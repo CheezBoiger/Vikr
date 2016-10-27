@@ -1,0 +1,2 @@
+- Vikr Editor TODO list!
+- Qt will be used for UI design and manipulation of the Renderer engine.

@@ -1,0 +1,17 @@
+TODO List for the Vikr Renderer Engine.
+
+- Mathematics!
+  - Implement Linear Algebra Commonality toolsets.
+  - Need Vector4, 3, 2, and Matrix4, 3, 2, 1.
+
+- Renderer Engine
+
+
+  - OpenGL and Vulkan Implementations
+    - Mesh and Model Objects.
+    - graphics commands.
+    - Shader Class
+    - Camera and free movement!
+- Animation!
+
+- Audio (Optional!)
