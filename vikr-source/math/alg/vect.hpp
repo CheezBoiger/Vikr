@@ -6,9 +6,10 @@
 
 
 namespace vikr {
+namespace math {
 
 
-template<typename _Value>
+template<typename _Value = float>
 class Vector2 {
 public:
 private:
@@ -17,7 +18,7 @@ private:
 };
 
 
-template<typename _Value>
+template<typename _Value = float>
 class Vector3 {
 public:
 private:
@@ -27,7 +28,7 @@ private:
 };
 
 
-template<typename _Value>
+template<typename _Value = float>
 class Vector4 {
 public:
 private:
@@ -37,5 +38,6 @@ private:
   _Value z;
   _Value w;
 };
+} // math
 } // vikr
 #endif // __VIKR_VECT_H
