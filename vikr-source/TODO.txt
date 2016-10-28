@@ -12,6 +12,8 @@ TODO List for the Vikr Renderer Engine.
     - graphics commands.
     - Shader Class
     - Camera and free movement!
+    - Lighting and shading models
+    - Implement the Framebuffer for the rendering pipeline.
 - Animation!
 
 - Audio (Optional!)
