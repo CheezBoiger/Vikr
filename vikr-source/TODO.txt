@@ -8,6 +8,7 @@ TODO List for the Vikr Renderer Engine.
 
 
   - OpenGL and Vulkan Implementations
+    - Start with OpenGL FIRST!!
     - Mesh and Model Objects.
     - graphics commands.
     - Shader Class
