@@ -1,5 +1,5 @@
 /*
-  Copyright (c) Mario Garcia. All rights reserved. Like anyone is going to use this shit anyway...
+  Copyright (c) Mario Garcia, under MIT license. Like anyone is going to use this shit anyway...
 */
 #ifndef __VIKR_MATRIX_H
 #define __VIKR_MATRIX_H

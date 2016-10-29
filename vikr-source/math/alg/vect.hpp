@@ -1,5 +1,5 @@
 /**
-  Copyright (c) Mario Garcia. All rights reserved.
+  Copyright (c) Mario Garcia. Under the MIT License.
 */
 #ifndef __VIKR_VECT_H
 #define __VIKR_VECT_H
