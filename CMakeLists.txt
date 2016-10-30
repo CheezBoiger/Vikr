@@ -23,10 +23,6 @@ set(VIKR_VERSION "0.01")
 # concat the name!
 set(VIKR_NAME "Vikr")
 
-
-# Set the directories for the compiler
-include_directories(SYSTEM vikr-source/)
-
 # Vikr Rendering engine directories
 set(VIKR_SOURCE_DIR   vikr-source/)
 set(VIKR_GLAD_DIR     ${VIKR_SOURCE_DIR}/glad/)
@@ -34,6 +30,11 @@ set(VIKR_PLATFORM_DIR ${VIKR_SOURCE}/platform/)
 set(VIKR_RENDERER_DIR ${VIKR_SOURCE_DIR}/renderer/)
 set(VIKR_SHADER_DIR   ${VIKR_SOURCE_DIR}/shader/)
 set(VIKR_UTIL_DIR     ${VIKR_SOURCE_DIR}/util/)
+
+# Set the directories for the compiler
+include_directories(SYSTEM ${VIKR_SOURCE_DIR})
+# Set Library directories as well
+include_directories(SYSTEM libs/include/)
 
 # Setting up the glob.
 set(VIKR_GLOB)
