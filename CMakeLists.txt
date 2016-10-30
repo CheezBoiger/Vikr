@@ -9,7 +9,7 @@ project("VikrSoftware")
 # Checking Operating system version.
 if (WIN32)
   message("Windows")
-elseif(LINUX)
+elseif(UNIX)
   message("Linux")
 else()
   message(ERROR_FATAL "Operating system not compatible with Vikr!")
