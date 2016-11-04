@@ -16,9 +16,10 @@ typedef GLdouble    vreal64;
 typedef GLint       vint32;
 typedef GLuint      vuint32;
 typedef GLshort     vint16;
-typedef GLulong     vuint64;
+typedef unsigned long long     vuint64;
 typedef long long   vint64;
 typedef GLvoid      vvoid;
+typedef GLboolean vbool;
 
 } // vikr
 #endif // __VIKR_TYPES_HPP

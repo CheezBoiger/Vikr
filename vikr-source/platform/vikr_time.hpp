@@ -21,5 +21,12 @@ vreal32 GetDeltaTime();
 
 // Takes the current time at the exact moment.
 vreal32 GetTime();
+
+
+namespace internals {
+
+
+void CalculateDeltaTime();
+} // internals
 } // vikr
 #endif // __VIKR_TIME_HPP
