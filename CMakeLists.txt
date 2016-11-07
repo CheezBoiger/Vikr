@@ -61,7 +61,8 @@ set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_SCENE_DIR}/icamera.hpp
   ${VIKR_SCENE_DIR}/camera.hpp
-  ${VIKR_SCENE_DIR}/camera.cpp)
+  ${VIKR_SCENE_DIR}/camera.cpp
+  ${VIKR_SCENE_DIR}/viewport.hpp)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}

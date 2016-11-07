@@ -321,6 +321,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\viewport.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\irenderer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vkrenderer.hpp" />

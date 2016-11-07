@@ -33,6 +33,9 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\viewport.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\irenderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
