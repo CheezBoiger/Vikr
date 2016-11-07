@@ -27,6 +27,9 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

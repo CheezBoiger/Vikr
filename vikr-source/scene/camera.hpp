@@ -4,14 +4,15 @@
 #ifndef __VIKR_CAMERA_HPP
 #define __VIKR_CAMERA_HPP
 
-#include <glm/glm.hpp>
-#include <platform/vikr_time.hpp>
-#include <platform/vikr_types.hpp>
+#include <scene/icamera.hpp>
+
 
 namespace vikr {
 
-
-class Camera {
+/**
+  Abstract Camera for use.
+*/
+class Camera : public ICamera {
 public:
   Camera(glm::vec3 world_up, glm::vec3 up, glm::vec3 front, glm::vec3 right, glm::vec3 pos) 
   : world_up(world_up)
@@ -29,12 +30,21 @@ public:
   glm::mat4 GetViewMat() { return view; }
   glm::mat4 GetProjectionMat() { return projection; }
 
-  virtual vvoid ApplyRelativeMovement(glm::vec3 offset);
-  virtual vvoid ApplyRelativeMovement(vreal32 xoffset, vreal32 yoffset, vreal32 zoffset);
-  virtual vvoid OverwritePos(vreal32 x, vreal32 y, vreal32 z);
-  virtual vvoid OverwritePos(glm::vec3 new_pos);  
+  vreal32 GetZoom() { return zoom; }
+  vreal32 GetPitch() { return pitch; }
+  vreal32 GetRoll() { return roll; }
+  void SetZoom(vreal32 z) { zoom = z; }
+  void SetPitch(vreal32 p) { pitch = p; }
+  void SetRoll(vreal32 r) { roll = r; }
 
-  virtual vvoid Update(vreal32 delta) = 0;
+  virtual vvoid ApplyRelativeMovement(glm::vec3 offset) override;
+  virtual vvoid ApplyRelativeMovement(vreal32 xoffset, vreal32 yoffset, vreal32 zoffset) override;
+  virtual vvoid OverwritePos(vreal32 x, vreal32 y, vreal32 z) override;
+  virtual vvoid OverwritePos(glm::vec3 new_pos) override;  
+  virtual void GenerateView() override;
+  virtual void GenerateProjection() override;
+
+  virtual vvoid Update(vreal32 delta) override = 0;
   
 protected:
   // Up vector in the world.
@@ -50,6 +60,20 @@ protected:
 
   glm::mat4 projection;
   glm::mat4 view;
+
+  vreal32 zoom;
+  vreal32 pitch;
+  vreal32 yaw;
+  vreal32 roll;
+
+public:
+  /**
+    Default variables for the camera.
+   */
+  static vreal32 ZOOM;
+  static vreal32 PITCH;
+  static vreal32 YAW;
+  static vreal32 ROLL;
 };
 } // vikr
 #endif // __VIKR_CAMERA_HPP
