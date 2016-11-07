@@ -63,6 +63,16 @@ set(VIKR_GLOB
   ${VIKR_SCENE_DIR}/camera.hpp
   ${VIKR_SCENE_DIR}/camera.cpp)
 
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_RENDERER_DIR}/irenderer.hpp
+  ${VIKR_RENDERER_DIR}/renderer.hpp
+  ${VIKR_RENDERER_DIR}/vkrenderer.hpp
+  ${VIKR_RENDERER_DIR}/glrenderer.hpp
+  ${VIKR_RENDERER_DIR}/render_command.hpp
+  ${VIKR_RENDERER_DIR}/render_group.hpp
+  ${VIKR_RENDERER_DIR}/render_target.hpp)
+
 set(VIKR_NAME "${VIKR_NAME}_${VIKR_VERSION}")
 # This will have to be changed up a bit though...
 # A Rendering engine is usually broken up into pieces, is this ok though?
