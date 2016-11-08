@@ -28,6 +28,7 @@ set(VIKR_SOURCE_DIR   vikr-source/)
 set(VIKR_GLAD_DIR     ${VIKR_SOURCE_DIR}/glad/)
 set(VIKR_PLATFORM_DIR ${VIKR_SOURCE_DIR}/platform/)
 set(VIKR_RENDERER_DIR ${VIKR_SOURCE_DIR}/renderer/)
+set(VIKR_GRAPHICS_DIR ${VIKR_PLATFORM_DIR}/graphics/)
 set(VIKR_SHADER_DIR   ${VIKR_SOURCE_DIR}/shader/)
 set(VIKR_SCENE_DIR    ${VIKR_SOURCE_DIR}/scene/)
 set(VIKR_UTIL_DIR     ${VIKR_SOURCE_DIR}/util/)
@@ -61,8 +62,12 @@ set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_SCENE_DIR}/icamera.hpp
   ${VIKR_SCENE_DIR}/camera.hpp
-  ${VIKR_SCENE_DIR}/camera.cpp
-  ${VIKR_SCENE_DIR}/viewport.hpp)
+  ${VIKR_SCENE_DIR}/camera.cpp)
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_GRAPHICS_DIR}/opengl.hpp
+  ${VIKR_GRAPHICS_DIR}/vk.hpp)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
@@ -72,11 +77,16 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/glrenderer.hpp
   ${VIKR_RENDERER_DIR}/render_command.hpp
   ${VIKR_RENDERER_DIR}/render_group.hpp
-  ${VIKR_RENDERER_DIR}/render_target.hpp)
+  ${VIKR_RENDERER_DIR}/render_target.hpp
+  ${VIKR_RENDERER_DIR}/viewport.hpp)
 
 set(VIKR_NAME "${VIKR_NAME}_${VIKR_VERSION}")
 # This will have to be changed up a bit though...
 # A Rendering engine is usually broken up into pieces, is this ok though?
 add_library(${VIKR_NAME} SHARED
   ${VIKR_GLOB})
+
+# Version might need to be determined, as well as updating to compensate for static libs on OS's other than windows.
+target_link_libraries(${VIKR_NAME} libs/GLFW/glfw3)
+target_link_libraries(${VIKR_NAME} libs/Vulkan/vulkan-1)
 

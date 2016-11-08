@@ -154,8 +154,8 @@ VikrSoftware_BINARY_DIR:STATIC=D:/cmgarcia/github/Vikr/build
 //Value Computed by CMake
 VikrSoftware_SOURCE_DIR:STATIC=D:/cmgarcia/github/Vikr
 
-//Dependencies for target
-Vikr_0.01_LIB_DEPENDS:STATIC=
+//Dependencies for the target
+Vikr_0.01_LIB_DEPENDS:STATIC=general;libs/GLFW/glfw3;general;libs/Vulkan/vulkan-1;
 
 //Dependencies for target
 Vikr_LIB_DEPENDS:STATIC=

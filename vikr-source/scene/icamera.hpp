@@ -9,6 +9,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <platform/vikr_time.hpp>
 #include <platform/vikr_types.hpp>
+#include <renderer/viewport.hpp>
 
 namespace vikr {
 
@@ -21,15 +22,6 @@ enum CamDirection {
   DOWN,
   LEFT,
   RIGHT
-};
-
-
-
-struct Viewport {
-  vint32 viewport_x;
-  vint32 viewport_y;
-  vint32 win_width;
-  vint32 win_height;
 };
 
 
