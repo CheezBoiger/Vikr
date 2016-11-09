@@ -6,8 +6,8 @@
 
 #include <platform/platform.hpp>
 
-
 #include <platform/graphics/opengl.hpp>
+
 #include <platform/graphics/vk.hpp>
 
 #endif // __VIKR_GRAPHICS_HPP

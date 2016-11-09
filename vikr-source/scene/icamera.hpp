@@ -14,7 +14,7 @@
 namespace vikr {
 
 
-enum Camtype { ORTHOGRAPHIC, PERSPECTIVE };
+enum CamType { ORTHOGRAPHIC, PERSPECTIVE };
 enum CamDirection {
   FORWARD,
   BACK,
@@ -35,14 +35,17 @@ public:
 
   virtual vvoid Move(CamDirection dir, vreal32 delta) = 0;
   virtual vvoid SetPos(glm::vec3 new_pos) = 0;
+  virtual vvoid SetLookAt(glm::vec3 new_look) = 0;
+  virtual vvoid SetClip(vreal64 near_clip_dist, vreal64 far_clip_dist) = 0;
+  virtual vvoid SetType(CamType new_type) = 0;
 
   virtual glm::mat4 GetView() = 0;
   virtual glm::mat4 GetProjection() = 0;
 
-  virtual vvoid Look(glm::vec2 mouse_offset) = 0;
-  virtual vvoid Look(vreal32 xoffset, vreal32 yoffset) = 0;
+  virtual vvoid Look(glm::vec2 mouse_offset, vbool constrain_pitch = true) = 0;
+  virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vbool constrain_pitch = true) = 0;
   virtual vvoid SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) = 0;
-  virtual Viewport GetViewport() = 0;
+  virtual Viewport& GetViewport() = 0;
   virtual vvoid Update() = 0;
 };
 } // vikr

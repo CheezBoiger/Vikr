@@ -21,9 +21,10 @@
   Still working on this, time consuming I know, but wraps the library for when we 
   need to update OpenGL.
 */
-void VikrCreateVertexBufferObject(GLuint* vbo);
-void VikrCreateVertexArrayObject(GLuint* vao);
+extern void VikrCreateVertexBufferObject(GLuint* vbo);
+extern void VikrCreateVertexArrayObject(GLuint* vao);
 
-void VikrGetUniformLocation(GLuint program, const char *uniform_name);
+extern void VikrGetUniformLocation(GLuint program, const char *uniform_name);
+extern void VikrUniform1v(GLuint uniform, GLint var);
 
 #endif // __VIKR_OPENGL_HPP

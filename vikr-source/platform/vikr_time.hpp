@@ -4,10 +4,6 @@
 #ifndef __VIKR_TIME_HPP
 #define __VIKR_TIME_HPP
 
-// OpenGL and Vulkan includes.
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include "vikr_types.hpp"
 
 

@@ -56,10 +56,6 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_SHADER_DIR}/gl_shader.hpp)
-
-set(VIKR_GLOB
-  ${VIKR_GLOB}
   ${VIKR_SCENE_DIR}/icamera.hpp
   ${VIKR_SCENE_DIR}/camera.hpp
   ${VIKR_SCENE_DIR}/camera.cpp)
@@ -67,7 +63,8 @@ set(VIKR_GLOB
 set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_GRAPHICS_DIR}/opengl.hpp
-  ${VIKR_GRAPHICS_DIR}/vk.hpp)
+  ${VIKR_GRAPHICS_DIR}/vk.hpp
+  ${VIKR_GRAPHICS_DIR}/graphics.hpp)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
@@ -79,6 +76,19 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/render_group.hpp
   ${VIKR_RENDERER_DIR}/render_target.hpp
   ${VIKR_RENDERER_DIR}/viewport.hpp)
+
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_SHADER_DIR}/gl_shader.hpp
+  ${VIKR_SHADER_DIR}/vk_shader.hpp
+  ${VIKR_SHADER_DIR}/material.hpp)
+
+
+if (${CMAKE_CXX_COMPILER_ID})
+# Doing some stuff for organization.
+endif()
+
 
 set(VIKR_NAME "${VIKR_NAME}_${VIKR_VERSION}")
 # This will have to be changed up a bit though...
