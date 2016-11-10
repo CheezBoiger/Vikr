@@ -80,7 +80,9 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_SHADER_DIR}/ishader.hpp
   ${VIKR_SHADER_DIR}/gl_shader.hpp
+  ${VIKR_SHADER_DIR}/gl_shader.cpp
   ${VIKR_SHADER_DIR}/vk_shader.hpp
   ${VIKR_SHADER_DIR}/material.hpp)
 
@@ -91,12 +93,17 @@ endif()
 
 
 set(VIKR_NAME "${VIKR_NAME}_${VIKR_VERSION}")
+
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/GLFW/ ${CMAKE_CURRENT_SOURCE_DIR}/libs/Vulkan/)
 # This will have to be changed up a bit though...
 # A Rendering engine is usually broken up into pieces, is this ok though?
-add_library(${VIKR_NAME} SHARED
+add_library(${VIKR_NAME} STATIC
   ${VIKR_GLOB})
 
 # Version might need to be determined, as well as updating to compensate for static libs on OS's other than windows.
-target_link_libraries(${VIKR_NAME} libs/GLFW/glfw3)
-target_link_libraries(${VIKR_NAME} libs/Vulkan/vulkan-1)
+target_link_libraries(${VIKR_NAME} glfw3)
+target_link_libraries(${VIKR_NAME} vulkan-1)
+
+
+add_subdirectory(test/)
 

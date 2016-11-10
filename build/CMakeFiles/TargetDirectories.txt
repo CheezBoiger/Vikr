@@ -1,3 +1,4 @@
 D:/cmgarcia/github/Vikr/build/CMakeFiles/ALL_BUILD.dir
 D:/cmgarcia/github/Vikr/build/CMakeFiles/Vikr_0.01.dir
 D:/cmgarcia/github/Vikr/build/CMakeFiles/ZERO_CHECK.dir
+D:/cmgarcia/github/Vikr/build/test/CMakeFiles/VikrRendererTest.dir

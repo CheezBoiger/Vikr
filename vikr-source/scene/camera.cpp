@@ -11,6 +11,7 @@ vreal32 Camera::ZOOM = 45.0f;
 vreal32 Camera::PITCH = 0.0f;
 vreal32 Camera::YAW = -90.0f;
 vreal32 Camera::SENSITIVITY = 0.25f;
+vreal32 Camera::ROLL = 0.0f;
 
 
 Camera::Camera(glm::vec3 world_up, glm::vec3 up, glm::vec3 front, glm::vec3 pos)

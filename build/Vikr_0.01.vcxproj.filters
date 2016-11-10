@@ -7,6 +7,9 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\glad\glad.h">
@@ -61,6 +64,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\viewport.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\ishader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.hpp">
