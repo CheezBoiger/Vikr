@@ -1,9 +1,3 @@
 ﻿  Checking Build System
-  CMake is re-running because D:/cmgarcia/github/Vikr/build/CMakeFiles/generate.stamp is out-of-date.
-    the file 'D:/cmgarcia/github/Vikr/CMakeLists.txt'
-    is newer than 'D:/cmgarcia/github/Vikr/build/CMakeFiles/generate.stamp.depend'
-    result='-1'
-  Windows
-  -- Configuring done
-  -- Generating done
-  -- Build files have been written to: D:/cmgarcia/github/Vikr/build
+  CMake does not need to re-run because D:/cmgarcia/github/Vikr/build/CMakeFiles/generate.stamp is up-to-date.
+  CMake does not need to re-run because D:/cmgarcia/github/Vikr/build/test/CMakeFiles/generate.stamp is up-to-date.

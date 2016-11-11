@@ -10,4 +10,16 @@
 
 #include <platform/graphics/vk.hpp>
 
+
+namespace vikr {
+
+
+/**
+  Graphics Pipeline to implement.
+*/
+enum GraphicsPipeline {
+  vikr_OPENGL,
+  vikr_VULKAN
+};
+} // vikr
 #endif // __VIKR_GRAPHICS_HPP

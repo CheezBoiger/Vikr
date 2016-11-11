@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\glad\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp">
@@ -12,10 +18,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\glad\glad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\glad\khrplatform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_assert.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_filesystem.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\platform.hpp">
@@ -25,6 +43,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_types.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_api.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp">

@@ -44,15 +44,28 @@ set(VIKR_GLOB)
 # These will have to move soon.
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_SOURCE_DIR}/vikr.hpp
+  ${VIKR_SOURCE_DIR}/vikr.cpp)
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
   ${VIKR_GLAD_DIR}/glad.c
   ${VIKR_GLAD_DIR}/glad.h
   ${VIKR_GLAD_DIR}/khrplatform.h)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_UTIL_DIR}/vikr_assert.hpp
+  ${VIKR_UTIL_DIR}/vikr_filesystem.hpp
+  ${VIKR_UTIL_DIR}/vikr_log.hpp
+  ${VIKR_UTIL_DIR}/vikr_log.cpp)
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
   ${VIKR_PLATFORM_DIR}/platform.hpp
   ${VIKR_PLATFORM_DIR}/vikr_time.hpp
-  ${VIKR_PLATFORM_DIR}/vikr_types.hpp)
+  ${VIKR_PLATFORM_DIR}/vikr_types.hpp
+  ${VIKR_PLATFORM_DIR}/vikr_api.hpp)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}

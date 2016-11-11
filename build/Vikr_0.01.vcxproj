@@ -249,11 +249,16 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\glad\glad.h" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\glad\khrplatform.h" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_assert.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_filesystem.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\platform.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_time.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_types.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_api.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\opengl.hpp" />
@@ -271,12 +276,14 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\vk_shader.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\material.hpp" />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\glad\glad.c" >
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.cpp"  />
   </ItemGroup>

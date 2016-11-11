@@ -1,5 +1,7 @@
 #include <iostream>
 #include <shader/gl_shader.hpp>
+#include <vikr.hpp>
+#include <util/vikr_log.hpp>
 
 
 unsigned int screen_width = 1200;
@@ -16,13 +18,10 @@ int main(int c, char* args[]) {
   GLFWwindow* window = glfwCreateWindow(screen_width, screen_height, "Vikr", nullptr, nullptr); // Windowed
   glfwMakeContextCurrent(window);
 
+
+  vikr::LoadGlad();
   // Options 
   //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-  if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    std::cout << "Failed to initialize OpenGL context" << std::endl;
-    return -1;
-  }
 
   //std::cout << "c(^ vv ^  c)" << std::endl;
   //vikr::GLShader vs(vikr::vikr_VERTEX_SHADER, "");
@@ -31,10 +30,10 @@ int main(int c, char* args[]) {
   //shader.Link(&vs, &fs);
 
   // Standard Game Loop
-  while(!glfwWindowShouldClose(window)) {
-    glfwPollEvents();
-
-    glfwSwapBuffers(window);
+  while(!vikr::WindowShouldClose(window)) {
+    vikr::internals::CalculateDeltaTime();
+    vikr::PollEvents();
+    vikr::DoubleBufferSwap(window);
   }
   return 0;
 }

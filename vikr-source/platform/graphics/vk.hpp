@@ -13,6 +13,11 @@
 #include <GLFW/glfw3.h>
 
 #define VIKR_VULKAN
+#include <platform/vikr_api.hpp>
+#include <platform/platform.hpp>
+
+
+
 #endif // VIKR_VULKAN_ENABLED
 
 /*
