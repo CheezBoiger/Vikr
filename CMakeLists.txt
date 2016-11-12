@@ -43,6 +43,10 @@ set(VIKR_SCENE_DIR    ${VIKR_SOURCE_DIR}/scene/)
 set(VIKR_UTIL_DIR     ${VIKR_SOURCE_DIR}/util/)
 set(VIKR_INPUT_DIR    ${VIKR_SOURCE_DIR}/input/)
 set(VIKR_MESH_DIR     ${VIKR_SOURCE_DIR}/mesh/)
+set(VIKR_MATH_DIR     ${VIKR_SOURCE_DIR}/math/)
+set(VIKR_ALG_DIR      ${VIKR_MATH_DIR}/alg/)
+set(VIKR_SHAPE_DIR    ${VIKR_MATH_DIR}/shape/)
+set(VIKR_LIGHTING_DIR ${VIKR_SOURCE_DIR}/lighting/)
 
 # Set the directories for the compiler
 include_directories(SYSTEM ${VIKR_SOURCE_DIR})
@@ -95,13 +99,19 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/irenderer.hpp
   ${VIKR_RENDERER_DIR}/renderer.hpp
   ${VIKR_RENDERER_DIR}/vkrenderer.hpp
+  ${VIKR_RENDERER_DIR}/vkrenderer.cpp
   ${VIKR_RENDERER_DIR}/glrenderer.hpp
+  ${VIKR_RENDERER_DIR}/glrenderer.cpp
   ${VIKR_RENDERER_DIR}/render_command.hpp
+  ${VIKR_RENDERER_DIR}/mesh_command.hpp
+  ${VIKR_RENDERER_DIR}/mesh_command.cpp
   ${VIKR_RENDERER_DIR}/render_command_types.hpp
   ${VIKR_RENDERER_DIR}/render_group.hpp
   ${VIKR_RENDERER_DIR}/render_queue.hpp
   ${VIKR_RENDERER_DIR}/render_target.hpp
-  ${VIKR_RENDERER_DIR}/viewport.hpp)
+  ${VIKR_RENDERER_DIR}/viewport.hpp
+  ${VIKR_RENDERER_DIR}/program_state.hpp
+  ${VIKR_RENDERER_DIR}/program_state.cpp)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
@@ -130,6 +140,10 @@ set(VIKR_GLOB
   ${VIKR_INPUT_DIR}/mouse.hpp
   ${VIKR_INPUT_DIR}/mouse.cpp)
 
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_SHAPE_DIR}/cube.hpp
+  ${VIKR_SHAPE_DIR}/cube.cpp)
 
 
 if (${CMAKE_CXX_COMPILER_ID})

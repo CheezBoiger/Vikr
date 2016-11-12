@@ -29,7 +29,7 @@ vvoid GLShader::LoadShaderFile(std::string filepath) {
     // must debug...
   }
   const GLchar* shader_code_c = shader_code.c_str();
-  shader_id = glCreateShader(GL_VERTEX_SHADER);
+  shader_id = CreateShader(pipeline_stage);
   ShaderSource(shader_id, 1, &shader_code_c, NULL);
 }
 

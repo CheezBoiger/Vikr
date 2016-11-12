@@ -14,10 +14,10 @@
 #include <platform/vikr_api.hpp>
 #include <platform/platform.hpp>
 
+namespace vikr {
 
-
+} // vikr
 #endif // VIKR_VULKAN_ENABLED
-
 /*
 
   Still need to read up on this.

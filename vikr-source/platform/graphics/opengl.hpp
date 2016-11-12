@@ -18,6 +18,10 @@
 #define VIKR_OPENGL_VERSION_MINOR  VIKR_OPENGL_VERSION.minor
 #define VIKR_OPENGL_VERSION_MAJOR  VIKR_OPENGL_VERSION.major
 
+
+namespace vikr {
+
+
 /*
   Still working on this, time consuming I know, but wraps the library for when we 
   need to update OpenGL.
@@ -61,4 +65,7 @@ VIKR_FORCEINLINE void GetShaderInfoLog(GLuint shader, GLsizei log_size, GLsizei 
 
 VIKR_FORCEINLINE void UseProgram(GLuint program) { glUseProgram(program); }
 VIKR_FORCEINLINE GLuint CreateProgram() { return glCreateProgram(); }
+VIKR_FORCEINLINE void Clear(GLbitfield mask) { glClear(mask); }
+VIKR_FORCEINLINE void ClearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) { glClearColor(red, green, blue, alpha); }
+} // vikr
 #endif // __VIKR_OPENGL_HPP

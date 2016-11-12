@@ -9,7 +9,7 @@ unsigned int screen_width = 1200;
 unsigned int screen_height = 800;
 
 int main(int c, char* args[]) {
-/*  glfwInit();
+  glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4.3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -24,11 +24,11 @@ int main(int c, char* args[]) {
   // Options 
   //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-  //std::cout << "c(^ vv ^  c)" << std::endl;
-  //vikr::GLShader vs(vikr::vikr_VERTEX_SHADER, "");
-  //vikr::GLShader fs(vikr::vikr_FRAGMENT_SHADER, "");
-  //vikr::Shader shader;
-  //shader.Link(&vs, &fs);
+  std::cout << "c(^ vv ^  c)" << std::endl;
+  vikr::GLShader vs(vikr::vikr_VERTEX_SHADER, "vert.vs");
+  vikr::GLShader fs(vikr::vikr_FRAGMENT_SHADER, "metallic.fs");
+  vikr::Shader shader;
+  shader.Link(&vs, &fs);
 
   // Standard Game Loop
   while(!vikr::WindowShouldClose(window)) {
@@ -36,7 +36,8 @@ int main(int c, char* args[]) {
     vikr::PollEvents();
     vikr::DoubleBufferSwap(window);
   }
-*/
+
+/*
   // Vulkan workbench
   glfwInit();
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -51,7 +52,7 @@ int main(int c, char* args[]) {
     glfwPollEvents();
     glfwSwapBuffers(window);
   }
-
+*/
   glfwDestroyWindow(window);
   glfwTerminate();
   return 0;
