@@ -20,6 +20,12 @@
 #else
  #define VIKR_FORCEINLINE
 #endif // VIKR_WINDOWS
+
+
+#define VIKR_DISALLOW_COPY_AND_ASSIGN(class_name) \
+                  class_name(class_name& obj) = delete; \
+                  class_name& operator=(class_name& obj) = delete; 
+
 namespace vikr {
 
 

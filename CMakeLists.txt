@@ -107,7 +107,7 @@ endif()
 
 set(VIKR_NAME "${VIKR_NAME}_${VIKR_VERSION}")
 
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/GLFW/ ${CMAKE_CURRENT_SOURCE_DIR}/libs/Vulkan/)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/GLFW/ ${CMAKE_CURRENT_SOURCE_DIR}/libs/Vulkan/bin32/)
 # This will have to be changed up a bit though...
 # A Rendering engine is usually broken up into pieces, is this ok though?
 add_library(${VIKR_NAME} STATIC
