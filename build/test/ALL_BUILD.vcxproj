@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGUID>{7B4D97A4-3493-45D3-AA0B-F98A842D1E72}</ProjectGUID>
+    <ProjectGUID>{60518D89-5F61-4C9C-B7AC-FA70A69F4EAD}</ProjectGUID>
     <Keyword>Win32Proj</Keyword>
     <Platform>Win32</Platform>
     <ProjectName>ALL_BUILD</ProjectName>
@@ -163,7 +163,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:/cmgarcia/github/Vikr/build/test/VikrRendererTest.vcxproj">
-      <Project>93BD489B-9128-4148-8480-815CE2577EFE</Project>
+      <Project>B1C50DFD-2C38-4BAA-AAF9-50F941CD8628</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

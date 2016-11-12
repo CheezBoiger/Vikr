@@ -6,21 +6,11 @@
 
 
 #include <platform/vikr_types.hpp>
-#include <vector>
+#include <platform/vikr_api.hpp>
+#include <renderer/render_command_types.hpp>
 
 
 namespace vikr {
-
-
-/**
-  Various other commands going in, but this is enough for now...
-*/
-enum RenderCommandType {
-  VIKR_MESH,
-  VIKR_GROUP,
-  VIKR_PRIMITIVE,
-  VIKR_TRIANGLES
-};
 
 
 /**
@@ -29,21 +19,12 @@ enum RenderCommandType {
 class RenderCommand {
 public:
   RenderCommand(RenderCommandType type);
-
-protected:
-  RenderCommandType type;
-};
-
-
-/**
-  Custom RenderQueue for the Renderer.
-*/
-class RenderQueue {
-public:
-  vvoid PushBack(RenderCommand command);
   
 protected:
-  std::vector<RenderCommand> m_command_list; 
+  RenderCommandType type;
+
+private:
+  VIKR_DISALLOW_COPY_AND_ASSIGN(RenderCommand);
 };
 } // vikr
 #endif // __VIKR_RENDER_COMMAND_HPP

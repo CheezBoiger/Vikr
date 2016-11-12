@@ -5,6 +5,7 @@
 #define __VIKR_IRENDERER_HPP
 
 #include <platform/vikr_types.hpp>
+#include <platform/vikr_api.hpp>
 #include <renderer/render_command.hpp>
 
 
@@ -20,7 +21,7 @@ public:
 
   virtual vvoid PushBack(RenderCommand *command) = 0;
   virtual vvoid Sort() = 0;
-  
+  virtual vint32 Init() = 0;
   /**
     Should render the frame. 
    */
