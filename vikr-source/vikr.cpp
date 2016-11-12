@@ -10,13 +10,14 @@ namespace vikr {
 Returns the same renderer back, initialized!
 */
 GLRenderer *InitGLRenderer(GLRenderer *renderer) {
+  renderer->Init();
   return renderer;
 }
 
 
-IRenderer *InitVikrEngine(GraphicsPipeline pipeline) {
+Renderer *InitVikrEngine(GraphicsPipeline pipeline) {
   LoadGlad();
-  IRenderer *renderer = nullptr;
+  Renderer *renderer = nullptr;
   switch (pipeline) {
     case vikr_OPENGL: {
       GLRenderer *gl = new GLRenderer();
@@ -27,7 +28,7 @@ IRenderer *InitVikrEngine(GraphicsPipeline pipeline) {
       VKRenderer *vk = new VKRenderer();
       delete vk; vk = nullptr; // delete for now.
       VikrLog::DisplayMessage(VIKR_ERROR, "Vulkan renderer not yet written!");
-      }
+    }
     break;
     default:
       VikrLog::DisplayMessage(VIKR_ERROR, "Enum does not match any compatible renderers!");

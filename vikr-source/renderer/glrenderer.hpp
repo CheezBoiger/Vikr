@@ -5,7 +5,7 @@
 #define __VIKR_GLRENDERER_HPP
 
 
-#include <renderer/irenderer.hpp>
+#include <renderer/renderer.hpp>
 #include <renderer/render_queue.hpp>
 
 
@@ -20,18 +20,18 @@ class Camera;
 /**
   Renderer using OpenGL Graphics APIs.
 */
-class GLRenderer : public IRenderer {
+class GLRenderer : public Renderer {
 public:
   GLRenderer();
   ~GLRenderer();
 
 
-  Camera *GetCamera() { return current_camera; }
-  vvoid SetCamera(Camera *camera) { current_camera = camera; }
+  Camera *GetCamera() override { return current_camera; }
+  vvoid SetCamera(Camera *camera) override { current_camera = camera; }
   /**
     Swaps current camera with the camera specified.
   */
-  vvoid SwapCameras(Camera *camera) { std::swap(current_camera, camera); }
+  vvoid SwapCamera(Camera *camera) override { std::swap(current_camera, camera); }
 
   vint32 Init() override;
   vvoid PushBack(RenderCommand *command) override;

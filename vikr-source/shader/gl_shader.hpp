@@ -40,17 +40,5 @@ private:
   vuint32 shader_id;
   vbool compiled;
 };
-
-
-class Shader : public IShader {
-public:
-  Shader();
-  
-  vvoid Link(GLShader* vs, GLShader* fs, GLShader* gs = nullptr);
-  vvoid Use() override { UseProgram(program); }
-  vuint32 GetProgram() { return program; }
-private:
-  vuint32 program;
-};
 } // vikr
 #endif // __VIKR_GL_SHADER_H

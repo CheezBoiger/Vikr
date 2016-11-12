@@ -13,6 +13,9 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp">
       <Filter>vikr-source\scene</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.cpp">
+      <Filter>vikr-source\renderer</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vkrenderer.cpp">
       <Filter>vikr-source\renderer</Filter>
     </ClCompile>
@@ -30,6 +33,9 @@
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp">
       <Filter>vikr-source\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader.cpp">
+      <Filter>vikr-source\shader</Filter>
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.cpp">
       <Filter>vikr-source\shader</Filter>
@@ -138,6 +144,9 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.hpp">
       <Filter>vikr-source\mesh</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader.hpp">
+      <Filter>vikr-source\shader</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\ishader.hpp">
       <Filter>vikr-source\shader</Filter>
     </ClInclude>
@@ -170,12 +179,6 @@
     <Filter Include="vikr-source">
       <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\platform\graphics">
-      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\math\shape">
-      <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vikr-source\glad">
       <UniqueIdentifier>{0A8C6B6F-F0FB-435F-B1B3-74E6D66D3A2D}</UniqueIdentifier>
     </Filter>
@@ -202,6 +205,12 @@
     </Filter>
     <Filter Include="vikr-source\math">
       <UniqueIdentifier>{705FD3B0-3E78-4563-B6B1-4FE690E4BE78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\math\shape">
+      <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\platform\graphics">
+      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

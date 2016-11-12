@@ -98,6 +98,7 @@ set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_RENDERER_DIR}/irenderer.hpp
   ${VIKR_RENDERER_DIR}/renderer.hpp
+  ${VIKR_RENDERER_DIR}/renderer.cpp
   ${VIKR_RENDERER_DIR}/vkrenderer.hpp
   ${VIKR_RENDERER_DIR}/vkrenderer.cpp
   ${VIKR_RENDERER_DIR}/glrenderer.hpp
@@ -123,6 +124,8 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_SHADER_DIR}/shader.hpp
+  ${VIKR_SHADER_DIR}/shader.cpp
   ${VIKR_SHADER_DIR}/ishader.hpp
   ${VIKR_SHADER_DIR}/gl_shader.hpp
   ${VIKR_SHADER_DIR}/gl_shader.cpp

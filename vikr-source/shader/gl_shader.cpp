@@ -46,41 +46,4 @@ vvoid GLShader::Compile() {
     compiled = true;
   }
 }
-
-
-Shader::Shader()
-  : program(CreateProgram()) 
-{
-  
-}
-
-
-vvoid Shader::Link(GLShader* vs, GLShader* fs, GLShader* gs) {
-  vint32 success;
-  GLchar log[1024];
-  if (!vs->IsCompiled()) {
-    vs->Compile();
-  }
-  if (!fs->IsCompiled()) {
-    fs->Compile();
-  }
-
-  if (gs != nullptr && !gs->IsCompiled()) {
-    gs->Compile();
-  }
-  glAttachShader(program, vs->GetShaderId());
-  glAttachShader(program, fs->GetShaderId());
-  glLinkProgram(program);
-  glGetProgramiv(program, GL_LINK_STATUS, &success);
-  if (!success) {
-    glGetProgramInfoLog(program, 1024, NULL, log);
-    std::cout << log << std::endl;
-  }
-  vs->Cleanup();
-  fs->Cleanup();
-
-  if (gs != nullptr) {
-    gs->Cleanup();
-  }
-}
 } // vikr

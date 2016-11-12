@@ -19,6 +19,7 @@ namespace vikr {
 
 
 char VikrLog::suppressed = 0xF;
+std::vector<std::pair<VikrMessage, std::string>> VikrLog::history_log;
 
 void VikrLog::DisplayMessage(VikrMessage type, std::string message) {
   switch (type) {

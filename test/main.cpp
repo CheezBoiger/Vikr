@@ -1,5 +1,6 @@
 #include <iostream>
 #include <shader/gl_shader.hpp>
+#include <shader/shader.hpp>
 #include <vikr.hpp>
 #include <util/vikr_log.hpp>
 #include <glm/vec4.hpp>
@@ -24,7 +25,7 @@ int main(int c, char* args[]) {
   // Options 
   //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-  std::cout << "c(^ vv ^  c)" << std::endl;
+  vikr::VikrLog::DisplayMessage(vikr::VIKR_NOTIFY, "c(^ vv ^  c)");
   vikr::GLShader vs(vikr::vikr_VERTEX_SHADER, "vert.vs");
   vikr::GLShader fs(vikr::vikr_FRAGMENT_SHADER, "metallic.fs");
   vikr::Shader shader;

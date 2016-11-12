@@ -8,12 +8,14 @@ D:\cmgarcia\github\Vikr\vikr-source\platform/vikr_time.hpp(29): warning C4244: '
 D:\cmgarcia\github\Vikr\vikr-source\platform/vikr_time.hpp(18): warning C4244: 'initializing': conversion from 'double' to 'vikr::vreal32', possible loss of data
 D:\cmgarcia\github\Vikr\vikr-source\platform/vikr_time.hpp(29): warning C4244: 'return': conversion from 'double' to 'vikr::vreal32', possible loss of data
 D:\cmgarcia\github\Vikr\vikr-source\scene/camera.hpp(56): warning C4244: '=': conversion from 'vikr::vreal64' to 'vikr::vreal32', possible loss of data
+  renderer.cpp
   vkrenderer.cpp
   glrenderer.cpp
   mesh_command.cpp
   program_state.cpp
   model.cpp
   mesh.cpp
+  shader.cpp
   gl_shader.cpp
   material.cpp
   texture.cpp

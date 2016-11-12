@@ -7,7 +7,7 @@
 #include <platform/vikr_api.hpp>
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_time.hpp>
-#include <renderer/irenderer.hpp>
+#include <renderer/renderer.hpp>
 
 namespace vikr {
 
@@ -24,7 +24,7 @@ VIKR_FORCEINLINE vint32 LoadGlad() {
 
   @param GraphicsPipeline 
 */
-IRenderer* InitVikrEngine(GraphicsPipeline pipeline);
+Renderer* InitVikrEngine(GraphicsPipeline pipeline);
 
 /**
   
