@@ -16,9 +16,18 @@ else()
   return()
 endif()
 
+
+
 # Name version
 set(VIKR_VERSION "0.01")
+option(vulkan "Build Vikr with Vulkan extension." OFF)
 
+
+if (vulkan)
+  message("Vulkan API enabled...")
+  add_definitions(-DVIKR_VULKAN_ENABLED)
+else()
+endif()
 
 # concat the name!
 set(VIKR_NAME "Vikr")

@@ -166,6 +166,9 @@ Vikr_0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;
 //Dependencies for target
 Vikr_LIB_DEPENDS:STATIC=
 
+//Build Vikr with Vulkan extension.
+vulkan:BOOL=ON
+
 
 ########################
 # INTERNAL cache entries

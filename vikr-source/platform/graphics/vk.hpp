@@ -4,8 +4,6 @@
 #ifndef __VIKR_VULKAN_HPP
 #define __VIKR_VULKAN_HPP
 
-#define VIKR_VULKAN_ENABLED
-
 #if defined (VIKR_VULKAN_ENABLED)
 #include <vulkan/vulkan.hpp>
 

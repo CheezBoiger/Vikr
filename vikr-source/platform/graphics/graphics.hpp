@@ -6,9 +6,10 @@
 
 #include <platform/platform.hpp>
 
+#include <platform/graphics/vk.hpp>
 #include <platform/graphics/opengl.hpp>
 
-#include <platform/graphics/vk.hpp>
+
 
 
 namespace vikr {
