@@ -18,15 +18,17 @@ IRenderer *InitVikrEngine(GraphicsPipeline pipeline) {
   LoadGlad();
   IRenderer *renderer = nullptr;
   switch (pipeline) {
-    case vikr_OPENGL:
-    {
+    case vikr_OPENGL: {
       GLRenderer *gl = new GLRenderer();
       renderer = InitGLRenderer(gl);
     }
     break;
-    case vikr_VULKAN:
+    case vikr_VULKAN: {
+      VKRenderer *vk = new VKRenderer();
+      delete vk; vk = nullptr; // delete for now.
       VikrLog::DisplayMessage(VIKR_ERROR, "Vulkan renderer not yet written!");
-      break;
+      }
+    break;
     default:
       VikrLog::DisplayMessage(VIKR_ERROR, "Enum does not match any compatible renderers!");
       break;

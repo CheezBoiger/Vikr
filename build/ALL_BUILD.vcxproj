@@ -165,8 +165,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ProjectReference Include="D:/cmgarcia/github/Vikr/build/test/VikrRendererTest.vcxproj">
       <Project>B1C50DFD-2C38-4BAA-AAF9-50F941CD8628</Project>
     </ProjectReference>
-    <ProjectReference Include="D:/cmgarcia/github/Vikr/build/Vikr_0.01.vcxproj">
-      <Project>44234F4C-6F8B-4E79-B4CE-40E23FF29582</Project>
+    <ProjectReference Include="D:/cmgarcia/github/Vikr/build/Vikr_v0.01.vcxproj">
+      <Project>4EB952B3-B1C7-4245-8EE5-C350204F534A</Project>
     </ProjectReference>
     <ProjectReference Include="D:/cmgarcia/github/Vikr/build/ZERO_CHECK.vcxproj">
       <Project>06017414-67A8-480D-B2F0-D95068A5854A</Project>

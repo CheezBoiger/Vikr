@@ -19,7 +19,7 @@ endif()
 
 
 # Name version
-set(VIKR_VERSION "0.01")
+set(VIKR_VERSION "v0.01")
 option(vulkan "Build Vikr with Vulkan extension." OFF)
 
 

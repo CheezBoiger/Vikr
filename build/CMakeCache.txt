@@ -163,6 +163,9 @@ VikrSoftware_SOURCE_DIR:STATIC=D:/cmgarcia/github/Vikr
 //Dependencies for the target
 Vikr_0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;
 
+//Dependencies for the target
+Vikr_v0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;
+
 //Build Vikr with Vulkan extension.
 vulkan:BOOL=ON
 
@@ -317,6 +320,8 @@ SG_Filter_vikr-source_GUID_CMAKE:INTERNAL=F0C511CB-5CB5-4226-9752-916BADB5B8FB
 VikrRendererTest_GUID_CMAKE:INTERNAL=B1C50DFD-2C38-4BAA-AAF9-50F941CD8628
 //Stored GUID
 Vikr_0.01_GUID_CMAKE:INTERNAL=44234F4C-6F8B-4E79-B4CE-40E23FF29582
+//Stored GUID
+Vikr_v0.01_GUID_CMAKE:INTERNAL=4EB952B3-B1C7-4245-8EE5-C350204F534A
 //Stored GUID
 ZERO_CHECK_GUID_CMAKE:INTERNAL=06017414-67A8-480D-B2F0-D95068A5854A
 

@@ -16,10 +16,10 @@ public:
   VKRenderer();
   ~VKRenderer();
 
-  vint32 Init();
-  vvoid PushBack(RenderCommand command);
-  vvoid Sort();
-  vvoid Render();
+  vint32 Init() override;
+  vvoid PushBack(RenderCommand *command) override;
+  vvoid Sort() override;
+  vvoid Render() override;
 private: 
 };
 } // vikr
