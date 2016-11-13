@@ -6,7 +6,7 @@
 
 // This should be implemented first!
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
+
 
 #include <platform/vikr_api.hpp>
 #include <platform/platform.hpp>
@@ -57,15 +57,19 @@ VIKR_FORCEINLINE void ShaderSource(GLuint source, GLsizei count, const GLchar *c
 }
 
 VIKR_FORCEINLINE void CompileShader(GLuint shader) { glCompileShader(shader); }
+VIKR_FORCEINLINE void DeleteShader(GLuint shader) { glDeleteShader(shader); }
 VIKR_FORCEINLINE void GetShaderiv(GLuint shader, GLenum status, GLint *success) { glGetShaderiv(shader, status, success); }
-
+VIKR_FORCEINLINE void AttachShader(GLuint program, GLuint shader) { glAttachShader(program, shader); }
 VIKR_FORCEINLINE void GetShaderInfoLog(GLuint shader, GLsizei log_size, GLsizei *length, GLchar *infolog) {
   glGetShaderInfoLog(shader, log_size, length, infolog); 
 }
 
 VIKR_FORCEINLINE void UseProgram(GLuint program) { glUseProgram(program); }
 VIKR_FORCEINLINE GLuint CreateProgram() { return glCreateProgram(); }
-VIKR_FORCEINLINE void Clear(GLbitfield mask) { glClear(mask); }
+VIKR_FORCEINLINE void LinkProgram(GLuint program) { glLinkProgram(program); }
+VIKR_FORCEINLINE void GetProgramiv(GLuint program, GLenum pname, GLint *params) { glGetProgramiv(program, pname, params); }
+VIKR_FORCEINLINE void GetProgramInfoLog(GLuint program, GLsizei size, GLsizei *length, GLchar *info_log) { glGetProgramInfoLog(program, size, length, info_log); }
+VIKR_FORCEINLINE void DisplayClear(GLbitfield mask) { glClear(mask); }
 VIKR_FORCEINLINE void ClearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) { glClearColor(red, green, blue, alpha); }
 } // vikr
 #endif // __VIKR_OPENGL_HPP

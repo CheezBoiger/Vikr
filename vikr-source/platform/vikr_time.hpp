@@ -14,11 +14,6 @@ namespace internals {
 static vreal32 last_frame = 0;
 static vreal32 delta_time = 0;
 
-VIKR_FORCEINLINE void CalculateDeltaTime() {
-  vreal32 current_frame = glfwGetTime();
-  delta_time = current_frame - last_frame;
-  last_frame = current_frame;  
-}
 } // internals
 // Takes the offset of the time it takes to render one frame after the other.
 // Delta time is calculated how long it takes to render one frame, and solve the difference
@@ -26,8 +21,20 @@ VIKR_FORCEINLINE void CalculateDeltaTime() {
 VIKR_FORCEINLINE vreal32 GetDeltaTime() { return internals::delta_time; }
 
 // Takes the current time at the exact moment.
-VIKR_FORCEINLINE vreal32 GetTime() { return glfwGetTime(); }
+VIKR_FORCEINLINE vreal64 GetTime() { return glfwGetTime(); }
+
 
 VIKR_FORCEINLINE vreal32 GetLastFrameTime() { return internals::last_frame; }
+
+
+/**
+  Calculates the Delta Time (the difference between the time it takes to render current 
+  frame and the time it takes to render the last frame).
+*/
+VIKR_FORCEINLINE void CalculateDeltaTime() {
+  vreal32 current_frame = vikr::GetTime();
+  internals::delta_time = current_frame - internals::last_frame;
+  internals::last_frame = current_frame;
+}
 } // vikr
 #endif // __VIKR_TIME_HPP

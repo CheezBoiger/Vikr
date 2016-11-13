@@ -29,7 +29,7 @@ public:
   GLShader(VikrPipelineStage stage = vikr_VERTEX_SHADER, std::string filepath = "");
 
   vvoid Compile();
-  vvoid Cleanup() { glDeleteShader(shader_id); }
+  vvoid Cleanup() { DeleteShader(shader_id); }
   VikrPipelineStage GetPipelineStage() { return pipeline_stage; }
   vuint32 GetShaderId() { return shader_id; }
   vbool IsCompiled() { return compiled; }

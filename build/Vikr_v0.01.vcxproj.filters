@@ -28,6 +28,9 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\program_state.cpp">
       <Filter>vikr-source\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\framebuffer.cpp">
+      <Filter>vikr-source\renderer</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.cpp">
       <Filter>vikr-source\mesh</Filter>
     </ClCompile>
@@ -54,6 +57,15 @@
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.cpp">
       <Filter>vikr-source\math\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\point_light.cpp">
+      <Filter>vikr-source\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.cpp">
+      <Filter>vikr-source\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\spot_light.cpp">
+      <Filter>vikr-source\lighting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +150,9 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\program_state.hpp">
       <Filter>vikr-source\renderer</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\framebuffer.hpp">
+      <Filter>vikr-source\renderer</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.hpp">
       <Filter>vikr-source\mesh</Filter>
     </ClInclude>
@@ -168,16 +183,43 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\input\mouse.hpp">
       <Filter>vikr-source\input</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\mat.hpp">
+      <Filter>vikr-source\math\alg</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\mat_alg.hpp">
+      <Filter>vikr-source\math\alg</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\quaternion.hpp">
+      <Filter>vikr-source\math\alg</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\vect.hpp">
+      <Filter>vikr-source\math\alg</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\vikr_math.hpp">
+      <Filter>vikr-source\math</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.hpp">
       <Filter>vikr-source\math\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\light.hpp">
+      <Filter>vikr-source\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\point_light.hpp">
+      <Filter>vikr-source\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.hpp">
+      <Filter>vikr-source\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\spot_light.hpp">
+      <Filter>vikr-source\lighting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="D:\cmgarcia\github\Vikr\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="vikr-source">
-      <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
+    <Filter Include="vikr-source\platform\graphics">
+      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\glad">
       <UniqueIdentifier>{0A8C6B6F-F0FB-435F-B1B3-74E6D66D3A2D}</UniqueIdentifier>
@@ -206,11 +248,17 @@
     <Filter Include="vikr-source\math">
       <UniqueIdentifier>{705FD3B0-3E78-4563-B6B1-4FE690E4BE78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vikr-source\lighting">
+      <UniqueIdentifier>{7438ABDA-56FF-4B76-89E9-18AA40ECBC48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source">
+      <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\math\alg">
+      <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vikr-source\math\shape">
       <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\platform\graphics">
-      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

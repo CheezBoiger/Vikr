@@ -23,6 +23,8 @@ public:
 
   static vvoid LoadShader(Renderer *renderer, std::string shader_name, std::string fs, std::string vs);
   static IShader *GetShader(std::string shader_name);
+  static Renderer *GetRenderer() { return renderer; }
+  static vvoid SetRenderer(Renderer *r) { renderer = r; }
 
   virtual Camera *GetCamera() = 0;
   virtual vvoid SwapCamera(Camera *camera) = 0;
@@ -34,6 +36,7 @@ public:
   virtual vvoid Render() override = 0;
 
 private:
+  static Renderer *renderer;
   static std::unordered_map<std::string, IShader*> shader_storage;
 };
 }

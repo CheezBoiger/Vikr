@@ -36,6 +36,9 @@ VIKR_FORCEINLINE vvoid PollEvents() { glfwPollEvents(); }
 */
 VIKR_FORCEINLINE vvoid DoubleBufferSwap(GLFWwindow *window) { glfwSwapBuffers(window); }
 VIKR_FORCEINLINE vint32 WindowShouldClose(GLFWwindow  *window) { return glfwWindowShouldClose(window); }
+/**
+  Cleanup renderer and it's resources after use.
+*/
 VIKR_FORCEINLINE vint32 Cleanup();
 } // vikr
 #endif // __VIKR_HPP

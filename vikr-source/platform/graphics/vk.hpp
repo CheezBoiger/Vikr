@@ -7,14 +7,13 @@
 #if defined (VIKR_VULKAN_ENABLED)
 #include <vulkan/vulkan.hpp>
 
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
-
 #define VIKR_VULKAN
 #include <platform/vikr_api.hpp>
 #include <platform/platform.hpp>
 
 namespace vikr {
+
+
 
 } // vikr
 #endif // VIKR_VULKAN_ENABLED

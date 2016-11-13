@@ -26,12 +26,12 @@ vvoid Shader::Link(GLShader* vs, GLShader* fs, GLShader* gs) {
   if(gs != nullptr && !gs->IsCompiled()) {
     gs->Compile();
   }
-  glAttachShader(program, vs->GetShaderId());
-  glAttachShader(program, fs->GetShaderId());
-  glLinkProgram(program);
-  glGetProgramiv(program, GL_LINK_STATUS, &success);
+  AttachShader(program, vs->GetShaderId());
+  AttachShader(program, fs->GetShaderId());
+  LinkProgram(program);
+  GetProgramiv(program, GL_LINK_STATUS, &success);
   if(!success) {
-    glGetProgramInfoLog(program, 1024, NULL, log);
+    GetProgramInfoLog(program, 1024, NULL, log);
     VikrLog::DisplayMessage(vikr::VIKR_ERROR, std::string(log));
   }
   vs->Cleanup();

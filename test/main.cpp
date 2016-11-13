@@ -6,6 +6,7 @@
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
 
+
 unsigned int screen_width = 1200;
 unsigned int screen_height = 800;
 
@@ -20,7 +21,6 @@ int main(int c, char* args[]) {
   GLFWwindow* window = glfwCreateWindow(screen_width, screen_height, "Vikr", nullptr, nullptr); // Windowed
   glfwMakeContextCurrent(window);
 
-
   vikr::LoadGlad();
   // Options 
   //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -33,7 +33,7 @@ int main(int c, char* args[]) {
 
   // Standard Game Loop
   while(!vikr::WindowShouldClose(window)) {
-    vikr::internals::CalculateDeltaTime();
+    vikr::CalculateDeltaTime();
     vikr::PollEvents();
     vikr::DoubleBufferSwap(window);
   }

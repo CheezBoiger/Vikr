@@ -112,7 +112,9 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/render_target.hpp
   ${VIKR_RENDERER_DIR}/viewport.hpp
   ${VIKR_RENDERER_DIR}/program_state.hpp
-  ${VIKR_RENDERER_DIR}/program_state.cpp)
+  ${VIKR_RENDERER_DIR}/program_state.cpp
+  ${VIKR_RENDERER_DIR}/framebuffer.hpp
+  ${VIKR_RENDERER_DIR}/framebuffer.cpp)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
@@ -145,8 +147,30 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_ALG_DIR}/mat.hpp
+  ${VIKR_ALG_DIR}/mat_alg.hpp
+  ${VIKR_ALG_DIR}/quaternion.hpp
+  ${VIKR_ALG_DIR}/vect.hpp)
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_MATH_DIR}/vikr_math.hpp)
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
   ${VIKR_SHAPE_DIR}/cube.hpp
   ${VIKR_SHAPE_DIR}/cube.cpp)
+
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_LIGHTING_DIR}/light.hpp
+  ${VIKR_LIGHTING_DIR}/point_light.hpp
+  ${VIKR_LIGHTING_DIR}/point_light.cpp
+  ${VIKR_LIGHTING_DIR}/directional_light.hpp
+  ${VIKR_LIGHTING_DIR}/directional_light.cpp
+  ${VIKR_LIGHTING_DIR}/spot_light.hpp
+  ${VIKR_LIGHTING_DIR}/spot_light.cpp)
 
 
 if (${CMAKE_CXX_COMPILER_ID})

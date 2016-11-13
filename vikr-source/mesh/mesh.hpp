@@ -37,9 +37,12 @@ enum MeshDrawMode {
 class Mesh {
 public:
   Mesh();
+  Mesh(std::vector<glm::vec3> positions, 
+       std::vector<glm::vec3> normals,
+       std::vector<glm::vec3> indices);
 
   vvoid Create();
-  virtual vvoid Draw() = 0;
+  vvoid Draw();
 
   vvoid SetProgramState(ProgramState *state);
 
@@ -58,6 +61,7 @@ protected:
   vuint32 m_ebo;
   Material *m_material;
   ProgramState *m_program;
+  glm::mat4 modelview;
 
   MeshCommand m_command;
 
