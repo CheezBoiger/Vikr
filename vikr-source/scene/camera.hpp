@@ -12,7 +12,7 @@ namespace vikr {
 
 
 /**
-  Abstract Camera for use.
+  Abstract, Quaternion-based camera.
 */
 class Camera : public ICamera {
 public:
@@ -33,21 +33,21 @@ public:
   glm::mat4 GetProjection() override { return projection; }
 
   vreal32 GetZoom() { return zoom; }
-  vreal32 GetPitch() { return pitch; }
-  vreal32 GetRoll() { return roll; }
+  vreal32 GetPitch() { return pitch_rate; }
+  vreal32 GetRoll() { return roll_rate; }
   vreal32 GetSensitivity() { return sensitivity; }
   vreal32 GetFOV() { return fov; }
   vreal32 GetAspect() { return aspect; }
   Viewport& GetViewport() override { return viewport; }
 
   vvoid SetZoom(vreal32 z) { zoom = z; }
-  vvoid SetPitch(vreal32 p) { pitch = p; }
-  vvoid SetRoll(vreal32 r) { roll = r; }
+  vvoid SetPitch(vreal32 p) { pitch_rate = p; }
+  vvoid SetRoll(vreal32 r) { roll_rate = r; }
   vvoid SetSensitivity(vreal32 s) { sensitivity = s; }
   vvoid SetFOV(vreal32 f) { fov = f ;}
   vvoid SetAspect(vreal32 a) { aspect = a; }
   vvoid SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) override;
-  vvoid SetLookAt(glm::vec3 new_look) override;
+  virtual vvoid SetLookAt(glm::vec3 new_look) override;
   vvoid SetType(CamType new_type) override { type = new_type; };
 
   virtual vvoid Move(CamDirection dir, vreal32 delta) override;
@@ -79,9 +79,9 @@ protected:
   vreal32 zoom;
   vreal32 sensitivity;
   vreal32 max_pitch;
-  vreal32 pitch;
-  vreal32 yaw;
-  vreal32 roll;
+  vreal32 pitch_rate;
+  vreal32 yaw_rate;
+  vreal32 roll_rate;
   vreal32 speed;
 
   vreal32 aspect;

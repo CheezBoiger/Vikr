@@ -20,9 +20,9 @@ Camera::Camera(glm::vec3 pos, glm::vec3 world_up, glm::vec3 up, glm::vec3 front)
   , front(front)
   , pos(pos)
   , zoom(Camera::ZOOM)
-  , pitch(Camera::PITCH)
-  , yaw(Camera::YAW)
-  , roll(Camera::ROLL) 
+  , pitch_rate(Camera::PITCH)
+  , yaw_rate(Camera::YAW)
+  , roll_rate(Camera::ROLL) 
   , sensitivity(Camera::SENSITIVITY)
 { 
   Update();
@@ -77,12 +77,13 @@ vvoid Camera::Update() {
     projection = glm::perspective(fov, aspect, near_clip, far_clip);
   }
   glm::vec3 axis = glm::cross(front, up);
-  glm::quat pitch_quatern = glm::angleAxis(pitch, axis);
-  glm::quat yaw_quatern = glm::angleAxis(yaw, up);
+  glm::quat pitch_quatern = glm::angleAxis(pitch_rate, axis);
+  glm::quat yaw_quatern = glm::angleAxis(yaw_rate, up);
   glm::quat q = glm::normalize(glm::cross(pitch_quatern, yaw_quatern));
   front = glm::rotate(q, front);
   right = glm::normalize(glm::cross(front, world_up));
   up = glm::normalize(glm::cross(right, front));
   view = glm::lookAt(pos, front + pos, up);
+  pitch_rate = 0; yaw_rate = 0;
 }
 } // vikr
