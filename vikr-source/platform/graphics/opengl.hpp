@@ -27,7 +27,9 @@ namespace vikr {
   need to update OpenGL.
 */
 VIKR_FORCEINLINE void CreateVertexBufferObject(GLuint* vbo) { glGenBuffers(1, vbo); }
+VIKR_FORCEINLINE void GenBuffers(GLsizei n, GLuint *buffer) { glGenBuffers(n, buffer); }
 VIKR_FORCEINLINE void CreateVertexArrayObject(GLuint* vao) { glGenVertexArrays(1, vao); }
+VIKR_FORCEINLINE void GenVertexArrays(GLsizei n, GLuint *vao) { glGenVertexArrays(n, vao); }
 VIKR_FORCEINLINE void BufferArrays(GLenum target, GLsizei size, GLint *obj, GLenum usage) { glBufferData(target, size, obj, usage); }
 VIKR_FORCEINLINE void BindBuffer(GLenum target, GLuint vbo) { glBindBuffer(target, vbo); }
 VIKR_FORCEINLINE void BindVertexArray(GLuint vao) { glBindVertexArray(vao); }

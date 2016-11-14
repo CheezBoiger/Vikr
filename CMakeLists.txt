@@ -85,6 +85,7 @@ set(VIKR_GLOB
 set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_SCENE_DIR}/icamera.hpp
+  ${VIKR_SCENE_DIR}/first_person_camera.hpp
   ${VIKR_SCENE_DIR}/camera.hpp
   ${VIKR_SCENE_DIR}/camera.cpp)
 
@@ -121,6 +122,7 @@ set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_MESH_DIR}/model.hpp
   ${VIKR_MESH_DIR}/model.cpp
+  ${VIKR_MESH_DIR}/imesh.hpp
   ${VIKR_MESH_DIR}/mesh.hpp
   ${VIKR_MESH_DIR}/mesh.cpp)
 

@@ -102,6 +102,9 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp">
       <Filter>vikr-source\scene</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.hpp">
+      <Filter>vikr-source\scene</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp">
       <Filter>vikr-source\scene</Filter>
     </ClInclude>
@@ -157,6 +160,9 @@
       <Filter>vikr-source\renderer</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.hpp">
+      <Filter>vikr-source\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\imesh.hpp">
       <Filter>vikr-source\mesh</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.hpp">
@@ -221,14 +227,17 @@
     <CustomBuild Include="D:\cmgarcia\github\Vikr\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="vikr-source">
-      <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
+    <Filter Include="vikr-source\platform\graphics">
+      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\math\alg">
       <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\math\shape">
       <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source">
+      <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\glad">
       <UniqueIdentifier>{0A8C6B6F-F0FB-435F-B1B3-74E6D66D3A2D}</UniqueIdentifier>
@@ -259,9 +268,6 @@
     </Filter>
     <Filter Include="vikr-source\lighting">
       <UniqueIdentifier>{7438ABDA-56FF-4B76-89E9-18AA40ECBC48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\platform\graphics">
-      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

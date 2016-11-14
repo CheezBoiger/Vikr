@@ -260,6 +260,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_types.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_api.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\opengl.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\vk.hpp" />
@@ -279,6 +280,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\framebuffer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\cullmode.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\imesh.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\ishader.hpp" />
