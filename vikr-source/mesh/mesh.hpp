@@ -39,9 +39,17 @@ public:
   Mesh();
   Mesh(std::vector<glm::vec3> positions, 
        std::vector<glm::vec3> normals,
-       std::vector<glm::vec3> indices);
+       std::vector<glm::vec2> uvs,
+       std::vector<glm::vec3> indices,
+       MeshDrawMode draw_mode = vikr_TRIANGLES);
 
   vvoid Create();
+  vvoid Create(std::vector<glm::vec3> positions, 
+               std::vector<glm::vec3> normals,
+               std::vector<glm::vec2> uvs,
+               std::vector<glm::vec3> indices, 
+               MeshDrawMode draw_mode = vikr_TRIANGLES);
+
   vvoid Draw();
 
   vvoid SetProgramState(ProgramState *state);
@@ -68,7 +76,10 @@ protected:
   std::vector<glm::vec3> m_vertices;
   std::vector<glm::vec3> m_normals;
   std::vector<glm::vec3> m_indices;
-  std::vector<glm::vec3> m_tex_coords;
+  std::vector<glm::vec2> m_uvs;
+  // For lighting...
+  std::vector<glm::vec3> m_tangents;
+  std::vector<glm::vec3> m_bitangents;
 };
 } // vikr
 #endif // __VIKR_MESH_HPP

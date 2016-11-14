@@ -8,6 +8,7 @@ namespace vikr {
 // the culling mode. This is a counter-clockwise facing order
 // cube, meaning it is front facing.
 Cube::Cube() {
+  m_mode = vikr_TRIANGLES;
   m_vertices = std::initializer_list<glm::vec3> {
     // Front
     glm::vec3(-0.5f, -0.5f, 0.5f),
@@ -54,6 +55,93 @@ Cube::Cube() {
   };
 
   // Still need to create normals.
-  m_normals = std::initializer_list<glm::vec3> { };
+  m_normals = std::initializer_list<glm::vec3> {
+    // Front 
+    glm::vec3(0.0f, 0.0f, 1.0f),
+    glm::vec3(0.0f, 0.0f, 1.0f),
+    glm::vec3(0.0f, 0.0f, 1.0f),
+    glm::vec3(0.0f, 0.0f, 1.0f),
+    glm::vec3(0.0f, 0.0f, 1.0f),
+    glm::vec3(0.0f, 0.0f, 1.0f),
+    // Back
+    glm::vec3(0.0f, 0.0f, -1.0f),
+    glm::vec3(0.0f, 0.0f, -1.0f),  
+    glm::vec3(0.0f, 0.0f, -1.0f),
+    glm::vec3(0.0f, 0.0f, -1.0f),
+    glm::vec3(0.0f, 0.0f, -1.0f),
+    glm::vec3(0.0f, 0.0f, -1.0f),
+    // Up
+    glm::vec3(0.0f, 1.0f, 0.0f),
+    glm::vec3(0.0f, 1.0f, 0.0f),
+    glm::vec3(0.0f, 1.0f, 0.0f),
+    glm::vec3(0.0f, 1.0f, 0.0f),
+    glm::vec3(0.0f, 1.0f, 0.0f),
+    glm::vec3(0.0f, 1.0f, 0.0f),
+    // Down
+    glm::vec3(0.0f, -1.0f, 0.0f),
+    glm::vec3(0.0f, -1.0f, 0.0f),
+    glm::vec3(0.0f, -1.0f, 0.0f),
+    glm::vec3(0.0f, -1.0f, 0.0f),
+    glm::vec3(0.0f, -1.0f, 0.0f),
+    glm::vec3(0.0f, -1.0f, 0.0f),
+    // Right
+    glm::vec3(1.0f, 0.0f, 0.0f),
+    glm::vec3(1.0f, 0.0f, 0.0f),
+    glm::vec3(1.0f, 0.0f, 0.0f),
+    glm::vec3(1.0f, 0.0f, 0.0f),
+    glm::vec3(1.0f, 0.0f, 0.0f),
+    glm::vec3(1.0f, 0.0f, 0.0f),
+    // Left
+    glm::vec3(-1.0f, 0.0f, 0.0f),
+    glm::vec3(-1.0f, 0.0f, 0.0f),
+    glm::vec3(-1.0f, 0.0f, 0.0f),
+    glm::vec3(-1.0f, 0.0f, 0.0f),
+    glm::vec3(-1.0f, 0.0f, 0.0f),
+    glm::vec3(-1.0f, 0.0f, 0.0f)
+  };
+
+  m_uvs = std::initializer_list<glm::vec2> {
+    glm::vec2(0.0f, 0.0f),
+    glm::vec2(1.0f, 0.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(0.0f, 1.0f),
+    glm::vec2(0.0f, 0.0f),
+
+    glm::vec2(0.0f, 0.0f),
+    glm::vec2(1.0f, 0.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(0.0f, 1.0f),
+    glm::vec2(0.0f, 0.0f),
+
+    glm::vec2(0.0f, 0.0f),
+    glm::vec2(1.0f, 0.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(0.0f, 1.0f),
+    glm::vec2(0.0f, 0.0f),
+
+    glm::vec2(0.0f, 0.0f),
+    glm::vec2(1.0f, 0.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(0.0f, 1.0f),
+    glm::vec2(0.0f, 0.0f),
+
+    glm::vec2(0.0f, 0.0f),
+    glm::vec2(1.0f, 0.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(0.0f, 1.0f),
+    glm::vec2(0.0f, 0.0f),
+
+    glm::vec2(0.0f, 0.0f),
+    glm::vec2(1.0f, 0.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(1.0f, 1.0f),
+    glm::vec2(0.0f, 1.0f),
+    glm::vec2(0.0f, 0.0f),
+  };
 }
 } // vikr

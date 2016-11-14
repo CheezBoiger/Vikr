@@ -42,8 +42,6 @@ public:
   virtual glm::mat4 GetView() = 0;
   virtual glm::mat4 GetProjection() = 0;
 
-  virtual vvoid Look(glm::vec2 mouse_offset, vbool constrain_pitch = true) = 0;
-  virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vbool constrain_pitch = true) = 0;
   virtual vvoid SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) = 0;
   virtual Viewport& GetViewport() = 0;
   virtual vvoid Update() = 0;

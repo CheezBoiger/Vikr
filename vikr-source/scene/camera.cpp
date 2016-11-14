@@ -9,12 +9,12 @@ namespace vikr {
 
 vreal32 Camera::ZOOM = 45.0f;
 vreal32 Camera::PITCH = 0.0f;
-vreal32 Camera::YAW = -90.0f;
+vreal32 Camera::YAW = 0.0f;
 vreal32 Camera::SENSITIVITY = 0.25f;
 vreal32 Camera::ROLL = 0.0f;
 
 
-Camera::Camera(glm::vec3 world_up, glm::vec3 up, glm::vec3 front, glm::vec3 pos)
+Camera::Camera(glm::vec3 pos, glm::vec3 world_up, glm::vec3 up, glm::vec3 front)
   : world_up(world_up)
   , up(up)
   , front(front)
@@ -54,31 +54,9 @@ vvoid Camera::Move(CamDirection dir, vreal32 delta) {
 }
 
 
-
-// This will need to be used with quaternions.
-vvoid Camera::Look(glm::vec2 mouse_offset, vbool constrain_pitch) {
-  Look(mouse_offset.x, mouse_offset.y, constrain_pitch);
-}
-
-
-vvoid Camera::Look(vreal32 xoffset, vreal32 yoffset, vbool constrain_pitch) {
-  xoffset *= sensitivity;
-  yoffset *= sensitivity;
-  yaw += xoffset;
-  pitch += yoffset;
-  if (constrain_pitch) {
-    if (pitch > 89.0f) {
-      pitch = 89.0f;
-    } else if (pitch < -89.0f) {
-      pitch = -89.0f;  
-    }
-  }
-}
-
-
 // Camera front vector must be facing the lookAt position!
 vvoid Camera::SetLookAt(glm::vec3 new_look) {
-  front = glm::normalize(new_look - pos);
+  look_at = new_look;
 }
 
 
@@ -92,6 +70,7 @@ vvoid Camera::SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) {
 
 // Everything gets updated!
 vvoid Camera::Update() {
+  front = glm::normalize(look_at - pos);
   if (type == CamType::ORTHOGRAPHIC) {
     projection = glm::ortho(-1.5f * float(aspect), 1.5f * float(aspect), -1.5f, 1.5f, -10.0f, 10.0f);
   } else if (type == CamType::PERSPECTIVE) {

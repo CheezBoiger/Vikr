@@ -16,10 +16,10 @@ namespace vikr {
 */
 class Camera : public ICamera {
 public:
-  Camera(glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f), 
+  Camera(glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.0f),
+         glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f), 
          glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), 
-         glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f),  
-         glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.0f));
+         glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f));
 
   virtual ~Camera() { }
 
@@ -55,8 +55,6 @@ public:
   virtual vvoid SetClip(vreal64 near_clip_dist, vreal64 far_clip_dist) override {
     near_clip = near_clip_dist; far_clip = far_clip_dist;
   }
-  virtual vvoid Look(glm::vec2 mouse_offset, vbool constrain_pitch = true) override;
-  virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vbool constrain_pitch = true) override;
 
   virtual vvoid Update() override;
   
@@ -73,7 +71,7 @@ protected:
   glm::vec3 right;
   // target position of which to camera to look at. We don't need this really as 
   // it is justa temp.
-  // glm::vec3 look_at;
+  glm::vec3 look_at;
 
   glm::mat4 projection;
   glm::mat4 view;
