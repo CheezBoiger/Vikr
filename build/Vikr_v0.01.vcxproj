@@ -261,6 +261,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_api.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene_node.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\opengl.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\vk.hpp" />
@@ -296,6 +297,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\vect.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\vikr_math.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\quad.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\light.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\point_light.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.hpp" />
@@ -308,6 +310,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vkrenderer.cpp"  />
@@ -324,6 +327,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\input\keyboard.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\input\mouse.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\quad.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\point_light.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\spot_light.cpp"  />

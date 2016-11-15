@@ -50,6 +50,8 @@ public:
   virtual vvoid SetLookAt(glm::vec3 new_look) override;
   vvoid SetType(CamType new_type) override { type = new_type; };
 
+  virtual vvoid Look(glm::vec2 mouse_offset, vreal32 delta, vbool constrain_pitch = true) override { }
+  virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool constrain_pitch = true) override { }
   virtual vvoid Move(CamDirection dir, vreal32 delta) override;
   virtual vvoid SetPos(glm::vec3 new_pos) override { pos = new_pos; }
   virtual vvoid SetClip(vreal64 near_clip_dist, vreal64 far_clip_dist) override {
@@ -78,7 +80,6 @@ protected:
 
   vreal32 zoom;
   vreal32 sensitivity;
-  vreal32 max_pitch;
   vreal32 pitch_rate;
   vreal32 yaw_rate;
   vreal32 roll_rate;

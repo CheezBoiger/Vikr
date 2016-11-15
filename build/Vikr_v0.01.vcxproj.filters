@@ -10,6 +10,9 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.cpp">
       <Filter>vikr-source\util</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.cpp">
+      <Filter>vikr-source\scene</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp">
       <Filter>vikr-source\scene</Filter>
     </ClCompile>
@@ -58,6 +61,9 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.cpp">
       <Filter>vikr-source\math\shape</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\quad.cpp">
+      <Filter>vikr-source\math\shape</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\point_light.cpp">
       <Filter>vikr-source\lighting</Filter>
     </ClCompile>
@@ -103,6 +109,9 @@
       <Filter>vikr-source\scene</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.hpp">
+      <Filter>vikr-source\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene_node.hpp">
       <Filter>vikr-source\scene</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp">
@@ -208,6 +217,9 @@
       <Filter>vikr-source\math</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.hpp">
+      <Filter>vikr-source\math\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\quad.hpp">
       <Filter>vikr-source\math\shape</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\light.hpp">

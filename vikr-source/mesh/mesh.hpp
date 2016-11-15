@@ -22,7 +22,7 @@ class Material;
 
 
 /**
-  Mesh object to be used for rendering.
+  OpenGL Mesh object to be used for rendering.
 */
 class Mesh : public IMesh {
 public:
@@ -43,13 +43,14 @@ public:
 
   vvoid Draw() override;
 
-  vvoid SetProgramState(ProgramState *state) override;
-
+  vvoid SetProgramState(ProgramState *state) override { m_program = state; }
+  vvoid SetMaterial(Material *material) { m_material = material; }
   ProgramState *GetProgramState() const override { return m_program; }
 
   vuint32 GetVAO() { return m_vao; }
   vuint32 GetVBO() { return m_vbo; }
   vuint32 GetEBO() { return m_ebo; }
+  Material *GetMaterial() { return m_material; }
 
   MeshDrawMode GetMeshMode() override { return m_mode; }
   GraphicsPipeline GetRenderType() override { return m_render_type; } 
@@ -61,6 +62,7 @@ protected:
   vuint32 m_ebo;
   Material *m_material;
   ProgramState *m_program;
+  vbool is_transparent;
   glm::mat4 modelview;
 
   MeshCommand m_command;

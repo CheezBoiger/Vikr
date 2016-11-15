@@ -13,8 +13,27 @@ Mesh::Mesh()
   : m_vao(0)
   , m_vbo(0)
   , m_ebo(0)
-  , m_uvs(0) 
+  , m_mode(vikr_TRIANGLES)
+  , m_render_type(vikr_OPENGL)
 {
+}
+
+
+Mesh::Mesh(std::vector<glm::vec3> positions,
+           std::vector<glm::vec3> normals,
+           std::vector<glm::vec2> uvs,
+           std::vector<vuint32> indices,
+           MeshDrawMode draw_mode)
+  : m_vao(0)
+  , m_vbo(0)
+  , m_ebo(0)
+  , m_vertices(positions)
+  , m_normals(normals)
+  , m_uvs(uvs)
+  , m_mode(draw_mode)
+  , m_render_type(vikr_OPENGL)
+{
+  Create();
 }
 
 
@@ -60,5 +79,27 @@ vvoid Mesh::Create() {
     VertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
   }
   BindVertexArray(0);
+}
+
+
+vvoid Mesh::Create(std::vector<glm::vec3> positions,
+                   std::vector<glm::vec3> normals,
+                   std::vector<glm::vec2> uvs,
+                   std::vector<vuint32> indices,
+                   MeshDrawMode draw_mode)
+{
+  if (positions.empty()) {
+    m_vertices = positions;
+    m_vertices = normals;
+    m_uvs = uvs;
+    m_indices = indices;
+    m_mode = draw_mode;
+  }
+  Create();
+}
+
+
+vvoid Mesh::Draw() {
+  
 }
 } // vikr

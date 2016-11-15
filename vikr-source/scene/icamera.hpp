@@ -38,6 +38,8 @@ public:
   virtual vvoid SetLookAt(glm::vec3 new_look) = 0;
   virtual vvoid SetClip(vreal64 near_clip_dist, vreal64 far_clip_dist) = 0;
   virtual vvoid SetType(CamType new_type) = 0;
+  virtual vvoid Look(glm::vec2 mouse_offset, vreal32 delta, vbool constrain_pitch = true) = 0;
+  virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool constrain_pitch = true) = 0;
 
   virtual glm::mat4 GetView() = 0;
   virtual glm::mat4 GetProjection() = 0;

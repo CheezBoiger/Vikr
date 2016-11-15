@@ -39,7 +39,7 @@ public:
                std::vector<glm::vec2> uvs,
                std::vector<vuint32> indices,
                MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
-  virtual vvoid Draw();
+  virtual vvoid Draw() = 0;
 
   virtual vvoid SetProgramState(ProgramState *state) = 0;
   virtual ProgramState *GetProgramState() const = 0;
