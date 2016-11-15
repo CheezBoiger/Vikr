@@ -16,5 +16,11 @@ enum class CullMode {
   vikr_CLOCKWISE,
   vikr_COUNTER_CLOCKWISE
 };
+
+
+enum class CullFace {
+  vikr_FRONT_FACE,
+  vikr_BACK_FACE,
+};
 } // vikr
 #endif // __VIKR_CULLMODE_HPP 

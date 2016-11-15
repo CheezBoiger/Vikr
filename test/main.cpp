@@ -10,6 +10,7 @@
 unsigned int screen_width = 1200;
 unsigned int screen_height = 800;
 
+
 int main(int c, char* args[]) {
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4.3);

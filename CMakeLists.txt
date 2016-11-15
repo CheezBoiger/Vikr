@@ -39,6 +39,7 @@ set(VIKR_PLATFORM_DIR ${VIKR_SOURCE_DIR}/platform/)
 set(VIKR_RENDERER_DIR ${VIKR_SOURCE_DIR}/renderer/)
 set(VIKR_GRAPHICS_DIR ${VIKR_PLATFORM_DIR}/graphics/)
 set(VIKR_SHADER_DIR   ${VIKR_SOURCE_DIR}/shader/)
+set(VIKR_STB_DIR      ${VIKR_SHADER_DIR}/stb/)
 set(VIKR_SCENE_DIR    ${VIKR_SOURCE_DIR}/scene/)
 set(VIKR_UTIL_DIR     ${VIKR_SOURCE_DIR}/util/)
 set(VIKR_INPUT_DIR    ${VIKR_SOURCE_DIR}/input/)
@@ -141,6 +142,12 @@ set(VIKR_GLOB
   ${VIKR_SHADER_DIR}/material.cpp
   ${VIKR_SHADER_DIR}/texture.hpp
   ${VIKR_SHADER_DIR}/texture.cpp)
+
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_STB_DIR}/stb_image.h
+  ${VIKR_STB_DIR}/stb_image.cpp)
 
 
 set(VIKR_GLOB

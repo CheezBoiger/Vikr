@@ -7,6 +7,7 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <renderer/mesh_command.hpp>
+#include <renderer/cullmode.hpp>
 #include <glm/vec3.hpp>
 #include <mesh/imesh.hpp>
 #include <vector>
@@ -56,6 +57,8 @@ public:
   GraphicsPipeline GetRenderType() override { return m_render_type; } 
 protected:
   MeshDrawMode m_mode;
+  CullMode m_cull;
+  CullFace m_face;
   GraphicsPipeline m_render_type;
   vuint32 m_vao;
   vuint32 m_vbo;

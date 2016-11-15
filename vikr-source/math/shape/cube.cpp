@@ -8,7 +8,6 @@ namespace vikr {
 // the culling mode. This is a counter-clockwise facing order
 // cube, meaning it is front facing.
 Cube::Cube() {
-  m_mode = vikr_TRIANGLES;
   m_vertices = std::initializer_list<glm::vec3> {
     // Front
     glm::vec3(-0.5f, -0.5f, 0.5f),
