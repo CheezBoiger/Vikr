@@ -9,7 +9,9 @@
 
 namespace vikr {
 
-class IShader;
+
+class Shader;
+
 
 /**
   Will have to be abstract.
@@ -19,11 +21,11 @@ public:
   static ProgramState *Create();
   static ProgramState *CreateWithShaders(std::string vs, std::string fs);
   
-  IShader *GetShader() { return shader; }
-  vvoid SetShader(IShader *shader) { this->shader = shader; }
+  Shader *GetShader() { return shader; }
+  vvoid SetShader(Shader *shader) { this->shader = shader; }
+
 protected:
-  IShader *shader;
-  bool compiled;
+  Shader *shader;
 };
 } // vikr
 #endif // __VIKR_PROGRAM_STATE_HPP

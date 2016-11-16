@@ -55,7 +55,8 @@ public:
   virtual vvoid Move(CamDirection dir, vreal32 delta) override;
   virtual vvoid SetPos(glm::vec3 new_pos) override { pos = new_pos; }
   virtual vvoid SetClip(vreal64 near_clip_dist, vreal64 far_clip_dist) override {
-    near_clip = near_clip_dist; far_clip = far_clip_dist;
+    near_clip = static_cast<vreal32>(near_clip_dist); 
+    far_clip = static_cast<vreal32>(far_clip_dist);
   }
 
   virtual vvoid Update() override;

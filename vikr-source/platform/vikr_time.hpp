@@ -32,7 +32,7 @@ VIKR_FORCEINLINE vreal32 GetLastFrameTime() { return internals::last_frame; }
   frame and the time it takes to render the last frame).
 */
 VIKR_FORCEINLINE void CalculateDeltaTime() {
-  vreal32 current_frame = vikr::GetTime();
+  vreal32 current_frame = static_cast<vreal32>(vikr::GetTime());
   internals::delta_time = current_frame - internals::last_frame;
   internals::last_frame = current_frame;
 }

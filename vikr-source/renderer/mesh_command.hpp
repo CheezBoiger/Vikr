@@ -24,10 +24,14 @@ public:
 
 
 private:
+  vbool is_transparent;
+  vbool is_invisible;
 
   // Model-View Transform.
-  glm::mat4 mv;
+  glm::mat4 model;
+  glm::mat4 view;
   Material *m_material; // weak ref 
+  Mesh *m_mesh; // weak ref;
 };
 } // vikr
 #endif // __VIKR_MESH_COMMAND_HPP

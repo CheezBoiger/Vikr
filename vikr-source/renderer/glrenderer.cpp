@@ -9,7 +9,13 @@ GLRenderer::GLRenderer()
 {
 }
 
+
 vint32 GLRenderer::Init() {
   return true;
+}
+
+
+vvoid GLRenderer::Render() {
+  
 }
 } // vikr

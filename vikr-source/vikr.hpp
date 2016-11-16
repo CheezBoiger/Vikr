@@ -17,6 +17,7 @@ VIKR_FORCEINLINE vint32 LoadGlad() {
   if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     return -1;
   }
+  return 1;
 }
 /**
   Initialize the Vikr engine based on what type of Graphics API to load.

@@ -6,10 +6,13 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
-#include <renderer/render_command.hpp>
 
 
 namespace vikr {
+
+
+class Light;
+class RenderCommand;
 
 
 // Interface Renderer
@@ -20,6 +23,7 @@ public:
   virtual ~IRenderer() { }
 
   virtual vvoid PushBack(RenderCommand *command) = 0;
+  virtual vvoid PushBack(Light *light) = 0;
   virtual vvoid Sort() = 0;
   virtual vint32 Init() = 0;
   /**

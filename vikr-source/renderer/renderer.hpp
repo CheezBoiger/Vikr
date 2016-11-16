@@ -5,7 +5,9 @@
 #define __VIKR_RENDERER_HPP
 
 #include <renderer/irenderer.hpp>
+#include <renderer/render_queue.hpp>
 #include <shader/shader.hpp>
+#include <glm/glm.hpp>
 #include <string>
 #include <unordered_map>
 
@@ -13,14 +15,18 @@ namespace vikr {
 
 
 class Camera;
+class Light;
 
 
 /**
-  Renderer resources to use with the Renderer. It also serves as an Interface Renderer.
+  Renderer resources to use with the Renderer. It also serves as an Abstract Renderer.
 */
 class Renderer : public IRenderer {
 public:
-  Renderer(GraphicsPipeline type) : renderer_type(type) { }
+  Renderer(GraphicsPipeline type) 
+    : renderer_type(type)
+    , camera(nullptr) { }
+
   virtual ~Renderer() { }
 
   static vvoid LoadShader(Renderer *renderer, std::string shader_name, std::string fs, std::string vs);
@@ -28,19 +34,27 @@ public:
   static Renderer *GetRenderer() { return renderer; }
   static vvoid SetRenderer(Renderer *r) { renderer = r; }
 
-  virtual Camera *GetCamera() = 0;
-  virtual vvoid SwapCamera(Camera *camera) = 0;
-  virtual vvoid SetCamera(Camera *camera) = 0;
+  Camera *GetCamera() { return camera; }
+  vvoid SwapCamera(Camera *camera) { std::swap(this->camera, camera); }
+  vvoid SetCamera(Camera *camera) { this->camera = camera; }
 
   virtual vint32 Init() override = 0;
-  virtual vvoid PushBack(RenderCommand *command) override = 0;
-  virtual vvoid Sort() override = 0;
+  virtual vvoid PushBack(RenderCommand *command) override;
+  virtual vvoid PushBack(Light *light) override;
+  virtual vvoid Sort() override;
   virtual vvoid Render() override = 0;
 
   GraphicsPipeline GetRenderType()  { return renderer_type; }
+  vvoid SetClearColor(glm::vec3 cc) { clear_color = cc; }
+  glm::vec3 GetClearColor() { return clear_color; }
+  vbool IsRendering() { return rendering; }
 
 protected:
-  GraphicsPipeline renderer_type;  
+  vbool rendering = false;
+  RenderQueue m_command_list;
+  GraphicsPipeline renderer_type;
+  glm::vec3 clear_color;
+  Camera *camera;  
 private:
   static Renderer *renderer;
   static std::unordered_map<std::string, std::pair<std::string, Shader*> > shader_storage;

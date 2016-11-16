@@ -1,6 +1,4 @@
 ﻿  main.cpp
-D:\cmgarcia\github\Vikr\vikr-source\platform/vikr_time.hpp(35): warning C4244: 'initializing': conversion from 'vikr::vreal64' to 'vikr::vreal32', possible loss of data
 D:\cmgarcia\github\Vikr\test\main.cpp(16): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\cmgarcia\github\vikr\vikr-source\vikr.hpp(20): warning C4715: 'vikr::LoadGlad': not all control paths return a value
   VikrRendererTest.vcxproj -> D:\cmgarcia\github\Vikr\build\test\Debug\VikrRendererTest.exe
   VikrRendererTest.vcxproj -> D:/cmgarcia/github/Vikr/build/test/Debug/VikrRendererTest.pdb (Full PDB)

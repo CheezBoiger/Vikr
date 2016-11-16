@@ -12,6 +12,8 @@
 namespace vikr {
 
 
+class Light;
+
 /**
 Custom RenderQueue for the Renderer.
 */
@@ -24,6 +26,14 @@ public:
   std::vector<RenderCommand>& GetCommandList() { return m_command_list; }
 protected:
   std::vector<RenderCommand> m_command_list;
+};
+
+
+class LightRenderQueue {
+public:
+
+private:
+  std::vector<Light*> light_list;
 };
 } // vikr
 #endif // __VIKR_RENDER_QUEUE_HPP

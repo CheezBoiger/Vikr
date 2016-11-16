@@ -17,7 +17,9 @@ enum ShaderType {
 };
 
 
-
+/**
+  Shader interface to define shader type for a specific graphics API.
+*/
 class IShader {
 public:
   IShader() { }

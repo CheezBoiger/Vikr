@@ -20,6 +20,7 @@ class RenderCommand {
 public:
   RenderCommand(RenderCommandType type);
   
+  RenderCommandType GetCommandType() { return type; }
 protected:
   RenderCommandType type;
 
