@@ -39,7 +39,6 @@ public:
   vvoid Render() override;
 private:
 
-
   RenderQueue m_command_list;
   /**
     Current camera that we render through.

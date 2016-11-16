@@ -13,7 +13,7 @@ namespace vikr {
 
 class VKRenderer : public Renderer {
 public:
-  VKRenderer() { }
+  VKRenderer() : Renderer(vikr_VULKAN) { }
   ~VKRenderer() { }
 
   Camera *GetCamera() override { return current_camera; }

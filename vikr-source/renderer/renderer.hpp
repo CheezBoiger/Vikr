@@ -14,11 +14,13 @@ namespace vikr {
 
 class Camera;
 
+
 /**
   Renderer resources to use with the Renderer. It also serves as an Interface Renderer.
 */
 class Renderer : public IRenderer {
 public:
+  Renderer(GraphicsPipeline type) : renderer_type(type) { }
   virtual ~Renderer() { }
 
   static vvoid LoadShader(Renderer *renderer, std::string shader_name, std::string fs, std::string vs);
@@ -35,9 +37,13 @@ public:
   virtual vvoid Sort() override = 0;
   virtual vvoid Render() override = 0;
 
+  GraphicsPipeline GetRenderType()  { return renderer_type; }
+
+protected:
+  GraphicsPipeline renderer_type;  
 private:
   static Renderer *renderer;
-  static std::unordered_map<std::string, IShader*> shader_storage;
+  static std::unordered_map<std::string, std::pair<std::string, Shader*> > shader_storage;
 };
 }
 #endif // __VIKR_RENDERER_HPP

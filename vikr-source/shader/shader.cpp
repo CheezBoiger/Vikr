@@ -8,6 +8,7 @@ namespace vikr {
 
 Shader::Shader()
   : program(CreateProgram())
+  , is_linked(false)
 {
 
 }
@@ -22,7 +23,6 @@ vvoid Shader::Link(IShader* vs, IShader* fs, IShader* gs) {
   if(!fs->IsCompiled()) {
     fs->Compile();
   }
-
   if(gs != nullptr && !gs->IsCompiled()) {
     gs->Compile();
   }
@@ -36,9 +36,11 @@ vvoid Shader::Link(IShader* vs, IShader* fs, IShader* gs) {
   }
   vs->Cleanup();
   fs->Cleanup();
-
   if(gs != nullptr) {
     gs->Cleanup();
+  }
+  if (success) {
+    is_linked = true;
   }
 }
 } // vikr

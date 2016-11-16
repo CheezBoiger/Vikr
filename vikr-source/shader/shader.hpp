@@ -22,9 +22,11 @@ public:
 
   vvoid Link(IShader* vs, IShader* fs, IShader* gs = nullptr);
   vvoid Use() { UseProgram(program); }
-  vuint32 GetProgram() { return program; }
+  inline vuint32 GetProgram() { return program; }
+  inline vbool IsLinked() { return is_linked; }
 private:
   vuint32 program;
+  vbool is_linked;
 };
 } // vikr
 #endif // __VIKR_SHADER_HPP
