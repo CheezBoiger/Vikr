@@ -13,7 +13,7 @@ Shader::Shader()
 }
 
 
-vvoid Shader::Link(GLShader* vs, GLShader* fs, GLShader* gs) {
+vvoid Shader::Link(IShader* vs, IShader* fs, IShader* gs) {
   vint32 success;
   GLchar log[1024];
   if(!vs->IsCompiled()) {

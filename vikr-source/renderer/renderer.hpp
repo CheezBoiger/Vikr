@@ -5,7 +5,7 @@
 #define __VIKR_RENDERER_HPP
 
 #include <renderer/irenderer.hpp>
-#include <shader/ishader.hpp>
+#include <shader/shader.hpp>
 #include <string>
 #include <unordered_map>
 
@@ -22,7 +22,7 @@ public:
   virtual ~Renderer() { }
 
   static vvoid LoadShader(Renderer *renderer, std::string shader_name, std::string fs, std::string vs);
-  static IShader *GetShader(std::string shader_name);
+  static Shader *GetShader(std::string shader_name);
   static Renderer *GetRenderer() { return renderer; }
   static vvoid SetRenderer(Renderer *r) { renderer = r; }
 

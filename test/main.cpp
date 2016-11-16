@@ -50,6 +50,8 @@ int main(int c, char* args[]) {
   glm::mat4 matrix;
   glm::vec4 vec;
   auto test = matrix * vec;
+
+  // Another standard game loop
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
     glfwSwapBuffers(window);

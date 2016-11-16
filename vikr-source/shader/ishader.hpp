@@ -11,13 +11,26 @@
 namespace vikr {
 
 
+enum ShaderType {
+  vikr_GLSL,
+  vikr_SPIRV
+};
+
+
+
 class IShader {
 public:
   IShader() { }
   virtual ~IShader() { }
 
-  virtual vvoid Use() = 0;
-  virtual vuint32 GetProgram() = 0;
+  virtual vvoid Compile() = 0;
+  virtual vvoid Cleanup() = 0;
+
+  virtual ShaderType GetShaderType() = 0;
+
+  virtual vbool IsCompiled() = 0;
+
+  virtual vuint32 GetShaderId() = 0;
 };
 } // vikr
 #endif // __VIKR_ISHADER_HPP

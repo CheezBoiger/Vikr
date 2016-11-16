@@ -24,18 +24,20 @@ enum VikrPipelineStage {
 /**
   GLSL Shader object for OpenGL. Try not to design it as a Template!
 */
-class GLShader {
+class GLShader : public IShader {
 public:
   GLShader(VikrPipelineStage stage = vikr_VERTEX_SHADER, std::string filepath = "");
 
-  vvoid Compile();
-  vvoid Cleanup() { DeleteShader(shader_id); }
+  vvoid Compile() override;
+  vvoid Cleanup() override { DeleteShader(shader_id); }
   VikrPipelineStage GetPipelineStage() { return pipeline_stage; }
-  vuint32 GetShaderId() { return shader_id; }
-  vbool IsCompiled() { return compiled; }
+  vuint32 GetShaderId() override { return shader_id; }
+  vbool IsCompiled() override { return compiled; }
+  ShaderType GetShaderType() override { return shader_type; }
 private:
   vvoid LoadShaderFile(std::string filepath);
   VikrPipelineStage pipeline_stage;
+  ShaderType shader_type;
   
   vuint32 shader_id;
   vbool compiled;

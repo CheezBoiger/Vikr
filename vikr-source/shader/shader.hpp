@@ -16,12 +16,12 @@ class GLShader;
 /**
   For now it only works with OpenGL, Spir-V not yet implemented!
 */
-class Shader : public IShader {
+class Shader {
 public:
   Shader();
 
-  vvoid Link(GLShader* vs, GLShader* fs, GLShader* gs = nullptr);
-  vvoid Use() override { UseProgram(program); }
+  vvoid Link(IShader* vs, IShader* fs, IShader* gs = nullptr);
+  vvoid Use() { UseProgram(program); }
   vuint32 GetProgram() { return program; }
 private:
   vuint32 program;
