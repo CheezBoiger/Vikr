@@ -7,6 +7,7 @@
 
 #include <renderer/render_command.hpp>
 #include <vector>
+#include <memory>
 
 
 namespace vikr {
@@ -19,8 +20,8 @@ Custom RenderQueue for the Renderer.
 */
 class RenderQueue {
 public:
-  vvoid PushBack(RenderCommand command);
-  vvoid Sort();
+  vvoid PushBack(RenderCommand command) { m_command_list.push_back(std::move(command)); }
+  vvoid Sort() { } // for now.
   vvoid Clear() { m_command_list.clear(); }
 
   std::vector<RenderCommand>& GetCommandList() { return m_command_list; }

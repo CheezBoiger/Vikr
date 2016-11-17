@@ -40,6 +40,6 @@ VIKR_FORCEINLINE vint32 WindowShouldClose(GLFWwindow  *window) { return glfwWind
 /**
   Cleanup renderer and it's resources after use.
 */
-VIKR_FORCEINLINE vint32 Cleanup();
+vint32 Cleanup();
 } // vikr
 #endif // __VIKR_HPP

@@ -16,9 +16,9 @@ public:
   VKRenderer() : Renderer(vikr_VULKAN) { }
   ~VKRenderer() { }
 
-  vint32 Init() override;
+  vint32 Init() override { return true; }
 
-  vvoid Render() override;
+  vvoid Render() override { }
 private: 
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(VKRenderer);

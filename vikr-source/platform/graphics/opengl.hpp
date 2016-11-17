@@ -72,7 +72,7 @@ VIKR_FORCEINLINE GLuint CreateProgram() { return glCreateProgram(); }
 VIKR_FORCEINLINE void LinkProgram(GLuint program) { glLinkProgram(program); }
 VIKR_FORCEINLINE void GetProgramiv(GLuint program, GLenum pname, GLint *params) { glGetProgramiv(program, pname, params); }
 VIKR_FORCEINLINE void GetProgramInfoLog(GLuint program, GLsizei size, GLsizei *length, GLchar *info_log) { glGetProgramInfoLog(program, size, length, info_log); }
-VIKR_FORCEINLINE void DisplayClear(GLbitfield mask) { glClear(mask); }
+VIKR_FORCEINLINE void ClearDisplay(GLbitfield mask) { glClear(mask); }
 VIKR_FORCEINLINE void ClearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) { glClearColor(red, green, blue, alpha); }
 } // vikr
 #endif // __VIKR_OPENGL_HPP

@@ -19,10 +19,10 @@ class Material;
 class MeshCommand : public RenderCommand {
 public:
   MeshCommand() : RenderCommand(RenderCommandType::RENDER_MESH) { }
-
+  MeshCommand(MeshCommand&& mes_cmd) = default;
   vvoid Execute() { }
-
-
+  MeshCommand& operator=(MeshCommand&& mesh_cmd) { return *this; }
+  
 private:
   vbool is_transparent;
   vbool is_invisible;
@@ -32,6 +32,8 @@ private:
   glm::mat4 view;
   Material *m_material; // weak ref 
   Mesh *m_mesh; // weak ref;
+
+  VIKR_DISALLOW_COPY_AND_ASSIGN(MeshCommand);
 };
 } // vikr
 #endif // __VIKR_MESH_COMMAND_HPP

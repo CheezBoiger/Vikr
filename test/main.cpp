@@ -36,11 +36,18 @@ int main(int c, char* args[]) {
   vikr::Cube cube;
   vikr::Mesh mesh;
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vikr::vuint32>());
-
+  vikr::Renderer *renderer = vikr::InitVikrEngine(vikr::vikr_OPENGL);
+  renderer->SetClearColor(glm::vec3(1.0f, 0.0f, 0.0f));
+  vikr::Renderer::SetRenderer(renderer);
   // Standard Game Loop
   while(!vikr::WindowShouldClose(window)) {
     vikr::CalculateDeltaTime();
     vikr::PollEvents();
+    // Just testing the clear color function...
+    vikr::vreal64 oscillate = std::abs(std::sin(vikr::GetTime()));
+    vikr::vreal64 roscillate = 1.0f - oscillate;
+    vikr::Renderer::GetRenderer()->SetClearColor(glm::vec3(oscillate, 0.0f, roscillate)); 
+    vikr::Renderer::GetRenderer()->Render();
     vikr::DoubleBufferSwap(window);
   }
 
@@ -62,6 +69,7 @@ int main(int c, char* args[]) {
     glfwSwapBuffers(window);
   }
 */
+  vikr::Cleanup();
   glfwDestroyWindow(window);
   glfwTerminate();
   return 0;

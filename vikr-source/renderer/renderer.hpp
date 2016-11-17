@@ -40,8 +40,8 @@ public:
 
   virtual vint32 Init() override = 0;
   virtual vvoid PushBack(RenderCommand *command) override;
-  virtual vvoid PushBack(Light *light) override;
-  virtual vvoid Sort() override;
+  virtual vvoid PushBack(Light *light) override { } // need to do this too.
+  virtual vvoid Sort() override { m_command_list.Sort();}
   virtual vvoid Render() override = 0;
 
   GraphicsPipeline GetRenderType()  { return renderer_type; }

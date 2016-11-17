@@ -19,7 +19,8 @@ namespace vikr {
 class RenderCommand {
 public:
   RenderCommand(RenderCommandType type) : type(type) { }
-  
+  RenderCommand(RenderCommand&& rendercommand) = default;
+  RenderCommand& operator=(RenderCommand&& render_command) { return *this; }
   RenderCommandType GetCommandType() { return type; }
 protected:
   RenderCommandType type;

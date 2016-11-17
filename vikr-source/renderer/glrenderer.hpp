@@ -23,7 +23,7 @@ class Camera;
 class GLRenderer : public Renderer {
 public:
   GLRenderer();
-  ~GLRenderer();
+  ~GLRenderer() { }
 
 
   vint32 Init() override;

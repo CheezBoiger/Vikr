@@ -7,6 +7,10 @@
 namespace vikr {
 
 
+Renderer *Renderer::renderer = nullptr;
+std::unordered_map<std::string, std::pair<std::string, Shader*> > Renderer::shader_storage;
+
+
 vvoid Renderer::LoadShader(Renderer *renderer, std::string shader_name, std::string fs, std::string vs) {
   Shader *shader = nullptr;
   switch (renderer->GetRenderType()) {
