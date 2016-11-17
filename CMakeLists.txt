@@ -209,6 +209,4 @@ add_library(${VIKR_NAME} STATIC
 target_link_libraries(${VIKR_NAME} glfw3)
 target_link_libraries(${VIKR_NAME} vulkan-1)
 
-
 add_subdirectory(test/)
-

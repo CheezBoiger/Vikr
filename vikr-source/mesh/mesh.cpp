@@ -66,18 +66,26 @@ vvoid Mesh::Create() {
     BindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
     BufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(vreal32), &m_indices[0], GL_STATIC_DRAW);  
   }
+  size_t stride = 3 * sizeof(vreal32);
+  if(!m_normals.empty()) {
+    stride += 3 * sizeof(vreal32);
+  }
+  if (!m_uvs.empty()) {
+    stride += 2 * sizeof(vreal32);
+  }
   vuint32 offset = 0;
-  EnableVertexAttribArray(0);
-  VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)0);
-  offset += m_vertices.size() * sizeof(vreal32);
+  EnableVertexAttribArray(0);  
+  VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
+  offset += 3 * sizeof(vreal32);
   if (!m_normals.empty()) {
     EnableVertexAttribArray(1);
-    VertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
-    offset += m_normals.size() * sizeof(vreal32);
+    VertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
+    offset += 3 * sizeof(vreal32);
   }
   if (!m_uvs.empty()) {
     EnableVertexAttribArray(2);
-    VertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+    VertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
+    offset += 2 * sizeof(vreal32);
   }
   BindVertexArray(0);
  
