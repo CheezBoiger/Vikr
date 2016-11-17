@@ -2,6 +2,8 @@
 #include <shader/gl_shader.hpp>
 #include <shader/shader.hpp>
 #include <vikr.hpp>
+#include <mesh/mesh.hpp>
+#include <math/shape/cube.hpp>
 #include <util/vikr_log.hpp>
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
@@ -31,6 +33,9 @@ int main(int c, char* args[]) {
   vikr::GLShader fs(vikr::vikr_FRAGMENT_SHADER, "metallic.fs");
   vikr::Shader shader;
   shader.Link(&vs, &fs);
+  vikr::Cube cube;
+  vikr::Mesh mesh;
+  mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vikr::vuint32>());
 
   // Standard Game Loop
   while(!vikr::WindowShouldClose(window)) {

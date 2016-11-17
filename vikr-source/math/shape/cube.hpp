@@ -18,6 +18,10 @@ namespace vikr {
 class Cube {
 public:
   Cube();
+
+  std::vector<glm::vec3> GetVertices() { return m_vertices; }
+  std::vector<glm::vec3> GetNormals() { return m_normals; }
+  std::vector<glm::vec2> GetUVs() { return m_uvs; }
 private:
   std::vector<glm::vec3> m_vertices;
   std::vector<glm::vec3> m_normals;

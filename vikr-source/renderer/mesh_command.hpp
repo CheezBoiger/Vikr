@@ -18,9 +18,9 @@ class Material;
 
 class MeshCommand : public RenderCommand {
 public:
-  MeshCommand();
+  MeshCommand() : RenderCommand(RenderCommandType::RENDER_MESH) { }
 
-  vvoid Execute();
+  vvoid Execute() { }
 
 
 private:

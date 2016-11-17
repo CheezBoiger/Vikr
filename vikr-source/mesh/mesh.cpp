@@ -5,6 +5,7 @@
 #include <shader/material.hpp>
 
 
+
 namespace vikr {
 
 
@@ -79,6 +80,7 @@ vvoid Mesh::Create() {
     VertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
   }
   BindVertexArray(0);
+ 
 }
 
 
@@ -88,7 +90,7 @@ vvoid Mesh::Create(std::vector<glm::vec3> positions,
                    std::vector<vuint32> indices,
                    MeshDrawMode draw_mode)
 {
-  if (positions.empty()) {
+  if (!positions.empty()) {
     m_vertices = positions;
     m_vertices = normals;
     m_uvs = uvs;

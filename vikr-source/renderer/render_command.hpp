@@ -18,7 +18,7 @@ namespace vikr {
 */
 class RenderCommand {
 public:
-  RenderCommand(RenderCommandType type);
+  RenderCommand(RenderCommandType type) : type(type) { }
   
   RenderCommandType GetCommandType() { return type; }
 protected:
