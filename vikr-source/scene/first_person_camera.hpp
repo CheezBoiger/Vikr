@@ -26,10 +26,16 @@ public:
   vvoid Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool constrain_pitch = true) override;
   vvoid Update() override;
   
+
+  vreal32 GetMaxPitchDegrees() { return pitch_max_deg; }
+  vreal32 GetMaxYawDegrees() { return yaw_max_deg; }
+  vreal32 GetPitch() { return pitch; }
+  vreal32 GetYaw() { return yaw; }
 private:
   vreal32 pitch_max_deg;
   vreal32 yaw_max_deg;
   vreal32 pitch;
+  vreal32 yaw;
 };
 } // vikr 
 #endif // __VIKR_FIRST_PERSON_CAMERA_HPP

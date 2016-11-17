@@ -7,7 +7,6 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <renderer/mesh_command.hpp>
-#include <renderer/cullmode.hpp>
 #include <glm/vec3.hpp>
 #include <mesh/imesh.hpp>
 #include <vector>
@@ -17,9 +16,6 @@ namespace vikr {
 
 class ProgramState;
 class Material;
-
-
-
 
 
 /**
@@ -57,8 +53,6 @@ public:
   GraphicsPipeline GetRenderType() override { return m_render_type; } 
 protected:
   MeshDrawMode m_mode;
-  CullMode m_cull;
-  CullFace m_face;
   GraphicsPipeline m_render_type;
   vuint32 m_vao;
   vuint32 m_vbo;
@@ -69,7 +63,7 @@ protected:
   glm::mat4 modelview;
 
   MeshCommand m_command;
-
+  // These aren't necessary to hold on to.
   std::vector<glm::vec3> m_vertices;
   std::vector<glm::vec3> m_normals;
   std::vector<vuint32> m_indices;

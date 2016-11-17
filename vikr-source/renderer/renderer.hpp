@@ -52,6 +52,7 @@ public:
 protected:
   vbool rendering = false;
   RenderQueue m_command_list;
+  std::vector<Light*> m_deferred_lights;
   GraphicsPipeline renderer_type;
   glm::vec3 clear_color;
   Camera *camera;  
