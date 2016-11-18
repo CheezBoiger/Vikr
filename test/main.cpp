@@ -13,6 +13,7 @@
 using namespace vikr;
 unsigned int screen_width = 1200;
 unsigned int screen_height = 800;
+Camera cam(glm::vec3(0.0f, 5.0f, -5.0f));
 
 
 int main(int c, char* args[]) {
@@ -25,7 +26,6 @@ int main(int c, char* args[]) {
 
   GLFWwindow* window = VikrCreateGLFWwindow(screen_width, screen_height, "Vikr", nullptr, nullptr); // Windowed
   VikrMakeContextCurrent(window);
-  Camera cam(glm::vec3(0.0f, 5.0f, -5.0f));
   cam.SetViewport(0, 0, screen_width, screen_height);
   cam.SetClip(0.1, 1000);
   cam.SetFOV(45.0f);
@@ -52,8 +52,8 @@ int main(int c, char* args[]) {
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
     cam.Move(CamDirection::LEFT, GetDeltaTime());
-    //std::string str = "x: " + std::to_string(cam.GetPos().x) + " y: " + std::to_string(cam.GetPos().y) + " z: " + std::to_string(cam.GetPos().z);
-    //VikrLog::DisplayMessage(VIKR_NORMAL, str);
+    std::string str = "x: " + std::to_string(cam.GetPos().x) + " y: " + std::to_string(cam.GetPos().y) + " z: " + std::to_string(cam.GetPos().z);
+    VikrLog::DisplayMessage(VIKR_NORMAL, str);
     cam.Update();
     PollEvents();
     // Just testing the clear color function...

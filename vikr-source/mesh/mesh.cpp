@@ -52,16 +52,12 @@ vvoid Mesh::Create() {
   for (vuint32 i = 0; i < m_vertices.size(); ++i) {
     data.push_back(m_vertices[i].x);
     data.push_back(m_vertices[i].y);
-    data.push_back(m_vertices[i].z);  
-  }
-  for (vuint32 i = 0; i < m_normals.size(); ++i) {
+    data.push_back(m_vertices[i].z);
     data.push_back(m_normals[i].x);
     data.push_back(m_normals[i].y);
     data.push_back(m_normals[i].z);
-  }
-  for (vuint32 i = 0; i < m_uvs.size(); ++i) {
     data.push_back(m_uvs[i].x);
-    data.push_back(m_uvs[i].y);
+    data.push_back(m_uvs[i].y);  
   }
   BindVertexArray(m_vao);
   BindBuffer(GL_ARRAY_BUFFER, m_vbo);
@@ -77,24 +73,18 @@ vvoid Mesh::Create() {
   if (!m_uvs.empty()) {
     stride += 2 * sizeof(vreal32);
   }
-  /**
-    Need to interleave data into a Vertex object and store:
-      position_v coordinate
-      normal_v coordinate
-      uv_v coordinate
-  */
   vuint32 offset = 0;
   EnableVertexAttribArray(0);  
-  VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+  VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
   offset += 3 * sizeof(vreal32);
   if (!m_normals.empty()) {
     EnableVertexAttribArray(1);
-    VertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+    VertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
     offset += 3 * sizeof(vreal32);
   }
   if (!m_uvs.empty()) {
     EnableVertexAttribArray(2);
-    VertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+    VertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
     offset += 2 * sizeof(vreal32);
   }
   BindVertexArray(0);
