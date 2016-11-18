@@ -14,7 +14,7 @@
   #define VIKR_FORCEINLINE __forceinline
  #endif
 #elif defined(VIKR_LINUX)
- #if defined(__GCC__)
+ #if defined(__GNUC__) || defined(__GNUG__)
   #define VIKR_FORCEINLINE __inline __attribute__((always_inline))
  #endif 
 #else

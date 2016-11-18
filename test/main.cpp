@@ -9,6 +9,7 @@
 #include <glm/mat4x4.hpp>
 #include <shader/material.hpp>
 #include <scene/camera.hpp>
+#include <util/vikr_assert.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;

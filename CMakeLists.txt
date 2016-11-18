@@ -21,13 +21,19 @@ endif()
 # Name version
 set(VIKR_VERSION "v0.01")
 option(vulkan "Build Vikr with Vulkan extension." OFF)
-
+option(debug "debug the software." OFF)
 
 if (vulkan)
   message("Vulkan API enabled...")
   add_definitions(-DVIKR_VULKAN_ENABLED)
 else()
 endif()
+
+if (debug)
+ message("DEBUG MODE ON")
+ add_definitions(-DVIKR_DEBUG_ENABLED)
+endif()
+
 
 # concat the name!
 set(VIKR_NAME "Vikr")
