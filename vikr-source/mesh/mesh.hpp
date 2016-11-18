@@ -37,20 +37,26 @@ public:
                std::vector<glm::vec2> uvs,
                std::vector<vuint32> indices, 
                MeshDrawMode draw_mode = vikr_TRIANGLES) override;
-
   vvoid Draw() override;
-
-  vvoid SetProgramState(ProgramState *state) override { m_program = state; }
+  vvoid SetModelView(glm::mat4 mv) { modelview = mv; }
   vvoid SetMaterial(Material *material) { m_material = material; }
-  ProgramState *GetProgramState() const override { return m_program; }
 
-  vuint32 GetVAO() { return m_vao; }
-  vuint32 GetVBO() { return m_vbo; }
-  vuint32 GetEBO() { return m_ebo; }
-  Material *GetMaterial() { return m_material; }
+  glm::mat4 GetModelView() { return modelview; }
+
+
+  vuint32 GetVAO() override { return m_vao; }
+  vuint32 GetVBO() override { return m_vbo; }
+  vuint32 GetEBO() override { return m_ebo; }
+  Material *GetMaterial() override { return m_material; }
+  MeshCommand *GetMeshCommand() override { return &m_command; }
 
   MeshDrawMode GetMeshMode() override { return m_mode; }
   GraphicsPipeline GetRenderType() override { return m_render_type; } 
+
+  std::vector<glm::vec3>& GetPositions() { return m_vertices; }
+  std::vector<glm::vec3>& GetNormals() { return m_normals; }
+  std::vector<glm::vec2>& GetUVs() { return m_uvs; }
+
 protected:
   MeshDrawMode m_mode;
   GraphicsPipeline m_render_type;
@@ -58,7 +64,6 @@ protected:
   vuint32 m_vbo;
   vuint32 m_ebo;
   Material *m_material;
-  ProgramState *m_program;
   vbool is_transparent;
   glm::mat4 modelview;
 

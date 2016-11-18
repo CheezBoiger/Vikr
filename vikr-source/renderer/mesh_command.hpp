@@ -20,19 +20,22 @@ class MeshCommand : public RenderCommand {
 public:
   MeshCommand() : RenderCommand(RenderCommandType::RENDER_MESH) { }
   MeshCommand(MeshCommand&& mes_cmd) = default;
-  vvoid Execute() { }
   MeshCommand& operator=(MeshCommand&& mesh_cmd) { return *this; }
+  
+  vbool IsTransparent() { return is_transparent; }
+  vbool IsInvisible() { return is_invisible; }  
+
+  Mesh *GetMesh() { return m_mesh; }
   
 private:
   vbool is_transparent;
   vbool is_invisible;
 
   // Model-View Transform.
-  glm::mat4 model;
-  glm::mat4 view;
-  Material *m_material; // weak ref 
-  Mesh *m_mesh; // weak ref;
-
+  glm::mat4 modelview;
+  // weak ref
+  Mesh *m_mesh;
+  friend class Mesh;
   VIKR_DISALLOW_COPY_AND_ASSIGN(MeshCommand);
 };
 } // vikr

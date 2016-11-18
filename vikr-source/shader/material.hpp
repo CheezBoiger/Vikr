@@ -8,6 +8,7 @@
 #include <platform/vikr_api.hpp>
 #include <renderer/cullmode.hpp>
 #include <unordered_map>
+#include <string>
 
 namespace vikr {
 
@@ -15,12 +16,28 @@ namespace vikr {
 class Shader;
 
 
+/**
+  Material defines the textures, cull, and blend of the Mesh.
+*/
 class Material {
+  static const std::string kDefaultName;
 public:
+  Material(Shader *shader, std::string name);
+  Material(Shader *shader);
+  Shader *GetShader() { return m_shader; }
 
+  vvoid SetCullMode(CullMode mode) { m_cullmode = mode; }
+  vvoid SetCullFace(CullFace face) { m_cullface = face; }
+  vvoid SetIsBlending(vbool blend) { is_blending = blend; }
+  
+  vbool IsBlending() { return is_blending; }
+  vbool IsCulling() { return is_culling; }
 
+  CullFace GetCullFace() { return m_cullface; }
+  CullMode GetCullMode() { return m_cullmode; }
 protected:
-  Shader *shader; // weak ref
+  std::string m_name;
+  Shader *m_shader; // weak ref
   vbool has_depth;
   vbool is_culling;
   vbool is_blending;

@@ -50,5 +50,6 @@ Shader *Renderer::GetShader(std::string shader_name) {
 
 vvoid Renderer::PushBack(RenderCommand *command) {
   
+  m_command_list.PushBack(command);
 }
 } // vikr

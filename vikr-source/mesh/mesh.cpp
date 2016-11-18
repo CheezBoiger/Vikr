@@ -3,7 +3,7 @@
 // 
 #include <mesh/mesh.hpp>
 #include <shader/material.hpp>
-
+#include <util/vikr_log.hpp>
 
 
 namespace vikr {
@@ -16,7 +16,9 @@ Mesh::Mesh()
   , m_ebo(0)
   , m_mode(vikr_TRIANGLES)
   , m_render_type(vikr_OPENGL)
+  , m_material(nullptr)
 {
+  m_command.m_mesh = this;
 }
 
 
@@ -33,7 +35,9 @@ Mesh::Mesh(std::vector<glm::vec3> positions,
   , m_uvs(uvs)
   , m_mode(draw_mode)
   , m_render_type(vikr_OPENGL)
+  , m_material(nullptr)
 {
+  m_command.m_mesh = this;
   Create();
 }
 
@@ -60,8 +64,8 @@ vvoid Mesh::Create() {
     data.push_back(m_uvs[i].y);
   }
   BindVertexArray(m_vao);
-  BindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbo);
-  BufferData(GL_ELEMENT_ARRAY_BUFFER, data.size() * sizeof(vreal32), &data[0], GL_STATIC_DRAW);
+  BindBuffer(GL_ARRAY_BUFFER, m_vbo);
+  BufferData(GL_ARRAY_BUFFER, data.size() * sizeof(vreal32), &data[0], GL_STATIC_DRAW);
   if (!m_indices.empty()) {
     BindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
     BufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(vreal32), &m_indices[0], GL_STATIC_DRAW);  
@@ -73,18 +77,24 @@ vvoid Mesh::Create() {
   if (!m_uvs.empty()) {
     stride += 2 * sizeof(vreal32);
   }
+  /**
+    Need to interleave data into a Vertex object and store:
+      position_v coordinate
+      normal_v coordinate
+      uv_v coordinate
+  */
   vuint32 offset = 0;
   EnableVertexAttribArray(0);  
-  VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
+  VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
   offset += 3 * sizeof(vreal32);
   if (!m_normals.empty()) {
     EnableVertexAttribArray(1);
-    VertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
+    VertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
     offset += 3 * sizeof(vreal32);
   }
   if (!m_uvs.empty()) {
     EnableVertexAttribArray(2);
-    VertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
+    VertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
     offset += 2 * sizeof(vreal32);
   }
   BindVertexArray(0);
@@ -100,7 +110,7 @@ vvoid Mesh::Create(std::vector<glm::vec3> positions,
 {
   if (!positions.empty()) {
     m_vertices = positions;
-    m_vertices = normals;
+    m_normals = normals;
     m_uvs = uvs;
     m_indices = indices;
     m_mode = draw_mode;
@@ -110,6 +120,20 @@ vvoid Mesh::Create(std::vector<glm::vec3> positions,
 
 
 vvoid Mesh::Draw() {
-  
+  if (m_vao) {
+    BindVertexArray(m_vao);
+    switch (m_mode) {
+      case vikr_TRIANGLES: {
+        glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
+      }
+      break;
+      default: {
+        VikrLog::DisplayMessage(VIKR_WARNING, "Topology of mesh cannot be determined!");
+        break;
+      }
+    }
+
+    BindVertexArray(0);
+  } 
 }
 } // vikr

@@ -20,7 +20,7 @@ class RenderCommand {
 public:
   RenderCommand(RenderCommandType type) : type(type) { }
   RenderCommand(RenderCommand&& rendercommand) = default;
-  RenderCommand& operator=(RenderCommand&& render_command) { return *this; }
+  RenderCommand& operator=(RenderCommand&& render_command) = default;
   RenderCommandType GetCommandType() { return type; }
 protected:
   RenderCommandType type;

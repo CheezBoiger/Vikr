@@ -5,6 +5,7 @@
 #define __VIKR_SHADER_HPP
 
 #include <shader/ishader.hpp>
+#include <glm/glm.hpp>
 #include <unordered_map>
 #include <string>
 
@@ -14,6 +15,10 @@ namespace vikr {
 class GLShader;
 
 
+/**
+  We determine the uniform type for our Uniform object
+  within the shader.
+*/
 enum ShaderUniformType {
   vikr_TEXTURE2D,
   vikr_TEXTURE3D,
@@ -32,6 +37,9 @@ enum ShaderUniformType {
 };
 
 
+/**
+  Calculated uniforms in GLSL file.
+*/
 struct Uniform {
   std::string       uniform_name;
   ShaderUniformType uniform_type;
@@ -39,6 +47,9 @@ struct Uniform {
 };
 
 
+/** 
+  Vertex Attributes.
+*/
 struct VertexAttrib {
   std::string       attrib_name;
   ShaderUniformType attrib_type;
@@ -56,6 +67,18 @@ public:
   vvoid Use() { UseProgram(program); }
   inline vuint32 GetProgram() { return program; }
   inline vbool IsLinked() { return is_linked; }
+
+  vvoid SetIntv(std::string name, vint32 value) { }
+  vvoid SetBool(std::string name, vbool value) { }
+  vvoid SetVector4fv(std::string name, glm::vec4 value) { }
+  vvoid SetVector3fv(std::string name, glm::vec3 value) { }
+  vvoid SetVector2fv(std::string name, glm::vec2 value) { }
+  vvoid SetFloat(std::string name, vreal32 value) { }
+  vvoid SetDouble(std::string name, vreal64 value) { }
+  vvoid SetMat4(std::string name, glm::mat4 value) { }
+  vvoid SetMat3(std::string name, glm::mat3 value) { }
+  vvoid SetMat2(std::string name, glm::mat2 value) { }
+
 private:
   vuint32 program;
   vbool is_linked;

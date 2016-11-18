@@ -27,5 +27,17 @@ enum GraphicsPipeline {
   vikr_OPENGL,
   vikr_VULKAN
 };
+
+
+VIKR_FORCEINLINE int VikrInit() { return glfwInit(); }
+VIKR_FORCEINLINE void VikrWindowHint(int hint, int value) { glfwWindowHint(hint, value); }
+VIKR_FORCEINLINE void VikrMakeContextCurrent(GLFWwindow *window) { glfwMakeContextCurrent(window); }
+VIKR_FORCEINLINE void VikrDestroyWindow(GLFWwindow *window) { glfwDestroyWindow(window); }
+VIKR_FORCEINLINE void VikrTerminateGLFW() { glfwTerminate(); }
+VIKR_FORCEINLINE GLFWwindow *VikrCreateGLFWwindow(int width, int height, 
+                                  const char *title, GLFWmonitor *monitor, GLFWwindow *share) { 
+  return glfwCreateWindow(width, height, title, monitor, share);
+}
+
 } // vikr
 #endif // __VIKR_GRAPHICS_HPP

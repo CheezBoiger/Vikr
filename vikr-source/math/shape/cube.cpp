@@ -18,10 +18,10 @@ Cube::Cube() {
     glm::vec3(-0.5f, -0.5f, 0.5f),
     // Back
     glm::vec3(-0.5f, -0.5f, -0.5f),
-    glm::vec3( 0.5f, -0.5f, -0.5f),
-    glm::vec3( 0.5f,  0.5f, -0.5f),
-    glm::vec3( 0.5f,  0.5f, -0.5f),
     glm::vec3(-0.5f,  0.5f, -0.5f),
+    glm::vec3( 0.5f,  0.5f, -0.5f),
+    glm::vec3( 0.5f,  0.5f, -0.5f),
+    glm::vec3( 0.5f, -0.5f, -0.5f),
     glm::vec3(-0.5f, -0.5f, -0.5f),
     // Up
     glm::vec3( 0.5f, 0.5f,  0.5f),

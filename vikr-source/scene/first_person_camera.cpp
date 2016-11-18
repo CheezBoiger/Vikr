@@ -49,7 +49,7 @@ vvoid FPSCamera::Update() {
   front = glm::rotate(q, front);
   right = glm::normalize(glm::cross(front, world_up));
   up = glm::normalize(glm::cross(right, front));
-  view = glm::lookAt(pos, front + pos, up);
+  modelview = glm::lookAt(pos, front + pos, up);
   pitch += pitch_rate; yaw += yaw_rate;
   yaw_rate = 0; pitch_rate = 0;
 }

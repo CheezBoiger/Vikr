@@ -1,5 +1,6 @@
 #version 430 core
-#include "common/light.hpp"
+#include "common/material.glsl"
+#include "common/light.glsl"
 
 
 in VS_OUT {
@@ -27,5 +28,6 @@ void main() {
   // 1. Render Directional lights,
   // 2. Render Point lights.
   // 3. Any spotlights we render last.
+  color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 

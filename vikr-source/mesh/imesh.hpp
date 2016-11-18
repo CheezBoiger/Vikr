@@ -14,6 +14,10 @@
 namespace vikr {
 
 
+class Material;
+class MeshCommand;
+
+
 enum MeshDrawMode {
   vikr_POINTS,
   vikr_LINE_STRIP,
@@ -40,10 +44,13 @@ public:
                std::vector<vuint32> indices,
                MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
   virtual vvoid Draw() = 0;
-
-  virtual vvoid SetProgramState(ProgramState *state) = 0;
-  virtual ProgramState *GetProgramState() const = 0;
   virtual MeshDrawMode GetMeshMode() = 0;
+  virtual MeshCommand *GetMeshCommand() = 0;
+  virtual Material *GetMaterial() = 0;
+  virtual vuint32 GetVAO() = 0;
+  virtual vuint32 GetVBO() = 0;
+  virtual vuint32 GetEBO() = 0;
+  
   virtual GraphicsPipeline GetRenderType() = 0;
 };
 } // vikr

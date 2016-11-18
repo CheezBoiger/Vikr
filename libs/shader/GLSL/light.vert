@@ -11,13 +11,13 @@ out VS_OUT {
   vec2 UVs;
 } vs_out;
 
-uniform mat4 model;
-uniform mat4 view;
+uniform mat4 modelview;
+uniform mat4 normalInterp;
 uniform mat4 projection;
 
 void main() {
-  gl_Position = projection * view * model * vec4(position, 1.0f);
+  gl_Position = projection * modelview * vec4(position, 1.0f);
   vs_out.Position = vec3(model * vec4(position, 1.0f));
-  vs_out.Normal = mat3(transpose(inverse(model))) * normal; // Not sure if I want this?
+  vs_out.Normal = vec3(normalInterp);
   vs_out.UVs = uvs;
 }

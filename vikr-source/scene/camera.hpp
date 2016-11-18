@@ -29,7 +29,7 @@ public:
   glm::vec3& GetFront() { return front; }
   glm::vec3& WorldUp() { return world_up; }
   glm::vec3& GetRight() { return right; }
-  glm::mat4 GetView() override { return view; }
+  glm::mat4 GetModelView() override { return modelview; }
   glm::mat4 GetProjection() override { return projection; }
 
   vreal32 GetZoom() { return zoom; }
@@ -49,6 +49,7 @@ public:
   vvoid SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) override;
   virtual vvoid SetLookAt(glm::vec3 new_look) override;
   vvoid SetType(CamType new_type) override { type = new_type; };
+  vvoid SetSpeed(vreal32 s) { speed = s; }
 
   virtual vvoid Look(glm::vec2 mouse_offset, vreal32 delta, vbool constrain_pitch = true) override { }
   virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool constrain_pitch = true) override { }
@@ -77,7 +78,7 @@ protected:
   glm::vec3 look_at;
 
   glm::mat4 projection;
-  glm::mat4 view;
+  glm::mat4 modelview;
 
   vreal32 zoom;
   vreal32 sensitivity;

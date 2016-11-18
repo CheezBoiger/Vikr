@@ -7,48 +7,62 @@
 #include <util/vikr_log.hpp>
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
+#include <shader/material.hpp>
+#include <scene/camera.hpp>
 
-
+using namespace vikr;
 unsigned int screen_width = 1200;
 unsigned int screen_height = 800;
 
 
 int main(int c, char* args[]) {
   glfwInit();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4.3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+  VikrWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4.3);
+  VikrWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  VikrWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  VikrWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 
-  GLFWwindow* window = glfwCreateWindow(screen_width, screen_height, "Vikr", nullptr, nullptr); // Windowed
-  glfwMakeContextCurrent(window);
-
-  vikr::LoadGlad();
+  GLFWwindow* window = VikrCreateGLFWwindow(screen_width, screen_height, "Vikr", nullptr, nullptr); // Windowed
+  VikrMakeContextCurrent(window);
+  Camera cam(glm::vec3(0.0f, 5.0f, -5.0f));
+  cam.SetViewport(0, 0, screen_width, screen_height);
+  cam.SetClip(0.1, 1000);
+  cam.SetFOV(45.0f);
+  cam.SetSpeed(10.0f);
+  LoadGlad();
   // Options 
   //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-  vikr::VikrLog::DisplayMessage(vikr::VIKR_NOTIFY, "c(^ vv ^  c)");
-  vikr::GLShader vs(vikr::vikr_VERTEX_SHADER, "vert.vs");
-  vikr::GLShader fs(vikr::vikr_FRAGMENT_SHADER, "metallic.fs");
-  vikr::Shader shader;
+  VikrLog::DisplayMessage(VIKR_NOTIFY, "c(^ vv ^  c)");
+  GLShader vs(vikr_VERTEX_SHADER, "test.vert");
+  GLShader fs(vikr_FRAGMENT_SHADER, "test.frag");
+  Shader shader;
   shader.Link(&vs, &fs);
-  vikr::Cube cube;
-  vikr::Mesh mesh;
-  mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vikr::vuint32>());
-  vikr::Renderer *renderer = vikr::InitVikrEngine(vikr::vikr_OPENGL);
-  renderer->SetClearColor(glm::vec3(1.0f, 0.0f, 0.0f));
-  vikr::Renderer::SetRenderer(renderer);
+  Cube cube;
+  Mesh mesh;
+  mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vuint32>());
+  Material material(&shader);
+  mesh.SetMaterial(&material);
+  Renderer *renderer = InitVikrEngine(vikr_OPENGL);
+  renderer->SetClearColor(glm::vec3(0.4f, 0.4f, 0.4f));
+  renderer->SetCamera(&cam);
+  Renderer::SetRenderer(renderer);
   // Standard Game Loop
-  while(!vikr::WindowShouldClose(window)) {
-    vikr::CalculateDeltaTime();
-    vikr::PollEvents();
+  while(!WindowShouldClose(window)) {
+    CalculateDeltaTime();
+    cam.Move(CamDirection::LEFT, GetDeltaTime());
+    //std::string str = "x: " + std::to_string(cam.GetPos().x) + " y: " + std::to_string(cam.GetPos().y) + " z: " + std::to_string(cam.GetPos().z);
+    //VikrLog::DisplayMessage(VIKR_NORMAL, str);
+    cam.Update();
+    PollEvents();
     // Just testing the clear color function...
-    vikr::vreal64 oscillate = std::abs(std::sin(vikr::GetTime()));
-    vikr::vreal64 roscillate = 1.0f - oscillate;
-    vikr::Renderer::GetRenderer()->SetClearColor(glm::vec3(oscillate, 0.0f, roscillate)); 
-    vikr::Renderer::GetRenderer()->Render();
-    vikr::DoubleBufferSwap(window);
+    vreal64 oscillate = std::abs(std::sin(vikr::GetTime()));
+    vreal64 roscillate = 1.0f - oscillate;
+    Renderer::GetRenderer()->PushBack(mesh.GetMeshCommand());
+    //Renderer::GetRenderer()->SetClearColor(glm::vec3(oscillate, 0.0f, roscillate)); 
+    Renderer::GetRenderer()->Render();
+    DoubleBufferSwap(window);
   }
 
 /*
@@ -70,7 +84,7 @@ int main(int c, char* args[]) {
   }
 */
   vikr::Cleanup();
-  glfwDestroyWindow(window);
-  glfwTerminate();
+  vikr::VikrDestroyWindow(window);
+  vikr::VikrTerminateGLFW();
   return 0;
 }
