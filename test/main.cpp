@@ -51,7 +51,7 @@ int main(int c, char* args[]) {
   // Standard Game Loop
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
-    cam.Move(CamDirection::LEFT, GetDeltaTime());
+    //cam.Move(CamDirection::LEFT, GetDeltaTime());
     std::string str = "x: " + std::to_string(cam.GetPos().x) + " y: " + std::to_string(cam.GetPos().y) + " z: " + std::to_string(cam.GetPos().z);
     VikrLog::DisplayMessage(VIKR_NORMAL, str);
     cam.Update();

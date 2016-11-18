@@ -67,6 +67,7 @@ protected:
   vbool is_transparent;
   glm::mat4 modelview;
 
+
   MeshCommand m_command;
   // These aren't necessary to hold on to.
   std::vector<glm::vec3> m_vertices;

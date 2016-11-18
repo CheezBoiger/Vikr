@@ -46,7 +46,10 @@ vvoid GLRenderer::Render() {
         if (material) {
           Shader *shader = material->GetShader();
           shader->Use();
-          glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "modelview"), 1, GL_FALSE, glm::value_ptr(camera->GetModelView()));
+          glm::mat4 transform;
+          transform = glm::translate(camera->GetModelView(), glm::vec3(std::sin(GetTime() * 5), 0.0f, 0.0f));
+          mesh->SetModelView(transform);
+          glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "modelview"), 1, GL_FALSE, glm::value_ptr(mesh->GetModelView()));
           glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projection"), 1, GL_FALSE,  glm::value_ptr(camera->GetProjection()));
           BindVertexArray(mesh->GetVAO());
           glDrawArrays(GL_TRIANGLES, 0, mesh->GetPositions().size());
