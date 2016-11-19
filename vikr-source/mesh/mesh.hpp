@@ -10,6 +10,7 @@
 #include <glm/vec3.hpp>
 #include <mesh/imesh.hpp>
 #include <vector>
+#include <string>
 
 namespace vikr {
 
@@ -22,6 +23,7 @@ class Material;
   OpenGL Mesh object to be used for rendering.
 */
 class Mesh : public IMesh {
+  static const std::string kDefaultName;
 public:
   Mesh();
   Mesh(ProgramState *program);
@@ -37,9 +39,10 @@ public:
                std::vector<glm::vec2> uvs,
                std::vector<vuint32> indices, 
                MeshDrawMode draw_mode = vikr_TRIANGLES) override;
-  vvoid Draw() override;
+
   vvoid SetModelView(glm::mat4 mv) { modelview = mv; }
   vvoid SetMaterial(Material *material) { m_material = material; }
+  vvoid SetName(std::string name) { m_name = name; }
 
   glm::mat4 GetModelView() { return modelview; }
 
@@ -57,7 +60,10 @@ public:
   std::vector<glm::vec3>& GetNormals() { return m_normals; }
   std::vector<glm::vec2>& GetUVs() { return m_uvs; }
 
+  std::string GetName() { return m_name; }
+
 protected:
+  std::string m_name;
   MeshDrawMode m_mode;
   GraphicsPipeline m_render_type;
   vuint32 m_vao;

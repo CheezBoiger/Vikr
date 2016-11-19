@@ -43,7 +43,6 @@ public:
                std::vector<glm::vec2> uvs,
                std::vector<vuint32> indices,
                MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
-  virtual vvoid Draw() = 0;
   virtual MeshDrawMode GetMeshMode() = 0;
   virtual MeshCommand *GetMeshCommand() = 0;
   virtual Material *GetMaterial() = 0;

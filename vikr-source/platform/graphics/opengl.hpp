@@ -102,5 +102,8 @@ VIKR_FORCEINLINE void Uniform1i(GLint location, GLint value) { glUniform1i(locat
 VIKR_FORCEINLINE void Uniform1ui(GLint location, GLuint value) { glUniform1ui(location, value); }
 VIKR_FORCEINLINE void Uniform1iv(GLint location, GLsizei count, const GLint *value) { glUniform1iv(location, count, value); }
 VIKR_FORCEINLINE void Uniform1d(GLint location, GLsizei count, GLdouble v0) { glUniform1d(location, v0); }
+
+
+VIKR_FORCEINLINE void DrawArrays(GLenum mode, GLint first, GLsizei count) { glDrawArrays(mode, first, count); }
 } // vikr
 #endif // __VIKR_OPENGL_HPP

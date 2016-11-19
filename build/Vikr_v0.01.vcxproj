@@ -277,6 +277,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_queue.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_target.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\viewport.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\blendmode.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\depthmode.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\program_state.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\framebuffer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\cullmode.hpp" />

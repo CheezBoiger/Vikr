@@ -43,6 +43,7 @@ int main(int c, char* args[]) {
   Cube cube;
   Mesh mesh;
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vuint32>());
+  mesh.SetName("Red Cube");
   Material material(&shader);
   mesh.SetMaterial(&material);
   Renderer *renderer = InitVikrEngine(vikr_OPENGL);
@@ -52,7 +53,7 @@ int main(int c, char* args[]) {
   // Standard Game Loop
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
-    //cam.Move(CamDirection::LEFT, GetDeltaTime());
+    cam.Move(CamDirection::LEFT, GetDeltaTime());
     std::string str = "x: " + std::to_string(cam.GetPos().x) + " y: " + std::to_string(cam.GetPos().y) + " z: " + std::to_string(cam.GetPos().z);
     VikrLog::DisplayMessage(VIKR_NORMAL, str);
     cam.Update();
@@ -64,6 +65,7 @@ int main(int c, char* args[]) {
     //Renderer::GetRenderer()->SetClearColor(glm::vec3(oscillate, 0.0f, roscillate)); 
     Renderer::GetRenderer()->Render();
     DoubleBufferSwap(window);
+    system("cls");
   }
 
 /*

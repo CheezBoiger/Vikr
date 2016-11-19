@@ -165,6 +165,12 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\viewport.hpp">
       <Filter>vikr-source\renderer</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\blendmode.hpp">
+      <Filter>vikr-source\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\depthmode.hpp">
+      <Filter>vikr-source\renderer</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\program_state.hpp">
       <Filter>vikr-source\renderer</Filter>
     </ClInclude>
@@ -251,6 +257,12 @@
     <CustomBuild Include="D:\cmgarcia\github\Vikr\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="vikr-source\platform\graphics">
+      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\shader\stb">
+      <UniqueIdentifier>{D8FB1225-AC3C-434A-8A51-710F342B92CD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vikr-source\math\alg">
       <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
     </Filter>
@@ -289,12 +301,6 @@
     </Filter>
     <Filter Include="vikr-source\lighting">
       <UniqueIdentifier>{7438ABDA-56FF-4B76-89E9-18AA40ECBC48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\platform\graphics">
-      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\shader\stb">
-      <UniqueIdentifier>{D8FB1225-AC3C-434A-8A51-710F342B92CD}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

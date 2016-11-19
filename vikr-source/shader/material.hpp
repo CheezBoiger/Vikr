@@ -7,6 +7,8 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <renderer/cullmode.hpp>
+#include <renderer/blendmode.hpp>
+#include <renderer/depthmode.hpp>
 #include <unordered_map>
 #include <string>
 
@@ -32,18 +34,25 @@ public:
   
   vbool IsBlending() { return is_blending; }
   vbool IsCulling() { return is_culling; }
+  vbool HasDepth() { return has_depth; }
 
   CullFace GetCullFace() { return m_cullface; }
   CullMode GetCullMode() { return m_cullmode; }
 protected:
   std::string m_name;
   Shader *m_shader; // weak ref
+
   vbool has_depth;
+  DepthFunc m_depth_func;
+
   vbool is_culling;
-  vbool is_blending;
   CullMode m_cullmode;
   CullFace m_cullface;
 
+  vbool is_blending;
+  BlendFunc m_blend_src;
+  BlendFunc m_blend_dst;
+  BlendEq m_blend_equation;
 }; 
 } // vikr
 #endif // __VIKR_MATERIAL_HPP

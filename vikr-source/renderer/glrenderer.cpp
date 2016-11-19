@@ -39,6 +39,11 @@ vvoid GLRenderer::Render() {
         it != render_commands.end();
         ++it) {
     switch ((*it)->GetCommandType()) {
+      /*
+    
+        This is not official! Just testing to see Material and Mesh work!!
+      
+      */
       case RenderCommandType::RENDER_MESH: {
         MeshCommand *mesh_cmd = static_cast<MeshCommand*>((*it));
         Mesh *mesh = mesh_cmd->GetMesh();
@@ -54,7 +59,7 @@ vvoid GLRenderer::Render() {
           //glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "modelview"), 1, GL_FALSE, glm::value_ptr(mesh->GetModelView()));
           //glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projection"), 1, GL_FALSE,  glm::value_ptr(camera->GetProjection()));
           BindVertexArray(mesh->GetVAO());
-          glDrawArrays(GL_TRIANGLES, 0, mesh->GetPositions().size());
+          DrawArrays(GL_TRIANGLES, 0, mesh->GetPositions().size());
           BindVertexArray(0);
         } else {
           VikrLog::DisplayMessage(VIKR_WARNING, "Mesh command rendered with unknown material!!");

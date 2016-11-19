@@ -1,5 +1,7 @@
 #version 430 core
 
+// Very simple Light struct using colors instead of 
+// texture samplers.
 struct Light {
   vec3 ambient;
   vec3 diffuse;

@@ -9,6 +9,8 @@
 namespace vikr {
 
 
+const std::string Mesh::kDefaultName = "Default_Mesh";
+
 
 Mesh::Mesh()
   : m_vao(0)
@@ -17,6 +19,7 @@ Mesh::Mesh()
   , m_mode(vikr_TRIANGLES)
   , m_render_type(vikr_OPENGL)
   , m_material(nullptr)
+  , m_name(kDefaultName)
 {
   m_command.m_mesh = this;
 }
@@ -106,24 +109,5 @@ vvoid Mesh::Create(std::vector<glm::vec3> positions,
     m_mode = draw_mode;
   }
   Create();
-}
-
-
-vvoid Mesh::Draw() {
-  if (m_vao) {
-    BindVertexArray(m_vao);
-    switch (m_mode) {
-      case vikr_TRIANGLES: {
-        glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
-      }
-      break;
-      default: {
-        VikrLog::DisplayMessage(VIKR_WARNING, "Topology of mesh cannot be determined!");
-        break;
-      }
-    }
-
-    BindVertexArray(0);
-  } 
 }
 } // vikr
