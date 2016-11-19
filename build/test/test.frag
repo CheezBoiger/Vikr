@@ -1,4 +1,5 @@
 #version 430 core
+
 in vec3 Normal;
 in vec3 Position;
 in vec2 TexCoords;

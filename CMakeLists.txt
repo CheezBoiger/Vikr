@@ -138,6 +138,8 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_SHADER_DIR}/shader_parser.hpp
+  ${VIKR_SHADER_DIR}/shader_parser.cpp
   ${VIKR_SHADER_DIR}/shader.hpp
   ${VIKR_SHADER_DIR}/shader.cpp
   ${VIKR_SHADER_DIR}/ishader.hpp

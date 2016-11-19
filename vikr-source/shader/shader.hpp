@@ -43,6 +43,7 @@ enum ShaderUniformType {
 struct Uniform {
   std::string       uniform_name;
   ShaderUniformType uniform_type;
+  vint32            uniform_size;
   vuint32           uniform_location;
 };
 
@@ -53,6 +54,7 @@ struct Uniform {
 struct VertexAttrib {
   std::string       attrib_name;
   ShaderUniformType attrib_type;
+  vint32            attrib_size;
   vuint32           attrib_location;
 };
 
@@ -68,18 +70,25 @@ public:
   inline vuint32 GetProgram() { return program; }
   inline vbool IsLinked() { return is_linked; }
 
-  vvoid SetIntv(std::string name, vint32 value) { }
+  vvoid SetInt(std::string name, vint32 value);
   vvoid SetBool(std::string name, vbool value) { }
-  vvoid SetVector4fv(std::string name, glm::vec4 value) { }
-  vvoid SetVector3fv(std::string name, glm::vec3 value) { }
-  vvoid SetVector2fv(std::string name, glm::vec2 value) { }
-  vvoid SetFloat(std::string name, vreal32 value) { }
-  vvoid SetDouble(std::string name, vreal64 value) { }
-  vvoid SetMat4(std::string name, glm::mat4 value) { }
-  vvoid SetMat3(std::string name, glm::mat3 value) { }
-  vvoid SetMat2(std::string name, glm::mat2 value) { }
+  vvoid SetVector4fv(std::string name, glm::vec4 value);
+  vvoid SetVector3fv(std::string name, glm::vec3 value);
+  vvoid SetVector2fv(std::string name, glm::vec2 value);
+  vvoid SetFloat(std::string name, vreal32 value);
+  vvoid SetDouble(std::string name, vreal64 value);
+  vvoid SetMat4(std::string name, glm::mat4 value);
+  vvoid SetMat3(std::string name, glm::mat3 value);
+  vvoid SetMat2(std::string name, glm::mat2 value);
+
+
+  vint32 GetNumberOfUniforms() { return m_uniforms.size(); }
+  vint32 GetNumberOfAttribs() { return m_attribs.size(); }
 
 private:
+  vvoid ParseActiveUniforms();
+  vvoid ParseActiveAttribs();
+
   vuint32 program;
   vbool is_linked;
   std::unordered_map<std::string, std::pair<std::string, Uniform> >      m_uniforms;

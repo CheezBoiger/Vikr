@@ -283,6 +283,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\imesh.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_parser.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\ishader.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.hpp" />
@@ -321,6 +322,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\framebuffer.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_parser.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\material.cpp"  />
