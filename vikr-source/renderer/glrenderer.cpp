@@ -59,7 +59,7 @@ vvoid GLRenderer::Render() {
           //glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "modelview"), 1, GL_FALSE, glm::value_ptr(mesh->GetModelView()));
           //glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projection"), 1, GL_FALSE,  glm::value_ptr(camera->GetProjection()));
           BindVertexArray(mesh->GetVAO());
-          DrawArrays(GL_TRIANGLES, 0, mesh->GetPositions().size());
+          DrawArrays(GL_TRIANGLES, 0, mesh->GetVertices().size());
           BindVertexArray(0);
         } else {
           VikrLog::DisplayMessage(VIKR_WARNING, "Mesh command rendered with unknown material!!");

@@ -19,6 +19,7 @@ class ProgramState;
 class Material;
 
 
+
 /**
   OpenGL Mesh object to be used for rendering.
 */
@@ -26,7 +27,6 @@ class Mesh : public IMesh {
   static const std::string kDefaultName;
 public:
   Mesh();
-  Mesh(ProgramState *program);
   Mesh(std::vector<glm::vec3> positions, 
        std::vector<glm::vec3> normals,
        std::vector<glm::vec2> uvs,
@@ -39,6 +39,8 @@ public:
                std::vector<glm::vec2> uvs,
                std::vector<vuint32> indices, 
                MeshDrawMode draw_mode = vikr_TRIANGLES) override;
+
+  vvoid Create(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) override;
 
   vvoid SetModelView(glm::mat4 mv) { modelview = mv; }
   vvoid SetMaterial(Material *material) { m_material = material; }
@@ -56,9 +58,7 @@ public:
   MeshDrawMode GetMeshMode() override { return m_mode; }
   GraphicsPipeline GetRenderType() override { return m_render_type; } 
 
-  std::vector<glm::vec3>& GetPositions() { return m_vertices; }
-  std::vector<glm::vec3>& GetNormals() { return m_normals; }
-  std::vector<glm::vec2>& GetUVs() { return m_uvs; }
+  std::vector<Vertex>& GetVertices() { return m_vertices; }
 
   std::string GetName() { return m_name; }
 
@@ -75,14 +75,9 @@ protected:
 
 
   MeshCommand m_command;
-  // These aren't necessary to hold on to.
-  std::vector<glm::vec3> m_vertices;
-  std::vector<glm::vec3> m_normals;
+
+  std::vector<Vertex> m_vertices;
   std::vector<vuint32> m_indices;
-  std::vector<glm::vec2> m_uvs;
-  // For lighting...
-  std::vector<glm::vec3> m_tangents;
-  std::vector<glm::vec3> m_bitangents;
 };
 } // vikr
 #endif // __VIKR_MESH_HPP

@@ -65,7 +65,6 @@ int main(int c, char* args[]) {
     //Renderer::GetRenderer()->SetClearColor(glm::vec3(oscillate, 0.0f, roscillate)); 
     Renderer::GetRenderer()->Render();
     DoubleBufferSwap(window);
-    system("cls");
   }
 
 /*
