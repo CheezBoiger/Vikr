@@ -10,11 +10,11 @@
 #include <renderer/program_state.hpp>
 #include <vector>
 
-
 namespace vikr {
 
 
 class Material;
+class Texture;
 class MeshCommand;
 
 
@@ -63,7 +63,7 @@ public:
   virtual vuint32 GetVAO() = 0;
   virtual vuint32 GetVBO() = 0;
   virtual vuint32 GetEBO() = 0;
-  
+  virtual Texture *GetTexture() = 0;
   virtual GraphicsPipeline GetRenderType() = 0;
 };
 } // vikr

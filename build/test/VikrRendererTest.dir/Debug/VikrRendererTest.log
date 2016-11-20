@@ -1,4 +1,4 @@
 ﻿  main.cpp
-D:\cmgarcia\github\Vikr\test\main.cpp(22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+D:\cmgarcia\github\Vikr\test\main.cpp(24): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   VikrRendererTest.vcxproj -> D:\cmgarcia\github\Vikr\build\test\Debug\VikrRendererTest.exe
   VikrRendererTest.vcxproj -> D:/cmgarcia/github/Vikr/build/test/Debug/VikrRendererTest.pdb (Full PDB)

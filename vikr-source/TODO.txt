@@ -3,19 +3,34 @@ TODO List for the Vikr Renderer Engine.
 - Mathematics!
   - Implement Linear Algebra Commonality toolsets.
   - Need Vector4, 3, 2, and Matrix4, 3, 2, 1.
+  - Translation, Rotation, Scale, Shear.
+  - Cross and dot product
+  - Lerp
+  - Quaternions
+    - Slerp
+    - Euler Angles
 
 - Renderer Engine
   - Light rendering model (blinn-phong for now.)
-
+    - Deferred Lighting!
+    - Requiring the use of FrameBuffers!
 
   - OpenGL and Vulkan Implementations
     - Start with OpenGL FIRST!! Wrapping.
     - Mesh and Model Objects.
     - graphics commands.
+      - Render Command (obvious)
+      - Group Command (for grouped commands to use)
+      - Custom Command (for custom commands)
+    - Render Target! for Post processing!
     - Shader Class
+      - I want to implement a Shader Preprocessor for #include (GLSL omits this for GOOD reasons)
     - Camera and free movement! // Abstract Camera needed.
+      - Quaternion based!
     - Lighting and shading models
     - Implement the Framebuffer for the rendering pipeline.
 - Animation! // maybe...
+  - Mesh Skinning and Skeletons
+  - Develop bone heiarchy
 
 - Audio (Optional!)

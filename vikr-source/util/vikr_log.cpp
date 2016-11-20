@@ -8,7 +8,7 @@
 
 #define DISPLAY_CHECK(type, message) \
           case type: \
-            if ((VikrLog::suppressed & type) == type) { \
+            if ((VikrLog::unsuppressed & type) == type) { \
               PRINT_MESSAGE(type, message); \
             } \
             break 
@@ -18,7 +18,7 @@
 namespace vikr {
 
 
-char VikrLog::suppressed = 0xF;
+char VikrLog::unsuppressed = 0xF;
 std::vector<std::pair<VikrMessage, std::string>> VikrLog::history_log;
 
 void VikrLog::DisplayMessage(VikrMessage type, std::string message) {
@@ -27,6 +27,7 @@ void VikrLog::DisplayMessage(VikrMessage type, std::string message) {
     DISPLAY_CHECK(VIKR_WARNING, message);
     DISPLAY_CHECK(VIKR_ERROR, message);
     DISPLAY_CHECK(VIKR_NOTIFY, message);
+    DISPLAY_CHECK(VIKR_RUNTIME_DEBUG, message);
     default:
       PRINT_MESSAGE(UNKNOWN, "Unknown message");
       break;
@@ -35,15 +36,15 @@ void VikrLog::DisplayMessage(VikrMessage type, std::string message) {
 
 
 void VikrLog::Suppress(VikrMessage type) {
-  if ((VikrLog::suppressed & type) == type) {
-    VikrLog::suppressed ^= type;
+  if ((VikrLog::unsuppressed & type) == type) {
+    VikrLog::unsuppressed ^= type;
   }
 }
 
 
 void VikrLog::UnSupress(VikrMessage type) {
-  if ((VikrLog::suppressed & type) != type) {
-    VikrLog::suppressed |= type;
+  if ((VikrLog::unsuppressed & type) != type) {
+    VikrLog::unsuppressed |= type;
   }
 }
 

@@ -23,10 +23,11 @@ namespace vikr {
 
 
 enum VikrMessage {
-  VIKR_NORMAL    = 0x1,
-  VIKR_WARNING   = 0x2,
-  VIKR_ERROR     = 0x4,
-  VIKR_NOTIFY    = 0x8
+  VIKR_NORMAL         = 0x1,
+  VIKR_WARNING        = 0x2,
+  VIKR_ERROR          = 0x4,
+  VIKR_NOTIFY         = 0x8,
+  VIKR_RUNTIME_DEBUG  = 0x10
 };
 
 
@@ -65,7 +66,7 @@ public:
   */
   static void ClearHistory();
 private:
-  static char suppressed;
+  static char unsuppressed;
   static std::vector<std::pair<VikrMessage, std::string>> history_log; 
 };
 } // vikr

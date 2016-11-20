@@ -88,7 +88,6 @@ vvoid Mesh::Create() {
   VertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (vvoid *)offset);
   offset += 2 * sizeof(vreal32);
   BindVertexArray(0);
- 
 }
 
 

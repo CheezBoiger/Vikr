@@ -14,7 +14,7 @@ D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.cpp(27): warning C
   model.cpp
   mesh.cpp
 D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp(41): warning C4018: '<': signed/unsigned mismatch
-D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp(101): warning C4018: '<': signed/unsigned mismatch
+D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp(100): warning C4018: '<': signed/unsigned mismatch
   shader_parser.cpp
   shader.cpp
   gl_shader.cpp

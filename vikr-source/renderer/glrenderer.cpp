@@ -11,6 +11,7 @@
 #include <scene/camera.hpp>
 #include <util/vikr_log.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <shader/texture.hpp>
 
 namespace vikr {
 
@@ -41,7 +42,7 @@ vvoid GLRenderer::Render() {
     switch ((*it)->GetCommandType()) {
       /*
     
-        This is not official! Just testing to see Material and Mesh work!!
+        This is not official! Just testing to see Material, Texture, and Mesh work!!
       
       */
       case RenderCommandType::RENDER_MESH: {
@@ -56,11 +57,13 @@ vvoid GLRenderer::Render() {
           mesh->SetModelView(transform);
           shader->SetMat4("modelview", mesh->GetModelView());
           shader->SetMat4("projection", camera->GetProjection());
-          //glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "modelview"), 1, GL_FALSE, glm::value_ptr(mesh->GetModelView()));
-          //glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projection"), 1, GL_FALSE,  glm::value_ptr(camera->GetProjection()));
+          shader->SetInt("tex", 0);
+          glActiveTexture(GL_TEXTURE0);
+          glBindTexture(GL_TEXTURE_2D, mesh->GetTexture()->GetId());
           BindVertexArray(mesh->GetVAO());
           DrawArrays(GL_TRIANGLES, 0, mesh->GetVertices().size());
           BindVertexArray(0);
+          glBindTexture(GL_TEXTURE_2D, 0);
         } else {
           VikrLog::DisplayMessage(VIKR_WARNING, "Mesh command rendered with unknown material!!");
         }

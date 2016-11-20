@@ -10,6 +10,8 @@
 #include <shader/material.hpp>
 #include <scene/camera.hpp>
 #include <util/vikr_assert.hpp>
+#include <shader/texture.hpp>
+#include <math/shape/quad.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;
@@ -34,22 +36,26 @@ int main(int c, char* args[]) {
   LoadGlad();
   // Options 
   //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-  VikrLog::DisplayMessage(VIKR_NOTIFY, "c(^ vv ^  c)");
+  VikrLog::UnSupress(VIKR_RUNTIME_DEBUG);
+  VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, "c(^ vv ^  c)");
   GLShader vs(vikr_VERTEX_SHADER, "test.vert");
   GLShader fs(vikr_FRAGMENT_SHADER, "test.frag");
   Shader shader;
   shader.Link(&vs, &fs);
+  Texture texture = Texture::Generate("wall.jpg", false);
   Cube cube;
+  Quad quad;
   Mesh mesh;
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vuint32>());
   mesh.SetName("Red Cube");
   Material material(&shader);
   mesh.SetMaterial(&material);
+  mesh.SetTexture(&texture);
   Renderer *renderer = InitVikrEngine(vikr_OPENGL);
   renderer->SetClearColor(glm::vec3(0.4f, 0.4f, 0.4f));
   renderer->SetCamera(&cam);
   Renderer::SetRenderer(renderer);
+  glEnable(GL_DEPTH_TEST); // This shouldn't be hardcoded...
   // Standard Game Loop
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
