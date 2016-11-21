@@ -14,7 +14,7 @@ namespace vikr {
 /**
   Determines the pipeline stage of the GLSL shader.
 */
-enum VikrPipelineStage {
+enum VikrGLPipelineStage {
   vikr_VERTEX_SHADER = GL_VERTEX_SHADER,
   vikr_FRAGMENT_SHADER = GL_FRAGMENT_SHADER,
   vikr_GEOMETRY_SHADER = GL_GEOMETRY_SHADER
@@ -26,17 +26,17 @@ enum VikrPipelineStage {
 */
 class GLShader : public IShader {
 public:
-  GLShader(VikrPipelineStage stage = vikr_VERTEX_SHADER, std::string filepath = "");
+  GLShader(VikrGLPipelineStage stage = vikr_VERTEX_SHADER, std::string filepath = "");
 
   vvoid Compile() override;
   vvoid Cleanup() override { DeleteShader(shader_id); }
-  VikrPipelineStage GetPipelineStage() { return pipeline_stage; }
+  VikrGLPipelineStage GetPipelineStage() { return pipeline_stage; }
   vuint32 GetShaderId() override { return shader_id; }
   vbool IsCompiled() override { return compiled; }
   ShaderType GetShaderType() override { return shader_type; }
 private:
   vvoid LoadShaderFile(std::string filepath);
-  VikrPipelineStage pipeline_stage;
+  VikrGLPipelineStage pipeline_stage;
   ShaderType shader_type;
   
   vuint32 shader_id;

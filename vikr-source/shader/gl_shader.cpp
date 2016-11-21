@@ -7,7 +7,7 @@
 namespace vikr {
 
 
-GLShader::GLShader(VikrPipelineStage stage, std::string filepath) 
+GLShader::GLShader(VikrGLPipelineStage stage, std::string filepath) 
   : pipeline_stage(stage)
   , compiled(false) {
   LoadShaderFile(filepath);

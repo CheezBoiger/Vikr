@@ -38,6 +38,7 @@ public:
 
   CullFace GetCullFace() { return m_cullface; }
   CullMode GetCullMode() { return m_cullmode; }
+  DepthFunc GetDepthFunc() { return m_depth_func; }
 protected:
   std::string m_name;
   Shader *m_shader; // weak ref

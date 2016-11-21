@@ -24,14 +24,14 @@ public:
   Mesh(std::vector<glm::vec3> positions, 
        std::vector<glm::vec3> normals,
        std::vector<glm::vec2> uvs,
-       std::vector<vuint32> indices,
+       std::vector<vuint32> indices = std::vector<vuint32>(),
        MeshDrawMode draw_mode = vikr_TRIANGLES);
 
   vvoid Create() override;
   vvoid Create(std::vector<glm::vec3> positions, 
                std::vector<glm::vec3> normals,
                std::vector<glm::vec2> uvs,
-               std::vector<vuint32> indices, 
+               std::vector<vuint32> indices = std::vector<vuint32>(), 
                MeshDrawMode draw_mode = vikr_TRIANGLES) override;
 
   vvoid Create(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) override;

@@ -104,7 +104,7 @@ int main(int c, char* args[]) {
   Mesh mesh;
   Mesh mesh2;
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vuint32>());
-  mesh2.Create(quad.GetPositions(), quad.GetNormals(), quad.GetUVs(), std::vector<vuint32>());
+  mesh2.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vuint32>());
   mesh.SetName("Red Cube");
   Material material(&shader);
   mesh.SetMaterial(&material);
@@ -131,7 +131,9 @@ int main(int c, char* args[]) {
     glm::mat4 model;
     model = glm::translate(model, glm::vec3(std::sin(GetTime()), 0.0f, 0.0f));
     mesh.GetMeshCommand()->SetTransform(model);
-    mesh2.GetMeshCommand()->SetTransform(glm::mat4());
+    model = glm::mat4();
+    model = glm::translate(model, glm::vec3(1.0f, 1.0f, 1.0f));
+    mesh2.GetMeshCommand()->SetTransform(model);
     Renderer::GetRenderer()->PushBack(mesh.GetMeshCommand()); 
     Renderer::GetRenderer()->PushBack(mesh2.GetMeshCommand());
     //Renderer::GetRenderer()->SetClearColor(glm::vec3(oscillate, 0.0f, roscillate)); 

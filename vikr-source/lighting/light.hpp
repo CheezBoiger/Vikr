@@ -18,6 +18,7 @@ public:
   virtual ~Light() { }
 
   
+  
 };
 }
 #endif // __VIKR_LIGHT_HPP

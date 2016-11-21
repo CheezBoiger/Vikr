@@ -7,12 +7,11 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <renderer/framebuffer.hpp>
+#include <shader/texture.hpp>
 
+#include <vector>
 
 namespace vikr {
-
-
-class Texture;
 
 
 /**
@@ -34,10 +33,15 @@ public:
 
   Texture *GetTexture() { return m_texture; }
 private:
+
+  vvoid Generate();
+  vuint32 m_id;
   Texture *m_texture;
   vuint32 m_width;
   vuint32 m_height;  
   vbool depthstencil;
+
+  std::vector<Texture> m_color_attachments;
 };
 } // vikr
 #endif // __VIKR_RENDER_TARGET_HPP
