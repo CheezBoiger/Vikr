@@ -166,8 +166,9 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
      */
     shader->SetMat4("modelview", mesh_cmd->GetTransform());
     shader->SetMat4("projection", camera->GetProjection());
+    shader->SetBool("blinn", true);
     shader->SetVector3fv("view_pos", glm::vec3(camera->GetPos().x, camera->GetPos().y, camera->GetPos().z));
-    shader->SetVector3fv("light_color", glm::vec3(1.0f, 1.0f, 1.0f));
+   // shader->SetVector3fv("light_color", glm::vec3(1.0f, 1.0f, 1.0f));
     shader->SetVector3fv("light_pos", glm::vec3(0.0f, 4.0f, std::sin(GetTime() * 3) * 5));
     shader->SetVector3fv("obj_color", glm::vec3(1.0f, 0.0f, 0.0f));
     ActiveTexture(GL_TEXTURE0);

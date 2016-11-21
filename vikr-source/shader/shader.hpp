@@ -73,7 +73,7 @@ public:
   inline vbool IsLinked() { return is_linked; }
 
   vvoid SetInt(std::string name, vint32 value);
-  vvoid SetBool(std::string name, vbool value) { }
+  vvoid SetBool(std::string name, vbool value);
   vvoid SetVector4fv(std::string name, glm::vec4 value);
   vvoid SetVector3fv(std::string name, glm::vec3 value);
   vvoid SetVector2fv(std::string name, glm::vec2 value);

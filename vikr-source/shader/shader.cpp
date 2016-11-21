@@ -160,4 +160,9 @@ vvoid Shader::SetDouble(std::string name, vreal64 value) {
     VikrLog::DisplayMessage(VIKR_ERROR, "uniform " + name + " not found!");
   }
 }
+
+
+vvoid Shader::SetBool(std::string name, vbool value) {
+  SetInt(name, value);
+}
 } // vikr
