@@ -47,18 +47,17 @@ vvoid GLRenderer::Render() {
       */
       case RenderCommandType::RENDER_MESH: {
         MeshCommand *mesh_cmd = static_cast<MeshCommand*>((*it));
-        Mesh *mesh = mesh_cmd->GetMesh();
-        Material *material = mesh->GetMaterial();
+        Material *material = mesh_cmd->GetMesh()->GetMaterial();
         if (material) {
           Shader *shader = material->GetShader();
           shader->Use();
-          shader->SetMat4("modelview", mesh->GetTransform());
+          shader->SetMat4("modelview", mesh_cmd->GetTransform());
           shader->SetMat4("projection", camera->GetProjection());
           shader->SetInt("tex", 0);
           ActiveTexture(GL_TEXTURE0);
-          BindTexture(GL_TEXTURE_2D, mesh->GetTexture()->GetId());
-          BindVertexArray(mesh->GetVAO());
-          DrawArrays(GL_TRIANGLES, 0, mesh->GetVertices().size());
+          BindTexture(GL_TEXTURE_2D, mesh_cmd->GetMesh()->GetTexture()->GetId());
+          BindVertexArray(mesh_cmd->GetMesh()->GetVAO());
+          DrawArrays(GL_TRIANGLES, 0, mesh_cmd->GetMesh()->GetVertices().size());
           BindVertexArray(0);
           BindTexture(GL_TEXTURE_2D, 0);
         } else {
@@ -70,5 +69,11 @@ vvoid GLRenderer::Render() {
 
   // Clear after.
   m_command_list.Clear();
+}
+
+
+vvoid GLRenderer::ExecuteCommand(RenderCommand *command) {
+  
+
 }
 } // vikr

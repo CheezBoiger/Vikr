@@ -20,7 +20,8 @@ class Texture;
 */
 class RenderTarget {
 public:
-
+  RenderTarget() : m_texture(nullptr) { }
+  RenderTarget(vuint32 width, vuint32 height, vbool has_depthstencil);
 
   vvoid SetTexture(Texture *texture) { m_texture = texture; }
   vvoid SetWidth(vuint32 width) { m_width = width; }

@@ -85,7 +85,7 @@ vvoid Camera::Update() {
   front = glm::rotate(q, front);
   right = glm::normalize(glm::cross(front, world_up));
   up = glm::normalize(glm::cross(right, front));
-  modelview = glm::mat4(1.0f) * glm::lookAt(pos, front + pos, up); // is as simple as getting the view...
+  view = glm::lookAt(pos, front + pos, up); // is as simple as getting the view...
   pitch_rate = 0; yaw_rate = 0;
 }
 } // vikr

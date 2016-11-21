@@ -28,6 +28,8 @@ public:
 
   vint32 Init() override;
   vvoid Render() override;
+
+  vvoid ExecuteCommand(RenderCommand *command);
 private:
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(GLRenderer);

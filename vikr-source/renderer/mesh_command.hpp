@@ -32,8 +32,12 @@ public:
   vvoid SetRenderTarget(RenderTarget *target) { render_target = target; }
   vvoid SetTransparent(vbool transparent) { is_transparent = transparent; }
   vvoid SetVisibility(vbool invisible) { is_invisible = invisible; } 
+  vvoid SetTransform(glm::mat4 transform) { modelview = transform; }
+
+  glm::mat4 GetTransform() { return modelview; }
 
 private:
+  vvoid InitTransform(glm::mat4 transform) { modelview = transform; }
   vbool is_transparent;
   vbool is_invisible;
 

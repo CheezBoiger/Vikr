@@ -58,7 +58,7 @@ vvoid Renderer::PushBack(RenderCommand *command) {
       MeshCommand *mesh = static_cast<MeshCommand *>(command);
       mesh->SetRenderTarget(m_current_render_target);
       if (camera) {
-        mesh->GetMesh()->SetTransform(mesh->GetMesh()->GetTransform() * camera->GetModelView());
+        mesh->SetTransform(camera->GetView() * mesh->GetTransform());
       }
     }
     break;

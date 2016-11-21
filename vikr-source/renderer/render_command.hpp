@@ -22,6 +22,7 @@ public:
   RenderCommand(RenderCommand&& rendercommand) = default;
   RenderCommand& operator=(RenderCommand&& render_command) = default;
   RenderCommandType GetCommandType() { return type; }
+
 protected:
   RenderCommandType type;
 

@@ -29,7 +29,7 @@ public:
   glm::vec3& GetFront() { return front; }
   glm::vec3& WorldUp() { return world_up; }
   glm::vec3& GetRight() { return right; }
-  glm::mat4 GetModelView() override { return modelview; }
+  glm::mat4 GetView() override { return view; }
   glm::mat4 GetProjection() override { return projection; }
 
   vreal32 GetZoom() { return zoom; }
@@ -78,7 +78,7 @@ protected:
   glm::vec3 look_at;
 
   glm::mat4 projection;
-  glm::mat4 modelview;
+  glm::mat4 view;
 
   vreal32 zoom;
   vreal32 sensitivity;
