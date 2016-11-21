@@ -32,10 +32,10 @@ Cube::Cube() {
     glm::vec3( 0.5f, 0.5f,  0.5f),
     // Down
     glm::vec3( 0.5f, -0.5f,  0.5f),
-    glm::vec3( 0.5f, -0.5f, -0.5f),
-    glm::vec3(-0.5f, -0.5f, -0.5f),
-    glm::vec3(-0.5f, -0.5f, -0.5f),
     glm::vec3(-0.5f, -0.5f,  0.5f),
+    glm::vec3(-0.5f, -0.5f, -0.5f),
+    glm::vec3(-0.5f, -0.5f, -0.5f),
+    glm::vec3( 0.5f, -0.5f, -0.5f),
     glm::vec3( 0.5f, -0.5f,  0.5f),
     // Right
     glm::vec3(0.5f, -0.5f,  0.5f),
@@ -46,10 +46,10 @@ Cube::Cube() {
     glm::vec3(0.5f, -0.5f,  0.5f),
     // Left
     glm::vec3(-0.5f, -0.5f,  0.5f),
-    glm::vec3(-0.5f, -0.5f, -0.5f),
-    glm::vec3(-0.5f,  0.5f, -0.5f),
-    glm::vec3(-0.5f,  0.5f, -0.5f),
     glm::vec3(-0.5f,  0.5f,  0.5f),
+    glm::vec3(-0.5f,  0.5f, -0.5f),
+    glm::vec3(-0.5f,  0.5f, -0.5f),
+    glm::vec3(-0.5f, -0.5f, -0.5f),
     glm::vec3(-0.5f, -0.5f,  0.5f),
   };
 

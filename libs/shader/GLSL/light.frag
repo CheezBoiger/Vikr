@@ -13,7 +13,9 @@ in VS_OUT {
 out vec4 color;
 
 // We will defer the lighting to render the number of lights in 
-// the scene in the last pass.
+// the scene in the last pass. We can instead have user 
+// define #define keywords to enable a variable amount of lights in a 
+// scene. They will be rendered in the G buffer instead though (for performance).
 #define MAX_LIGHTS 32
 
 uniform vec3 ViewPos;

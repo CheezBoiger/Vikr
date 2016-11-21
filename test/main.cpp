@@ -119,12 +119,12 @@ int main(int c, char* args[]) {
   mesh2.SetTexture(&texture);
   mesh3.SetMaterial(&material);
   mesh3.SetTexture(&texture);
-  renderer->SetClearColor(glm::vec3(0.4f, 0.4f, 0.4f));
+  renderer->SetClearColor(glm::vec3(0.1f, 0.1f, 0.1f));
   renderer->SetCamera(&camera);
   Renderer::SetRenderer(renderer);
   glEnable(GL_DEPTH_TEST); // This shouldn't be hardcoded...
   vreal32 angle = 0.0f;
-  PointLight light(glm::vec3(0.0f, 1.0f, 0.0f));
+  PointLight light(glm::vec3(0.0f, 3.0f, 0.0f));
   Mesh meshlight;
   meshlight.SetName("Mesh light");
   meshlight.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vuint32>());
@@ -157,7 +157,7 @@ int main(int c, char* args[]) {
     Renderer::GetRenderer()->PushBack(mesh.GetMeshCommand()); 
     Renderer::GetRenderer()->PushBack(mesh2.GetMeshCommand());
     Renderer::GetRenderer()->PushBack(mesh3.GetMeshCommand());
-    light.SetPos(glm::vec3(0.0f, 1.0f, std::sin(GetTime()) * 10));
+    light.SetPos(glm::vec3(1.0f, 2.0f, std::sin(GetTime()) * 2.5));
     model = glm::mat4();
     model = glm::translate(model, light.GetPos());
     model = glm::scale(model, glm::vec3(0.2f));

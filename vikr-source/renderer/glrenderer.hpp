@@ -26,8 +26,8 @@ class MeshCommand;
 class GLRenderer : public Renderer {
   static GLenum GetDepthFunct(DepthFunc funct);
   static GLenum GetBlendFunct(BlendFunc blend);
-  static GLenum GetCullFace(CullFace face);
-  static GLenum GetCullMode(CullMode mode);
+  static GLenum GetFrontFace(FrontFace face);
+  static GLenum GetCullMode(CullFace mode);
 public:
   GLRenderer();
   ~GLRenderer() { }

@@ -12,13 +12,13 @@ namespace vikr {
   State the Cull mode of the artifact, from which to 
   determine a front-facing or back-facing object.
 */
-enum class CullMode {
+enum class CullFace {
   vikr_CLOCKWISE,
   vikr_COUNTER_CLOCKWISE
 };
 
 
-enum class CullFace {
+enum class FrontFace {
   vikr_FRONT_FACE,
   vikr_BACK_FACE,
 };

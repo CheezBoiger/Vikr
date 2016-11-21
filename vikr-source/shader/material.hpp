@@ -28,17 +28,24 @@ public:
   Material(Shader *shader);
   Shader *GetShader() { return m_shader; }
 
-  vvoid SetCullMode(CullMode mode) { m_cullmode = mode; }
-  vvoid SetCullFace(CullFace face) { m_cullface = face; }
+  vvoid SetCullMode(CullFace mode) { m_cullmode = mode; }
+  vvoid SetCullFace(FrontFace face) { m_cullface = face; }
   vvoid SetIsBlending(vbool blend) { is_blending = blend; }
-  
+  vvoid SetBlendDst(BlendFunc funct) { m_blend_dst = funct; }
+  vvoid SetBlendSrc(BlendFunc funct) { m_blend_src = funct; }  
+
   vbool IsBlending() { return is_blending; }
   vbool IsCulling() { return is_culling; }
   vbool HasDepth() { return has_depth; }
 
-  CullFace GetCullFace() { return m_cullface; }
-  CullMode GetCullMode() { return m_cullmode; }
+  FrontFace GetFrontFace() { return m_cullface; }
+  CullFace GetCullFace() { return m_cullmode; }
   DepthFunc GetDepthFunc() { return m_depth_func; }
+
+  BlendFunc GetBlendSrc() { return m_blend_src; }
+  BlendFunc GetBlendDst() { return m_blend_dst; }
+  
+
 protected:
   std::string m_name;
   Shader *m_shader; // weak ref
@@ -47,8 +54,8 @@ protected:
   DepthFunc m_depth_func;
 
   vbool is_culling;
-  CullMode m_cullmode;
-  CullFace m_cullface;
+  CullFace m_cullmode;
+  FrontFace m_cullface;
 
   vbool is_blending;
   BlendFunc m_blend_src;

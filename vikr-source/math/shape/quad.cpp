@@ -12,10 +12,10 @@ namespace vikr {
 Quad::Quad() {
   positions = std::initializer_list<glm::vec3> {
     glm::vec3(-1.0f, -1.0f, 0.0f),
-    glm::vec3(1.0f,  -1.0f, 0.0f),
+    glm::vec3(-1.0f,  1.0f, 0.0f),
     glm::vec3(1.0f, 1.0f, 0.0f),
     glm::vec3(1.0f, 1.0f, 0.0f),
-    glm::vec3(-1.0f, 1.0f, 0.0f),
+    glm::vec3(1.0f, -1.0f, 0.0f),
     glm::vec3(-1.0f, -1.0f, 0.0f)
   };
 

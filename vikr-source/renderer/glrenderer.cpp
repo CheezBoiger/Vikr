@@ -104,90 +104,58 @@ GLenum GLRenderer::GetDepthFunct(DepthFunc funct) {
   These need to go into Material! Waste of time searching!
 */
 GLenum GLRenderer::GetBlendFunct(BlendFunc blend) {
-  GLenum blendfunc = GL_BLEND_DST_ALPHA;
   switch (blend) {
-    case BlendFunc::vikr_BLEND_CONSTANT_ALPHA:
-      blendfunc = GL_CONSTANT_ALPHA;
-    break;
-    case BlendFunc::vikr_BLEND_CONSTANT_COLOR:
-      blendfunc = GL_CONSTANT_COLOR;
-    break;
-    case BlendFunc::vikr_BLEND_DST_ALPHA:
-      blendfunc = GL_DST_ALPHA;
-    break;
-    case BlendFunc::vikr_BLEND_DST_COLOR:
-      blendfunc = GL_DST_COLOR; 
-    break;
-    case BlendFunc::vikr_BLEND_GL_ONE_MINUS_CONSTANT_ALPHA:
-      blendfunc = GL_ONE_MINUS_CONSTANT_ALPHA;
-    break;
-    case BlendFunc::vikr_BLEND_ONE:
-      blendfunc = GL_ONE;
-    break;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR:
-      blendfunc = GL_ONE_MINUS_CONSTANT_COLOR;
-    break;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_ALPHA:
-      blendfunc = GL_ONE_MINUS_DST_ALPHA;
-    break;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_COLOR:
-      blendfunc = GL_ONE_MINUS_DST_COLOR;
-    break;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA:
-      blendfunc = GL_ONE_MINUS_SRC1_ALPHA;
-    break;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_COLOR:
-      blendfunc = GL_ONE_MINUS_SRC_COLOR;
-    break;
-    case BlendFunc::vikr_BLEND_SRC_ALPHA:
-      blendfunc = GL_SRC_ALPHA;
-    break;
-    case BlendFunc::vikr_BLEND_SRC_COLOR:
-      blendfunc = GL_SRC_COLOR;
-    break;
-    case BlendFunc::vikr_BLEND_ZERO:
-      blendfunc = GL_SRC_COLOR;
-    break;
+    case BlendFunc::vikr_BLEND_CONSTANT_ALPHA: return GL_CONSTANT_ALPHA;
+    case BlendFunc::vikr_BLEND_CONSTANT_COLOR: return GL_CONSTANT_COLOR;
+    case BlendFunc::vikr_BLEND_DST_ALPHA: return GL_DST_ALPHA;
+    case BlendFunc::vikr_BLEND_DST_COLOR: return GL_DST_COLOR;
+    case BlendFunc::vikr_BLEND_GL_ONE_MINUS_CONSTANT_ALPHA: return GL_ONE_MINUS_CONSTANT_ALPHA;
+    case BlendFunc::vikr_BLEND_ONE: return GL_ONE;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR: return GL_ONE_MINUS_CONSTANT_COLOR;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_ALPHA: return GL_ONE_MINUS_DST_ALPHA;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_COLOR: return GL_ONE_MINUS_DST_COLOR;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA: return GL_ONE_MINUS_SRC1_ALPHA;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_COLOR: return GL_ONE_MINUS_SRC_COLOR;
+    case BlendFunc::vikr_BLEND_SRC_ALPHA: return GL_SRC_ALPHA;
+    case BlendFunc::vikr_BLEND_SRC_COLOR: return GL_SRC_COLOR;
+    case BlendFunc::vikr_BLEND_ZERO: return GL_ZERO;
+    default: return GL_ZERO;
   }
-  return blendfunc;
 }
 
 
-GLenum GLRenderer::GetCullMode(CullMode mode) {
-  GLenum m = GL_CCW;
+GLenum GLRenderer::GetCullMode(CullFace mode) {
   switch (mode) {
-    case CullMode::vikr_CLOCKWISE:
-      m = GL_CW;
-    break;
-    case CullMode::vikr_COUNTER_CLOCKWISE:
-      m = GL_CCW;
-    break;
+    case CullFace::vikr_CLOCKWISE: return GL_CW;
+    case CullFace::vikr_COUNTER_CLOCKWISE: return GL_CCW;
   }
-  return m;
 }
 
 
-GLenum GLRenderer::GetCullFace(CullFace face) {
-  GLenum f = GL_BACK;
+GLenum GLRenderer::GetFrontFace(FrontFace face) {
   switch (face) {
-    case CullFace::vikr_FRONT_FACE:
-      f = GL_FRONT;
-    break;
-    case CullFace::vikr_BACK_FACE:
-      f = GL_BACK;
-    break;
+    case FrontFace::vikr_FRONT_FACE: return GL_FRONT;
+    case FrontFace::vikr_BACK_FACE: return GL_BACK;
+    default: return GL_BACK;
   }
-  return f;
 }
 
 
 vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
   Material *material = mesh_cmd->GetMesh()->GetMaterial();
   glDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));
+  if (material->IsCulling()) {
+    glEnable(GL_CULL_FACE);
+    glFrontFace(GLRenderer::GetFrontFace(material->GetFrontFace()));
+    glCullFace(GLRenderer::GetCullMode(material->GetCullFace()));
+  } else {
+    glDisable(GL_CULL_FACE);
+  }
   
   if (material->IsBlending()) {
     glEnable(GL_BLEND);
-    
+    glBlendFunc(GLRenderer::GetBlendFunct(material->GetBlendSrc()), 
+                GLRenderer::GetBlendFunct(material->GetBlendDst()));
   } else {
     glDisable(GL_BLEND);
   }
@@ -203,7 +171,8 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
     shader->SetMat4("view", camera->GetView());
     shader->SetMat4("projection", camera->GetProjection());
     shader->SetMat4("model", mesh_cmd->GetTransform());
-    shader->SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.0f, 0.0f));
+    shader->SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
+    shader->SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
     shader->SetVector3fv("view_pos", glm::vec3(camera->GetPos().x, camera->GetPos().y, camera->GetPos().z));
     /*
         Algorithm to light a scene!
