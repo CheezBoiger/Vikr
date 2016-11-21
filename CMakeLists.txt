@@ -120,6 +120,7 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/render_group.hpp
   ${VIKR_RENDERER_DIR}/render_queue.hpp
   ${VIKR_RENDERER_DIR}/render_target.hpp
+  ${VIKR_RENDERER_DIR}/render_target.cpp
   ${VIKR_RENDERER_DIR}/viewport.hpp
   ${VIKR_RENDERER_DIR}/blendmode.hpp
   ${VIKR_RENDERER_DIR}/depthmode.hpp
@@ -148,8 +149,10 @@ set(VIKR_GLOB
   ${VIKR_SHADER_DIR}/gl_shader.hpp
   ${VIKR_SHADER_DIR}/gl_shader.cpp
   ${VIKR_SHADER_DIR}/vk_shader.hpp
+  ${VIKR_SHADER_DIR}/imaterial.hpp
   ${VIKR_SHADER_DIR}/material.hpp
   ${VIKR_SHADER_DIR}/material.cpp
+  ${VIKR_SHADER_DIR}/itexture.hpp
   ${VIKR_SHADER_DIR}/texture.hpp
   ${VIKR_SHADER_DIR}/texture.cpp)
 

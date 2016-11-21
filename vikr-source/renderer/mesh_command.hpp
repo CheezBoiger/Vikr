@@ -13,8 +13,9 @@ namespace vikr {
 
 
 class Mesh;
-
 class Material;
+class RenderTarget;
+
 
 class MeshCommand : public RenderCommand {
 public:
@@ -26,7 +27,12 @@ public:
   vbool IsInvisible() { return is_invisible; }  
 
   Mesh *GetMesh() { return m_mesh; }
+  RenderTarget *GetRenderTarget() { return render_target; }
   
+  vvoid SetRenderTarget(RenderTarget *target) { render_target = target; }
+  vvoid SetTransparent(vbool transparent) { is_transparent = transparent; }
+  vvoid SetVisibility(vbool invisible) { is_invisible = invisible; } 
+
 private:
   vbool is_transparent;
   vbool is_invisible;
@@ -35,6 +41,8 @@ private:
   glm::mat4 modelview;
   // weak ref
   Mesh *m_mesh;
+  RenderTarget *render_target;
+
   friend class Mesh;
   VIKR_DISALLOW_COPY_AND_ASSIGN(MeshCommand);
 };

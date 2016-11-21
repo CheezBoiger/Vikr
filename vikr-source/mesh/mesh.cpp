@@ -38,7 +38,7 @@ Mesh::Mesh(std::vector<glm::vec3> positions,
   , m_render_type(vikr_OPENGL)
   , m_material(nullptr)
 {
-  for (vint32 i = 0; i < positions.size(); ++i) {
+  for (vuint32 i = 0; i < positions.size(); ++i) {
     Vertex vert;
     vert.position = std::move(positions[i]);
     vert.normal = std::move(normals[i]);
@@ -97,7 +97,7 @@ vvoid Mesh::Create(std::vector<glm::vec3> positions,
                    std::vector<vuint32> indices,
                    MeshDrawMode draw_mode)
 {
-  for (vint32 i = 0; i < positions.size(); ++i) {
+  for (vuint32 i = 0; i < positions.size(); ++i) {
     Vertex vert;
     vert.position = std::move(positions[i]);
     vert.normal = std::move(normals[i]);

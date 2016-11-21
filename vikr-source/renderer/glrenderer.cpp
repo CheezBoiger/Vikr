@@ -52,18 +52,15 @@ vvoid GLRenderer::Render() {
         if (material) {
           Shader *shader = material->GetShader();
           shader->Use();
-          glm::mat4 transform;
-          transform = glm::translate(camera->GetModelView(), glm::vec3(std::sin(GetTime() * 5), 0.0f, 0.0f));
-          mesh->SetModelView(transform);
-          shader->SetMat4("modelview", mesh->GetModelView());
+          shader->SetMat4("modelview", mesh->GetTransform());
           shader->SetMat4("projection", camera->GetProjection());
           shader->SetInt("tex", 0);
-          glActiveTexture(GL_TEXTURE0);
-          glBindTexture(GL_TEXTURE_2D, mesh->GetTexture()->GetId());
+          ActiveTexture(GL_TEXTURE0);
+          BindTexture(GL_TEXTURE_2D, mesh->GetTexture()->GetId());
           BindVertexArray(mesh->GetVAO());
           DrawArrays(GL_TRIANGLES, 0, mesh->GetVertices().size());
           BindVertexArray(0);
-          glBindTexture(GL_TEXTURE_2D, 0);
+          BindTexture(GL_TEXTURE_2D, 0);
         } else {
           VikrLog::DisplayMessage(VIKR_WARNING, "Mesh command rendered with unknown material!!");
         }

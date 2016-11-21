@@ -27,7 +27,6 @@ Camera::Camera(glm::vec3 pos, glm::vec3 world_up, glm::vec3 up, glm::vec3 front)
   , speed(1.0f)
   , type(CamType::PERSPECTIVE)
 { 
-  Update();
 }
 
 

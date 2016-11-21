@@ -7,6 +7,7 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <shader/stb/stb_image.h>
+#include <shader/itexture.hpp>
 #include <string>
 
 namespace vikr {
@@ -18,21 +19,26 @@ enum TextureTarget {
   vikr_TEXTURE_CUBEMAP
 };
 
+enum TextureFormat {
+  vikr_RGB,
+  vikr_RGBA
+};
+
 
 /**
   Texture object, currently only supporting OpenGL.
 */
-class Texture {
+class Texture : public ITexture {
   static const std::string kDefaultName;
 public:
 
-  static Texture Generate(std::string texture_path, vbool has_alpha);
+  static Texture Generate(std::string texture_path, vbool has_alpha = true, vbool is_mipmapped = true);
   
   Texture(Texture&& texture) = default;
-  vint32 GetWidth() { return width; }
-  vint32 GetHeight() { return height; }
-  vbool ContainsAlpha() { return contains_alpha; }
-  vuint32 GetId() { return m_id; }
+  vint32 GetWidth() override { return width; }
+  vint32 GetHeight() override { return height; }
+  vbool ContainsAlpha() override { return contains_alpha; }
+  vuint32 GetId() override { return m_id; }
 
 protected:
 
@@ -56,9 +62,10 @@ protected:
   vint32 width;
   vint32 height;
   vint32 channels;
-  vint32 depth; // not really needed, maybe?
+  vint32 depth;
   TextureTarget target;
   vbool contains_alpha;
+  vbool uses_mipmap;
 
   static stbi_uc *CreateTextureImage(std::string tex_path
                                     , vint32 *width

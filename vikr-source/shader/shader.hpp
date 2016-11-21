@@ -64,6 +64,8 @@ struct VertexAttrib {
 class Shader {
 public:
   Shader();
+  Shader(Shader&& shader) = default;
+  Shader& operator=(Shader&& shader) = default;
 
   vvoid Link(IShader* vs, IShader* fs, IShader* gs = nullptr);
   vvoid Use() { UseProgram(program); }
@@ -93,6 +95,7 @@ private:
   vbool is_linked;
   std::unordered_map<std::string, std::pair<std::string, Uniform> >      m_uniforms;
   std::unordered_map<std::string, std::pair<std::string, VertexAttrib> > m_attribs;
+  VIKR_DISALLOW_COPY_AND_ASSIGN(Shader);
 };
 } // vikr
 #endif // __VIKR_SHADER_HPP

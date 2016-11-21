@@ -36,12 +36,12 @@ public:
 
   vvoid Create(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) override;
 
-  vvoid SetModelView(glm::mat4 mv) { modelview = mv; }
+  vvoid SetTransform(glm::mat4 transform) { m_transform = transform; }
   vvoid SetMaterial(Material *material) { m_material = material; }
   vvoid SetTexture(Texture *texture) { m_texture = texture; }
   vvoid SetName(std::string name) { m_name = name; }
 
-  glm::mat4 GetModelView() { return modelview; }
+  glm::mat4 GetTransform() { return m_transform; }
 
 
   vuint32 GetVAO() override { return m_vao; }
@@ -68,7 +68,7 @@ protected:
   Material *m_material;
   Texture *m_texture;
   vbool is_transparent;
-  glm::mat4 modelview;
+  glm::mat4 m_transform;
 
 
   MeshCommand m_command;

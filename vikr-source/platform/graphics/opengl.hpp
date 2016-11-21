@@ -103,7 +103,14 @@ VIKR_FORCEINLINE void Uniform1ui(GLint location, GLuint value) { glUniform1ui(lo
 VIKR_FORCEINLINE void Uniform1iv(GLint location, GLsizei count, const GLint *value) { glUniform1iv(location, count, value); }
 VIKR_FORCEINLINE void Uniform1d(GLint location, GLsizei count, GLdouble v0) { glUniform1d(location, v0); }
 
-
+VIKR_FORCEINLINE void GenTextures(GLsizei n, GLuint *textures) { glGenTextures(n, textures); }
+VIKR_FORCEINLINE void BindTexture(GLenum target, GLuint texture) { glBindTexture(target, texture); }
+VIKR_FORCEINLINE void TexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void *pixels) { 
+  glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels); 
+}
+VIKR_FORCEINLINE void ActiveTexture(GLenum texture) { glActiveTexture(texture); }
+VIKR_FORCEINLINE void GenerateMipmap(GLenum target) { glGenerateMipmap(target); }
+VIKR_FORCEINLINE void TexParameteri(GLenum target, GLenum pname, GLint param) { glTexParameteri(target, pname, param); }
 VIKR_FORCEINLINE void DrawArrays(GLenum mode, GLint first, GLsizei count) { glDrawArrays(mode, first, count); }
 } // vikr
 #endif // __VIKR_OPENGL_HPP

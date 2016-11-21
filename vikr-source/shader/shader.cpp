@@ -1,3 +1,6 @@
+//
+// Copyright (c) Mario Garcia, Under the MIT License.
+//
 #include <shader/shader.hpp>
 #include <shader/gl_shader.hpp>
 #include <util/vikr_log.hpp>

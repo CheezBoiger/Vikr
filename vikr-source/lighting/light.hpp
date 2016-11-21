@@ -17,7 +17,6 @@ public:
   Light() { }
   virtual ~Light() { }
 
-
   
 };
 }
