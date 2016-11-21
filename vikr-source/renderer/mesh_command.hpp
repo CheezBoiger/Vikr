@@ -32,17 +32,17 @@ public:
   vvoid SetRenderTarget(RenderTarget *target) { render_target = target; }
   vvoid SetTransparent(vbool transparent) { is_transparent = transparent; }
   vvoid SetVisibility(vbool invisible) { is_invisible = invisible; } 
-  vvoid SetTransform(glm::mat4 transform) { modelview = transform; }
+  vvoid SetTransform(glm::mat4 transform) { m_transform = transform; }
 
-  glm::mat4 GetTransform() { return modelview; }
+  glm::mat4 GetTransform() { return m_transform; }
 
 private:
-  vvoid InitTransform(glm::mat4 transform) { modelview = transform; }
+  vvoid InitTransform(glm::mat4 transform) { transform = transform; }
   vbool is_transparent;
   vbool is_invisible;
 
   // Model-View Transform.
-  glm::mat4 modelview;
+  glm::mat4 m_transform;
   // weak ref
   Mesh *m_mesh;
   RenderTarget *render_target;

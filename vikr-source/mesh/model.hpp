@@ -8,5 +8,6 @@
 namespace vikr {
 
 
+
 } // vikr
 #endif // __VIKR_MODEL_HPP

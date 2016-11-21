@@ -212,7 +212,9 @@ endif()
 
 set(VIKR_NAME "${VIKR_NAME}_${VIKR_VERSION}")
 
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/GLFW/ ${CMAKE_CURRENT_SOURCE_DIR}/libs/Vulkan/bin32/)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/GLFW/ ${CMAKE_CURRENT_SOURCE_DIR}/libs/Vulkan/bin32/ 
+                 ${CMAKE_CURRENT_SOURCE_DIR}/libs/assimp/)
+
 # This will have to be changed up a bit though...
 # A Rendering engine is usually broken up into pieces, is this ok though?
 add_library(${VIKR_NAME} STATIC
@@ -221,5 +223,6 @@ add_library(${VIKR_NAME} STATIC
 # Version might need to be determined, as well as updating to compensate for static libs on OS's other than windows.
 target_link_libraries(${VIKR_NAME} glfw3)
 target_link_libraries(${VIKR_NAME} vulkan-1)
+target_link_libraries(${VIKR_NAME} assimp)
 
 add_subdirectory(test/)

@@ -12,6 +12,8 @@
 #include <util/vikr_log.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <shader/texture.hpp>
+#include <lighting/point_light.hpp>
+#include <lighting/light.hpp>
 
 namespace vikr {
 
@@ -58,11 +60,13 @@ vvoid GLRenderer::Render() {
 
   // Clear after.
   m_command_list.Clear();
+  m_pointlights.clear();
 }
 
 
 /**
-  This will likely fall into it's own resources class.
+  This will likely fall into it's own resources class. Needs to be handled by 
+  Material.
 */
 GLenum GLRenderer::GetDepthFunct(DepthFunc funct) {
   GLenum function = GL_LESS;
@@ -96,7 +100,9 @@ GLenum GLRenderer::GetDepthFunct(DepthFunc funct) {
   return function;
 }
 
-
+/**
+  These need to go into Material! Waste of time searching!
+*/
 GLenum GLRenderer::GetBlendFunct(BlendFunc blend) {
   GLenum blendfunc = GL_BLEND_DST_ALPHA;
   switch (blend) {
@@ -147,6 +153,34 @@ GLenum GLRenderer::GetBlendFunct(BlendFunc blend) {
 }
 
 
+GLenum GLRenderer::GetCullMode(CullMode mode) {
+  GLenum m = GL_CCW;
+  switch (mode) {
+    case CullMode::vikr_CLOCKWISE:
+      m = GL_CW;
+    break;
+    case CullMode::vikr_COUNTER_CLOCKWISE:
+      m = GL_CCW;
+    break;
+  }
+  return m;
+}
+
+
+GLenum GLRenderer::GetCullFace(CullFace face) {
+  GLenum f = GL_BACK;
+  switch (face) {
+    case CullFace::vikr_FRONT_FACE:
+      f = GL_FRONT;
+    break;
+    case CullFace::vikr_BACK_FACE:
+      f = GL_BACK;
+    break;
+  }
+  return f;
+}
+
+
 vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
   Material *material = mesh_cmd->GetMesh()->GetMaterial();
   glDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));
@@ -162,15 +196,39 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
     Shader *shader = material->GetShader();
     shader->Use();
     /**
-      TODO(Garcia): Lights need to be individually rendered for each object pass.
+      TODO(Garcia): Lights need to be individually rendered for each object pass. This is 
+                    literally hardcoded and needs to be redesigned!
      */
-    shader->SetMat4("modelview", mesh_cmd->GetTransform());
+
+    shader->SetMat4("view", camera->GetView());
     shader->SetMat4("projection", camera->GetProjection());
-    shader->SetBool("blinn", true);
+    shader->SetMat4("model", mesh_cmd->GetTransform());
+    shader->SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.0f, 0.0f));
     shader->SetVector3fv("view_pos", glm::vec3(camera->GetPos().x, camera->GetPos().y, camera->GetPos().z));
-   // shader->SetVector3fv("light_color", glm::vec3(1.0f, 1.0f, 1.0f));
-    shader->SetVector3fv("light_pos", glm::vec3(0.0f, 4.0f, std::sin(GetTime() * 3) * 5));
-    shader->SetVector3fv("obj_color", glm::vec3(1.0f, 0.0f, 0.0f));
+    /*
+        Algorithm to light a scene!
+        1. Render Directional lights first
+        2. Render Pointlights second
+        3. Render Spotlights last!
+    */ 
+    for (vuint32 i = 0; i < m_pointlights.size(); ++i) {
+      std::string position = "light_pos";
+      std::string ambient = "light_ambient";
+      std::string diffuse = "light_diffuse";
+      std::string specular = "light_specular";
+      std::string constant = "constant";
+      std::string linear = "linear";
+      std::string quadratic = "quadratic";
+      shader->SetBool("blinn", true);
+      shader->SetVector3fv(position, m_pointlights[i]->GetPos());
+      shader->SetVector3fv(ambient, glm::vec3(0.05f, 0.05f, 0.05f));
+      shader->SetVector3fv(diffuse, glm::vec3(0.8f, 0.8f, 0.8f));
+      shader->SetVector3fv(specular, glm::vec3(1.0f, 1.0f, 1.0f));
+      shader->SetFloat(constant, 1.0f);
+      shader->SetFloat(linear, 0.09f);
+      shader->SetFloat(quadratic, 0.032f);
+    }
+
     ActiveTexture(GL_TEXTURE0);
     BindTexture(GL_TEXTURE_2D, mesh_cmd->GetMesh()->GetTexture()->GetId());
     BindVertexArray(mesh_cmd->GetMesh()->GetVAO());

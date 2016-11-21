@@ -6,6 +6,7 @@
 #include <mesh/mesh.hpp>
 #include <shader/gl_shader.hpp>
 #include <shader/vk_shader.hpp>
+#include <lighting/point_light.hpp>
 #include <util/vikr_log.hpp>
 
 namespace vikr {
@@ -16,7 +17,7 @@ std::unordered_map<std::string,
         std::pair<std::string, std::unique_ptr<Shader> > > Renderer::shader_storage;
 
 
-vvoid Renderer::LoadShader(Renderer *renderer, std::string shader_name, std::string fs, std::string vs) {
+vvoid Renderer::LoadShader(Renderer *renderer, std::string shader_name, std::string vs, std::string fs) {
   Shader shader;
   switch (renderer->GetRenderType()) {
     case vikr_OPENGL: {
@@ -53,13 +54,15 @@ Shader *Renderer::GetShader(std::string shader_name) {
 
 
 vvoid Renderer::PushBack(RenderCommand *command) {
+  if (!command) {
+    VikrLog::DisplayMessage(VIKR_ERROR, "Pushed RenderCommand was null! Refusing to push to queue!");
+    return;
+  }
+
   switch (command->GetCommandType()) {
     case RenderCommandType::RENDER_MESH: {
       MeshCommand *mesh = static_cast<MeshCommand *>(command);
       mesh->SetRenderTarget(m_current_render_target);
-      if (camera) {
-        mesh->SetTransform(camera->GetView() * mesh->GetTransform());
-      }
     }
     break;
     default:
@@ -67,6 +70,17 @@ vvoid Renderer::PushBack(RenderCommand *command) {
   }
   m_command_list.PushBack(command);
 }
+
+
+vvoid Renderer::PushBack(Light *command) {
+  if (command != nullptr) {
+    switch (command->GetLightType()) {
+      case vikr_POINTLIGHT:
+        m_pointlights.push_back(static_cast<PointLight *>(command));
+      break;
+    }
+  }
+};
 
 
 // Cleanup any resources that where handled by the renderer engine.

@@ -3,45 +3,43 @@
 in vec3 Normal;
 in vec3 Position;
 in vec2 TexCoords;
+in vec3 FragCoords;
 
 out vec4 color;
 
+
+struct PointLight {
+  vec3 position;
+  float constant;
+  float linear;
+  float quadratic;
+  vec3 ambient;
+  vec3 diffuse;
+  vec3 specular;
+};
+
+
 //uniform sampler2D tex;
 uniform vec3 view_pos;
-uniform vec3 obj_color;
-uniform vec3 light_pos;
-//uniform vec3 light_color;
+uniform vec3 obj_specular;
+uniform vec3 obj_diffuse;
 uniform bool blinn;
 
-void main() {
-/*   //color = vec4(texture(tex, TexCoords));
-  float ambient_strength = 0.1f;
-  vec3 ambient = ambient_strength * light_color;
-  
-  vec3 norm = normalize(Normal);
-  vec3 light_dir = normalize(light_pos - Position);
-  float diff = max(dot(norm, light_dir), 0.0f);
-  vec3 diffuse = diff * light_color;
-  
-  float specular_strength = 0.5f;
-  vec3 view_dir = normalize(view_pos - Position);
-  vec3 reflect_dir = reflect(-light_dir, norm);
-  float spec = pow(max(dot(view_dir, reflect_dir), 0.0f), 32);
-  vec3 specular = specular_strength * spec * light_color;
-  
-  vec3 result = (ambient + diffuse + specular) * obj_color;
-  */
-  
-  /* Blinn-Phong Implementation! */
-  vec3 ambient = 0.05 * obj_color;
+uniform vec3 light_pos;
+uniform vec3 light_ambient;
+uniform vec3 light_diffuse;
+uniform vec3 light_specular;
+uniform float constant;
+uniform float linear;
+uniform float quadratic;
+
+
+vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 view_dir) {
+  /* Blinn-Phong Implementation! */ 
   // diffuse
-  vec3 light_dir = normalize(light_pos - Position);
-  vec3 normal = normalize(Normal);
+  vec3 light_dir = normalize(light.position - frag_coord);
   float diff = max(dot(light_dir, normal), 0.0f);
-  vec3 diffuse = diff * obj_color;
-  
   // Specular
-  vec3 view_dir = normalize(view_pos - Position);
   vec3 reflect_dir = reflect(-light_dir, normal);
   float spec = 0.0f;
   if (blinn) {
@@ -51,6 +49,32 @@ void main() {
     vec3 reflect_dir = reflect(-light_dir, normal);
     spec = pow(max(dot(view_dir, reflect_dir), 0.0f), 8.0f) ;
   }
-  vec3 specular = vec3(0.3) * spec; // assuming a bright white color. Can be substituted with light_color
-  color = vec4(ambient + diffuse + specular, 1.0f); 
+  float distance = length(light.position - frag_coord);
+  float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+   
+  vec3 ambient = light.ambient * obj_diffuse;
+  vec3 diffuse = light.diffuse * diff * obj_diffuse;
+  vec3 specular = light_diffuse * spec * obj_specular; // assuming a bright white color. Can be substituted with light_color
+  ambient *= attenuation;
+  diffuse *= attenuation;
+  specular *= attenuation;
+  
+  return (ambient + diffuse + specular); 
+}
+
+
+void main() {
+  vec3 norm = normalize(Normal);
+  vec3 view_dir = normalize(view_pos - FragCoords);
+  vec3 result = vec3(0.0f);
+  PointLight light;
+  light.position = light_pos;
+  light.constant = constant;
+  light.linear = linear;
+  light.quadratic = quadratic;
+  light.ambient = light_ambient;
+  light.diffuse = light_diffuse;
+  light.specular = light_specular;
+  result = CalculatePointLight(light, norm, FragCoords, view_dir);
+  color = vec4(result, 1.0f); 
 }

@@ -18,6 +18,7 @@ namespace vikr {
 class Camera;
 class Light;
 class RenderTarget;
+class PointLight;
 
 
 /**
@@ -44,7 +45,7 @@ public:
   virtual vvoid Render() override = 0;
 
   virtual vvoid PushBack(RenderCommand *command) override;
-  virtual vvoid PushBack(Light *light) override { } // need to do this too.
+  virtual vvoid PushBack(Light *light) override;// need to do this too.
   virtual vvoid Sort() override { m_command_list.Sort();}
 
   GraphicsPipeline GetRenderType()  { return renderer_type; }
@@ -60,7 +61,7 @@ public:
 protected:
   vbool rendering = false;
   RenderQueue m_command_list;
-  std::vector<Light*> m_deferred_lights;
+  std::vector<PointLight*> m_pointlights;
   std::vector<RenderTarget *> m_render_targets;
   
   RenderTarget *m_current_render_target;

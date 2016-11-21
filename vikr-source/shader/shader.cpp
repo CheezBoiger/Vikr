@@ -53,16 +53,22 @@ vvoid Shader::Link(IShader* vs, IShader* fs, IShader* gs) {
 
 vvoid Shader::ParseActiveUniforms() {
   vint32 n_uniforms;
-  char buf[256];
   GetProgramiv(program, GL_ACTIVE_UNIFORMS, &n_uniforms);
-  for (vint32 i = 0; i < n_uniforms; ++i) {
-    Uniform uniform;
-    GLenum type;
-    GetActiveUniform(program, i, sizeof(buf), 0, &uniform.uniform_size, &type, buf);
-    uniform.uniform_name = std::string(buf);
-    uniform.uniform_location = GetUniformLocation(program, buf);
-    m_uniforms[uniform.uniform_name] = std::make_pair(uniform.uniform_name, uniform);
-  } 
+  if (n_uniforms > 0) {
+    vint32 length;
+    GetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
+    if (length > 0) {
+      char buf[256];
+      for(vint32 i = 0; i < n_uniforms; ++i) {
+        Uniform uniform;
+        GLenum type;
+        GetActiveUniform(program, i, length, nullptr, &uniform.uniform_size, &type, buf);
+        uniform.uniform_name = std::string(buf);
+        uniform.uniform_location = GetUniformLocation(program, buf);
+        m_uniforms[uniform.uniform_name] = std::make_pair(uniform.uniform_name, uniform);
+      }
+    }
+  }
 }
 
 
