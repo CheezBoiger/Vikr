@@ -25,7 +25,7 @@ public:
   vvoid Look(glm::vec2 mouse_offset, vreal32 delta,  vbool constain_pitch = true) override;
   vvoid Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool constrain_pitch = true) override;
   vvoid Update() override;
-  
+  vvoid SetLookAt(glm::vec3 look) override;
 
   vreal32 GetMaxPitchDegrees() { return pitch_max_deg; }
   vreal32 GetMaxYawDegrees() { return yaw_max_deg; }

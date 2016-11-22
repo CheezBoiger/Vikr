@@ -1,4 +1,7 @@
-#include <shader/gl_shader.hpp>
+//
+// Copyright (c) Mario Garcia. Under the MIT License.
+//
+#include <shader/glsl/glsl_compiler.hpp>
 #include <util/vikr_filesystem.hpp>
 #include <fstream>
 #include <sstream>
@@ -7,14 +10,15 @@
 namespace vikr {
 
 
-GLShader::GLShader(VikrGLPipelineStage stage, std::string filepath) 
+GLSLCompiler::GLSLCompiler(VikrGLPipelineStage stage, std::string filepath) 
   : pipeline_stage(stage)
+  , shader_type(vikr_GLSL)
   , compiled(false) {
   LoadShaderFile(filepath);
 }
 
 
-vvoid GLShader::LoadShaderFile(std::string filepath) {
+vvoid GLSLCompiler::LoadShaderFile(std::string filepath) {
   // This needs to go into filesystem insteam.
   std::string shader_code;
   std::ifstream shader_file;
@@ -34,7 +38,7 @@ vvoid GLShader::LoadShaderFile(std::string filepath) {
 }
 
 
-vvoid GLShader::Compile() {
+vvoid GLSLCompiler::Compile() {
   vint32 success;
   GLchar log[1024];
   CompileShader(shader_id);

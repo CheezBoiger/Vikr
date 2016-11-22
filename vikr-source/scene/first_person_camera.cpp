@@ -37,6 +37,12 @@ vvoid FPSCamera::Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool con
 }
 
 
+vvoid FPSCamera::SetLookAt(glm::vec3 look) {
+  Camera::SetLookAt(look);
+  front = glm::normalize(look_at - pos);
+}
+
+
 vvoid FPSCamera::Update() {
   if(type == CamType::ORTHOGRAPHIC) {
     projection = glm::ortho(-1.5f * float(aspect), 1.5f * float(aspect), -1.5f, 1.5f, -10.0f, 10.0f);

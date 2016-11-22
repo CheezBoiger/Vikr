@@ -2,9 +2,13 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <shader/shader.hpp>
-#include <shader/gl_shader.hpp>
+#include <shader/glsl/glsl_compiler.hpp>
 #include <util/vikr_log.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <shader/shader_parser.hpp>
+#include <shader/glsl/glsl_parser.hpp>
+#include <shader/glsl/glsl_linker.hpp>
+#include <shader/spirv/spirv_compiler.hpp>
 
 
 namespace vikr {
@@ -13,35 +17,30 @@ namespace vikr {
 Shader::Shader()
   : program(CreateProgram())
   , is_linked(false)
+  , shader_type(vikr_GLSL)
+  , m_parser(nullptr)
 {
 
 }
 
 
-vvoid Shader::Link(IShader* vs, IShader* fs, IShader* gs) {
-  vint32 success;
-  GLchar log[1024];
-  if(!vs->IsCompiled()) {
-    vs->Compile();
+vvoid Shader::Link(IShaderCompiler *vs, IShaderCompiler *fs, IShaderCompiler *gs) {
+  if (!vs || !fs) {
+    VikrLog::DisplayMessage(VIKR_ERROR, "Vertex or Fragment shader was not specified!");
+    return;
   }
-  if(!fs->IsCompiled()) {
-    fs->Compile();
-  }
-  if(gs != nullptr && !gs->IsCompiled()) {
-    gs->Compile();
-  }
-  AttachShader(program, vs->GetShaderId());
-  AttachShader(program, fs->GetShaderId());
-  LinkProgram(program);
-  GetProgramiv(program, GL_LINK_STATUS, &success);
-  if(!success) {
-    GetProgramInfoLog(program, 1024, NULL, log);
-    VikrLog::DisplayMessage(vikr::VIKR_ERROR, std::string(log));
-  }
-  vs->Cleanup();
-  fs->Cleanup();
-  if(gs != nullptr) {
-    gs->Cleanup();
+  vint32 success = 0;
+  switch (vs->GetShaderType()) {
+    case vikr_GLSL: { 
+      GLSLParser parse(this);
+      GLSLLinker linker(this);
+      m_parser = std::make_unique<GLSLParser>(std::move(parse));
+      success = linker.Link(vs, fs, gs);
+    }
+    break;
+    case vikr_SPIRV: {
+    }
+    break;
   }
   if (success) {
     ParseActiveUniforms();
@@ -52,37 +51,51 @@ vvoid Shader::Link(IShader* vs, IShader* fs, IShader* gs) {
 
 
 vvoid Shader::ParseActiveUniforms() {
-  vint32 n_uniforms;
-  GetProgramiv(program, GL_ACTIVE_UNIFORMS, &n_uniforms);
-  if (n_uniforms > 0) {
-    vint32 length;
-    GetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
-    if (length > 0) {
-      char buf[256];
-      for(vint32 i = 0; i < n_uniforms; ++i) {
-        Uniform uniform;
-        GLenum type;
-        GetActiveUniform(program, i, length, nullptr, &uniform.uniform_size, &type, buf);
-        uniform.uniform_name = std::string(buf);
-        uniform.uniform_location = GetUniformLocation(program, buf);
-        m_uniforms[uniform.uniform_name] = std::make_pair(uniform.uniform_name, uniform);
-      }
-    }
+  if (m_parser) {
+    m_parser->ParseActiveUniforms();
+  } else {
+    VikrLog::DisplayMessage(VIKR_ERROR, "No Parser initialized!");
   }
 }
 
 
+vvoid Shader::InsertUniform(Uniform &uniform) {
+  m_uniforms[uniform.uniform_name] = 
+        std::make_pair(uniform.uniform_name, uniform);
+}
+
+
+vvoid Shader::InsertAttribute(VertexAttrib &attrib) {
+  m_attribs[attrib.attrib_name] = 
+      std::make_pair(attrib.attrib_name, std::move(attrib));
+}
+
+
+Uniform *Shader::GetUniform(std::string name) {
+  if (m_uniforms.find(name) != m_uniforms.end()) {
+    return &m_uniforms[name].second;
+  } else {
+    VikrLog::DisplayMessage(VIKR_ERROR, "No uniform by the name " + name);
+  }
+  return nullptr;
+}
+
+
+VertexAttrib *Shader::GetAttrib(std::string name) {
+  if (m_attribs.find(name) != m_attribs.end()) {
+    return &m_attribs[name].second;
+  } else {
+    VikrLog::DisplayMessage(VIKR_ERROR, "No uniform by the name " + name);
+  }
+  return nullptr;
+}
+
+
 vvoid Shader::ParseActiveAttribs() {
-  vint32 n_attribs;
-  char buf[256];
-  GetProgramiv(program, GL_ACTIVE_ATTRIBUTES, &n_attribs);
-  for (vint32 i = 0; i < n_attribs; ++i) {
-    VertexAttrib attrib;
-    GLenum type;
-    GetActiveAttrib(program, i, sizeof(buf), 0, &attrib.attrib_size, &type, buf);
-    attrib.attrib_name = std::string(buf);
-    attrib.attrib_location = GetAttribLocation(program, buf);
-    m_attribs[attrib.attrib_name] = std::make_pair(attrib.attrib_name, attrib);
+  if (m_parser) {
+    m_parser->ParseActiveAttributes();
+  } else {
+    VikrLog::DisplayMessage(VIKR_ERROR, "No parser initialized!");
   }
 }
 

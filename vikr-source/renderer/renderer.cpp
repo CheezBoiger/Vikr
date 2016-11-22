@@ -1,11 +1,14 @@
+//
+// Copyright (c) Mario Garcia. Under the MIT License.
+//
 #include <renderer/renderer.hpp>
 #include <renderer/render_target.hpp>
 #include <renderer/render_command.hpp>
 #include <renderer/mesh_command.hpp>
 #include <scene/camera.hpp>
 #include <mesh/mesh.hpp>
-#include <shader/gl_shader.hpp>
-#include <shader/vk_shader.hpp>
+#include <shader/glsl/glsl_compiler.hpp>
+#include <shader/spirv/spirv_compiler.hpp>
 #include <lighting/point_light.hpp>
 #include <util/vikr_log.hpp>
 
@@ -17,12 +20,14 @@ std::unordered_map<std::string,
         std::pair<std::string, std::unique_ptr<Shader> > > Renderer::shader_storage;
 
 
+
+
 vvoid Renderer::LoadShader(Renderer *renderer, std::string shader_name, std::string vs, std::string fs) {
   Shader shader;
   switch (renderer->GetRenderType()) {
     case vikr_OPENGL: {
-      GLShader vertex_shader(vikr_VERTEX_SHADER, vs);
-      GLShader fragment_shader(vikr_FRAGMENT_SHADER, fs);
+      GLSLCompiler vertex_shader(vikr_VERTEX_SHADER, vs);
+      GLSLCompiler fragment_shader(vikr_FRAGMENT_SHADER, fs);
       shader.Link(&vertex_shader, &fragment_shader);
     }
     break;
@@ -53,6 +58,15 @@ Shader *Renderer::GetShader(std::string shader_name) {
 }
 
 
+Renderer::Renderer(GraphicsPipeline pipeline)
+  : renderer_type(pipeline)
+  , camera(nullptr)
+  , m_current_render_target(nullptr)
+  , clear_color(glm::vec3(0.1f, 0.1f, 0.1f)) 
+{ 
+}
+
+
 vvoid Renderer::PushBack(RenderCommand *command) {
   if (!command) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Pushed RenderCommand was null! Refusing to push to queue!");
@@ -76,7 +90,7 @@ vvoid Renderer::PushBack(Light *command) {
   if (command != nullptr) {
     switch (command->GetLightType()) {
       case vikr_POINTLIGHT:
-        m_pointlights.push_back(static_cast<PointLight *>(command));
+        m_pointlights.PushBack(static_cast<PointLight *>(command));
       break;
     }
   }

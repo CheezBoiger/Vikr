@@ -1,10 +1,10 @@
 //
 // Copyright (c) Mario Garcia. Under the MIT License.
 //
-#ifndef __VIKR_GL_SHADER_H
-#define __VIKR_GL_SHADER_H
+#ifndef __VIKR_GLSL_COMPILER_H
+#define __VIKR_GLSL_COMPILER_H
 
-#include <shader/ishader.hpp>
+#include <shader/shader_compiler.hpp>
 #include <string>
 
 
@@ -24,23 +24,24 @@ enum VikrGLPipelineStage {
 /**
   GLSL Shader object for OpenGL. Try not to design it as a Template!
 */
-class GLShader : public IShader {
+class GLSLCompiler : public IShaderCompiler {
 public:
-  GLShader(VikrGLPipelineStage stage = vikr_VERTEX_SHADER, std::string filepath = "");
+  GLSLCompiler(VikrGLPipelineStage stage = vikr_VERTEX_SHADER, std::string filepath = "");
 
   vvoid Compile() override;
   vvoid Cleanup() override { DeleteShader(shader_id); }
   VikrGLPipelineStage GetPipelineStage() { return pipeline_stage; }
   vuint32 GetShaderId() override { return shader_id; }
   vbool IsCompiled() override { return compiled; }
-  ShaderType GetShaderType() override { return shader_type; }
+  ShaderCompilerType GetShaderType() override { return shader_type; }
+
 private:
   vvoid LoadShaderFile(std::string filepath);
   VikrGLPipelineStage pipeline_stage;
-  ShaderType shader_type;
+  ShaderCompilerType shader_type;
   
   vuint32 shader_id;
   vbool compiled;
 };
 } // vikr
-#endif // __VIKR_GL_SHADER_H
+#endif // __VIKR_GLSL_COMPILER_HPP

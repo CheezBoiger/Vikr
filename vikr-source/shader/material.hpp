@@ -28,8 +28,8 @@ public:
   Material(Shader *shader);
   Shader *GetShader() { return m_shader; }
 
-  vvoid SetCullMode(CullFace mode) { m_cullmode = mode; }
-  vvoid SetCullFace(FrontFace face) { m_cullface = face; }
+  vvoid SetFrontFace(FrontFace mode) { m_frontface = mode; }
+  vvoid SetCullFace(CullFace face) { m_cullface = face; }
   vvoid SetIsBlending(vbool blend) { is_blending = blend; }
   vvoid SetBlendDst(BlendFunc funct) { m_blend_dst = funct; }
   vvoid SetBlendSrc(BlendFunc funct) { m_blend_src = funct; }  
@@ -38,8 +38,8 @@ public:
   vbool IsCulling() { return is_culling; }
   vbool HasDepth() { return has_depth; }
 
-  FrontFace GetFrontFace() { return m_cullface; }
-  CullFace GetCullFace() { return m_cullmode; }
+  CullFace GetCullFace() { return m_cullface; }
+  FrontFace GetFrontFace() { return m_frontface; }
   DepthFunc GetDepthFunc() { return m_depth_func; }
 
   BlendFunc GetBlendSrc() { return m_blend_src; }
@@ -54,8 +54,8 @@ protected:
   DepthFunc m_depth_func;
 
   vbool is_culling;
-  CullFace m_cullmode;
-  FrontFace m_cullface;
+  FrontFace m_frontface;
+  CullFace m_cullface;
 
   vbool is_blending;
   BlendFunc m_blend_src;

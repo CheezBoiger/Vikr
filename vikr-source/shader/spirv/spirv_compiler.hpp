@@ -1,8 +1,8 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
-#ifndef __VIKR_SPIRV_SHADER_HPP
-#define __VIKR_SPIRV_SHADER_HPP
+#ifndef __VIKR_SPIRV_COMPILER_HPP
+#define __VIKR_SPIRV_COMPILER_HPP
 
 
 //
@@ -13,4 +13,4 @@ namespace vikr {
 
 
 } // vikr
-#endif // __VIKR_SPIRV_SHADER_HP
+#endif // __VIKR_SPIRV_COMPILER_HP

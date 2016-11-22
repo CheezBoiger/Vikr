@@ -10,13 +10,26 @@
 namespace vikr {
 
 
-class GLShader;
 class Shader;
 
 
 class ShaderParser {
 public:
-  static vvoid FillUniforms(Shader *shader, GLShader *gl);
+  ShaderParser(ShaderParser&&) = default;
+  ShaderParser& operator=(ShaderParser&&) = default;
+  virtual ~ShaderParser() { }
+
+  virtual vvoid ParseActiveUniforms() = 0;
+  virtual vvoid ParseActiveAttributes() = 0;
+
+
+protected:
+  ShaderParser(Shader *shader_ref)
+    : shader_ref(shader_ref) { }
+
+  Shader *shader_ref;
+
+  friend class Shader;
 };
 } // vikr
 #endif // __VIKR_SHADER_PARSER_HPP

@@ -1,6 +1,6 @@
 #include <vikr.hpp>
-#include <renderer/glrenderer.hpp>
-#include <renderer/vkrenderer.hpp>
+#include <renderer/opengl/glrenderer.hpp>
+#include <renderer/vulkan/vkrenderer.hpp>
 #include <util/vikr_log.hpp>
 
 namespace vikr {
@@ -33,6 +33,11 @@ Renderer *InitVikrEngine(GraphicsPipeline pipeline) {
     default:
       VikrLog::DisplayMessage(VIKR_ERROR, "Enum does not match any compatible renderers!");
       break;
+  }
+  if (!Renderer::GetRenderer()) {
+    Renderer::SetRenderer(renderer);
+  } else {
+    VikrLog::DisplayMessage(VIKR_WARNING, "A Renderer is already set! Still building a new renderer...");
   }
   return renderer;
 }

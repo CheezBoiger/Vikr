@@ -16,12 +16,15 @@ class Mesh;
 class Material;
 class RenderTarget;
 
-
+/**
+  TODO(Garcia): This must be abstracted a bit.
+*/
 class MeshCommand : public RenderCommand {
 public:
-  MeshCommand() : RenderCommand(RenderCommandType::RENDER_MESH) { }
+  MeshCommand();
+  // these will need to be manually defined.
   MeshCommand(MeshCommand&& mes_cmd) = default;
-  MeshCommand& operator=(MeshCommand&& mesh_cmd) { return *this; }
+  MeshCommand& operator=(MeshCommand&& mesh_cmd) = default;
   
   vbool IsTransparent() { return is_transparent; }
   vbool IsInvisible() { return is_invisible; }  

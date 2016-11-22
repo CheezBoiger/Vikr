@@ -166,6 +166,9 @@ Vikr_0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;
 //Dependencies for the target
 Vikr_v0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;general;assimp;
 
+//Dependencies for the target
+_v0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;general;assimp;
+
 //debug the software.
 debug:BOOL=ON
 
@@ -318,11 +321,29 @@ SG_Filter_vikr-source\platform\graphics_GUID_CMAKE:INTERNAL=5AA62CDA-B101-4783-A
 //Stored GUID
 SG_Filter_vikr-source\platform_GUID_CMAKE:INTERNAL=4ACA45A0-4BCB-4B1D-8B85-CB7B296D36D9
 //Stored GUID
+SG_Filter_vikr-source\renderer\opengl_GUID_CMAKE:INTERNAL=70FD5DA7-CD88-44A6-A1D0-E862B46B325D
+//Stored GUID
+SG_Filter_vikr-source\renderer\vulkan_GUID_CMAKE:INTERNAL=8B1C3AE6-645F-4C1E-9B01-B7DECE20C47D
+//Stored GUID
 SG_Filter_vikr-source\renderer_GUID_CMAKE:INTERNAL=404CF168-964B-4F5B-8AD6-1F0F59305584
+//Stored GUID
+SG_Filter_vikr-source\resources\opengl_GUID_CMAKE:INTERNAL=EBE5F335-25F2-4823-86A0-20EF8BBC92FD
+//Stored GUID
+SG_Filter_vikr-source\resources\vulkan_GUID_CMAKE:INTERNAL=62FD0179-CEE0-4207-A082-8FBD29E80224
+//Stored GUID
+SG_Filter_vikr-source\resources_GUID_CMAKE:INTERNAL=2E9C0F1D-77A1-412E-AF8C-F548C35302CE
 //Stored GUID
 SG_Filter_vikr-source\scene_GUID_CMAKE:INTERNAL=7B8E02A6-B4C8-47B4-9185-50296CBCA95B
 //Stored GUID
+SG_Filter_vikr-source\shader\glsl_GUID_CMAKE:INTERNAL=087BCC22-BACF-4F2C-A4FC-E0711121C954
+//Stored GUID
+SG_Filter_vikr-source\shader\opengl_GUID_CMAKE:INTERNAL=35E31788-F3C4-453F-8512-4E1573AA2E8C
+//Stored GUID
+SG_Filter_vikr-source\shader\spirv_GUID_CMAKE:INTERNAL=07D290D0-7F7C-4CEC-8A18-9E34E13797E8
+//Stored GUID
 SG_Filter_vikr-source\shader\stb_GUID_CMAKE:INTERNAL=D8FB1225-AC3C-434A-8A51-710F342B92CD
+//Stored GUID
+SG_Filter_vikr-source\shader\vulkan_GUID_CMAKE:INTERNAL=42F0FE38-1B95-4365-A90D-33AF727BFC9B
 //Stored GUID
 SG_Filter_vikr-source\shader_GUID_CMAKE:INTERNAL=1D0AD5D8-16C0-4104-89AE-000380332D47
 //Stored GUID

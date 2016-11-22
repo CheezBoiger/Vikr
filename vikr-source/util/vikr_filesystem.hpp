@@ -7,6 +7,8 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
+#include <string>
+#include <unordered_set>
 
 namespace vikr {
 
@@ -19,10 +21,21 @@ namespace vikr {
 class Filesystem {
 public:
 
-  // TODO(Garcia):
-protected:
-  // TODO(Garcia):
-private:
+  // TODO(Garcia): Paths must be specified by the user, or the 
+  // engine by default.
+  static vbool IsDirectory(std::string path);
+
+  static vbool IsFile(std::string filepath);
+
+  static std::string CreateVikrDirectory(std::string filepath);
+
+  static std::string GetVikrResourceDirectoryPath(std::string path);
+
+  static std::string GetVikrDirectory(std::string path);
+
+  static std::string SetVikrCurrentDirectory(std::string path);
+
+  static std::string GetVikrCurrentDirectory();
 };
 } // vikr 
 #endif // __VIKR_FILESYSTEM_HPP

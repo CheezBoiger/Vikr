@@ -8,4 +8,11 @@
 
 namespace vikr {
 
+
+MeshCommand::MeshCommand()
+  : RenderCommand(RenderCommandType::RENDER_MESH)
+{
+}
+
+
 } // vikr

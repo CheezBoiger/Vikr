@@ -204,7 +204,7 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/cmgarcia/github/Vikr/CMakeLists.txt;D:\cmgarcia\github\Vikr\CMakeLists.txt;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeSystem.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInitialize.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCCompiler.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCXXCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\WindowsPaths.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeRCCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\cmgarcia\github\Vikr\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/cmgarcia/github/Vikr/CMakeLists.txt;D:\cmgarcia\github\Vikr\CMakeLists.txt;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeSystem.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInitialize.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCCompiler.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCXXCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\WindowsPaths.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeRCCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\cmgarcia\github\Vikr\cmake\configurable.cmake;D:\cmgarcia\github\Vikr\cmake\glad.cmake;D:\cmgarcia\github\Vikr\cmake\input.cmake;D:\cmgarcia\github\Vikr\cmake\lighting.cmake;D:\cmgarcia\github\Vikr\cmake\math.cmake;D:\cmgarcia\github\Vikr\cmake\mesh.cmake;D:\cmgarcia\github\Vikr\cmake\platform.cmake;D:\cmgarcia\github\Vikr\cmake\renderer.cmake;D:\cmgarcia\github\Vikr\cmake\scene.cmake;D:\cmgarcia\github\Vikr\cmake\shader.cmake;D:\cmgarcia\github\Vikr\cmake\util.cmake;D:\cmgarcia\github\Vikr\cmake\resources.cmake;D:\cmgarcia\github\Vikr\cmake\vikr.cmake;D:\cmgarcia\github\Vikr\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\cmgarcia\github\Vikr\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/cmgarcia/github/Vikr/CMakeLists.txt</Message>
@@ -217,7 +217,7 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/cmgarcia/github/Vikr/CMakeLists.txt;D:\cmgarcia\github\Vikr\CMakeLists.txt;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeSystem.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInitialize.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCCompiler.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCXXCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\WindowsPaths.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeRCCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\cmgarcia\github\Vikr\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/cmgarcia/github/Vikr/CMakeLists.txt;D:\cmgarcia\github\Vikr\CMakeLists.txt;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeSystem.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInitialize.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCCompiler.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCXXCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\WindowsPaths.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeRCCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\cmgarcia\github\Vikr\cmake\configurable.cmake;D:\cmgarcia\github\Vikr\cmake\glad.cmake;D:\cmgarcia\github\Vikr\cmake\input.cmake;D:\cmgarcia\github\Vikr\cmake\lighting.cmake;D:\cmgarcia\github\Vikr\cmake\math.cmake;D:\cmgarcia\github\Vikr\cmake\mesh.cmake;D:\cmgarcia\github\Vikr\cmake\platform.cmake;D:\cmgarcia\github\Vikr\cmake\renderer.cmake;D:\cmgarcia\github\Vikr\cmake\scene.cmake;D:\cmgarcia\github\Vikr\cmake\shader.cmake;D:\cmgarcia\github\Vikr\cmake\util.cmake;D:\cmgarcia\github\Vikr\cmake\resources.cmake;D:\cmgarcia\github\Vikr\cmake\vikr.cmake;D:\cmgarcia\github\Vikr\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\cmgarcia\github\Vikr\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/cmgarcia/github/Vikr/CMakeLists.txt</Message>
@@ -230,7 +230,7 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:/cmgarcia/github/Vikr/CMakeLists.txt;D:\cmgarcia\github\Vikr\CMakeLists.txt;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeSystem.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInitialize.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCCompiler.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCXXCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\WindowsPaths.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeRCCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\cmgarcia\github\Vikr\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:/cmgarcia/github/Vikr/CMakeLists.txt;D:\cmgarcia\github\Vikr\CMakeLists.txt;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeSystem.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInitialize.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCCompiler.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCXXCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\WindowsPaths.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeRCCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\cmgarcia\github\Vikr\cmake\configurable.cmake;D:\cmgarcia\github\Vikr\cmake\glad.cmake;D:\cmgarcia\github\Vikr\cmake\input.cmake;D:\cmgarcia\github\Vikr\cmake\lighting.cmake;D:\cmgarcia\github\Vikr\cmake\math.cmake;D:\cmgarcia\github\Vikr\cmake\mesh.cmake;D:\cmgarcia\github\Vikr\cmake\platform.cmake;D:\cmgarcia\github\Vikr\cmake\renderer.cmake;D:\cmgarcia\github\Vikr\cmake\scene.cmake;D:\cmgarcia\github\Vikr\cmake\shader.cmake;D:\cmgarcia\github\Vikr\cmake\util.cmake;D:\cmgarcia\github\Vikr\cmake\resources.cmake;D:\cmgarcia\github\Vikr\cmake\vikr.cmake;D:\cmgarcia\github\Vikr\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\cmgarcia\github\Vikr\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/cmgarcia/github/Vikr/CMakeLists.txt</Message>
@@ -243,33 +243,41 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:/cmgarcia/github/Vikr/CMakeLists.txt;D:\cmgarcia\github\Vikr\CMakeLists.txt;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeSystem.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInitialize.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCCompiler.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCXXCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\WindowsPaths.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeRCCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\cmgarcia\github\Vikr\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:/cmgarcia/github/Vikr/CMakeLists.txt;D:\cmgarcia\github\Vikr\CMakeLists.txt;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeSystem.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInitialize.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCCompiler.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeCXXCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeSystemSpecificInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeGenericSystem.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\WindowsPaths.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-C.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\cmgarcia\github\Vikr\build\CMakeFiles\3.2.2\CMakeRCCompiler.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeRCInformation.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCXXInformation.cmake;D:\CMake\share\cmake-3.2\Modules\Compiler\MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC-CXX.cmake;D:\CMake\share\cmake-3.2\Modules\Platform\Windows-MSVC.cmake;D:\CMake\share\cmake-3.2\Modules\CMakeCommonLanguageInclude.cmake;D:\cmgarcia\github\Vikr\cmake\configurable.cmake;D:\cmgarcia\github\Vikr\cmake\glad.cmake;D:\cmgarcia\github\Vikr\cmake\input.cmake;D:\cmgarcia\github\Vikr\cmake\lighting.cmake;D:\cmgarcia\github\Vikr\cmake\math.cmake;D:\cmgarcia\github\Vikr\cmake\mesh.cmake;D:\cmgarcia\github\Vikr\cmake\platform.cmake;D:\cmgarcia\github\Vikr\cmake\renderer.cmake;D:\cmgarcia\github\Vikr\cmake\scene.cmake;D:\cmgarcia\github\Vikr\cmake\shader.cmake;D:\cmgarcia\github\Vikr\cmake\util.cmake;D:\cmgarcia\github\Vikr\cmake\resources.cmake;D:\cmgarcia\github\Vikr\cmake\vikr.cmake;D:\cmgarcia\github\Vikr\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\cmgarcia\github\Vikr\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\glad\glad.h" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\glad\khrplatform.h" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_assert.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_filesystem.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\input\keyboard.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\input\mouse.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\light.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\point_light.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\spot_light.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\mat.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\mat_alg.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\quaternion.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\vect.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\vikr_math.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\quad.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\imesh.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\platform.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_time.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_types.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_api.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene_node.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\opengl.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\vk.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\graphics.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vulkan\vkrenderer.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\glrenderer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\irenderer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vkrenderer.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\glrenderer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_command.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\mesh_command.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_command_types.hpp" />
@@ -282,64 +290,66 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\program_state.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\framebuffer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\cullmode.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\imesh.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene_node.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\spirv\spirv_compiler.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_compiler.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_linker.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_parser.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_parser.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\ishader.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\vk_shader.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_compiler.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_linker.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\imaterial.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\material.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\itexture.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\texture.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\stb\stb_image.h" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\input\keyboard.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\input\mouse.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\mat.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\mat_alg.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\quaternion.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\alg\vect.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\vikr_math.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\quad.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\light.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\point_light.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\spot_light.hpp" />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.cpp"  />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_assert.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_filesystem.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\vulkan\vk_resources.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\opengl\gl_resources.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\renderer_builder.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\resources.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.hpp" />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\glad\glad.c" >
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\input\keyboard.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\input\mouse.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\point_light.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\spot_light.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\quad.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vulkan\vkrenderer.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\glrenderer.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vkrenderer.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\glrenderer.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\mesh_command.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_target.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\program_state.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\framebuffer.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\spirv\spirv_compiler.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_compiler.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_linker.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_parser.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_parser.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\gl_shader.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\material.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\texture.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\stb\stb_image.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\input\keyboard.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\input\mouse.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\cube.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\quad.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\point_light.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\spot_light.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.cpp"  />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:/cmgarcia/github/Vikr/build/ZERO_CHECK.vcxproj">

@@ -1,7 +1,7 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
-#include <renderer/glrenderer.hpp>
+#include <renderer/opengl/glrenderer.hpp>
 #include <renderer/renderer.hpp>
 #include <shader/material.hpp>
 #include <shader/shader.hpp>
@@ -60,7 +60,7 @@ vvoid GLRenderer::Render() {
 
   // Clear after.
   m_command_list.Clear();
-  m_pointlights.clear();
+  m_pointlights.Clear();
 }
 
 
@@ -106,18 +106,19 @@ GLenum GLRenderer::GetBlendFunct(BlendFunc blend) {
 }
 
 
-GLenum GLRenderer::GetCullMode(CullFace mode) {
+GLenum GLRenderer::GetFrontFace(FrontFace mode) {
   switch (mode) {
-    case CullFace::vikr_CLOCKWISE: return GL_CW;
-    case CullFace::vikr_COUNTER_CLOCKWISE: return GL_CCW;
+    case FrontFace::vikr_CLOCKWISE: return GL_CW;
+    case FrontFace::vikr_COUNTER_CLOCKWISE: return GL_CCW;
+    default: return GL_CCW;
   }
 }
 
 
-GLenum GLRenderer::GetFrontFace(FrontFace face) {
+GLenum GLRenderer::GetCullFace(CullFace face) {
   switch (face) {
-    case FrontFace::vikr_FRONT_FACE: return GL_FRONT;
-    case FrontFace::vikr_BACK_FACE: return GL_BACK;
+    case CullFace::vikr_FRONT_FACE: return GL_FRONT;
+    case CullFace::vikr_BACK_FACE: return GL_BACK;
     default: return GL_BACK;
   }
 }
@@ -125,11 +126,16 @@ GLenum GLRenderer::GetFrontFace(FrontFace face) {
 
 vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
   Material *material = mesh_cmd->GetMesh()->GetMaterial();
+  if (material->HasDepth()) {
+    glEnable(GL_DEPTH_TEST);
   glDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));
+  } else {
+    glEnable(GL_DEPTH_TEST);
+  }
   if (material->IsCulling()) {
     glEnable(GL_CULL_FACE);
     glFrontFace(GLRenderer::GetFrontFace(material->GetFrontFace()));
-    glCullFace(GLRenderer::GetCullMode(material->GetCullFace()));
+    glCullFace(GLRenderer::GetCullFace(material->GetCullFace()));
   } else {
     glDisable(GL_CULL_FACE);
   }
@@ -162,7 +168,8 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
         2. Render Pointlights second
         3. Render Spotlights last!
     */ 
-    for (vuint32 i = 0; i < m_pointlights.size(); ++i) {
+    std::vector<PointLight *>& pointlights = m_pointlights.GetCommandList();
+    for (vuint32 i = 0; i < pointlights.size(); ++i) {
       std::string position = "light_pos";
       std::string ambient = "light_ambient";
       std::string diffuse = "light_diffuse";
@@ -171,7 +178,7 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
       std::string linear = "linear";
       std::string quadratic = "quadratic";
       shader->SetBool("blinn", true);
-      shader->SetVector3fv(position, m_pointlights[i]->GetPos());
+      shader->SetVector3fv(position, pointlights[i]->GetPos());
       shader->SetVector3fv(ambient, glm::vec3(0.05f, 0.05f, 0.05f));
       shader->SetVector3fv(diffuse, glm::vec3(0.8f, 0.8f, 0.8f));
       shader->SetVector3fv(specular, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -179,7 +186,9 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
       shader->SetFloat(linear, 0.09f);
       shader->SetFloat(quadratic, 0.032f);
     }
-
+    /**
+      Require multiple texture targets!
+    */
     ActiveTexture(GL_TEXTURE0);
     BindTexture(GL_TEXTURE_2D, mesh_cmd->GetMesh()->GetTexture()->GetId());
     BindVertexArray(mesh_cmd->GetMesh()->GetVAO());

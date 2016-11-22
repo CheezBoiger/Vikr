@@ -13,12 +13,11 @@ namespace vikr {
 
 class VKRenderer : public Renderer {
 public:
-  VKRenderer() : Renderer(vikr_VULKAN) { }
-  ~VKRenderer() { }
+  VKRenderer();
 
-  vint32 Init() override { return true; }
+  vint32 Init() override;
 
-  vvoid Render() override { }
+  vvoid Render() override;
 private: 
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(VKRenderer);

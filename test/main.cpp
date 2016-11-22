@@ -3,7 +3,6 @@
   Going to be cleaned up soon...
 */
 #include <iostream>
-#include <shader/gl_shader.hpp>
 #include <shader/shader.hpp>
 #include <vikr.hpp>
 #include <mesh/mesh.hpp>
@@ -111,6 +110,7 @@ int main(int c, char* args[]) {
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vuint32>());
   mesh2.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), std::vector<vuint32>());
   mesh3.Create(quad.GetPositions(), quad.GetNormals(), quad.GetUVs());
+
   mesh.SetName("Red Cube");
   Material material(Renderer::GetShader("red_test"));
   mesh.SetMaterial(&material);
@@ -119,10 +119,10 @@ int main(int c, char* args[]) {
   mesh2.SetTexture(&texture);
   mesh3.SetMaterial(&material);
   mesh3.SetTexture(&texture);
+
   renderer->SetClearColor(glm::vec3(0.1f, 0.1f, 0.1f));
   renderer->SetCamera(&camera);
   Renderer::SetRenderer(renderer);
-  glEnable(GL_DEPTH_TEST); // This shouldn't be hardcoded...
   vreal32 angle = 0.0f;
   PointLight light(glm::vec3(0.0f, 3.0f, 0.0f));
   Mesh meshlight;

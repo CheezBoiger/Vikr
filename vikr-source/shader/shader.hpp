@@ -4,15 +4,13 @@
 #ifndef __VIKR_SHADER_HPP
 #define __VIKR_SHADER_HPP
 
-#include <shader/ishader.hpp>
+#include <shader/shader_compiler.hpp>
+#include <shader/shader_parser.hpp>
 #include <glm/glm.hpp>
 #include <unordered_map>
 #include <string>
 
 namespace vikr {
-
-
-class GLShader;
 
 
 /**
@@ -67,7 +65,7 @@ public:
   Shader(Shader&& shader) = default;
   Shader& operator=(Shader&& shader) = default;
 
-  vvoid Link(IShader* vs, IShader* fs, IShader* gs = nullptr);
+  vvoid Link(IShaderCompiler* vs, IShaderCompiler* fs, IShaderCompiler* gs = nullptr);
   vvoid Use() { UseProgram(program); }
   inline vuint32 GetProgram() { return program; }
   inline vbool IsLinked() { return is_linked; }
@@ -87,9 +85,20 @@ public:
   vint32 GetNumberOfUniforms() { return m_uniforms.size(); }
   vint32 GetNumberOfAttribs() { return m_attribs.size(); }
 
+  ShaderCompilerType GetShaderType() { return shader_type; }
+
+  vvoid InsertUniform(Uniform &uniform);
+  vvoid InsertAttribute(VertexAttrib &attrib);
+
+  Uniform *GetUniform(std::string name);
+  VertexAttrib *GetAttrib(std::string name);
+
 private:
   vvoid ParseActiveUniforms();
   vvoid ParseActiveAttribs();
+
+  ShaderCompilerType shader_type;
+  std::unique_ptr<ShaderParser> m_parser;
 
   vuint32 program;
   vbool is_linked;

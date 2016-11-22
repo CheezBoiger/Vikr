@@ -1,7 +1,7 @@
 ﻿  main.cpp
+D:\cmgarcia\github\Vikr\test\main.cpp(69): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
 D:\cmgarcia\github\Vikr\test\main.cpp(70): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-D:\cmgarcia\github\Vikr\test\main.cpp(71): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-D:\cmgarcia\github\Vikr\test\main.cpp(81): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+D:\cmgarcia\github\Vikr\test\main.cpp(80): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
 D:\cmgarcia\github\Vikr\test\main.cpp(150): warning C4244: '=': conversion from 'vikr::vreal64' to 'vikr::vreal32', possible loss of data
   VikrRendererTest.vcxproj -> D:\cmgarcia\github\Vikr\build\test\Debug\VikrRendererTest.exe
   VikrRendererTest.vcxproj -> D:/cmgarcia/github/Vikr/build/test/Debug/VikrRendererTest.pdb (Full PDB)
