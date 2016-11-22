@@ -1,13 +1,13 @@
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vikr_v0.01.pdb
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glad.obj
-d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_compiler.obj
-d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\spirv_compiler.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\camera.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\first_person_camera.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\framebuffer.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\program_state.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\render_target.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\group_command.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\mesh_command.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\render_command.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\renderer.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glrenderer.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vkrenderer.obj
@@ -29,6 +29,8 @@ d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\shader.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\shader_parser.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_parser.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_linker.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_compiler.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\spirv_compiler.obj
 d:\cmgarcia\github\vikr\build\cmakefiles\generate.stamp
 d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.lib
 d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.pdb

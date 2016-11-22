@@ -17,16 +17,25 @@ namespace vikr {
   Abstract RenderCommand.
 */
 class RenderCommand {
+  static const std::string kDefaultName;
 public:
-  RenderCommand(RenderCommandType type) : type(type) { }
+  RenderCommand(RenderCommandType type);
   RenderCommand(RenderCommand&& rendercommand) = default;
   RenderCommand& operator=(RenderCommand&& render_command) = default;
   RenderCommandType GetCommandType() { return type; }
+
+  std::string GetCommandName() { return m_name; }
+  vvoid SetCommandName(std::string name) { m_name = name; }
 
 protected:
   RenderCommandType type;
 
 private:
+  /**
+    Name of the command.
+  */
+  std::string m_name;
+
   VIKR_DISALLOW_COPY_AND_ASSIGN(RenderCommand);
 };
 } // vikr

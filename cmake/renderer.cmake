@@ -26,8 +26,11 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/renderer.hpp
   ${VIKR_RENDERER_DIR}/renderer.cpp
   ${VIKR_RENDERER_DIR}/render_command.hpp
+  ${VIKR_RENDERER_DIR}/render_command.cpp
   ${VIKR_RENDERER_DIR}/mesh_command.hpp
   ${VIKR_RENDERER_DIR}/mesh_command.cpp
+  ${VIKR_RENDERER_DIR}/group_command.hpp
+  ${VIKR_RENDERER_DIR}/group_command.cpp
   ${VIKR_RENDERER_DIR}/render_command_types.hpp
   ${VIKR_RENDERER_DIR}/render_group.hpp
   ${VIKR_RENDERER_DIR}/render_queue.hpp
