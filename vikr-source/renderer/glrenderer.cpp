@@ -69,35 +69,17 @@ vvoid GLRenderer::Render() {
   Material.
 */
 GLenum GLRenderer::GetDepthFunct(DepthFunc funct) {
-  GLenum function = GL_LESS;
   switch(funct) {
-  case DepthFunc::vikr_DEPTH_ALWAYS:
-  function = GL_ALWAYS;
-  break;
-  case DepthFunc::vikr_DEPTH_EQUAL:
-  function = GL_EQUAL;
-  break;
-  case DepthFunc::vikr_DEPTH_GEQUAL:
-  function = GL_GEQUAL;
-  break;
-  case DepthFunc::vikr_DEPTH_GREATER:
-  function = GL_GREATER;
-  break;
-  case DepthFunc::vikr_DEPTH_LEQUAL:
-  function = GL_LEQUAL;
-  break;
-  case DepthFunc::vikr_DEPTH_LESS:
-  function = GL_LESS;
-  break;
-  case DepthFunc::vikr_DEPTH_NEVER:
-  function = GL_NEVER;
-  break;
-  case DepthFunc::vikr_DEPTH_NOTEQUAL:
-  function = GL_NOTEQUAL;
-  break;
-
+    case DepthFunc::vikr_DEPTH_ALWAYS: return GL_ALWAYS;
+    case DepthFunc::vikr_DEPTH_EQUAL: return GL_EQUAL;
+    case DepthFunc::vikr_DEPTH_GEQUAL: return GL_GEQUAL;
+    case DepthFunc::vikr_DEPTH_GREATER: return GL_GREATER;
+    case DepthFunc::vikr_DEPTH_LEQUAL: return GL_LEQUAL;
+    case DepthFunc::vikr_DEPTH_LESS: return GL_LESS;
+    case DepthFunc::vikr_DEPTH_NEVER: return GL_NEVER;
+    case DepthFunc::vikr_DEPTH_NOTEQUAL: return GL_NOTEQUAL;
+    default: return GL_LESS;
   }
-  return function;
 }
 
 /**

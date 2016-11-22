@@ -12,7 +12,9 @@ TODO List for the Vikr Renderer Engine.
 
 - Renderer Engine
   - Light rendering model (blinn-phong for now.)
+    
     - Deferred Lighting!
+      - G-Buffer (OpenGL for now)
     - Requiring the use of FrameBuffers!
 
   - OpenGL and Vulkan Implementations
@@ -25,14 +27,28 @@ TODO List for the Vikr Renderer Engine.
     - Render Target! for Post processing!
     - Shader Class
       - I want to implement a Shader Preprocessor for #include (GLSL omits this for GOOD reasons)
+    - Shader Compiler implementation
+      - Ease of use for Shader programming.
+      - Parser for compiling shaders.
     - Camera and free movement! // Abstract Camera needed.
       - Quaternion based!
     - Lighting and shading models
     - Implement the Framebuffer for the rendering pipeline.
-- Animation! // maybe...
-  - Mesh Skinning and Skeletons
-  - Develop bone heiarchy
 
+- Vikr Filesystem!  
+  - Implement Filesystem handling for Folders/Directories of the Operating system.
+    - Windows (WIN32 NAT)
+    - Linux
+    - OS X (I dunno, can't test it :c )
+  - Require Shader/Resource directory for better handling with our Vikr Editor in the future.
+
+FUTURE WORKS
+- Animation! // Most likely
+  - Mesh Skinning and Skeletons
+  - Develop bone heiarchy 
 - Audio (Optional!)
 - Moving to Physically Based Rendering (PBR)
   - This is going to be in the future!
+
+
+EOF
