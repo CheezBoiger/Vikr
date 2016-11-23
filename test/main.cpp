@@ -103,7 +103,7 @@ int main(int c, char* args[]) {
   Mesh meshlight;
   Cube cube;
   PointLight light;
-  Renderer::LoadShader(Renderer::GetRenderer(), "test", "test.vert", "test.frag");
+  Renderer::StoreShader(Renderer::GetRenderer(), "test", "test.vert", "test.frag");
   Material material(Renderer::GetShader("test"));
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   meshlight.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());

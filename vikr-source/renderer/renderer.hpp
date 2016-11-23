@@ -33,7 +33,7 @@ public:
   /**
     TODO(Garcia): This will need to move to resources.
   */
-  static vvoid LoadShader(Renderer *renderer, std::string shader_name, std::string fs, std::string vs);
+  static vvoid StoreShader(Renderer *renderer, std::string shader_name, std::string fs, std::string vs);
   static Shader *GetShader(std::string shader_name);
   static Renderer *GetRenderer() { return renderer; }
   static vvoid SetRenderer(Renderer *r) { renderer = r; }

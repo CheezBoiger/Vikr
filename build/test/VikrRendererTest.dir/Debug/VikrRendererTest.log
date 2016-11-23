@@ -1,16 +1,6 @@
-﻿glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(context.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(init.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(input.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(window.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_tls.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_tls.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(egl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(egl_context.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
+﻿  main.cpp
+D:\cmgarcia\github\Vikr\test\main.cpp(69): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+D:\cmgarcia\github\Vikr\test\main.cpp(70): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+D:\cmgarcia\github\Vikr\test\main.cpp(80): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   VikrRendererTest.vcxproj -> D:\cmgarcia\github\Vikr\build\test\Debug\VikrRendererTest.exe
   VikrRendererTest.vcxproj -> D:/cmgarcia/github/Vikr/build/test/Debug/VikrRendererTest.pdb (Full PDB)

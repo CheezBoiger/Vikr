@@ -12,7 +12,8 @@
 #include <shader/shader_config.hpp>
 #include <glm/glm.hpp>
 #include <string>
-#include <vector>
+#include <memory>
+#include <map>
 
 namespace vikr {
 
@@ -26,10 +27,32 @@ class Texture;
 /**
   Sets the Texture samplers into the Material
 */
-struct TextureSamplers {
+struct TextureSampler {
   ShaderUniformType type;
-  Texture *texture;
-  vuint32 i;
+  Texture           *texture;
+  vuint32           i;
+};
+
+
+/**
+  Material values that are added to modify the shader.
+*/
+struct MaterialValue {
+  ShaderUniformType type;
+  union {
+    vbool     m_bool;
+    vint32    m_integer;
+    vreal32   m_float;
+    vreal64   m_double;
+    glm::vec2 m_vec2;
+    glm::vec3 m_vec3;
+    glm::vec4 m_vec4;
+    glm::mat2 m_mat2;
+    glm::mat3 m_mat3;
+    glm::mat4 m_mat4;
+  };
+
+  MaterialValue() { }
 };
 
 
@@ -63,10 +86,11 @@ public:
 
   std::string GetName() { return m_name; }
 
+  GraphicsPipeline GetPipeline() { return pipeline; }
   /**
     Sets the texture for a sampler in the shader.
   */
-  vvoid SetTexture(Texture *texture, vuint32 i);
+  vvoid SetTexture(std::string name, Texture *texture, vuint32 i);
   /**
     Primitive uniform defines.
   */
@@ -81,8 +105,8 @@ public:
   vvoid SetMat3(std::string name, glm::mat3 value);
   vvoid SetMat2(std::string name, glm::mat2 value);
   
-  std::vector<TextureSamplers> *GetUniformSamplers();
-  std::vector<Uniform> *GetUniforms();
+  std::map<std::string, TextureSampler> *GetUniformSamplers() { return &m_uniform_samplers; }
+  std::map<std::string, MaterialValue> *GetMaterialValues() { return &m_material_values; } 
 
 protected:
 
@@ -101,11 +125,13 @@ protected:
   BlendFunc m_blend_dst;
   BlendEq m_blend_equation;
   
+  GraphicsPipeline pipeline;
   /**
-    Keep track of the uniforms and samplers of the shader.
+    Keep track of the uniforms and samplers of the shader. These values get called by the renderer
+    to render textures and materials.
   */
-  std::vector<TextureSamplers> m_uniform_samplers;
-  std::vector<Uniform> m_uniforms;
+  std::map<std::string, TextureSampler> m_uniform_samplers;
+  std::map<std::string, MaterialValue> m_material_values;
 }; 
 } // vikr
 #endif // __VIKR_MATERIAL_HPP

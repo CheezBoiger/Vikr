@@ -21,6 +21,7 @@ enum ShaderUniformType {
   vikr_SAMPLERCUBE,
   vikr_INT,
   vikr_FLOAT,
+  vikr_DOUBLE,
   vikr_BOOL,
   vikr_VEC2,
   vikr_VEC3,

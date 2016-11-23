@@ -22,7 +22,7 @@ std::unordered_map<std::string,
 
 
 
-vvoid Renderer::LoadShader(Renderer *renderer, std::string shader_name, std::string vs, std::string fs) {
+vvoid Renderer::StoreShader(Renderer *renderer, std::string shader_name, std::string vs, std::string fs) {
   Shader shader;
   switch (renderer->GetRenderType()) {
     case vikr_OPENGL: {

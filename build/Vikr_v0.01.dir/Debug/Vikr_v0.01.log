@@ -1,1 +1,7 @@
-﻿  Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Debug\Vikr_v0.01.lib
+﻿  model.cpp
+  mesh.cpp
+  glrenderer.cpp
+  mesh_command.cpp
+  material.cpp
+  Generating Code...
+  Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Debug\Vikr_v0.01.lib
