@@ -18,5 +18,5 @@ Credits out to Joey De Vries and his tutorials on OpenGL, which has taught me,
 through simple to understand, steps on learning graphics programming! check
 out his tutorial website: http://learnopengl.com/#!Introduction
   
-You also also check out his work in progress engine here as well as he is implementing
+You should also check out his work in progress engine here as well, as he is implementing
 much more advanced work than me! : https://github.com/JoeyDeVries/Cell
