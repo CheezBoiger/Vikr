@@ -7,10 +7,27 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <shader/stb/stb_image.h>
-#include <shader/itexture.hpp>
 #include <string>
 
 namespace vikr {
+
+
+enum TextureWrapMode {
+  vikr_TEXTURE_REPEAT,
+  vikr_TEXTURE_MIRRORED_REPEAT,
+  vikr_TEXTURE_CLAMP_TO_EDGE,
+  vikr_TEXTURE_CLAMP_TO_BORDER
+};
+
+
+enum TextureFilterMode {
+  vikr_TEXTURE_NEAREST,
+  vikr_TEXTURE_LINEAR,
+  vikr_TEXTURE_NEAREST_MIPMAP_NEAREST,
+  vikr_TEXTURE_LINEAR_MIPMAP_NEAREST,
+  vikr_TEXTURE_LINEAR_MIPMAP_LINEAR,
+  vikr_TEXTURE_NEAREST_MIPMAP_LINEAR
+};
 
 
 enum TextureTarget {
@@ -19,6 +36,7 @@ enum TextureTarget {
   vikr_TEXTURE_CUBEMAP
 };
 
+
 enum TextureFormat {
   vikr_RGB,
   vikr_RGBA
@@ -26,53 +44,28 @@ enum TextureFormat {
 
 
 /**
-  Texture object, currently only supporting OpenGL.
+  Texture object, abstraction.
 */
-class Texture : public ITexture {
+class Texture {
+protected:
   static const std::string kDefaultName;
 public:
+  static vbyte *CreateImageByteCode(std::string tex_path, vint32 *width, vint32 *height, vint32 *channels, vbool alpha);
 
-  static Texture Generate(std::string texture_path, vbool has_alpha = true, vbool is_mipmapped = true);
-  
-  Texture(Texture&& texture) = default;
-  vint32 GetWidth() override { return width; }
-  vint32 GetHeight() override { return height; }
-  vbool ContainsAlpha() override { return contains_alpha; }
-  vuint32 GetId() override { return m_id; }
+  TextureTarget GetTargetFormat() { return m_target; }
+  TextureFormat GetFormat() { return m_format; }
+  TextureFormat GetInternalFormat() { return m_internal_format; }
+  TextureFilterMode GetFilterMin() { return m_filter_min; }
+  TextureFilterMode GetFilterMax() {  return m_filter_max; }
+  vbool IsMipmapping() { return mipmapping; }
 
 protected:
-
-  Texture(std::string name = kDefaultName
-          , TextureTarget target = vikr_TEXTURE_2D
-          , vbool has_alpha = false)
-    : m_id(0)
-    , name(name)
-    , width(0)
-    , height(0)
-    , depth(0)
-    , channels(0)
-    , target(target)
-    , contains_alpha(has_alpha) { }
-
-  std::string name;
-  vvoid Bind(stbi_uc *image);
-  vvoid GenerateTextureId();
-  vuint32 m_id;
-  
-  vint32 width;
-  vint32 height;
-  vint32 channels;
-  vint32 depth;
-  TextureTarget target;
-  vbool contains_alpha;
-  vbool uses_mipmap;
-
-  static stbi_uc *CreateTextureImage(std::string tex_path
-                                    , vint32 *width
-                                    , vint32 *height
-                                    , vint32 *channels
-                                    , vbool alpha);
-
+  TextureTarget m_target;
+  TextureFormat m_format;
+  TextureFormat m_internal_format;
+  TextureFilterMode m_filter_min;
+  TextureFilterMode m_filter_max;
+  vbool mipmapping;
 private:
   VIKR_DISALLOW_COPY_AND_ASSIGN(Texture);
 };

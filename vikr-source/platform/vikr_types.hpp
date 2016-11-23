@@ -19,6 +19,7 @@ typedef GLuint      vuint32;
 typedef GLshort     vint16;
 typedef GLvoid      vvoid;
 typedef GLboolean vbool;
+typedef GLchar vchar;
 
 // vulkan defines. Maybe
 #else
@@ -30,10 +31,12 @@ typedef unsigned int vuint32;
 typedef short vint16;
 typedef void vvoid;
 typedef bool vbool;
+typedef char vchar;
 
 #endif // VIKR_OPENGL
 
 typedef unsigned long long     vuint64;
 typedef long long   vint64;
+typedef unsigned char vbyte;
 } // vikr
 #endif // __VIKR_TYPES_HPP

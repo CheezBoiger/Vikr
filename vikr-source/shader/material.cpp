@@ -3,7 +3,8 @@
 // 
 #include <shader/material.hpp>
 #include <shader/texture.hpp>
-
+#include <shader/shader.hpp>
+#include <util/vikr_log.hpp>
 
 namespace vikr {
 

@@ -7,6 +7,7 @@
 
 #include <platform/vikr_api.hpp>
 #include <platform/vikr_types.hpp>
+#include <renderer/group_command.hpp>
 
 // Going to need group command on this one...
 
@@ -26,7 +27,6 @@
 namespace vikr {
 
 
-class GroupCommand;
 /**
   Model is a class intended for importing various different 
   graphical models that are imported from graphics software like
@@ -46,7 +46,7 @@ protected:
 
 private:
 
-  
+  GroupCommand m_command;
 
   std::vector<Mesh> m_meshes;
   std::vector<Texture> m_textures;

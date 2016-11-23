@@ -18,7 +18,7 @@ namespace vikr {
 */
 class GroupCommand : public RenderCommand {
 public:
-
+  GroupCommand() : RenderCommand(RenderCommandType::RENDER_GROUP) { }
   vvoid Insert(RenderCommand *command) { m_commands.push_back(command); }
   RenderCommand *Remove(std::string name);
 

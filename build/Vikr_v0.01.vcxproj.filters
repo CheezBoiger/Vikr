@@ -67,6 +67,24 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\spirv\spirv_compiler.cpp">
       <Filter>vikr-source\shader\spirv</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_preprocessor.cpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture.cpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture1d.cpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture2d.cpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture3d.cpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_material.cpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_compiler.cpp">
       <Filter>vikr-source\shader\glsl</Filter>
     </ClCompile>
@@ -240,6 +258,24 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\spirv\spirv_compiler.hpp">
       <Filter>vikr-source\shader\spirv</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_preprocessor.hpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture.hpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture1d.hpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture2d.hpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture3d.hpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_material.hpp">
+      <Filter>vikr-source\shader\glsl</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_compiler.hpp">
       <Filter>vikr-source\shader\glsl</Filter>
     </ClInclude>
@@ -252,6 +288,9 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_parser.hpp">
       <Filter>vikr-source\shader</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_config.hpp">
+      <Filter>vikr-source\shader</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader.hpp">
       <Filter>vikr-source\shader</Filter>
     </ClInclude>
@@ -261,16 +300,22 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_linker.hpp">
       <Filter>vikr-source\shader</Filter>
     </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\imaterial.hpp">
-      <Filter>vikr-source\shader</Filter>
-    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\material.hpp">
       <Filter>vikr-source\shader</Filter>
     </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\itexture.hpp">
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\texture.hpp">
       <Filter>vikr-source\shader</Filter>
     </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\texture.hpp">
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\texture1d.hpp">
+      <Filter>vikr-source\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\texture2d.hpp">
+      <Filter>vikr-source\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\texture3d.hpp">
+      <Filter>vikr-source\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\cubemap.hpp">
       <Filter>vikr-source\shader</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\stb\stb_image.h">
@@ -305,11 +350,29 @@
     <CustomBuild Include="D:\cmgarcia\github\Vikr\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="vikr-source\platform\graphics">
-      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vikr-source">
       <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\renderer\vulkan">
+      <UniqueIdentifier>{8B1C3AE6-645F-4C1E-9B01-B7DECE20C47D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\renderer\opengl">
+      <UniqueIdentifier>{70FD5DA7-CD88-44A6-A1D0-E862B46B325D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\shader\spirv">
+      <UniqueIdentifier>{07D290D0-7F7C-4CEC-8A18-9E34E13797E8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\shader\glsl">
+      <UniqueIdentifier>{087BCC22-BACF-4F2C-A4FC-E0711121C954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\shader\stb">
+      <UniqueIdentifier>{D8FB1225-AC3C-434A-8A51-710F342B92CD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\resources\vulkan">
+      <UniqueIdentifier>{62FD0179-CEE0-4207-A082-8FBD29E80224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\resources\opengl">
+      <UniqueIdentifier>{EBE5F335-25F2-4823-86A0-20EF8BBC92FD}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\math\alg">
       <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
@@ -317,11 +380,8 @@
     <Filter Include="vikr-source\math\shape">
       <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\renderer\vulkan">
-      <UniqueIdentifier>{8B1C3AE6-645F-4C1E-9B01-B7DECE20C47D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\renderer\opengl">
-      <UniqueIdentifier>{70FD5DA7-CD88-44A6-A1D0-E862B46B325D}</UniqueIdentifier>
+    <Filter Include="vikr-source\platform\graphics">
+      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\glad">
       <UniqueIdentifier>{0A8C6B6F-F0FB-435F-B1B3-74E6D66D3A2D}</UniqueIdentifier>
@@ -355,21 +415,6 @@
     </Filter>
     <Filter Include="vikr-source\resources">
       <UniqueIdentifier>{2E9C0F1D-77A1-412E-AF8C-F548C35302CE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\shader\spirv">
-      <UniqueIdentifier>{07D290D0-7F7C-4CEC-8A18-9E34E13797E8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\shader\glsl">
-      <UniqueIdentifier>{087BCC22-BACF-4F2C-A4FC-E0711121C954}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\shader\stb">
-      <UniqueIdentifier>{D8FB1225-AC3C-434A-8A51-710F342B92CD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\resources\vulkan">
-      <UniqueIdentifier>{62FD0179-CEE0-4207-A082-8FBD29E80224}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\resources\opengl">
-      <UniqueIdentifier>{EBE5F335-25F2-4823-86A0-20EF8BBC92FD}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -189,12 +189,9 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
     /**
       Require multiple texture targets!
     */
-    ActiveTexture(GL_TEXTURE0);
-    BindTexture(GL_TEXTURE_2D, mesh_cmd->GetMesh()->GetTexture()->GetId());
     BindVertexArray(mesh_cmd->GetMesh()->GetVAO());
     DrawArrays(GL_TRIANGLES, 0, mesh_cmd->GetMesh()->GetVertices().size());
     BindVertexArray(0);
-    BindTexture(GL_TEXTURE_2D, 0);
   } else {
     VikrLog::DisplayMessage(VIKR_WARNING, "Mesh command rendered with unknown material!!");
   }
