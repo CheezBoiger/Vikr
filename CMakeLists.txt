@@ -51,5 +51,6 @@ add_library(${VIKR_NAME} STATIC
 target_link_libraries(${VIKR_NAME} glfw3)
 target_link_libraries(${VIKR_NAME} vulkan-1)
 target_link_libraries(${VIKR_NAME} assimp)
+target_link_libraries(${VIKR_NAME} opengl32)
 
 add_subdirectory(test/)

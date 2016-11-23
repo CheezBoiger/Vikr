@@ -114,7 +114,7 @@
     </Midl>
     <Link>
       <AdditionalOptions> /machine:X86 /debug %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\Debug\Vikr_v0.01.lib;glfw3.lib;vulkan-1.lib;assimp.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\Debug\Vikr_v0.01.lib;glfw3.lib;vulkan-1.lib;assimp.lib;opengl32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:/cmgarcia/github/Vikr/libs/GLFW;D:/cmgarcia/github/Vikr/libs/GLFW/$(Configuration);D:/cmgarcia/github/Vikr/libs/Vulkan/bin32;D:/cmgarcia/github/Vikr/libs/Vulkan/bin32/$(Configuration);D:/cmgarcia/github/Vikr/libs/assimp;D:/cmgarcia/github/Vikr/libs/assimp/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -157,7 +157,7 @@
     </Midl>
     <Link>
       <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\Release\Vikr_v0.01.lib;glfw3.lib;vulkan-1.lib;assimp.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\Release\Vikr_v0.01.lib;glfw3.lib;vulkan-1.lib;assimp.lib;opengl32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:/cmgarcia/github/Vikr/libs/GLFW;D:/cmgarcia/github/Vikr/libs/GLFW/$(Configuration);D:/cmgarcia/github/Vikr/libs/Vulkan/bin32;D:/cmgarcia/github/Vikr/libs/Vulkan/bin32/$(Configuration);D:/cmgarcia/github/Vikr/libs/assimp;D:/cmgarcia/github/Vikr/libs/assimp/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -200,7 +200,7 @@
     </Midl>
     <Link>
       <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\MinSizeRel\Vikr_v0.01.lib;glfw3.lib;vulkan-1.lib;assimp.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\MinSizeRel\Vikr_v0.01.lib;glfw3.lib;vulkan-1.lib;assimp.lib;opengl32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:/cmgarcia/github/Vikr/libs/GLFW;D:/cmgarcia/github/Vikr/libs/GLFW/$(Configuration);D:/cmgarcia/github/Vikr/libs/Vulkan/bin32;D:/cmgarcia/github/Vikr/libs/Vulkan/bin32/$(Configuration);D:/cmgarcia/github/Vikr/libs/assimp;D:/cmgarcia/github/Vikr/libs/assimp/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -243,7 +243,7 @@
     </Midl>
     <Link>
       <AdditionalOptions> /machine:X86 /debug %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\RelWithDebInfo\Vikr_v0.01.lib;glfw3.lib;vulkan-1.lib;assimp.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\RelWithDebInfo\Vikr_v0.01.lib;glfw3.lib;vulkan-1.lib;assimp.lib;opengl32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:/cmgarcia/github/Vikr/libs/GLFW;D:/cmgarcia/github/Vikr/libs/GLFW/$(Configuration);D:/cmgarcia/github/Vikr/libs/Vulkan/bin32;D:/cmgarcia/github/Vikr/libs/Vulkan/bin32/$(Configuration);D:/cmgarcia/github/Vikr/libs/assimp;D:/cmgarcia/github/Vikr/libs/assimp/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>

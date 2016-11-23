@@ -164,7 +164,7 @@ VikrSoftware_SOURCE_DIR:STATIC=D:/cmgarcia/github/Vikr
 Vikr_0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;
 
 //Dependencies for the target
-Vikr_v0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;general;assimp;
+Vikr_v0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;general;assimp;general;opengl32;
 
 //Dependencies for the target
 _v0.01_LIB_DEPENDS:STATIC=general;glfw3;general;vulkan-1;general;assimp;
