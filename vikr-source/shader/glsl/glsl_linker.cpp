@@ -10,24 +10,15 @@ namespace vikr {
 
 
 GLSLLinker::GLSLLinker(Shader *shader)
-  : ShaderLinker(shader)
+  : shader(shader)
 {
 }
 
 
-vint32 GLSLLinker::Link(IShaderCompiler *vs, IShaderCompiler *fs, IShaderCompiler *gs) {
+vint32 GLSLLinker::Link(GLSLCompiler *vs, GLSLCompiler *fs, GLSLCompiler *gs) {
   GLSLCompiler *vs_compiler = nullptr;
   GLSLCompiler *fs_compiler = nullptr;
   GLSLCompiler *gs_compiler = nullptr;
-  if (vs->GetShaderType() == vikr_GLSL) {
-    vs_compiler = ToCompiler(vs);
-  }
-  if (fs->GetShaderType() == vikr_GLSL) {
-    fs_compiler = ToCompiler(fs);
-  }
-  if (gs != nullptr && gs->GetShaderType() == vikr_GLSL) {
-    gs_compiler = ToCompiler(gs);
-  }
   vint32 success;
   GLchar log[1024];
   if(!vs->IsCompiled()) {
@@ -39,12 +30,12 @@ vint32 GLSLLinker::Link(IShaderCompiler *vs, IShaderCompiler *fs, IShaderCompile
   if(gs != nullptr && !gs->IsCompiled()) {
     gs->Compile();
   }
-  AttachShader(shader_ref->GetProgram(), vs->GetShaderId());
-  AttachShader(shader_ref->GetProgram(), fs->GetShaderId());
-  LinkProgram(shader_ref->GetProgram());
-  GetProgramiv(shader_ref->GetProgram(), GL_LINK_STATUS, &success);
+  AttachShader(shader->GetShaderId(), vs->GetShaderId());
+  AttachShader(shader->GetShaderId(), fs->GetShaderId());
+  LinkProgram(shader->GetShaderId());
+  GetProgramiv(shader->GetShaderId(), GL_LINK_STATUS, &success);
   if(!success) {
-    GetProgramInfoLog(shader_ref->GetProgram(), 1024, NULL, log);
+    GetProgramInfoLog(shader->GetShaderId(), 1024, NULL, log);
     VikrLog::DisplayMessage(vikr::VIKR_ERROR, std::string(log));
     return -1;
   }
@@ -53,11 +44,7 @@ vint32 GLSLLinker::Link(IShaderCompiler *vs, IShaderCompiler *fs, IShaderCompile
   if(gs != nullptr) {
     gs->Cleanup();
   }
+  is_linked = true;
   return 1;
-}
-
-
-GLSLCompiler *GLSLLinker::ToCompiler(IShaderCompiler *compiler) {
-  return static_cast<GLSLCompiler *>(compiler);
 }
 } // vikr

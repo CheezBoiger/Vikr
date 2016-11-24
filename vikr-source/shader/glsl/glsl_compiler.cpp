@@ -12,7 +12,6 @@ namespace vikr {
 
 GLSLCompiler::GLSLCompiler(VikrGLPipelineStage stage, std::string filepath) 
   : pipeline_stage(stage)
-  , shader_type(vikr_GLSL)
   , compiled(false) {
   LoadShaderFile(filepath);
 }
@@ -32,6 +31,7 @@ vvoid GLSLCompiler::LoadShaderFile(std::string filepath) {
   } catch (std::ifstream::failure e) {
     // must debug...
   }
+  // We can preprocess here!
   const GLchar* shader_code_c = shader_code.c_str();
   shader_id = CreateShader(pipeline_stage);
   ShaderSource(shader_id, 1, &shader_code_c, NULL);

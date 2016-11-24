@@ -16,46 +16,6 @@ namespace vikr {
 
 
 Renderer *Renderer::renderer = nullptr;
-std::unordered_map<std::string, 
-        std::pair<std::string, std::unique_ptr<Shader> > > Renderer::shader_storage;
-
-
-
-
-vvoid Renderer::StoreShader(Renderer *renderer, std::string shader_name, std::string vs, std::string fs) {
-  Shader shader;
-  switch (renderer->GetRenderType()) {
-    case vikr_OPENGL: {
-      GLSLCompiler vertex_shader(vikr_VERTEX_SHADER, vs);
-      GLSLCompiler fragment_shader(vikr_FRAGMENT_SHADER, fs);
-      shader.Link(&vertex_shader, &fragment_shader);
-    }
-    break;
-    case vikr_VULKAN: {
-      VikrLog::DisplayMessage(VIKR_NOTIFY, "SPIR-V NOT YET IMPLEMENTED! We are workin' on it ( = w = )");
-    }
-    default:
-      VikrLog::DisplayMessage(VIKR_ERROR, "Renderer type is not known to this software!");
-    break; 
-  }
-  if (shader.IsLinked()) {
-    Renderer::shader_storage[shader_name] = 
-                std::make_pair(shader_name, std::make_unique<Shader>(std::move(shader)));
-  } else {
-    VikrLog::DisplayMessage(VIKR_WARNING, "Shader not linked! Aborting shader load!"); 
-  }
-}
-
-
-Shader *Renderer::GetShader(std::string shader_name) {
-  std::unordered_map<std::string, std::pair<std::string, std::unique_ptr<Shader> > >::iterator it;
-  Shader *shader = nullptr;
-  it = shader_storage.find(shader_name);
-  if (it != shader_storage.end()) {
-    shader = shader_storage[shader_name].second.get();
-  }
-  return shader;
-}
 
 
 Renderer::Renderer(GraphicsPipeline pipeline)

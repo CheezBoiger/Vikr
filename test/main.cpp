@@ -103,8 +103,8 @@ int main(int c, char* args[]) {
   Mesh meshlight;
   Cube cube;
   PointLight light;
-  Renderer::StoreShader(Renderer::GetRenderer(), "test", "test.vert", "test.frag");
-  Material material(Renderer::GetShader("test"));
+  Renderer::GetRenderer()->StoreShader("test", "test.vert", "test.frag");
+  Material material(Renderer::GetRenderer()->GetShader("test"));
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   meshlight.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   mesh.SetMaterial(&material);
@@ -116,6 +116,7 @@ int main(int c, char* args[]) {
     CalculateDeltaTime();
     PollEvents();
     Do_Movement();
+    VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()));
     camera.Update();
     glm::mat4 model;
     mesh.GetMeshCommand()->SetTransform(model);

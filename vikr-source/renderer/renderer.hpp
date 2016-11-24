@@ -19,6 +19,7 @@ class Camera;
 class Light;
 class RenderTarget;
 class PointLight;
+class Material;
 
 
 /**
@@ -33,8 +34,6 @@ public:
   /**
     TODO(Garcia): This will need to move to resources.
   */
-  static vvoid StoreShader(Renderer *renderer, std::string shader_name, std::string fs, std::string vs);
-  static Shader *GetShader(std::string shader_name);
   static Renderer *GetRenderer() { return renderer; }
   static vvoid SetRenderer(Renderer *r) { renderer = r; }
 
@@ -52,7 +51,12 @@ public:
 
   virtual vvoid PushBack(RenderCommand *command) override;
   virtual vvoid PushBack(Light *light) override;
-  virtual vvoid Sort() override { m_command_list.Sort();}
+  virtual vvoid Sort() override { m_command_list.Sort(); }
+
+  virtual vint32 StoreShader(std::string shader_name, std::string fs, std::string vs) = 0;
+  virtual Shader *GetShader(std::string shader_name) = 0;
+
+  //virtual Material *CreateMaterial(std::string name) = 0;
 
   GraphicsPipeline GetRenderType()  { return renderer_type; }
   vvoid SetClearColor(glm::vec3 cc) { clear_color = cc; }
@@ -62,7 +66,7 @@ public:
   vvoid SetCurrentRenderTarget(RenderTarget *target) override { m_current_render_target = target; }
   RenderTarget *GetCurrentRenderTarget() override { return m_current_render_target; }
 
-  vint32 CleanupResources();
+  virtual vint32 CleanupResources();
 
 protected:
   /**
@@ -88,11 +92,6 @@ private:
     The current renderer plugin.
   */
   static Renderer *renderer;
-  /**
-    @TODO(Garcia): this will need to move to resources.
-  */
-  static std::unordered_map<std::string, 
-                            std::pair<std::string, std::unique_ptr<Shader>> > shader_storage;
 };
 }
 #endif // __VIKR_RENDERER_HPP

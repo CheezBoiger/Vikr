@@ -101,7 +101,7 @@ VIKR_FORCEINLINE void Uniform4fv(GLint location, GLsizei count, const GLfloat *v
 VIKR_FORCEINLINE void Uniform1i(GLint location, GLint value) { glUniform1i(location, value); }
 VIKR_FORCEINLINE void Uniform1ui(GLint location, GLuint value) { glUniform1ui(location, value); }
 VIKR_FORCEINLINE void Uniform1iv(GLint location, GLsizei count, const GLint *value) { glUniform1iv(location, count, value); }
-VIKR_FORCEINLINE void Uniform1d(GLint location, GLsizei count, GLdouble v0) { glUniform1d(location, v0); }
+VIKR_FORCEINLINE void Uniform1d(GLint location, GLdouble v0) { glUniform1d(location, v0); }
 
 VIKR_FORCEINLINE void GenTextures(GLsizei n, GLuint *textures) { glGenTextures(n, textures); }
 VIKR_FORCEINLINE void BindTexture(GLenum target, GLuint texture) { glBindTexture(target, texture); }
@@ -112,5 +112,12 @@ VIKR_FORCEINLINE void ActiveTexture(GLenum texture) { glActiveTexture(texture); 
 VIKR_FORCEINLINE void GenerateMipmap(GLenum target) { glGenerateMipmap(target); }
 VIKR_FORCEINLINE void TexParameteri(GLenum target, GLenum pname, GLint param) { glTexParameteri(target, pname, param); }
 VIKR_FORCEINLINE void DrawArrays(GLenum mode, GLint first, GLsizei count) { glDrawArrays(mode, first, count); }
+
+VIKR_FORCEINLINE void GLEnable(GLenum cap) { glEnable(cap); }
+VIKR_FORCEINLINE void GLDisable(GLenum cap) { glDisable(cap); }
+VIKR_FORCEINLINE void GLDepthFunc(GLenum func) { glDepthFunc(func); }
+VIKR_FORCEINLINE void GLFrontFace(GLenum face) { glFrontFace(face); }
+VIKR_FORCEINLINE void GLCullFace(GLenum face) { glCullFace(face); }
+VIKR_FORCEINLINE void GLBlendFunc(GLenum sfactor, GLenum dfactor) { glBlendFunc(sfactor, dfactor); }
 } // vikr
 #endif // __VIKR_OPENGL_HPP

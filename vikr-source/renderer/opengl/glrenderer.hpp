@@ -35,6 +35,8 @@ public:
 
   vint32 Init() override;
   vvoid Render() override;
+  vint32 StoreShader(std::string shader_name, std::string fs, std::string vs) override;
+  Shader *GetShader(std::string shader_name) override;
 
   vint32 ExecuteMeshCommand(MeshCommand *cmd);
 

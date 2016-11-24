@@ -4,23 +4,27 @@
 #ifndef __VIKR_GLSL_LINKER_HPP
 #define __VIKR_GLSL_LINKER_HPP
 
-#include <shader/shader_linker.hpp>
+#include <platform/vikr_types.hpp>
+#include <platform/vikr_api.hpp>
 
 namespace vikr {
 
 
 class GLSLCompiler;
+class Shader;
 
 
-class GLSLLinker : public ShaderLinker {
+class GLSLLinker {
 public:
   GLSLLinker(Shader *shader);
 
-  vint32 Link(IShaderCompiler *vs, IShaderCompiler *fs, IShaderCompiler *gs = nullptr) override;
+  vint32 Link(GLSLCompiler *vs, GLSLCompiler *fs, GLSLCompiler *gs = nullptr);
 
-  GLSLCompiler *ToCompiler(IShaderCompiler *c);  
-
+  vbool IsLinked() { return is_linked; }
 private:
+  Shader *shader;
+
+  vbool is_linked = false;
 };
 } // vikr
 #endif // __VIKR_GLSL_LINKER_HPP

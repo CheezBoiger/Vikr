@@ -30,18 +30,14 @@ set(VIKR_GLOB
   ${VIKR_SHADER_GLSL_DIR}/glsl_compiler.cpp
   ${VIKR_SHADER_GLSL_DIR}/glsl_linker.hpp
   ${VIKR_SHADER_GLSL_DIR}/glsl_linker.cpp
-  ${VIKR_SHADER_GLSL_DIR}/glsl_parser.hpp
-  ${VIKR_SHADER_GLSL_DIR}/glsl_parser.cpp)
+  ${VIKR_SHADER_GLSL_DIR}/glsl_shader.hpp
+  ${VIKR_SHADER_GLSL_DIR}/glsl_shader.cpp)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_SHADER_DIR}/shader_parser.hpp
-  ${VIKR_SHADER_DIR}/shader_parser.cpp
   ${VIKR_SHADER_DIR}/shader_config.hpp
   ${VIKR_SHADER_DIR}/shader.hpp
   ${VIKR_SHADER_DIR}/shader.cpp
-  ${VIKR_SHADER_DIR}/shader_compiler.hpp
-  ${VIKR_SHADER_DIR}/shader_linker.hpp
   ${VIKR_SHADER_DIR}/material.hpp
   ${VIKR_SHADER_DIR}/material.cpp
   ${VIKR_SHADER_DIR}/texture.hpp

@@ -7,18 +7,4 @@
 namespace vikr {
 
 
-VKRenderer::VKRenderer()
-  : Renderer(vikr_VULKAN)
-{
-}
-
-
-vint32 VKRenderer::Init() {
-  VikrLog::DisplayMessage(VIKR_ERROR, "Not Implemented!");
-  return false;
-}
-
-vvoid VKRenderer::Render() {
-  VikrLog::DisplayMessage(VIKR_ERROR, "Not Implemented!");
-}
 } // vikr

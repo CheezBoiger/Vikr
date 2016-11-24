@@ -4,7 +4,8 @@
 #ifndef __VIKR_GLSL_COMPILER_H
 #define __VIKR_GLSL_COMPILER_H
 
-#include <shader/shader_compiler.hpp>
+#include <platform/vikr_types.hpp>
+#include <platform/vikr_api.hpp>
 #include <string>
 
 
@@ -24,21 +25,21 @@ enum VikrGLPipelineStage {
 /**
   GLSL Shader object for OpenGL. Try not to design it as a Template!
 */
-class GLSLCompiler : public IShaderCompiler {
+class GLSLCompiler {
 public:
   GLSLCompiler(VikrGLPipelineStage stage = vikr_VERTEX_SHADER, std::string filepath = "");
-
-  vvoid Compile() override;
-  vvoid Cleanup() override { DeleteShader(shader_id); }
+  /**
+    Compile the shader and it's filepath.
+  */
+  vvoid Compile();
+  vvoid Cleanup() { DeleteShader(shader_id); }
   VikrGLPipelineStage GetPipelineStage() { return pipeline_stage; }
-  vuint32 GetShaderId() override { return shader_id; }
-  vbool IsCompiled() override { return compiled; }
-  ShaderCompilerType GetShaderType() override { return shader_type; }
+  vuint32 GetShaderId() { return shader_id; }
+  vbool IsCompiled() { return compiled; }
 
 private:
   vvoid LoadShaderFile(std::string filepath);
   VikrGLPipelineStage pipeline_stage;
-  ShaderCompilerType shader_type;
   
   vuint32 shader_id;
   vbool compiled;

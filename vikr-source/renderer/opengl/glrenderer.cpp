@@ -3,17 +3,26 @@
 //
 #include <renderer/opengl/glrenderer.hpp>
 #include <renderer/renderer.hpp>
+
 #include <shader/material.hpp>
-#include <shader/shader.hpp>
+#include <shader/glsl/glsl_shader.hpp>
+#include <shader/glsl/gl_texture.hpp>
+
 #include <renderer/render_command.hpp>
 #include <renderer/mesh_command.hpp>
+
 #include <mesh/mesh.hpp>
+
 #include <scene/camera.hpp>
+
 #include <util/vikr_log.hpp>
+
 #include <glm/gtc/type_ptr.hpp>
-#include <shader/texture.hpp>
+
 #include <lighting/point_light.hpp>
 #include <lighting/light.hpp>
+
+#include <resources/opengl/gl_resources.hpp>
 
 namespace vikr {
 
@@ -26,6 +35,19 @@ GLRenderer::GLRenderer()
 
 vint32 GLRenderer::Init() {
   return true;
+}
+
+vint32 GLRenderer::StoreShader(std::string shader_name, std::string vs, std::string fs) {
+  GLSLShader shader;
+  shader.Compile(vs, fs);
+  if (shader.IsLinked()) {
+    return GLResources::StoreShader(shader_name, &shader);
+  }
+}
+
+
+Shader *GLRenderer::GetShader(std::string shader_name) {
+  return GLResources::GetShader(shader_name);
 }
 
 
@@ -127,25 +149,25 @@ GLenum GLRenderer::GetCullFace(CullFace face) {
 vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
   Material *material = mesh_cmd->GetMesh()->GetMaterial();
   if (material->HasDepth()) {
-    glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));
+    GLEnable(GL_DEPTH_TEST);
+    GLDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));
   } else {
-    glEnable(GL_DEPTH_TEST);
+    GLEnable(GL_DEPTH_TEST);
+    GLEnable(GL_CULL_FACE);
   }
   if (material->IsCulling()) {
-    glEnable(GL_CULL_FACE);
-    glFrontFace(GLRenderer::GetFrontFace(material->GetFrontFace()));
-    glCullFace(GLRenderer::GetCullFace(material->GetCullFace()));
+    GLFrontFace(GLRenderer::GetFrontFace(material->GetFrontFace()));
+    GLCullFace(GLRenderer::GetCullFace(material->GetCullFace()));
   } else {
-    glDisable(GL_CULL_FACE);
+    GLDisable(GL_CULL_FACE);
   }
   
   if (material->IsBlending()) {
-    glEnable(GL_BLEND);
-    glBlendFunc(GLRenderer::GetBlendFunct(material->GetBlendSrc()), 
+    GLEnable(GL_BLEND);
+    GLBlendFunc(GLRenderer::GetBlendFunct(material->GetBlendSrc()), 
                 GLRenderer::GetBlendFunct(material->GetBlendDst()));
   } else {
-    glDisable(GL_BLEND);
+    GLDisable(GL_BLEND);
   }
 
   if(material) {
@@ -156,12 +178,12 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
                     literally hardcoded and needs to be redesigned!
      */
 
-    shader->SetMat4("view", camera->GetView());
-    shader->SetMat4("projection", camera->GetProjection());
-    shader->SetMat4("model", mesh_cmd->GetTransform());
-    shader->SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
-    shader->SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
-    shader->SetVector3fv("view_pos", glm::vec3(camera->GetPos().x, camera->GetPos().y, camera->GetPos().z));
+    shader->SetValue("view", camera->GetView());
+    shader->SetValue("projection", camera->GetProjection());
+    shader->SetValue("model", mesh_cmd->GetTransform());
+    shader->SetValue("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
+    shader->SetValue("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
+    shader->SetValue("view_pos", glm::vec3(camera->GetPos().x, camera->GetPos().y, camera->GetPos().z));
     /*
         Algorithm to light a scene!
         1. Render Directional lights first
@@ -177,14 +199,14 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
       std::string constant = "constant";
       std::string linear = "linear";
       std::string quadratic = "quadratic";
-      shader->SetBool("blinn", true);
-      shader->SetVector3fv(position, pointlights[i]->GetPos());
-      shader->SetVector3fv(ambient, glm::vec3(0.05f, 0.05f, 0.05f));
-      shader->SetVector3fv(diffuse, glm::vec3(0.8f, 0.8f, 0.8f));
-      shader->SetVector3fv(specular, glm::vec3(1.0f, 1.0f, 1.0f));
-      shader->SetFloat(constant, 1.0f);
-      shader->SetFloat(linear, 0.09f);
-      shader->SetFloat(quadratic, 0.032f);
+      shader->SetValue("blinn", true);
+      shader->SetValue(position, pointlights[i]->GetPos());
+      shader->SetValue(ambient, glm::vec3(0.05f, 0.05f, 0.05f));
+      shader->SetValue(diffuse, glm::vec3(0.8f, 0.8f, 0.8f));
+      shader->SetValue(specular, glm::vec3(1.0f, 1.0f, 1.0f));
+      shader->SetValue(constant, 1.0f);
+      shader->SetValue(linear, 0.09f);
+      shader->SetValue(quadratic, 0.032f);
     }
     /**
       Require multiple texture targets!

@@ -54,7 +54,7 @@ vvoid Material::SetTexture(std::string name, Texture *texture, vuint32 i) {
     }
     if (m_shader) {
       m_shader->Use();
-      m_shader->SetInt(name, i); 
+      m_shader->SetValue(name, (vint32)i); 
     }
   }
 }

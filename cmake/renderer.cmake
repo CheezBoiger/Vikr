@@ -39,6 +39,7 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/viewport.hpp
   ${VIKR_RENDERER_DIR}/blendmode.hpp
   ${VIKR_RENDERER_DIR}/depthmode.hpp
+  ${VIKR_RENDERER_DIR}/stencildepth.hpp
   ${VIKR_RENDERER_DIR}/program_state.hpp
   ${VIKR_RENDERER_DIR}/program_state.cpp
   ${VIKR_RENDERER_DIR}/framebuffer.hpp

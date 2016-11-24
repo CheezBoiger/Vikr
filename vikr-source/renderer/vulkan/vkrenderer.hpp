@@ -10,17 +10,5 @@
 namespace vikr {
 
 
-
-class VKRenderer : public Renderer {
-public:
-  VKRenderer();
-
-  vint32 Init() override;
-
-  vvoid Render() override;
-private: 
-
-  VIKR_DISALLOW_COPY_AND_ASSIGN(VKRenderer);
-};
 } // vikr
 #endif // __VIKR_VULKAN_RENDERER_HPP

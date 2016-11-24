@@ -4,14 +4,17 @@
 #ifndef __VIKR_SHADER_HPP
 #define __VIKR_SHADER_HPP
 
-#include <shader/shader_compiler.hpp>
-#include <shader/shader_parser.hpp>
-#include <shader/shader_config.hpp>
+#include <platform/vikr_types.hpp>
+#include <platform/vikr_api.hpp>
 #include <glm/glm.hpp>
-#include <unordered_map>
 #include <string>
 
 namespace vikr {
+
+enum ShaderType {
+  vikr_GLSL,
+  vikr_SPIRV
+};
 
 
 /**
@@ -22,46 +25,34 @@ public:
   Shader();
   Shader(Shader&& shader) = default;
   Shader& operator=(Shader&& shader) = default;
+  virtual ~Shader() { }
 
-  vvoid Link(IShaderCompiler* vs, IShaderCompiler* fs, IShaderCompiler* gs = nullptr);
-  vvoid Use() { UseProgram(program); }
-  inline vuint32 GetProgram() { return program; }
-  inline vbool IsLinked() { return is_linked; }
+  virtual vvoid Compile(std::string vs, std::string fs, std::string gs = "") = 0;
+  virtual vvoid Use() = 0;
+  virtual vvoid Cleanup() = 0;
+  vuint32 GetShaderId() { return shader_id; }
+  vbool IsLinked() { return is_linked; }
 
-  vvoid SetInt(std::string name, vint32 value);
-  vvoid SetBool(std::string name, vbool value);
-  vvoid SetVector4fv(std::string name, glm::vec4 value);
-  vvoid SetVector3fv(std::string name, glm::vec3 value);
-  vvoid SetVector2fv(std::string name, glm::vec2 value);
-  vvoid SetFloat(std::string name, vreal32 value);
-  vvoid SetDouble(std::string name, vreal64 value);
-  vvoid SetMat4(std::string name, glm::mat4 value);
-  vvoid SetMat3(std::string name, glm::mat3 value);
-  vvoid SetMat2(std::string name, glm::mat2 value);
+  virtual vvoid SetValue(std::string name, vint32 value) = 0;
+  virtual vvoid SetValue(std::string name, vbool value) = 0;
+  virtual vvoid SetValue(std::string name, vreal32 value) = 0;
+  virtual vvoid SetValue(std::string name, vreal64 value) = 0;
+  virtual vvoid SetValue(std::string name, glm::vec2 value) = 0;
+  virtual vvoid SetValue(std::string name, glm::vec3 value) = 0;
+  virtual vvoid SetValue(std::string name, glm::vec4 value) = 0;
+  virtual vvoid SetValue(std::string name, glm::mat2 value) = 0;
+  virtual vvoid SetValue(std::string name, glm::mat3 value) = 0;
+  virtual vvoid SetValue(std::string name, glm::mat4 value) = 0;
 
 
-  vint32 GetNumberOfUniforms() { return m_uniforms.size(); }
-  vint32 GetNumberOfAttribs() { return m_attribs.size(); }
+  ShaderType GetShaderType() { return shader_type; }
 
-  ShaderCompilerType GetShaderType() { return shader_type; }
+protected:
 
-  vvoid InsertUniform(Uniform &uniform);
-  vvoid InsertAttribute(VertexAttrib &attrib);
+  ShaderType shader_type;
 
-  Uniform *GetUniform(std::string name);
-  VertexAttrib *GetAttrib(std::string name);
-
-private:
-  vvoid ParseActiveUniforms();
-  vvoid ParseActiveAttribs();
-
-  ShaderCompilerType shader_type;
-  std::unique_ptr<ShaderParser> m_parser;
-
-  vuint32 program;
+  vuint32 shader_id;
   vbool is_linked;
-  std::unordered_map<std::string, std::pair<std::string, Uniform> >      m_uniforms;
-  std::unordered_map<std::string, std::pair<std::string, VertexAttrib> > m_attribs;
   VIKR_DISALLOW_COPY_AND_ASSIGN(Shader);
 };
 } // vikr

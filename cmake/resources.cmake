@@ -12,7 +12,8 @@ endif()
 # OpenGL always supported!
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_RESOURCES_OPENGL_DIR}/gl_resources.hpp)
+  ${VIKR_RESOURCES_OPENGL_DIR}/gl_resources.hpp
+  ${VIKR_RESOURCES_OPENGL_DIR}/gl_resources.cpp)
 
 
 set (VIKR_GLOB

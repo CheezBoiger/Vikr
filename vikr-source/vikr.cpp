@@ -25,8 +25,6 @@ Renderer *InitVikrEngine(GraphicsPipeline pipeline) {
     }
     break;
     case vikr_VULKAN: {
-      VKRenderer *vk = new VKRenderer();
-      delete vk; vk = nullptr; // delete for now.
       VikrLog::DisplayMessage(VIKR_ERROR, "Vulkan renderer not yet written!");
     }
     break;
