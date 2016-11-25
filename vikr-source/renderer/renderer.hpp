@@ -6,6 +6,7 @@
 
 #include <renderer/irenderer.hpp>
 #include <renderer/render_queue.hpp>
+#include <shader/texture_config.hpp>
 #include <shader/shader.hpp>
 #include <glm/glm.hpp>
 #include <string>
@@ -20,6 +21,7 @@ class Light;
 class RenderTarget;
 class PointLight;
 class Material;
+class Texture;
 
 
 /**
@@ -55,6 +57,7 @@ public:
 
   virtual vint32 StoreShader(std::string shader_name, std::string fs, std::string vs) = 0;
   virtual Shader *GetShader(std::string shader_name) = 0;
+  virtual Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) = 0;
 
   //virtual Material *CreateMaterial(std::string name) = 0;
 

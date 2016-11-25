@@ -19,7 +19,7 @@ struct PointLight {
 };
 
 
-//uniform sampler2D tex;
+//uniform sampler2D texas;
 uniform vec3 view_pos;
 uniform vec3 obj_specular;
 uniform vec3 obj_diffuse;
@@ -77,4 +77,5 @@ void main() {
   light.specular = light_specular;
   result = CalculatePointLight(light, norm, FragCoords, view_dir);
   color = vec4(result, 1.0f); 
+  //color = vec4(texture(texas, TexCoords));
 }

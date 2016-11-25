@@ -13,6 +13,9 @@
 namespace vikr {
 
 
+class Mesh;
+
+
 enum LightType {
   vikr_DIRECTIONLIGHT,
   vikr_POINTLIGHT,
@@ -37,10 +40,15 @@ public:
 
   LightType GetLightType() { return type; }
 
+  Mesh *GetMesh() { return light_mesh; }
+  vvoid SetMesh(Mesh *mesh) { light_mesh = mesh; }
+  
 protected:
   LightType type;
   glm::vec3 m_color;
   glm::vec3 m_position;
+
+  Mesh *light_mesh;
 };
 }
 #endif // __VIKR_LIGHT_HPP

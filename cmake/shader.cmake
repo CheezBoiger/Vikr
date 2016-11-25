@@ -40,11 +40,9 @@ set(VIKR_GLOB
   ${VIKR_SHADER_DIR}/shader.cpp
   ${VIKR_SHADER_DIR}/material.hpp
   ${VIKR_SHADER_DIR}/material.cpp
+  ${VIKR_SHADER_DIR}/texture_config.hpp
   ${VIKR_SHADER_DIR}/texture.hpp
   ${VIKR_SHADER_DIR}/texture.cpp
-  ${VIKR_SHADER_DIR}/texture1d.hpp
-  ${VIKR_SHADER_DIR}/texture2d.hpp
-  ${VIKR_SHADER_DIR}/texture3d.hpp
   ${VIKR_SHADER_DIR}/cubemap.hpp)
 
 

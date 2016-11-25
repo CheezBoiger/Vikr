@@ -1,3 +1,8 @@
-﻿  glsl_shader.cpp
+﻿  glrenderer.cpp
+  renderer.cpp
+  vkrenderer.cpp
+  vikr.cpp
+  Generating Code...
+d:\cmgarcia\github\vikr\vikr-source\renderer\opengl\glrenderer.cpp(43): warning C4715: 'vikr::GLRenderer::StoreShader': not all control paths return a value
 vkrenderer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
   Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Debug\Vikr_v0.01.lib

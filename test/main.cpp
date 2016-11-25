@@ -7,6 +7,7 @@
 #include <vikr.hpp>
 #include <mesh/mesh.hpp>
 #include <math/shape/cube.hpp>
+#include <math/shape/sphere.hpp>
 #include <util/vikr_log.hpp>
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
@@ -99,6 +100,7 @@ int main(int c, char* args[]) {
   // Initialize the renderer.
   InitVikrEngine(vikr_OPENGL);
   Renderer::GetRenderer()->SetCamera(&camera);
+  Texture *texture = Renderer::GetRenderer()->CreateTexture(vikr_TEXTURE_2D, "awesomeface.png", true);
   Mesh mesh;
   Mesh meshlight;
   Cube cube;
@@ -110,8 +112,12 @@ int main(int c, char* args[]) {
   mesh.SetMaterial(&material);
   meshlight.SetMaterial(&material);
   light.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+  material.SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
+  material.SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
+  material.SetTexture("texas", texture, 0);
+
   // Standard Game Loop
-  vreal32 radius = 1.0f;
+  vreal32 radius = 2.0f;
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
     PollEvents();

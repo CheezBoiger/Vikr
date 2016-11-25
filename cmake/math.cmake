@@ -16,4 +16,6 @@ set(VIKR_GLOB
   ${VIKR_SHAPE_DIR}/cube.hpp
   ${VIKR_SHAPE_DIR}/cube.cpp
   ${VIKR_SHAPE_DIR}/quad.hpp
-  ${VIKR_SHAPE_DIR}/quad.cpp)
+  ${VIKR_SHAPE_DIR}/quad.cpp
+  ${VIKR_SHAPE_DIR}/sphere.hpp
+  ${VIKR_SHAPE_DIR}/sphere.cpp)

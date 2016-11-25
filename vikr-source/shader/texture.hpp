@@ -7,51 +7,10 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <shader/stb/stb_image.h>
+#include <shader/texture_config.hpp>
 #include <string>
 
 namespace vikr {
-
-
-/**
-  Texture wrap mode depending on the 
-  s, t, r texture coordinates.
-*/
-enum TextureWrapMode {
-  vikr_TEXTURE_REPEAT,
-  vikr_TEXTURE_MIRRORED_REPEAT,
-  vikr_TEXTURE_CLAMP_TO_EDGE,
-  vikr_TEXTURE_CLAMP_TO_BORDER
-};
-
-
-/**
-  Filter mode, depending on distance from the view.
-*/
-enum TextureFilterMode {
-  vikr_TEXTURE_NEAREST,
-  vikr_TEXTURE_LINEAR,
-  vikr_TEXTURE_NEAREST_MIPMAP_NEAREST,
-  vikr_TEXTURE_LINEAR_MIPMAP_NEAREST,
-  vikr_TEXTURE_LINEAR_MIPMAP_LINEAR,
-  vikr_TEXTURE_NEAREST_MIPMAP_LINEAR
-};
-
-
-/**
-  Texture type, or target, for the 
-  Texture object.
-*/
-enum TextureTarget {
-  vikr_TEXTURE_2D,
-  vikr_TEXTURE_3D,
-  vikr_TEXTURE_CUBEMAP
-};
-
-
-enum TextureFormat {
-  vikr_RGB,
-  vikr_RGBA
-};
 
 
 /**
@@ -61,6 +20,10 @@ class Texture {
 protected:
   static const std::string kDefaultName;
 public:
+  Texture() { }
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(Texture);
+
+  virtual ~Texture() { }
   /**
     Generates bytecode for the provided image;
   */

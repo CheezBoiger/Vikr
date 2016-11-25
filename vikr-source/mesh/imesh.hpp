@@ -14,7 +14,6 @@ namespace vikr {
 
 
 class Material;
-class Texture;
 class MeshCommand;
 
 
@@ -37,10 +36,9 @@ enum MeshDrawMode {
   vikr_LINE_LOOP,
   vikr_LINES,
   vikr_TRIANGLE_STRIP,
-  vikr_TRIANGE_FAN,
+  vikr_TRIANGLE_FAN,
   vikr_TRIANGLES,
-  vikr_QUAD_STRIP,
-  vikr_QUADS,
+  vikr_TRIANGLE_STRIP_ADJACENCY,
   vikr_POLYGON,
 };
 
@@ -63,7 +61,6 @@ public:
   virtual vuint32 GetVAO() = 0;
   virtual vuint32 GetVBO() = 0;
   virtual vuint32 GetEBO() = 0;
-  virtual Texture *GetTexture() = 0;
   virtual GraphicsPipeline GetRenderType() = 0;
 };
 } // vikr

@@ -6,22 +6,19 @@
 
 #include <shader/material.hpp>
 #include <shader/glsl/glsl_shader.hpp>
+#include <shader/stb/stb_image.h>
 #include <shader/glsl/gl_texture.hpp>
-
+#include <shader/glsl/gl_texture1d.hpp>
+#include <shader/glsl/gl_texture2d.hpp>
+#include <shader/glsl/gl_texture3d.hpp>
 #include <renderer/render_command.hpp>
 #include <renderer/mesh_command.hpp>
-
 #include <mesh/mesh.hpp>
-
 #include <scene/camera.hpp>
-
 #include <util/vikr_log.hpp>
-
 #include <glm/gtc/type_ptr.hpp>
-
 #include <lighting/point_light.hpp>
 #include <lighting/light.hpp>
-
 #include <resources/opengl/gl_resources.hpp>
 
 namespace vikr {
@@ -48,6 +45,27 @@ vint32 GLRenderer::StoreShader(std::string shader_name, std::string vs, std::str
 
 Shader *GLRenderer::GetShader(std::string shader_name) {
   return GLResources::GetShader(shader_name);
+}
+
+
+Texture *GLRenderer::CreateTexture(TextureTarget target, std::string img_path, vbool alpha) {
+  Texture *texture = nullptr;
+  vint32 width = 0;
+  vint32 height = 0;
+  vint32 depth = 0;
+  vbyte *bytecode = stbi_load(img_path.c_str(), &width, &height, &depth,
+                              alpha ? STBI_rgb_alpha : STBI_rgb);
+  switch (target) {
+    case vikr_TEXTURE_1D: texture = new GLTexture2D(width); break;
+    case vikr_TEXTURE_2D: texture = new GLTexture2D(width, height); break;
+    case vikr_TEXTURE_3D: texture = new GLTexture3D(width, height, depth); break;
+    case vikr_TEXTURE_CUBEMAP: // not implemented yet.
+    default: break;
+  }
+  if (texture) {
+    texture->Create(bytecode);
+  }
+  return texture;
 }
 
 
@@ -152,10 +170,10 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
     GLEnable(GL_DEPTH_TEST);
     GLDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));
   } else {
-    GLEnable(GL_DEPTH_TEST);
-    GLEnable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
   }
   if (material->IsCulling()) {
+    glEnable(GL_CULL_FACE);
     GLFrontFace(GLRenderer::GetFrontFace(material->GetFrontFace()));
     GLCullFace(GLRenderer::GetCullFace(material->GetCullFace()));
   } else {
@@ -177,12 +195,9 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
       TODO(Garcia): Lights need to be individually rendered for each object pass. This is 
                     literally hardcoded and needs to be redesigned!
      */
-
     shader->SetValue("view", camera->GetView());
     shader->SetValue("projection", camera->GetProjection());
     shader->SetValue("model", mesh_cmd->GetTransform());
-    shader->SetValue("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
-    shader->SetValue("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
     shader->SetValue("view_pos", glm::vec3(camera->GetPos().x, camera->GetPos().y, camera->GetPos().z));
     /*
         Algorithm to light a scene!
@@ -211,8 +226,37 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
     /**
       Require multiple texture targets!
     */
+    std::map<std::string, TextureSampler> *samplers = material->GetUniformSamplers();
+    std::map<std::string, MaterialValue> *uniforms = material->GetMaterialValues();
+    for (std::map<std::string, TextureSampler>::iterator it = samplers->begin();
+         it != samplers->end(); ++it) {
+      it->second.texture->Bind(it->second.i);
+      
+    }
+    for (std::map<std::string, MaterialValue>::iterator it = uniforms->begin();
+         it != uniforms->end(); ++it) {
+      switch (it->second.type) {
+        case vikr_INT:    shader->SetValue(it->first, it->second.m_integer); break;
+        case vikr_FLOAT:  shader->SetValue(it->first, it->second.m_float); break;
+        case vikr_DOUBLE: shader->SetValue(it->first, it->second.m_double); break;
+        case vikr_BOOL:   shader->SetValue(it->first, it->second.m_bool); break;
+        case vikr_VEC2:   shader->SetValue(it->first, it->second.m_vec2); break;
+        case vikr_VEC3:   shader->SetValue(it->first, it->second.m_vec3); break;
+        case vikr_VEC4:   shader->SetValue(it->first, it->second.m_vec4); break;
+        case vikr_MAT2:   shader->SetValue(it->first, it->second.m_mat2); break;
+        case vikr_MAT3:   shader->SetValue(it->first, it->second.m_mat3); break;
+        case vikr_MAT4:   shader->SetValue(it->first, it->second.m_mat4); break;
+        default:          shader->SetValue(it->first, it->second.m_integer); break;
+      }
+    }
+    vuint32 vertices = mesh_cmd->GetMesh()->GetVertices().size();
     BindVertexArray(mesh_cmd->GetMesh()->GetVAO());
-    DrawArrays(GL_TRIANGLES, 0, mesh_cmd->GetMesh()->GetVertices().size());
+    switch (mesh_cmd->GetMesh()->GetMeshMode()) {
+      case vikr_TRIANGLES: DrawArrays(GL_TRIANGLES, 0, vertices); break;
+      case vikr_TRIANGLE_STRIP: DrawArrays(GL_TRIANGLE_STRIP, 0, vertices); break; 
+      case vikr_TRIANGLE_FAN: DrawArrays(GL_TRIANGLE_FAN, 0, vertices); break;
+      case vikr_TRIANGLE_STRIP_ADJACENCY : DrawArrays(GL_TRIANGLE_STRIP_ADJACENCY, 0, vertices); break;
+    }
     BindVertexArray(0);
   } else {
     VikrLog::DisplayMessage(VIKR_WARNING, "Mesh command rendered with unknown material!!");

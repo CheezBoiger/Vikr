@@ -124,7 +124,9 @@ protected:
   BlendFunc m_blend_src;
   BlendFunc m_blend_dst;
   BlendEq m_blend_equation;
-  
+  /**
+    Current Render Pipeline. 
+  */
   GraphicsPipeline pipeline;
   /**
     Keep track of the uniforms and samplers of the shader. These values get called by the renderer

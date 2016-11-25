@@ -38,6 +38,8 @@ public:
   vint32 StoreShader(std::string shader_name, std::string fs, std::string vs) override;
   Shader *GetShader(std::string shader_name) override;
 
+  Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;
+
   vint32 ExecuteMeshCommand(MeshCommand *cmd);
 
 private:
