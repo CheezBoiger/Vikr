@@ -1,5 +1,7 @@
 #version 430 core
 
+#include "test.glsl"
+
 in vec3 Normal;
 in vec3 Position;
 in vec2 TexCoords;
@@ -19,8 +21,8 @@ struct PointLight {
 };
 
 
-//uniform sampler2D tex;
-uniform vec3 view_pos;
+//uniform sampler2D texas;
+uniform vec3 vikr_camPosition;
 uniform vec3 obj_specular;
 uniform vec3 obj_diffuse;
 uniform bool blinn;
@@ -65,7 +67,7 @@ vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 vi
 
 void main() {
   vec3 norm = normalize(Normal);
-  vec3 view_dir = normalize(view_pos - FragCoords);
+  vec3 view_dir = normalize(vikr_camPosition - FragCoords);
   vec3 result = vec3(0.0f);
   PointLight light;
   light.position = light_pos;
@@ -77,4 +79,5 @@ void main() {
   light.specular = light_specular;
   result = CalculatePointLight(light, norm, FragCoords, view_dir);
   color = vec4(result, 1.0f); 
+  //color = vec4(texture(texas, TexCoords));
 }

@@ -28,6 +28,7 @@ public:
   virtual ~Shader() { }
 
   virtual vvoid Compile(std::string vs, std::string fs, std::string gs = "") = 0;
+  vvoid SetIncludeSearchPath(std::string path) { include_searchpath = path; }
   virtual vvoid Use() = 0;
   virtual vvoid Cleanup() = 0;
   vuint32 GetShaderId() { return shader_id; }
@@ -50,6 +51,7 @@ public:
 protected:
 
   ShaderType shader_type;
+  std::string include_searchpath        = ".";
 
   vuint32 shader_id;
   vbool is_linked;

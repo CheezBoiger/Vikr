@@ -12,26 +12,15 @@ namespace vikr {
 
 GLSLCompiler::GLSLCompiler(VikrGLPipelineStage stage, std::string filepath) 
   : pipeline_stage(stage)
-  , compiled(false) {
-  LoadShaderFile(filepath);
+  , compiled(false) 
+  , filepath(filepath)
+{
 }
 
 
-vvoid GLSLCompiler::LoadShaderFile(std::string filepath) {
+vvoid GLSLCompiler::LoadShaderFile() {
   // This needs to go into filesystem insteam.
-  std::string shader_code;
-  std::ifstream shader_file;
-  shader_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-  try {
-    shader_file.open(filepath);
-    std::stringstream shaderstream;
-    shaderstream << shader_file.rdbuf();
-    shader_file.close();
-    shader_code = shaderstream.str();
-  } catch (std::ifstream::failure e) {
-    // must debug...
-  }
-  // We can preprocess here!
+  std::string shader_code = preprocessor.Preprocess(filepath);
   const GLchar* shader_code_c = shader_code.c_str();
   shader_id = CreateShader(pipeline_stage);
   ShaderSource(shader_id, 1, &shader_code_c, NULL);
@@ -39,6 +28,7 @@ vvoid GLSLCompiler::LoadShaderFile(std::string filepath) {
 
 
 vvoid GLSLCompiler::Compile() {
+  LoadShaderFile();
   vint32 success;
   GLchar log[1024];
   CompileShader(shader_id);

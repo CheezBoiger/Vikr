@@ -4,6 +4,7 @@
 #ifndef __VIKR_GLSL_COMPILER_H
 #define __VIKR_GLSL_COMPILER_H
 
+#include <shader/glsl/glsl_preprocessor.hpp>
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <string>
@@ -37,12 +38,19 @@ public:
   vuint32 GetShaderId() { return shader_id; }
   vbool IsCompiled() { return compiled; }
 
+  GLSLPreprocessor *GetPreprocessor() { return &preprocessor; }
+
+  std::string GetFilePath() { return filepath; }
+  vvoid SetFilePath(std::string path) { filepath = path; }
+
 private:
-  vvoid LoadShaderFile(std::string filepath);
+  vvoid LoadShaderFile();
+  std::string filepath;
   VikrGLPipelineStage pipeline_stage;
   
   vuint32 shader_id;
   vbool compiled;
+  GLSLPreprocessor preprocessor;
 };
 } // vikr
 #endif // __VIKR_GLSL_COMPILER_HPP

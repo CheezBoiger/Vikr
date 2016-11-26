@@ -278,6 +278,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\vk.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\graphics.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vulkan\vkrenderer.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\gl_rendertarget.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\glrenderer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\irenderer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.hpp" />
@@ -343,6 +344,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vulkan\vkrenderer.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\gl_rendertarget.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\glrenderer.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_command.cpp"  />

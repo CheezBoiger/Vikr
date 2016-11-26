@@ -43,6 +43,9 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vulkan\vkrenderer.cpp">
       <Filter>vikr-source\renderer\vulkan</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\gl_rendertarget.cpp">
+      <Filter>vikr-source\renderer\opengl</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\glrenderer.cpp">
       <Filter>vikr-source\renderer\opengl</Filter>
     </ClCompile>
@@ -213,6 +216,9 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\vulkan\vkrenderer.hpp">
       <Filter>vikr-source\renderer\vulkan</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\gl_rendertarget.hpp">
+      <Filter>vikr-source\renderer\opengl</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\glrenderer.hpp">
       <Filter>vikr-source\renderer\opengl</Filter>
     </ClInclude>
@@ -356,17 +362,17 @@
     <CustomBuild Include="D:\cmgarcia\github\Vikr\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="vikr-source\math\alg">
-      <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\math\shape">
-      <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vikr-source\mesh\vulkan">
       <UniqueIdentifier>{93140204-4E55-46D7-B1FD-EAF4F1A7E0D6}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\mesh\opengl">
       <UniqueIdentifier>{3D2B60C5-DF0C-4E44-BC3B-9843DF1088FA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\math\alg">
+      <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\math\shape">
+      <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\platform\graphics">
       <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>

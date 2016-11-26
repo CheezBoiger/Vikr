@@ -19,6 +19,7 @@ namespace vikr {
 */
 class Mesh : public IMesh {
   static const std::string kDefaultName;
+  VIKR_DISALLOW_COPY_AND_ASSIGN(Mesh);
 public:
   Mesh();
   Mesh(std::vector<glm::vec3> positions, 
@@ -26,6 +27,8 @@ public:
        std::vector<glm::vec2> uvs,
        std::vector<vuint32> indices = std::vector<vuint32>(),
        MeshDrawMode draw_mode = vikr_TRIANGLES);
+
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(Mesh);
 
   vvoid Create() override;
   vvoid Create(std::vector<glm::vec3> positions, 

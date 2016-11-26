@@ -30,26 +30,26 @@ namespace vikr {
 /**
   Model is a class intended for importing various different 
   graphical models that are imported from graphics software like
-  Maya, 3DSMax, and Blender. 
+  Maya, 3DSMax, and Blender. IT is abstract, for it must be 
+  defined by the renderer api you plan to use.
 */
 class Model {
 public:
-  Model(std::string path);
+  virtual ~Model() { }
 
-  
+  GroupCommand *GetGroupCommand() { return &m_command; }
 
 protected:
   vvoid LoadModel(std::string path);
   vvoid ProcessNode(aiNode *node, const aiScene *scene);
-  Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
-  std::vector<Texture> LoadMaterialTextures(aiMaterial *material, aiTextureType type, std::string type_name);
+  virtual Mesh *ProcessMesh(aiMesh *mesh, const aiScene *scene) = 0;
+  virtual std::vector<Texture *> LoadMaterialTextures(aiMaterial *material, aiTextureType type, std::string type_name) = 0;
 
 private:
 
   GroupCommand m_command;
-
-  std::vector<Mesh> m_meshes;
-  std::vector<Texture> m_textures;
+  std::string directory;
+  std::vector<std::pair<Mesh *, std::vector<Texture *> > > renderables;
 
 };
 } // vikr

@@ -55,7 +55,11 @@ public:
   virtual vvoid PushBack(Light *light) override;
   virtual vvoid Sort() override { m_command_list.Sort(); }
 
-  virtual vint32 StoreShader(std::string shader_name, std::string fs, std::string vs) = 0;
+  virtual vint32 StoreShader(std::string shader_name, 
+                             std::string vs, 
+                             std::string fs, 
+                             std::string include_searchpath = ".") = 0;
+
   virtual Shader *GetShader(std::string shader_name) = 0;
   virtual Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) = 0;
 

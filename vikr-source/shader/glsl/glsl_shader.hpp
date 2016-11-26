@@ -30,7 +30,8 @@ public:
   vvoid SetValue(std::string name, glm::mat2 value) override;
   vvoid SetValue(std::string name, glm::mat3 value) override;
   vvoid SetValue(std::string name, glm::mat4 value) override;
-  
+
+private:
 };
 } // vikr
 #endif // __VIKR_GLSL_SHADER_HPP

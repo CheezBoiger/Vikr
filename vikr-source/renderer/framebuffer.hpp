@@ -10,6 +10,9 @@
 namespace vikr {
 
 
+class Texture;
+
+
 class FrameBuffer {
 public:
 
@@ -17,11 +20,18 @@ public:
   FrameBuffer(vuint32 width, vuint32 height);
 
   vvoid SetStencilDepth(vbool stencil_depth) { m_depth_and_stencil = stencil_depth; }
-  
+
+  virtual vvoid Generate() = 0;  
   vuint32 GetWidth() { return m_width; }
   vuint32 GetHeight() { return m_height; }
+  vvoid SetClearColor(glm::vec3 color) { m_clearcolor = color; }
 
-private:
+  glm::vec3 GetClearColor() { return m_clearcolor; }
+  vuint32 GetId() { return m_id; }
+
+
+protected:
+  Texture *m_texture;
   vuint32 m_id;
   vuint32 m_fbo;
   

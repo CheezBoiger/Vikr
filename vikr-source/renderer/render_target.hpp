@@ -22,6 +22,8 @@ public:
   RenderTarget() : m_texture(nullptr) { }
   RenderTarget(vuint32 width, vuint32 height, vbool has_depthstencil);
 
+  virtual vvoid Generate() = 0;
+
   vvoid SetTexture(Texture *texture) { m_texture = texture; }
   vvoid SetWidth(vuint32 width) { m_width = width; }
   vvoid SetHeight(vuint32 height) { m_height = height; }
@@ -29,19 +31,21 @@ public:
   vuint32 GetWidth() { return m_width; }
   vuint32 GetHeight() { return m_height; }
 
-  vbool HasDepthAndStencil() { return depthstencil; }
+  vbool HasDepthAndStencil() { return m_depthstencil; }
+  vvoid SetHasDepthAndStencil(vbool depthstencil) { m_depthstencil = depthstencil; }
 
   Texture *GetTexture() { return m_texture; }
-private:
+  std::vector<Texture *> *GetColorAttachments() { return &m_color_attachments; }
 
-  vvoid Generate();
+protected:
+
   vuint32 m_id;
   Texture *m_texture;
   vuint32 m_width;
   vuint32 m_height;  
-  vbool depthstencil;
+  vbool m_depthstencil;
 
-  std::vector<Texture> m_color_attachments;
+  std::vector<Texture *> m_color_attachments;
 };
 } // vikr
 #endif // __VIKR_RENDER_TARGET_HPP

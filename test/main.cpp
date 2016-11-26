@@ -89,7 +89,7 @@ int main(int c, char* args[]) {
   camera.SetViewport(0, 0, screen_width, screen_height);
   camera.SetClip(0.1, 1000);
   camera.SetFOV(45.0f);
-  camera.SetSpeed(2.0f);
+  camera.SetSpeed(5.0f);
   camera.SetSensitivity(0.50f);
   camera.SetLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
   LoadGlad();
@@ -105,7 +105,7 @@ int main(int c, char* args[]) {
   Mesh meshlight;
   Cube cube;
   PointLight light;
-  Renderer::GetRenderer()->StoreShader("test", "test.vert", "test.frag");
+  Renderer::GetRenderer()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
   Material material(Renderer::GetRenderer()->GetShader("test"));
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   meshlight.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
@@ -118,6 +118,7 @@ int main(int c, char* args[]) {
 
   // Standard Game Loop
   vreal32 radius = 2.0f;
+  vreal32 angle = 0.0f;
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
     PollEvents();
@@ -125,6 +126,8 @@ int main(int c, char* args[]) {
     VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()));
     camera.Update();
     glm::mat4 model;
+    angle += GetDeltaTime() * 100;
+    model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
     mesh.GetMeshCommand()->SetTransform(model);
     light.SetPos(glm::vec3(std::sin(GetTime()) * radius, std::cos(GetTime()) * radius, 0.0f));
     model = glm::mat4();

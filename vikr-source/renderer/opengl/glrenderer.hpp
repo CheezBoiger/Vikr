@@ -35,7 +35,11 @@ public:
 
   vint32 Init() override;
   vvoid Render() override;
-  vint32 StoreShader(std::string shader_name, std::string fs, std::string vs) override;
+  vint32 StoreShader(std::string shader_name, 
+                     std::string vs, 
+                     std::string fs, 
+                     std::string include_path) override;
+
   Shader *GetShader(std::string shader_name) override;
 
   Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;

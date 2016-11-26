@@ -34,12 +34,18 @@ vint32 GLRenderer::Init() {
   return true;
 }
 
-vint32 GLRenderer::StoreShader(std::string shader_name, std::string vs, std::string fs) {
+vint32 GLRenderer::StoreShader(std::string shader_name, 
+                               std::string vs, 
+                               std::string fs, 
+                               std::string include_path) 
+{
   GLSLShader shader;
+  shader.SetIncludeSearchPath(include_path);
   shader.Compile(vs, fs);
   if (shader.IsLinked()) {
     return GLResources::StoreShader(shader_name, &shader);
   }
+  return -1;
 }
 
 
@@ -64,6 +70,7 @@ Texture *GLRenderer::CreateTexture(TextureTarget target, std::string img_path, v
   }
   if (texture) {
     texture->Create(bytecode);
+    texture->SetString(img_path);
   }
   return texture;
 }
@@ -179,7 +186,6 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
   } else {
     GLDisable(GL_CULL_FACE);
   }
-  
   if (material->IsBlending()) {
     GLEnable(GL_BLEND);
     GLBlendFunc(GLRenderer::GetBlendFunct(material->GetBlendSrc()), 
@@ -191,14 +197,12 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
   if(material) {
     Shader *shader = material->GetShader();
     shader->Use();
-    /**
-      TODO(Garcia): Lights need to be individually rendered for each object pass. This is 
-                    literally hardcoded and needs to be redesigned!
-     */
-    shader->SetValue("view", camera->GetView());
-    shader->SetValue("projection", camera->GetProjection());
-    shader->SetValue("model", mesh_cmd->GetTransform());
-    shader->SetValue("view_pos", glm::vec3(camera->GetPos().x, camera->GetPos().y, camera->GetPos().z));
+    shader->SetValue("vikr_view", camera->GetView());
+    shader->SetValue("vikr_projection", camera->GetProjection());
+    shader->SetValue("vikr_model", mesh_cmd->GetTransform());
+    shader->SetValue("vikr_camPosition", glm::vec3(camera->GetPos().x, 
+                                                   camera->GetPos().y, 
+                                                   camera->GetPos().z));
     /*
         Algorithm to light a scene!
         1. Render Directional lights first

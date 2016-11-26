@@ -40,6 +40,7 @@ public:
   TextureWrapMode GetWrapR() { return m_wrap_r; }
   vbool IsMipmapping() { return m_mipmapping; }
   vint32 GetWidth() { return m_width; }
+  std::string GetPath() { return m_path; }
 
   virtual vint32 Create(vbyte *bytecode) = 0;
 
@@ -55,7 +56,7 @@ public:
   virtual vvoid SetWrapR(TextureWrapMode mode) = 0;
 
   vvoid SetMipmapping(vbool mipmap) { m_mipmapping = mipmap; }
-
+  vvoid SetString(std::string path) { m_path = path; }
   vvoid SetWidth(vint32 width) { m_width = width; }
 
 protected:
@@ -71,6 +72,7 @@ protected:
   vbool             m_mipmapping                = true;
   vbool             m_alpha                     = true;
   vuint32           m_width                     = 0;
+  std::string       m_path                      = "";
 
 private:
   VIKR_DISALLOW_COPY_AND_ASSIGN(Texture);
