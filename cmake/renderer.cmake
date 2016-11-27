@@ -42,8 +42,7 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/blendmode.hpp
   ${VIKR_RENDERER_DIR}/depthmode.hpp
   ${VIKR_RENDERER_DIR}/stencildepth.hpp
-  ${VIKR_RENDERER_DIR}/program_state.hpp
-  ${VIKR_RENDERER_DIR}/program_state.cpp
+  ${VIKR_RENDERER_DIR}/pass.hpp
   ${VIKR_RENDERER_DIR}/framebuffer.hpp
   ${VIKR_RENDERER_DIR}/framebuffer.cpp
   ${VIKR_RENDERER_DIR}/cullmode.hpp)

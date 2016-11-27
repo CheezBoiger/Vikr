@@ -22,6 +22,7 @@ class RenderTarget;
 class PointLight;
 class Material;
 class Texture;
+class RenderPass;
 
 
 /**
@@ -70,9 +71,6 @@ public:
   glm::vec3 GetClearColor() { return clear_color; }
   vbool IsRendering() { return rendering; }
 
-  vvoid SetCurrentRenderTarget(RenderTarget *target) override { m_current_render_target = target; }
-  RenderTarget *GetCurrentRenderTarget() override { return m_current_render_target; }
-
   virtual vint32 CleanupResources();
 
 protected:
@@ -84,10 +82,8 @@ protected:
     List of commands in the to be rendered.
   */
   RenderQueue<RenderCommand> m_command_list;
-  RenderQueue<PointLight> m_pointlights;
-  RenderQueue<RenderTarget> m_render_targets;
-  
-  RenderTarget *m_current_render_target;
+  std::vector<PointLight *> m_pointlights;
+  std::vector<RenderPass *> m_renderpasses;
   /**
     Currently bound renderer type.
   */

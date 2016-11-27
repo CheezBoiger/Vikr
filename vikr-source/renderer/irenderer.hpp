@@ -23,8 +23,6 @@ public:
   IRenderer() { }
   virtual ~IRenderer() { }
 
-  virtual RenderTarget *GetCurrentRenderTarget() = 0;
-  virtual vvoid SetCurrentRenderTarget(RenderTarget *target) = 0;
   virtual vvoid PushBack(RenderCommand *command) = 0;
   virtual vvoid PushBack(Light *light) = 0;
   virtual vvoid Sort() = 0;

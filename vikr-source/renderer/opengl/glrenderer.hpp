@@ -43,8 +43,16 @@ public:
   Shader *GetShader(std::string shader_name) override;
 
   Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;
-
+  /**
+    Executes the following MeshCommand. This is where we render meshes.
+  */
   vint32 ExecuteMeshCommand(MeshCommand *cmd);
+
+  /**
+    Sets the context of the OpenGL mesh in terms of whether or not 
+    to disable/enable blending, depth, or culling
+  */
+  vvoid SetGLContext(Material *material);
 
 private:
 

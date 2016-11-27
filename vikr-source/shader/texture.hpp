@@ -54,6 +54,7 @@ public:
   virtual vvoid SetWrapS(TextureWrapMode mode) = 0;
   virtual vvoid SetWrapT(TextureWrapMode mode) = 0;
   virtual vvoid SetWrapR(TextureWrapMode mode) = 0;
+  virtual vuint32 GetNativeId() = 0;
 
   vvoid SetMipmapping(vbool mipmap) { m_mipmapping = mipmap; }
   vvoid SetString(std::string path) { m_path = path; }

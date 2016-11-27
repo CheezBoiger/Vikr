@@ -7,7 +7,6 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
-#include <renderer/program_state.hpp>
 #include <vector>
 
 namespace vikr {

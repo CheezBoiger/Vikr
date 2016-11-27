@@ -21,7 +21,6 @@ Renderer *Renderer::renderer = nullptr;
 Renderer::Renderer(GraphicsPipeline pipeline)
   : renderer_type(pipeline)
   , camera(nullptr)
-  , m_current_render_target(nullptr)
   , clear_color(glm::vec3(0.1f, 0.1f, 0.1f)) 
 { 
 }
@@ -36,7 +35,6 @@ vvoid Renderer::PushBack(RenderCommand *command) {
   switch (command->GetCommandType()) {
     case RenderCommandType::RENDER_MESH: {
       MeshCommand *mesh = static_cast<MeshCommand *>(command);
-      mesh->SetRenderTarget(m_current_render_target);
     }
     break;
     default:
@@ -50,7 +48,7 @@ vvoid Renderer::PushBack(Light *command) {
   if (command != nullptr) {
     switch (command->GetLightType()) {
       case vikr_POINTLIGHT:
-        m_pointlights.PushBack(static_cast<PointLight *>(command));
+        m_pointlights.push_back(static_cast<PointLight *>(command));
       break;
     }
   }

@@ -24,8 +24,6 @@ set(VIKR_GLOB
   ${VIKR_SHADER_GLSL_DIR}/gl_texture2d.cpp
   ${VIKR_SHADER_GLSL_DIR}/gl_texture3d.hpp
   ${VIKR_SHADER_GLSL_DIR}/gl_texture3d.cpp
-  ${VIKR_SHADER_GLSL_DIR}/gl_material.hpp
-  ${VIKR_SHADER_GLSL_DIR}/gl_material.cpp
   ${VIKR_SHADER_GLSL_DIR}/glsl_compiler.hpp
   ${VIKR_SHADER_GLSL_DIR}/glsl_compiler.cpp
   ${VIKR_SHADER_GLSL_DIR}/glsl_linker.hpp

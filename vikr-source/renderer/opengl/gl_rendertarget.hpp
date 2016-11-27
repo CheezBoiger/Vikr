@@ -14,6 +14,7 @@ class GLRenderTarget : public RenderTarget {
 public:
 
   GLRenderTarget();
+
   GLRenderTarget(vuint32 width, vuint32 height);
 
   vvoid Generate() override;
@@ -21,6 +22,8 @@ public:
   vvoid BindDepthStencil() override;
   vvoid BindTexture(vuint32 index) override;
   
+  vvoid Unbind() override;
+  vvoid Bind() override;
 
 private:
 

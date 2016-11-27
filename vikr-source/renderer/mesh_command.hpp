@@ -35,24 +35,24 @@ public:
   vvoid SetRenderTarget(RenderTarget *target) { render_target = target; }
   vvoid SetTransparent(vbool transparent) { is_transparent = transparent; }
   vvoid SetVisibility(vbool invisible) { is_invisible = invisible; } 
-  vvoid SetModel(glm::mat4 transform) { m_model = transform; }
+  vvoid SetTransform(glm::mat4 transform) { m_transform = transform; }
 
-  glm::mat4 GetTransform() { return m_model; }
+  glm::mat4 GetTransform() { return m_transform; }
 
   Material *GetMaterial() { return m_material; }
   vvoid SetMaterial(Material *material) { m_material = material; }
 
 private:
-  vvoid InitModel(glm::mat4 model) { m_model = model; }
+  vvoid InitTransform(glm::mat4 model) { m_transform = model; }
   vbool is_transparent;
   vbool is_invisible;
 
-  // Model matrix.
-  glm::mat4 m_model;
+  // Model transform matrix.
+  glm::mat4 m_transform;
   // weak ref
-  Mesh *m_mesh;
-  Material *m_material;
-  RenderTarget *render_target;
+  Mesh *m_mesh                    = nullptr;
+  Material *m_material            = nullptr;
+  RenderTarget *render_target     = nullptr;
 
   friend class Mesh;
   VIKR_DISALLOW_COPY_AND_ASSIGN(MeshCommand);

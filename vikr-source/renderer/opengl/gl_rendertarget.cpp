@@ -3,6 +3,7 @@
 //
 #include <renderer/opengl/gl_rendertarget.hpp>
 #include <shader/glsl/gl_texture2d.hpp>
+#include <util/vikr_log.hpp>
 
 namespace vikr {
 
@@ -24,7 +25,7 @@ vvoid GLRenderTarget::Generate() {
   }
 
   if (!m_texture) {
-    m_texture = new GLTexture2D(m_width, m_height);
+    m_texture = std::make_unique<GLTexture2D>(GLTexture2D());
     m_texture->Create(0);
   }
 
@@ -38,6 +39,32 @@ vvoid GLRenderTarget::Generate() {
 
 
 vvoid GLRenderTarget::BindTexture(vuint32 index) {
-  glFramebufferTexture2D(GL_FRAMEBUFFER, index, GL_TEXTURE_2D, 0, 0);
+  if (m_texture) {
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_TEXTURE_2D,
+            m_texture->GetNativeId(), 0);
+  } else {
+    VikrLog::DisplayMessage(VIKR_ERROR, "Framebuffer: Texture was not generated to be bound to!");
+  }
+}
+
+
+vvoid GLRenderTarget::BindDepthStencil() {
+  if (m_rbo) {
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+  }
+}
+
+
+vvoid GLRenderTarget::Bind() {
+  if (m_id) { 
+    glBindFramebuffer(GL_FRAMEBUFFER, m_id);
+  }
+}
+
+
+vvoid GLRenderTarget::Unbind() {
+  if (m_id) {
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  }
 }
 } // vikr

@@ -91,11 +91,6 @@ vvoid GLRenderer::Render() {
         it != render_commands.end();
         ++it) {
     switch ((*it)->GetCommandType()) {
-      /*
-    
-        This is not official! Just testing to see Material, Texture, and Mesh work!!
-      
-      */
       case RenderCommandType::RENDER_MESH: {
         ExecuteMeshCommand(static_cast<MeshCommand *>((*it)));
       }
@@ -108,7 +103,7 @@ vvoid GLRenderer::Render() {
   }
   // Clear after.
   m_command_list.Clear();
-  m_pointlights.Clear();
+  m_pointlights.clear();
   rendering = false;
 }
 
@@ -175,26 +170,7 @@ GLenum GLRenderer::GetCullFace(CullFace face) {
 
 vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
   Material *material = mesh_cmd->GetMaterial();
-  if (material->HasDepth()) {
-    GLEnable(GL_DEPTH_TEST);
-    GLDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));
-  } else {
-    glDisable(GL_DEPTH_TEST);
-  }
-  if (material->IsCulling()) {
-    glEnable(GL_CULL_FACE);
-    GLFrontFace(GLRenderer::GetFrontFace(material->GetFrontFace()));
-    GLCullFace(GLRenderer::GetCullFace(material->GetCullFace()));
-  } else {
-    GLDisable(GL_CULL_FACE);
-  }
-  if (material->IsBlending()) {
-    GLEnable(GL_BLEND);
-    GLBlendFunc(GLRenderer::GetBlendFunct(material->GetBlendSrc()), 
-                GLRenderer::GetBlendFunct(material->GetBlendDst()));
-  } else {
-    GLDisable(GL_BLEND);
-  }
+  SetGLContext(material);
 
   if(material) {
     Shader *shader = material->GetShader();
@@ -211,8 +187,7 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
         2. Render Pointlights second
         3. Render Spotlights last!
     */ 
-    std::vector<PointLight *>& pointlights = m_pointlights.GetCommandList();
-    for (vuint32 i = 0; i < pointlights.size(); ++i) {
+    for (vuint32 i = 0; i < m_pointlights.size(); ++i) {
       std::string position = "light_pos";
       std::string ambient = "light_ambient";
       std::string diffuse = "light_diffuse";
@@ -221,7 +196,7 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
       std::string linear = "linear";
       std::string quadratic = "quadratic";
       shader->SetValue("blinn", true);
-      shader->SetValue(position, pointlights[i]->GetPos());
+      shader->SetValue(position, m_pointlights[i]->GetPos());
       shader->SetValue(ambient, glm::vec3(0.05f, 0.05f, 0.05f));
       shader->SetValue(diffuse, glm::vec3(0.8f, 0.8f, 0.8f));
       shader->SetValue(specular, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -270,5 +245,29 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
 
 
   return 1;
+}
+
+
+vvoid GLRenderer::SetGLContext(Material *material) {
+  if(material->HasDepth()) {
+    GLEnable(GL_DEPTH_TEST);
+    GLDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));
+  } else {
+    glDisable(GL_DEPTH_TEST);
+  }
+  if(material->IsCulling()) {
+    glEnable(GL_CULL_FACE);
+    GLFrontFace(GLRenderer::GetFrontFace(material->GetFrontFace()));
+    GLCullFace(GLRenderer::GetCullFace(material->GetCullFace()));
+  } else {
+    GLDisable(GL_CULL_FACE);
+  }
+  if(material->IsBlending()) {
+    GLEnable(GL_BLEND);
+    GLBlendFunc(GLRenderer::GetBlendFunct(material->GetBlendSrc()),
+                GLRenderer::GetBlendFunct(material->GetBlendDst()));
+  } else {
+    GLDisable(GL_BLEND);
+  }
 }
 } // vikr

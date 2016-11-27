@@ -33,6 +33,7 @@ public:
   vvoid SetWrapS(TextureWrapMode mode) override;
   vvoid SetWrapT(TextureWrapMode mode) override;
   vvoid SetWrapR(TextureWrapMode mode) override;
+  vuint32 GetNativeId() override { return id; }
 
 
 

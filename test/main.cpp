@@ -14,7 +14,6 @@
 #include <glm/glm.hpp>
 #include <shader/material.hpp>
 #include <scene/camera.hpp>
-#include <util/vikr_assert.hpp>
 #include <shader/texture.hpp>
 #include <math/shape/quad.hpp>
 #include <lighting/point_light.hpp>
@@ -67,8 +66,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     firstMouse = false;
   }
 
-  GLfloat xoffset = xpos - lastX;
-  GLfloat yoffset = lastY - ypos;
+  vreal32 xoffset = static_cast<vreal32>(xpos - lastX);
+  vreal32 yoffset = static_cast<vreal32>(lastY - ypos);
 
   lastX = xpos;
   lastY = ypos;
@@ -78,7 +77,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 
 int main(int c, char* args[]) {
   glfwInit();
-  VikrWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4.3);
+  VikrWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   VikrWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   VikrWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   VikrWindowHint(GLFW_RESIZABLE, GL_FALSE);
@@ -128,12 +127,12 @@ int main(int c, char* args[]) {
     glm::mat4 model;
     angle += GetDeltaTime() * 100;
     model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
-    mesh.GetMeshCommand()->SetModel(model);
+    mesh.GetMeshCommand()->SetTransform(model);
     light.SetPos(glm::vec3(std::sin(GetTime()) * radius, std::cos(GetTime()) * radius, 0.0f));
     model = glm::mat4();
     model = glm::translate(model, light.GetPos());
     model = glm::scale(model, glm::vec3(0.2f));
-    meshlight.GetMeshCommand()->SetModel(model);
+    meshlight.GetMeshCommand()->SetTransform(model);
     Renderer::GetRenderer()->PushBack(mesh.GetMeshCommand());
     Renderer::GetRenderer()->PushBack(meshlight.GetMeshCommand());
     Renderer::GetRenderer()->PushBack(&light);

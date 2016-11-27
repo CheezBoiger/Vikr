@@ -1,4 +1,6 @@
-TODO List for the Vikr Renderer Engine. 
+TODO List for the Vikr Renderer Engine.
+
+ 
 - Experimental, Try to lean towards Data Oriented Design.
 - Mathematics!
   - Implement Linear Algebra Commonality toolsets.
@@ -21,19 +23,28 @@ TODO List for the Vikr Renderer Engine.
     - Start with OpenGL FIRST!! Wrapping.
     - Mesh and Model Objects.
     - graphics commands.
-      - Render Command (obvious)
-      - Group Command (for grouped commands to use)
-      - Custom Command (for custom commands)
+      - Render Command
+        - MeshCommand(Render mesh)
+        - Primitive Command (Rendering 2D objects like triangles and lines)
+        - Group Command (for grouped commands to use)
+        - Custom Command (for custom commands)
     - Render Target! for Post processing!
+      - Figure out how to make it easier to use for Targetting specific Meshes
+      - Render Queue
+        - Use an unordered_map to store key (RenderTarget *) with value (std::vector<RenderCommand>)?
+        - Should be able to push back Deferred commands to render after (this is a post-batch render).
     - Shader Class
-      - I want to implement a Shader Preprocessor for #include (GLSL omits this for GOOD reasons)
+      - I want to implement a Shader Preprocessor for #include (GLSL omits this for GOOD reasons)            [X]
     - Shader Compiler implementation
       - Ease of use for Shader programming.
-      - Parser for compiling shaders.
-    - Camera and free movement! // Abstract Camera needed.
-      - Quaternion based!
-    - Lighting and shading models
+      - Parser for compiling shaders.                                                                        [X]
+    - Camera and free movement! // Abstract Camera needed.                                                   [X]
+      - Quaternion based!                                                                                    [X]
+    - Lighting and shading model
+      - Blinn-Phong shading.
+      - G-Buffer required
     - Implement the Framebuffer for the rendering pipeline.
+    - Work on Scene graph for pushing commands with!
 
 - Vikr Filesystem!  
   - Implement Filesystem handling for Folders/Directories of the Operating system.
@@ -47,6 +58,7 @@ FUTURE WORKS
   - Mesh Skinning and Skeletons
   - Develop bone heiarchy 
 - Audio (Optional!)
+  - OpenAL
 - Moving to Physically Based Rendering (PBR)
   - This is going to be in the future!
 

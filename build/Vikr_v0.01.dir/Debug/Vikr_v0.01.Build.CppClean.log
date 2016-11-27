@@ -28,7 +28,6 @@ d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\material.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\shader.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_shader.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_linker.obj
-d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_compiler.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl_material.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl_texture3d.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl_texture2d.obj
@@ -41,6 +40,10 @@ d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\first_person_camera.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\framebuffer.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\program_state.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vikr.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_compiler.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\transform.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\scene.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\scene_obj.obj
 d:\cmgarcia\github\vikr\build\cmakefiles\generate.stamp
 d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.lib
 d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.pdb

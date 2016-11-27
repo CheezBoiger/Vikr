@@ -10,12 +10,14 @@
 #include <shader/texture.hpp>
 
 #include <vector>
+#include <memory>
 
 namespace vikr {
 
 
 /**
-  Render Target for post processing.
+  Render Target for post processing. This is an abstract class
+  designed as a plugin for rendering APIs.
 */
 class RenderTarget {
 public:
@@ -26,8 +28,9 @@ public:
 
   virtual vvoid BindDepthStencil() = 0;
   virtual vvoid BindTexture(vuint32 index) = 0;
+  virtual vvoid Unbind() = 0;
+  virtual vvoid Bind() = 0;
 
-  vvoid SetTexture(Texture *texture) { m_texture = texture; }
   vvoid SetWidth(vuint32 width) { m_width = width; }
   vvoid SetHeight(vuint32 height) { m_height = height; }
 
@@ -36,14 +39,18 @@ public:
 
   vbool HasDepthAndStencil() { return m_depthstencil; }
 
-  Texture *GetTexture() { return m_texture; }
+  Texture *GetTexture() { return m_texture.get(); }
   std::vector<Texture *> *GetColorAttachments() { return &m_color_attachments; }
+
+  vvoid SetClearColor(glm::vec3 cl) { clearcolor = cl; }
+  glm::vec3 GetClearColor() { return clearcolor; }
 
 protected:
 
+  glm::vec3 clearcolor                      = glm::vec3(0.1f, 0.1f, 0.1f);
   vuint32 m_id                              = 0;
   vuint32 m_rbo                             = 0;
-  Texture *m_texture                        = nullptr;
+  std::unique_ptr<Texture> m_texture        = nullptr;
   vuint32 m_width                           = 0;
   vuint32 m_height                          = 0;  
   vbool m_depthstencil                      = false;
