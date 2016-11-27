@@ -77,6 +77,8 @@ Texture *GLRenderer::CreateTexture(TextureTarget target, std::string img_path, v
 
 
 vvoid GLRenderer::Render() {
+  rendering = true;
+
   ClearColor(clear_color.x, clear_color.y, clear_color.z, 1.0f);  
   ClearDisplay(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   // Sort out the m_command_list
@@ -104,10 +106,10 @@ vvoid GLRenderer::Render() {
       break;
     }
   }
-
   // Clear after.
   m_command_list.Clear();
   m_pointlights.Clear();
+  rendering = false;
 }
 
 

@@ -127,13 +127,13 @@ int main(int c, char* args[]) {
     camera.Update();
     glm::mat4 model;
     angle += GetDeltaTime() * 100;
-    model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    mesh.GetMeshCommand()->SetTransform(model);
+    model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
+    mesh.GetMeshCommand()->SetModel(model);
     light.SetPos(glm::vec3(std::sin(GetTime()) * radius, std::cos(GetTime()) * radius, 0.0f));
     model = glm::mat4();
     model = glm::translate(model, light.GetPos());
     model = glm::scale(model, glm::vec3(0.2f));
-    meshlight.GetMeshCommand()->SetTransform(model);
+    meshlight.GetMeshCommand()->SetModel(model);
     Renderer::GetRenderer()->PushBack(mesh.GetMeshCommand());
     Renderer::GetRenderer()->PushBack(meshlight.GetMeshCommand());
     Renderer::GetRenderer()->PushBack(&light);

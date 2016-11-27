@@ -17,7 +17,7 @@ uniform mat4 vikr_projection;
 void main() {
   gl_Position = vikr_projection * vikr_view * vikr_model * vec4(position, 1.0f);
   TexCoords = tex_coords;
-   Normal = normal;
+   Normal = mat3(transpose(inverse(vikr_model))) * normal;
    Position = position;
    FragCoords = vec3(vikr_model * vec4(position, 1.0f));
 }
