@@ -20,9 +20,12 @@ namespace vikr {
 class RenderTarget {
 public:
   RenderTarget() : m_texture(nullptr) { }
-  RenderTarget(vuint32 width, vuint32 height, vbool has_depthstencil);
+  RenderTarget(vuint32 width, vuint32 height);
 
   virtual vvoid Generate() = 0;
+
+  virtual vvoid BindDepthStencil() = 0;
+  virtual vvoid BindTexture(vuint32 index) = 0;
 
   vvoid SetTexture(Texture *texture) { m_texture = texture; }
   vvoid SetWidth(vuint32 width) { m_width = width; }
@@ -32,18 +35,18 @@ public:
   vuint32 GetHeight() { return m_height; }
 
   vbool HasDepthAndStencil() { return m_depthstencil; }
-  vvoid SetHasDepthAndStencil(vbool depthstencil) { m_depthstencil = depthstencil; }
 
   Texture *GetTexture() { return m_texture; }
   std::vector<Texture *> *GetColorAttachments() { return &m_color_attachments; }
 
 protected:
 
-  vuint32 m_id;
-  Texture *m_texture;
-  vuint32 m_width;
-  vuint32 m_height;  
-  vbool m_depthstencil;
+  vuint32 m_id                              = 0;
+  vuint32 m_rbo                             = 0;
+  Texture *m_texture                        = nullptr;
+  vuint32 m_width                           = 0;
+  vuint32 m_height                          = 0;  
+  vbool m_depthstencil                      = false;
 
   std::vector<Texture *> m_color_attachments;
 };

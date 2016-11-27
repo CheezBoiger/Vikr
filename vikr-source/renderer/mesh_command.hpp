@@ -39,6 +39,9 @@ public:
 
   glm::mat4 GetTransform() { return m_model; }
 
+  Material *GetMaterial() { return m_material; }
+  vvoid SetMaterial(Material *material) { m_material = material; }
+
 private:
   vvoid InitModel(glm::mat4 model) { m_model = model; }
   vbool is_transparent;
@@ -48,6 +51,7 @@ private:
   glm::mat4 m_model;
   // weak ref
   Mesh *m_mesh;
+  Material *m_material;
   RenderTarget *render_target;
 
   friend class Mesh;

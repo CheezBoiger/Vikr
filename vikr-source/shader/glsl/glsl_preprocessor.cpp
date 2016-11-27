@@ -9,7 +9,20 @@
 namespace vikr {
 
 
-const std::string include_dir = "#include";
+const std::string include_dir             = "#include";
+/**
+Static values to be implemented into the vertex shader.
+*/
+const std::string vikr_model              = "uniform mat4 vikr_model;";
+const std::string vikr_view               = "uniform mat4 vikr_view;";
+const std::string vikr_projection         = "uniform mat4 vikr_projection;";
+/**
+Static values to be implemented into the fragement shader.
+*/
+const std::string vikr_camPosition        = "uniform vec3 vikr_camPosition";
+const std::string vikr_pointLights        = "uniform PointLight vikr_pointLights[]";
+const std::string vikr_directionalLights  = "uniform DirectionLight vikr_directionalLights[]";
+const std::string vikr_spotLights         = "uniform SpotLight vikr_spotLights[]";
 
 
 GLSLPreprocessor::GLSLPreprocessor()

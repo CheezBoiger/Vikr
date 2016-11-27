@@ -174,7 +174,7 @@ GLenum GLRenderer::GetCullFace(CullFace face) {
 
 
 vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
-  Material *material = mesh_cmd->GetMesh()->GetMaterial();
+  Material *material = mesh_cmd->GetMaterial();
   if (material->HasDepth()) {
     GLEnable(GL_DEPTH_TEST);
     GLDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));

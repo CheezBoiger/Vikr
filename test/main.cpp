@@ -109,8 +109,8 @@ int main(int c, char* args[]) {
   Material material(Renderer::GetRenderer()->GetShader("test"));
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   meshlight.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
-  mesh.SetMaterial(&material);
-  meshlight.SetMaterial(&material);
+  mesh.GetMeshCommand()->SetMaterial(&material);
+  meshlight.GetMeshCommand()->SetMaterial(&material);
   light.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
   material.SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
   material.SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));

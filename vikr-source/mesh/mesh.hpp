@@ -39,14 +39,13 @@ public:
 
   vvoid Create(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) override;
 
-  vvoid SetMaterial(Material *material) { m_material = material; }
   vvoid SetName(std::string name) { m_name = name; }
 
 
   vuint32 GetVAO() override { return m_vao; }
   vuint32 GetVBO() override { return m_vbo; }
   vuint32 GetEBO() override { return m_ebo; }
-  Material *GetMaterial() override { return m_material; }
+
   MeshCommand *GetMeshCommand() override { return &m_command; }
 
   MeshDrawMode GetMeshMode() override { return m_mode; }
@@ -63,7 +62,6 @@ protected:
   vuint32 m_vao;
   vuint32 m_vbo;
   vuint32 m_ebo;
-  Material *m_material;
   vbool is_transparent;
 
   MeshCommand m_command;

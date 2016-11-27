@@ -13,6 +13,13 @@ namespace vikr {
 class GLRenderTarget : public RenderTarget {
 public:
 
+  GLRenderTarget();
+  GLRenderTarget(vuint32 width, vuint32 height);
+
+  vvoid Generate() override;
+
+  vvoid BindDepthStencil() override;
+  vvoid BindTexture(vuint32 index) override;
   
 
 private:

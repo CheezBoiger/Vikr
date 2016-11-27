@@ -18,7 +18,6 @@ Mesh::Mesh()
   , m_ebo(0)
   , m_mode(vikr_TRIANGLES)
   , m_render_type(vikr_OPENGL)
-  , m_material(nullptr)
   , m_name(kDefaultName)
 {
   m_command.m_mesh = this;
@@ -36,7 +35,6 @@ Mesh::Mesh(std::vector<glm::vec3> positions,
   , m_mode(draw_mode)
   , m_indices(indices)
   , m_render_type(vikr_OPENGL)
-  , m_material(nullptr)
 {
   for (vuint32 i = 0; i < positions.size(); ++i) {
     Vertex vert;

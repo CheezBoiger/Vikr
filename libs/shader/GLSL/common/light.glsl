@@ -1,4 +1,5 @@
-#version 430 core
+#ifndef __VIKR_LIGHT_GLSL
+#define __VIKR_LIGHT_GLSL
 
 // Very simple Light struct using colors instead of 
 // texture samplers.
@@ -36,3 +37,5 @@ struct SpotLight {
   float cutoff;
   float outer_cutoff;
 };
+
+#endif // __VIKR_LIGHT_GLSL
