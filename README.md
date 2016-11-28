@@ -12,7 +12,10 @@ Currently all resources and implementations within the engine source code is sub
 so keep in mind that this engine is barely newborn (Vulkan isn't even implemented yet,
 OpenGL is 50% finished, and alot of the code needs to be abstracted to allow Vulkan and OpenGL plugins (along with soon to follow DirectX12 and Metal)). I only ask for patience until the engine is fully implemented, cleaned up,
 and optimized. Contribution is always welcome!
-
+  
+The Design goal of this renderer is to allow the user to handle memory management, while the Engine merely uses the data
+given to manipulate the objects it must render. **VERY STRONG** emphasis in avoiding dynamic allocation as much as possible.
+  
 # Credits and Honorable Mentions
 Credits out to Joey De Vries and his tutorials on OpenGL, which has taught me,
 through simple to understand, steps on learning graphics programming! check

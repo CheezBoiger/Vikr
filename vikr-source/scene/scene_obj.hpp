@@ -6,6 +6,7 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
+#include <renderer/mesh_command.hpp>
 #include <scene/transform.hpp>
 #include <vector>
 #include <string>
@@ -32,8 +33,11 @@ public:
   SceneObject *RemoveChild(std::string tag);
   
   std::vector<SceneObject *> *GetChildren() { return &children; }
-  Mesh *GetMesh() { return m_meshObject; }
-  Material *GetMaterial() { return m_materialObject; }
+  vvoid AttachMaterial(Material *material) { mesh_command.SetMaterial(material); }
+  vvoid AttachMesh(Mesh *mesh) { mesh_command.SetMesh(mesh); }
+
+  Material *GetMaterial() { return mesh_command.GetMaterial(); }
+  Mesh *GetMesh() { return mesh_command.GetMesh(); }
   /**
     SceneObject's transform.
   */
@@ -52,14 +56,16 @@ private:
     The SceneObject's children.
   */
   std::vector<SceneObject *>  children;
+
   /**
-    The Mesh associated with this SceneObject.
+    The MeshCommand for the SceneObject.
   */
-  Mesh                        *m_meshObject;
+  MeshCommand mesh_command;
+
   /**
-    The Material associated with this SceneObject.
+    Our renderer has access to this mesh command.
   */
-  Material                    *m_materialObject;    
+  friend class Renderer;
 };
 } // vikr
 #endif // __VIKR_SCENE_NODE_HPP

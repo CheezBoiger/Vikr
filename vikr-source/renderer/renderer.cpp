@@ -60,6 +60,8 @@ vvoid Renderer::PushBack(SceneObject *obj) {
     rotation = glm::toMat4(obj->Transform.Rotation);
     model = model * rotation;
     model = glm::scale(model, obj->Transform.Scale);
+    obj->mesh_command.SetTransform(model);
+    PushBack(&obj->mesh_command);
     std::vector<SceneObject *> *children = obj->GetChildren();
   }
 };
