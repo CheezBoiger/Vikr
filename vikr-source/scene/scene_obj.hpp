@@ -31,7 +31,9 @@ public:
   SceneObject *GetChild(std::string tag);
   SceneObject *RemoveChild(std::string tag);
   
-  std::vector<SceneObject *> GetChildren() { return children; }
+  std::vector<SceneObject *> *GetChildren() { return &children; }
+  Mesh *GetMesh() { return m_meshObject; }
+  Material *GetMaterial() { return m_materialObject; }
   /**
     SceneObject's transform.
   */

@@ -16,6 +16,7 @@
 namespace vikr {
 
 
+// Forward declarations.
 class Camera;
 class Light;
 class RenderTarget;
@@ -53,6 +54,7 @@ public:
   virtual vvoid Render() override = 0;
 
   virtual vvoid PushBack(RenderCommand *command) override;
+  virtual vvoid PushBack(SceneObject *obj) override;
   virtual vvoid PushBack(Light *light) override;
   virtual vvoid Sort() override { m_command_list.Sort(); }
 

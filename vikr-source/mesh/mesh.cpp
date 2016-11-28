@@ -20,7 +20,6 @@ Mesh::Mesh()
   , m_render_type(vikr_OPENGL)
   , m_name(kDefaultName)
 {
-  m_command.m_mesh = this;
 }
 
 
@@ -43,7 +42,6 @@ Mesh::Mesh(std::vector<glm::vec3> positions,
     vert.uv = std::move(uvs[i]);  
     m_vertices.push_back(std::move(vert));
   }
-  m_command.m_mesh = this;
   Create();
 }
 

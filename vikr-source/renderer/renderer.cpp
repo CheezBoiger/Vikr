@@ -5,12 +5,20 @@
 #include <renderer/render_target.hpp>
 #include <renderer/render_command.hpp>
 #include <renderer/mesh_command.hpp>
+
 #include <scene/camera.hpp>
+#include <scene/scene_obj.hpp>
+
 #include <mesh/mesh.hpp>
+
 #include <shader/glsl/glsl_compiler.hpp>
 #include <shader/spirv/spirv_compiler.hpp>
+
 #include <lighting/point_light.hpp>
+
 #include <util/vikr_log.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 namespace vikr {
 
@@ -42,6 +50,19 @@ vvoid Renderer::PushBack(RenderCommand *command) {
   }
   m_command_list.PushBack(command);
 }
+
+
+vvoid Renderer::PushBack(SceneObject *obj) {
+  if (obj) {
+    glm::mat4 model;
+    glm::mat4 rotation;
+    model = glm::translate(model, obj->Transform.Position);
+    rotation = glm::toMat4(obj->Transform.Rotation);
+    model = model * rotation;
+    model = glm::scale(model, obj->Transform.Scale);
+    std::vector<SceneObject *> *children = obj->GetChildren();
+  }
+};
 
 
 vvoid Renderer::PushBack(Light *command) {

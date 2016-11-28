@@ -20,3 +20,7 @@ out his tutorial website: http://learnopengl.com/#!Introduction
   
 You should also check out his work in progress engine here as well, as he is implementing
 much more advanced work than me! : https://github.com/JoeyDeVries/Cell
+  
+Notable mention to Koray Hagen and his delectable knowledge on Computer Graphics rendering,
+helping me by pointing the way to certain rendering techniques with tangent space normal
+mapping and Skew-Symmetric Matrices.

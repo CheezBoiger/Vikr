@@ -29,6 +29,7 @@ public:
   vbool IsTransparent() { return is_transparent; }
   vbool IsInvisible() { return is_invisible; }  
 
+  vvoid SetMesh(Mesh *mesh) { m_mesh = mesh; }
   Mesh *GetMesh() { return m_mesh; }
   RenderTarget *GetRenderTarget() { return render_target; }
   

@@ -46,8 +46,6 @@ public:
   vuint32 GetVBO() override { return m_vbo; }
   vuint32 GetEBO() override { return m_ebo; }
 
-  MeshCommand *GetMeshCommand() override { return &m_command; }
-
   MeshDrawMode GetMeshMode() override { return m_mode; }
   GraphicsPipeline GetRenderType() override { return m_render_type; } 
 
@@ -63,8 +61,6 @@ protected:
   vuint32 m_vbo;
   vuint32 m_ebo;
   vbool is_transparent;
-
-  MeshCommand m_command;
 
   std::vector<Vertex> m_vertices;
   std::vector<vuint32> m_indices;

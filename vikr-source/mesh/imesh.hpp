@@ -13,7 +13,6 @@ namespace vikr {
 
 
 class Material;
-class MeshCommand;
 
 
 /*
@@ -55,7 +54,6 @@ public:
                MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
   virtual vvoid Create(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
   virtual MeshDrawMode GetMeshMode() = 0;
-  virtual MeshCommand *GetMeshCommand() = 0;
   virtual vuint32 GetVAO() = 0;
   virtual vuint32 GetVBO() = 0;
   virtual vuint32 GetEBO() = 0;

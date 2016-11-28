@@ -1,0 +1,3 @@
+Be advised! This Mathematics library is not implemented, nor is it complete!
+We are currently using GLM (OpenGL Mathematics library) as our math library for
+now... We will be replacing it with our own implementation later.
