@@ -1,5 +1,6 @@
 //
 // Copyright (c) Mario Garcia. Under the MIT License.
+//
 #include <scene/camera.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>

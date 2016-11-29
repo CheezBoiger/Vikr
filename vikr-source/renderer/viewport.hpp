@@ -13,9 +13,21 @@ namespace vikr {
   the window's size;
 */
 struct Viewport {
+  /**
+    Starting pixel width.
+  */
   vint32 viewport_x;
+  /**
+    Starting pixel height. 
+  */
   vint32 viewport_y;
+  /**
+    Max window width. 
+  */
   vint32 win_width;
+  /**
+    Max window height.
+  */
   vint32 win_height;
 };
 

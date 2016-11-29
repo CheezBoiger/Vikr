@@ -18,6 +18,9 @@ namespace vikr {
 /**
   Render Target for post processing. This is an abstract class
   designed as a plugin for rendering APIs.
+
+  OpenGL: Associates this object with GLRenderTarget.
+  Vulkan: Associates this obejct with VKRenderTarget.
 */
 class RenderTarget {
 public:
@@ -48,7 +51,7 @@ public:
 protected:
 
   glm::vec3 clearcolor                      = glm::vec3(0.1f, 0.1f, 0.1f);
-  vuint32 m_id                              = 0;
+  vuint32 m_fbo                             = 0;
   vuint32 m_rbo                             = 0;
   std::unique_ptr<Texture> m_texture        = nullptr;
   vuint32 m_width                           = 0;

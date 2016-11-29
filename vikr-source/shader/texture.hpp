@@ -14,7 +14,8 @@ namespace vikr {
 
 
 /**
-  Texture object, abstraction.
+  Texture object, abstraction. This is the texture that is associated with 
+  Materials, Meshes, and SceneObjects.
 */
 class Texture {
 protected:
@@ -25,7 +26,7 @@ public:
 
   virtual ~Texture() { }
   /**
-    Generates bytecode for the provided image;
+    Generates bytecode for the provided image.
   */
   static vbyte *CreateImageByteCode(std::string tex_path, 
             vint32 *width, vint32 *height, vint32 *channels, vbool alpha);
@@ -35,29 +36,72 @@ public:
   TextureFormat GetInternalFormat() { return m_internal_format; }
   TextureFilterMode GetFilterMin() { return m_filter_min; }
   TextureFilterMode GetFilterMax() {  return m_filter_max; }
+  /**
+    Texture coordinate wrapping for coord S. 
+  */
   TextureWrapMode GetWrapS() { return m_wrap_s; }
+  /**
+    Texture coordinate wrapping for coord t.
+  */
   TextureWrapMode GetWrapT() { return m_wrap_t; }
+  /**
+    Texture coordinate wrapping for coord r.
+  */
   TextureWrapMode GetWrapR() { return m_wrap_r; }
+  /**
+    Determines if the Texture is mipmapped.
+  */
   vbool IsMipmapping() { return m_mipmapping; }
   vint32 GetWidth() { return m_width; }
   std::string GetPath() { return m_path; }
-
+  /**
+    Create the Texture object.
+  */
   virtual vint32 Create(vbyte *bytecode) = 0;
-
+  /**
+    Bind our texture object with the associated attachment point
+    ( or, our id).
+  */
   virtual vvoid Bind(vint32 id = -1) = 0;
+  /**
+    Unbind the texture from our Renderer.
+  */
   virtual vvoid Unbind() = 0;
 
   virtual vvoid SetFormat(TextureFormat format) = 0;
   virtual vvoid SetInternalFormat(TextureFormat format) = 0;
   virtual vvoid SetFilterMin(TextureFilterMode filter) = 0;
   virtual vvoid SetFilterMax(TextureFilterMode filter) = 0;
+  /**
+    Texture clamp modes. Tells our Rendering API how to clamp the texture onto 
+    a Mesh or Quad. This is specified for coord S.
+  */
   virtual vvoid SetWrapS(TextureWrapMode mode) = 0;
+  /**
+    Texture clamp modes. Tells our Rendering API how to clamp the texture onto
+    a Mesh or Quad. This is specified for coord T.
+  */
   virtual vvoid SetWrapT(TextureWrapMode mode) = 0;
+  /**
+    Texture clamp modes. Tells our Rendering API how to clamp the texture onto
+    a Mesh or Quad. This is specified for coord R.
+  */
   virtual vvoid SetWrapR(TextureWrapMode mode) = 0;
+  /**
+    Get the native texture id.
+  */
   virtual vuint32 GetNativeId() = 0;
-
+  /**
+    Set whether this texture needs to generate a mipmap for itself.
+  */
   vvoid SetMipmapping(vbool mipmap) { m_mipmapping = mipmap; }
+  /**
+    Grab the path of the image file that this texture is going to load.
+  */
   vvoid SetString(std::string path) { m_path = path; }
+  /**
+    Width size of the texture object.
+  */
   vvoid SetWidth(vint32 width) { m_width = width; }
 
 protected:

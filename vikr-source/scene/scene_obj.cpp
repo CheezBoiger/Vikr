@@ -9,5 +9,18 @@
 namespace vikr {
 
 
+SceneObject::SceneObject()
+{
+}
+
+
+SceneObject *SceneObject::AddChild(SceneObject *obj) {
+  if (obj) {
+    children.push_back(obj);
+  }
+  return obj;
+}
+
+
 
 } // vikr

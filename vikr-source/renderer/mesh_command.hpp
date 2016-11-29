@@ -17,7 +17,10 @@ class Material;
 class RenderTarget;
 
 /**
-  TODO(Garcia): This must be abstracted a bit.
+  MeshCommand is a Render command used to send a command to the renderer,
+  telling the engine to render a Mesh object with the associated material. It uses
+  the RenderTarget to determine the Post Process that must be done on the Mesh in 
+  screen space.
 */
 class MeshCommand : public RenderCommand {
 public:
@@ -25,10 +28,17 @@ public:
   // these will need to be manually defined.
   MeshCommand(MeshCommand&& mes_cmd) = default;
   MeshCommand& operator=(MeshCommand&& mesh_cmd) = default;
-  
+  /**
+    Determines if the Mesh will be transparent.
+  */
   vbool IsTransparent() { return is_transparent; }
+  /**
+    Is the mesh invisible. 
+  */
   vbool IsInvisible() { return is_invisible; }  
-
+  /**
+    Set the mesh reference to the command. 
+  */
   vvoid SetMesh(Mesh *mesh) { m_mesh = mesh; }
   Mesh *GetMesh() { return m_mesh; }
   RenderTarget *GetRenderTarget() { return render_target; }

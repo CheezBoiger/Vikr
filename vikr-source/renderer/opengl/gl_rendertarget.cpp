@@ -20,8 +20,8 @@ GLRenderTarget::GLRenderTarget(vuint32 width, vuint32 height)
 
 
 vvoid GLRenderTarget::Generate() {
-  if (!m_id) {
-    glGenFramebuffers(1, &m_id);
+  if (!m_fbo) {
+    glGenFramebuffers(1, &m_fbo);
   }
 
   if (!m_texture) {
@@ -56,14 +56,14 @@ vvoid GLRenderTarget::BindDepthStencil() {
 
 
 vvoid GLRenderTarget::Bind() {
-  if (m_id) { 
-    glBindFramebuffer(GL_FRAMEBUFFER, m_id);
+  if (m_fbo) { 
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
   }
 }
 
 
 vvoid GLRenderTarget::Unbind() {
-  if (m_id) {
+  if (m_fbo) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
   }
 }

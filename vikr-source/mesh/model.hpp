@@ -32,6 +32,8 @@ namespace vikr {
   graphical models that are imported from graphics software like
   Maya, 3DSMax, and Blender. IT is abstract, for it must be 
   defined by the renderer api you plan to use.
+
+  @deprecated
 */
 class Model {
 public:

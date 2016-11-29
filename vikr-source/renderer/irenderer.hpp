@@ -16,9 +16,9 @@ class RenderCommand;
 class RenderTarget;
 class SceneObject;
 
-
-// Interface Renderer
-//
+/**
+  Interface Renderer for use with the abstract renderer.
+*/
 class IRenderer {
 public:
   IRenderer() { }

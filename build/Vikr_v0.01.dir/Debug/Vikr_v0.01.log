@@ -1,7 +1,22 @@
-﻿  renderer.cpp
-  scene_obj.cpp
+﻿  sphere.cpp
+  mesh.cpp
+  model.cpp
+  mesh_command.cpp
+  gl_rendertarget.cpp
+  glrenderer.cpp
+  render_target.cpp
+  renderer.cpp
+  gl_texture.cpp
+  gl_texture1d.cpp
+  gl_texture2d.cpp
+  gl_texture3d.cpp
+  glsl_compiler.cpp
+  glsl_linker.cpp
+  glsl_preprocessor.cpp
+  glsl_shader.cpp
+  material.cpp
+  texture.cpp
   Generating Code...
 transform.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-scene_obj.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 vkrenderer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
   Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Debug\Vikr_v0.01.lib

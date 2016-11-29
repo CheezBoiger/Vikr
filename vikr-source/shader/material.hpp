@@ -65,7 +65,11 @@ public:
   Material(Shader *shader, std::string name);
   Material(Shader *shader);
   Shader *GetShader() { return m_shader; }
-
+  vvoid SetShader(Shader * shader) { m_shader = shader; }
+  /**
+    Set the front face of the material (this kind of 
+    determines the culling for the renderer).
+  */
   vvoid SetFrontFace(FrontFace mode) { m_frontface = mode; }
   vvoid SetCullFace(CullFace face) { m_cullface = face; }
   vvoid SetIsBlending(vbool blend) { is_blending = blend; }

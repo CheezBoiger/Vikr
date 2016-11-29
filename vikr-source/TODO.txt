@@ -1,17 +1,21 @@
 TODO List for the Vikr Renderer Engine.
 
- 
-- Experimental, Try to lean towards Data Oriented Design.
-- Mathematics!
-  - Implement Linear Algebra Commonality toolsets.
-  - Need Vector4, 3, 2, and Matrix4, 3, 2, 1.
+Legend:
+[X] = Completed.
+[$] = Working on.
+[C] = Cancelled.
+                                                                             
+- Experimental, Try to lean towards Data Oriented Design.                                       
+- Mathematics!                                                                                        
+  - Implement Linear Algebra Commonality toolsets.                                                   
+  - Need Vector4, 3, 2, and Matrix4, 3, 2, 1.                                                        
   - Translation, Rotation, Scale, Shear.
   - Cross and dot product
   - Lerp
   - Quaternions
     - Slerp
     - Euler Angles
-
+ 
 - Renderer Engine
   - Light rendering model (blinn-phong for now.)
     
@@ -22,12 +26,17 @@ TODO List for the Vikr Renderer Engine.
   - OpenGL and Vulkan Implementations
     - Start with OpenGL FIRST!! Wrapping.
     - Mesh and Model Objects.
+      - Model is deprecated! Replacing with SceneObject and Scene.
+      - Mesh needs to be abstracted!
     - graphics commands.
       - Render Command
         - MeshCommand(Render mesh)
         - Primitive Command (Rendering 2D objects like triangles and lines)
         - Group Command (for grouped commands to use)
         - Custom Command (for custom commands)
+    - Bump and Parallax Mapping
+      - Integrate Tangents and Bitangets into our Vertex object
+      - Calculate tangents and bitangents.
     - Render Target! for Post processing!
       - Figure out how to make it easier to use for Targetting specific Meshes
       - Render Queue
@@ -59,6 +68,7 @@ FUTURE WORKS
   - Develop bone heiarchy 
 - Audio (Optional!)
   - OpenAL
+- Skew-Symmetric Matrix is rather a toughy, but worth researching more.
 - Moving to Physically Based Rendering (PBR)
   - This is going to be in the future!
 

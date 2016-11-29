@@ -1,3 +1,6 @@
+//
+// Copyright (c) Mario Garcia, Under the MIT License.
+//
 #include <math/shape/cube.hpp>
 #include <initializer_list>
 
