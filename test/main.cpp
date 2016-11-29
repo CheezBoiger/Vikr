@@ -106,19 +106,35 @@ int main(int c, char* args[]) {
   MeshCommand mesh_command2;
   Cube cube;
   PointLight light;
+  // Storing shaders into resources from renderer.
   Renderer::GetRenderer()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
+  Renderer::GetRenderer()->StoreShader("light", "test.vert", "light.frag");
+  /**
+    referencing stored shaders with materials. 
+  */
   Material material(Renderer::GetRenderer()->GetShader("test"));
+  Material lightMaterial(Renderer::GetRenderer()->GetShader("light"));
+  /**
+    Create meshes.
+  */
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   meshlight.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  /**
+    Reference the materials and meshes into mesh command. 
+  */
   mesh_command1.SetMaterial(&material);
-  mesh_command2.SetMaterial(&material);
+  mesh_command2.SetMaterial(&lightMaterial);
   mesh_command1.SetMesh(&mesh);
   mesh_command2.SetMesh(&meshlight);
 
   light.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+  /**
+    Set the variables of the shaders associated with the material. 
+  */
   material.SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
   material.SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
   material.SetTexture("texas", texture, 0);
+  lightMaterial.SetVector3fv("light_color", glm::vec3(1.0f, 1.0f, 1.0f));
 
   // Standard Game Loop
   vreal32 radius = 2.0f;
@@ -138,6 +154,9 @@ int main(int c, char* args[]) {
     model = glm::translate(model, light.GetPos());
     model = glm::scale(model, glm::vec3(0.2f));
     mesh_command2.SetTransform(model);
+    /**
+      Push back the mesh_commands and light!
+    */
     Renderer::GetRenderer()->PushBack(&mesh_command1);
     Renderer::GetRenderer()->PushBack(&mesh_command2);
     Renderer::GetRenderer()->PushBack(&light);
