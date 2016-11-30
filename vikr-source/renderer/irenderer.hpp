@@ -14,7 +14,7 @@ namespace vikr {
 class Light;
 class RenderCommand;
 class RenderTarget;
-class SceneObject;
+class SceneNode;
 
 /**
   Interface Renderer for use with the abstract renderer.
@@ -25,7 +25,7 @@ public:
   virtual ~IRenderer() { }
 
   virtual vvoid PushBack(RenderCommand *command) = 0;
-  virtual vvoid PushBack(SceneObject *obj) = 0;
+  virtual vvoid PushBack(SceneNode *obj) = 0;
   virtual vvoid PushBack(Light *light) = 0;
   virtual vvoid Sort() = 0;
   virtual vint32 Init() = 0;

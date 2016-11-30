@@ -10,14 +10,16 @@
 #include <renderer/blendmode.hpp>
 #include <renderer/depthmode.hpp>
 #include <renderer/cullmode.hpp>
-
+#include <math/shape/quad.hpp>
+#include <mesh/mesh.hpp>
 
 namespace vikr {
 
 
 
 class Camera;
-class MeshCommand;
+class MeshCommand; 
+class Mesh;
 
 
 /**
@@ -38,7 +40,7 @@ public:
   vint32 StoreShader(std::string shader_name, 
                      std::string vs, 
                      std::string fs, 
-                     std::string include_path) override;
+                     std::string include_path = ".") override;
 
   Shader *GetShader(std::string shader_name) override;
 

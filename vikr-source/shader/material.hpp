@@ -73,9 +73,11 @@ public:
   vvoid SetFrontFace(FrontFace mode) { m_frontface = mode; }
   vvoid SetCullFace(CullFace face) { m_cullface = face; }
   vvoid SetIsBlending(vbool blend) { is_blending = blend; }
+  vvoid SetIsCulling(vbool culling) { is_culling = culling; }
   vvoid SetBlendDst(BlendFunc funct) { m_blend_dst = funct; }
   vvoid SetBlendSrc(BlendFunc funct) { m_blend_src = funct; }  
   vvoid SetName(std::string name) { m_name = name; }
+  vvoid SetDepth(vbool depth) { has_depth = depth; }
 
   vbool IsBlending() { return is_blending; }
   vbool IsCulling() { return is_culling; }

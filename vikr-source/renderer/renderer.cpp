@@ -5,9 +5,10 @@
 #include <renderer/render_target.hpp>
 #include <renderer/render_command.hpp>
 #include <renderer/mesh_command.hpp>
+#include <renderer/pass.hpp>
 
 #include <scene/camera.hpp>
-#include <scene/scene_obj.hpp>
+#include <scene/scene_node.hpp>
 
 #include <mesh/mesh.hpp>
 
@@ -48,23 +49,18 @@ vvoid Renderer::PushBack(RenderCommand *command) {
     default:
     break;
   }
-  m_command_list.PushBack(command);
+  m_render_queue.PushBack(command, current_renderpass);
 }
 
 
-vvoid Renderer::PushBack(SceneObject *obj) {
+vvoid Renderer::PushBack(SceneNode *obj) {
   if (obj) {
-    glm::mat4 model;
-    glm::mat4 rotation;
-    model = glm::translate(model, obj->Transform.Position);
-    rotation = glm::toMat4(obj->Transform.Rotation);
-    model = model * rotation;
-    model = glm::scale(model, obj->Transform.Scale);
-    obj->mesh_command.SetTransform(model);
+    obj->Transform.CalculateTransform();
+    obj->mesh_command.SetTransform(obj->Transform.GetTransform());
     PushBack(&obj->mesh_command);
-    std::vector<SceneObject *> *children = obj->GetChildren();
+    std::vector<SceneNode *> *children = obj->GetChildren();
   }
-};
+}
 
 
 vvoid Renderer::PushBack(Light *command) {
@@ -75,7 +71,12 @@ vvoid Renderer::PushBack(Light *command) {
       break;
     }
   }
-};
+}
+
+
+vvoid Renderer::AddRenderPass(RenderPass *renderpass) {
+  m_renderpasses.push_back(renderpass);
+}
 
 
 // Cleanup any resources that where handled by the renderer engine.

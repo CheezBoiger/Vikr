@@ -91,8 +91,14 @@ public:
   vvoid SetPitch(vreal32 p) { pitch_rate = p; }
   vvoid SetRoll(vreal32 r) { roll_rate = r; }
   vvoid SetSensitivity(vreal32 s) { sensitivity = s; }
-  vvoid SetFOV(vreal32 f) { fov = f ;}
+  vvoid SetFOV(vreal32 f) { fov = f; }
+  /**
+    Setting the Aspect will update the projection.
+  */
   vvoid SetAspect(vreal32 a) { aspect = a; }
+  /**
+    Set the viewport for the camera.
+  */
   vvoid SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) override;
   /**
     Set our look at vector for the camera to focus on. Uses Vector subtraction of the lookat

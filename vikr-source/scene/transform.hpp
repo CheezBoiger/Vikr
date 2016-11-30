@@ -20,7 +20,8 @@ namespace vikr {
   position, rotation, and scale in the world coordinates.
 
 */
-struct Transform {
+class Transform {
+public:
   /**
     Position of the object in world space.
   */
@@ -33,6 +34,21 @@ struct Transform {
     Object rotation represented as a Quaternion.
   */
   glm::quat Rotation;
+
+  glm::mat4 GetTransform() { return m_transformMatrix; }
+  /**
+    Calculate our dear ol' tranform matrix.
+
+      Algorithm:    ->>>    
+        Tranform4x4 = Translation4x4 * Rotation4x4 * Scale4x4
+  */
+  vvoid CalculateTransform();
+
+private:
+  /**
+    Transform matrix.
+  */
+  glm::mat4 m_transformMatrix;
 };
 } // vikr
 #endif // __VIKR_TRANSFORM_HPP

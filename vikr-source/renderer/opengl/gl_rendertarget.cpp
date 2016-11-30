@@ -22,11 +22,18 @@ GLRenderTarget::GLRenderTarget(vuint32 width, vuint32 height)
 vvoid GLRenderTarget::Generate() {
   if (!m_fbo) {
     glGenFramebuffers(1, &m_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
   }
 
   if (!m_texture) {
-    m_texture = std::make_unique<GLTexture2D>(GLTexture2D());
-    m_texture->Create(0);
+    GLTexture2D texture(m_width, m_height);
+    texture.SetWidth(m_width);
+    texture.SetFilterMin(TextureFilterMode::vikr_TEXTURE_LINEAR);
+    texture.SetFormat(TextureFormat::vikr_RGB);
+    texture.SetInternalFormat(TextureFormat::vikr_RGB);
+    texture.SetMipmapping(false);
+    texture.Create(0);
+    m_texture = std::make_unique<GLTexture2D>(std::move(texture));
   }
 
   if (!m_rbo) {
@@ -50,7 +57,8 @@ vvoid GLRenderTarget::BindTexture(vuint32 index) {
 
 vvoid GLRenderTarget::BindDepthStencil() {
   if (m_rbo) {
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+    m_depthstencil = true;
   }
 }
 
@@ -66,5 +74,16 @@ vvoid GLRenderTarget::Unbind() {
   if (m_fbo) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
   }
+}
+
+
+vbool GLRenderTarget::IsComplete() {
+  vbool success = false;
+  if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+    std::cout << "Frame buffer not complete!" << std::endl;
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    return false;
+  }
+  return true;
 }
 } // vikr

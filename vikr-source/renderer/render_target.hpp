@@ -48,6 +48,8 @@ public:
   vvoid SetClearColor(glm::vec3 cl) { clearcolor = cl; }
   glm::vec3 GetClearColor() { return clearcolor; }
 
+  virtual vbool IsComplete() = 0;
+
 protected:
 
   glm::vec3 clearcolor                      = glm::vec3(0.1f, 0.1f, 0.1f);

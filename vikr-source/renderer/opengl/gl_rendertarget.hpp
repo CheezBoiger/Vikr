@@ -21,6 +21,7 @@ public:
 
   vvoid BindDepthStencil() override;
   vvoid BindTexture(vuint32 index) override;
+  vbool IsComplete() override;
   
   vvoid Unbind() override;
   vvoid Bind() override;

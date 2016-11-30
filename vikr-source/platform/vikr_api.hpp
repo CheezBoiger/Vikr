@@ -8,7 +8,6 @@
 #include "platform.hpp"
 
 
-
 #if defined(VIKR_WINDOWS)
  #if defined(_MSC_VER)
   #define VIKR_FORCEINLINE __forceinline
@@ -29,6 +28,12 @@
 #define VIKR_DEFAULT_MOVE_AND_ASSIGN(class_name) \
                   class_name(class_name &&obj) = default; \
                   class_name &operator=(class_name &&obj) = default
+
+
+#define VIKR_ABSTRACT
+#define VIKR_INTERFACE
+#define VIKR_ABSTRACT_CLASS class
+#define VIKR_INTERFACE_CLASS class
 
 namespace vikr {
 

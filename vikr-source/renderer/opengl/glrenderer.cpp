@@ -3,23 +3,32 @@
 //
 #include <renderer/opengl/glrenderer.hpp>
 #include <renderer/renderer.hpp>
+#include <renderer/render_command.hpp>
+#include <renderer/mesh_command.hpp>
+#include <renderer/opengl/gl_rendertarget.hpp>
+#include <renderer/pass.hpp>
 
 #include <shader/material.hpp>
-#include <shader/glsl/glsl_shader.hpp>
 #include <shader/stb/stb_image.h>
+#include <shader/glsl/glsl_shader.hpp>
 #include <shader/glsl/gl_texture.hpp>
 #include <shader/glsl/gl_texture1d.hpp>
 #include <shader/glsl/gl_texture2d.hpp>
 #include <shader/glsl/gl_texture3d.hpp>
-#include <renderer/render_command.hpp>
-#include <renderer/mesh_command.hpp>
+
 #include <mesh/mesh.hpp>
+
 #include <scene/camera.hpp>
+
 #include <util/vikr_log.hpp>
+
 #include <glm/gtc/type_ptr.hpp>
+
 #include <lighting/point_light.hpp>
 #include <lighting/light.hpp>
+
 #include <resources/opengl/gl_resources.hpp>
+
 
 namespace vikr {
 
@@ -31,6 +40,35 @@ GLRenderer::GLRenderer()
 
 
 vint32 GLRenderer::Init() {
+  // I don't like dynamically allocated meshes.  -__-
+  Quad q;
+  quad = std::make_unique<Mesh>();
+  quad->Create(q.GetPositions(), q.GetNormals(), q.GetUVs());
+  StoreShader("screen_shader", "screen_shader.vert", "screen_shader.frag");
+  /**
+    Wait WTF?!?!
+  */
+  m_render_queue.RegisterBatchComparator([] (RenderCommand *, RenderCommand *) -> vint32 {
+    return 0;
+  });
+
+  m_render_queue.RegisterDeferredComparator([] (RenderCommand *, RenderCommand *) -> vint32 {
+    return 0;
+  });
+  // Create default rendertarget.
+  default_rendertarget = std::make_unique<GLRenderTarget>();
+  default_rendertarget->SetWidth(1200);
+  default_rendertarget->SetHeight(800);
+  default_rendertarget->Generate();
+  default_rendertarget->BindTexture(0);
+  default_rendertarget->BindDepthStencil();
+  default_rendertarget->IsComplete();
+  default_rendertarget->Unbind();
+  default_renderpass.Rendertargets.push_back(default_rendertarget.get());
+  default_renderpass.Viewport.win_x = 0;
+  default_renderpass.Viewport.win_y = 0;
+  current_renderpass = &default_renderpass;
+  m_renderpasses.push_back(&default_renderpass);
   return true;
 }
 
@@ -77,32 +115,61 @@ Texture *GLRenderer::CreateTexture(TextureTarget target, std::string img_path, v
 
 
 vvoid GLRenderer::Render() {
-  rendering = true;
+  vuint32 original_window_width = camera->GetViewport().win_width;
+  vuint32 original_window_height = camera->GetViewport().win_height;
+  default_renderpass.Viewport.win_width = original_window_width;
+  default_renderpass.Viewport.win_height = original_window_height;
+  vreal32 aspect = camera->GetAspect();
 
+  rendering = true;
   ClearColor(clear_color.x, clear_color.y, clear_color.z, 1.0f);  
   ClearDisplay(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  // Sort out the m_command_list
+  // Sort out the m_renderqueue
   Sort();
-  
   // Perform drawing, need to better understand passes for rendering,
   // Pre-batch, batch, and Post-batch drawing.
-  std::vector<RenderCommand *> render_commands = m_command_list.GetCommandList();
-  for (std::vector<RenderCommand *>::iterator it = render_commands.begin();
-        it != render_commands.end();
-        ++it) {
-    switch ((*it)->GetCommandType()) {
-      case RenderCommandType::RENDER_MESH: {
-        ExecuteMeshCommand(static_cast<MeshCommand *>((*it)));
+  for (RenderPass *pass : m_renderpasses) {
+    std::vector<RenderCommand *> &commands = *m_render_queue.GetCommandList(pass);
+    Viewport  *viewport = &pass->Viewport;
+    glViewport(viewport->win_x, viewport->win_y, viewport->win_width, viewport->win_height);
+    for (RenderTarget *target : pass->Rendertargets) {
+      target->Bind();
+      if (target->HasDepthAndStencil()) {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+      } else {
+        glClear(GL_COLOR_BUFFER_BIT);
       }
-      break;
-      case RenderCommandType::RENDER_GROUP: {
+      for (RenderCommand *command : commands) {
+        switch (command->GetCommandType()) {
+          case RenderCommandType::RENDER_MESH: { 
+            ExecuteMeshCommand(static_cast<MeshCommand *>(command)); 
+          } break;
+          case RenderCommandType::RENDER_GROUP: break;
+          case RenderCommandType::RENDER_PRIMITIVE: break;
+          default: break;
+        }
       }
-      default:
-      break;
     }
   }
+  // Remove framebuffers.
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  
+  // TODO(Garcia): Perform Blit and Post processing later on
+  
+  // Final render onto Quad.
+  glViewport(0, 0, original_window_width, original_window_height);
+  glClear(GL_COLOR_BUFFER_BIT);
+  MeshCommand quadCommand;
+  Material material(GLResources::GetShader("screen_shader"));
+  material.SetDepth(false);
+  material.SetIsCulling(false);
+  material.SetTexture("screenTexture", default_rendertarget->GetTexture(), 0);
+  quadCommand.SetMesh(quad.get());
+  quadCommand.SetMaterial(&material);
+  ExecuteMeshCommand(&quadCommand);
+  // Restore.
   // Clear after.
-  m_command_list.Clear();
+  m_render_queue.Clear();
   m_pointlights.clear();
   rendering = false;
 }
@@ -212,7 +279,6 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
     for (std::map<std::string, TextureSampler>::iterator it = samplers->begin();
          it != samplers->end(); ++it) {
       it->second.texture->Bind(it->second.i);
-      
     }
     for (std::map<std::string, MaterialValue>::iterator it = uniforms->begin();
          it != uniforms->end(); ++it) {

@@ -63,8 +63,8 @@ vvoid Camera::SetLookAt(glm::vec3 new_look) {
 
 
 vvoid Camera::SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) {
-  viewport.viewport_x = x;
-  viewport.viewport_y = y;
+  viewport.win_x = x;
+  viewport.win_y = y;
   viewport.win_width = width;
   viewport.win_height = height;
   aspect = (vreal32 )width / (vreal32 )height;

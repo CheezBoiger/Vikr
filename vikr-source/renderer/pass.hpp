@@ -19,8 +19,8 @@ namespace vikr {
 /**
   Controls passes that are sent to the Renderer.
 */
-struct RenderPass {
-  
+class RenderPass {
+public:
   Viewport Viewport;
   std::vector<RenderTarget *> Rendertargets;
 };

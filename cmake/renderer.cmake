@@ -36,6 +36,7 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/render_command_types.hpp
   ${VIKR_RENDERER_DIR}/render_group.hpp
   ${VIKR_RENDERER_DIR}/render_queue.hpp
+  ${VIKR_RENDERER_DIR}/render_queue.cpp
   ${VIKR_RENDERER_DIR}/render_target.hpp
   ${VIKR_RENDERER_DIR}/render_target.cpp
   ${VIKR_RENDERER_DIR}/viewport.hpp

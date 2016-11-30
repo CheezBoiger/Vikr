@@ -6,8 +6,11 @@
 
 #include <renderer/irenderer.hpp>
 #include <renderer/render_queue.hpp>
+#include <renderer/render_target.hpp>
+#include <renderer/pass.hpp>
 #include <shader/texture_config.hpp>
 #include <shader/shader.hpp>
+#include <mesh/mesh.hpp>
 #include <glm/glm.hpp>
 #include <string>
 #include <memory>
@@ -23,7 +26,6 @@ class RenderTarget;
 class PointLight;
 class Material;
 class Texture;
-class RenderPass;
 
 
 /**
@@ -54,9 +56,9 @@ public:
   virtual vvoid Render() override = 0;
 
   virtual vvoid PushBack(RenderCommand *command) override;
-  virtual vvoid PushBack(SceneObject *obj) override;
+  virtual vvoid PushBack(SceneNode *obj) override;
   virtual vvoid PushBack(Light *light) override;
-  virtual vvoid Sort() override { m_command_list.Sort(); }
+  virtual vvoid Sort() override { m_render_queue.Sort(); }
 
   virtual vint32 StoreShader(std::string shader_name, 
                              std::string vs, 
@@ -73,6 +75,10 @@ public:
   glm::vec3 GetClearColor() { return clear_color; }
   vbool IsRendering() { return rendering; }
 
+
+  RenderPass *GetCurrentRenderPass() { return current_renderpass; }
+  vvoid AddRenderPass(RenderPass *renderpass);
+
   virtual vint32 CleanupResources();
 
 protected:
@@ -83,9 +89,20 @@ protected:
   /**
     List of commands in the to be rendered.
   */
-  RenderQueue<RenderCommand> m_command_list;
+  RenderQueue m_render_queue;
   std::vector<PointLight *> m_pointlights;
   std::vector<RenderPass *> m_renderpasses;
+  /*
+    The current RenderPass.
+  */
+  RenderPass *current_renderpass                      = nullptr;
+  /**
+  Screen filled mesh quad.
+  */
+  std::unique_ptr<Mesh> quad                          = nullptr;
+  std::unique_ptr<RenderTarget> default_rendertarget  = nullptr;
+  RenderPass default_renderpass;
+
   /**
     Currently bound renderer type.
   */

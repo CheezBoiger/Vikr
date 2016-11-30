@@ -16,11 +16,11 @@ struct Viewport {
   /**
     Starting pixel width.
   */
-  vint32 viewport_x;
+  vint32 win_x;
   /**
     Starting pixel height. 
   */
-  vint32 viewport_y;
+  vint32 win_y;
   /**
     Max window width. 
   */

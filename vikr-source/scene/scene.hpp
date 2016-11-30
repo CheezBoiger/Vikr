@@ -6,38 +6,41 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
+#include <scene/guid_generator.hpp>
 #include <unordered_map>
 
 
 namespace vikr {
 
 
-class SceneObject;
+class SceneNode;
 
 
 /**
-  Scene graph (built as a Direct Acyclic Graph) that contains all SceneObjects within the 
-  rendering scene. this is used to determine all scenes and their associated objects for easy
+  Scene graph (built as a Direct Acyclic Graph) that contains all SceneNodes within the 
+  rendering scene. this is used to determine all scenes and their associated nodes for easy
   storage, along with quick rendering set up.
 */
 class Scene {
 public:
-  Scene(SceneObject *root = nullptr);
+  Scene(SceneNode *root = nullptr);
 
-  SceneObject *GetRoot() { return root; }
+  SceneNode *GetRoot() { return root; }
 
-  vvoid SetRoot(SceneObject *n_root) { root = n_root; }
-
-  SceneObject *GetSceneObject(std::string tag);
+  vvoid SetRoot(SceneNode *n_root) { root = n_root; }
+  /**
+    Get the scene node in the map.
+  */
+  SceneNode *GetSceneNode(guid_t guid);
 private:
   /**
     Root SceneObject.
   */
-  SceneObject *root = nullptr;
+  SceneNode *root = nullptr;
   /**
     All objects referenced by the scene.
   */
-  std::unordered_map<std::string, SceneObject *> objects;
+  std::unordered_map<guid_t, SceneNode *> objects; 
 };
 } // vikr
 #endif // __VIKR_SCENE_HPP
