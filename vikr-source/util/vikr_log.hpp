@@ -9,13 +9,6 @@
 #include <vector>
 
 
-#if defined(VIKR_DEBUG) || defined(_DEBUG)
- #define VIKR_DEBUG(str, ...)  std::printf(str, ##__VA_ARGS__)
-#else 
- #define VIKR_DEBUG(str, ...)
-#endif // VIKR_DEBUG || _DEBUG
-
-
 #define MESSAGE_TYPE(type) #type
 #define PRINT_MESSAGE(type, message) std::cout << #type << ": " << message << std::endl
 

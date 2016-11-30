@@ -55,9 +55,6 @@ vvoid Renderer::PushBack(RenderCommand *command) {
 
 vvoid Renderer::PushBack(SceneNode *obj) {
   if (obj) {
-    obj->Transform.CalculateTransform();
-    obj->mesh_command.SetTransform(obj->Transform.GetTransform());
-    PushBack(&obj->mesh_command);
     std::vector<SceneNode *> *children = obj->GetChildren();
   }
 }

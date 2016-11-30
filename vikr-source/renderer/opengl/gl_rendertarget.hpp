@@ -10,6 +10,9 @@
 namespace vikr {
 
 
+/**
+  OpenGL Implementation of a RenderTarget.
+*/
 class GLRenderTarget : public RenderTarget {
 public:
 

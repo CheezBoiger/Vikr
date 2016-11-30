@@ -101,8 +101,10 @@ int main(int c, char* args[]) {
   Renderer::GetRenderer()->SetCamera(&camera);
   Texture *texture = Renderer::GetRenderer()->CreateTexture(vikr_TEXTURE_2D, "awesomeface.png", true);
   Mesh mesh;
+  Mesh cube2;
   Mesh meshlight;
   MeshCommand mesh_command1;
+  MeshCommand mesh_command3;
   MeshCommand mesh_command2;
   Cube cube;
   PointLight light;
@@ -118,14 +120,17 @@ int main(int c, char* args[]) {
     Create meshes.
   */
   mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  cube2.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   meshlight.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   /**
     Reference the materials and meshes into mesh command. 
   */
   mesh_command1.SetMaterial(&material);
+  mesh_command3.SetMaterial(&material);
   mesh_command2.SetMaterial(&lightMaterial);
   mesh_command1.SetMesh(&mesh);
   mesh_command2.SetMesh(&meshlight);
+  mesh_command3.SetMesh(&cube2);
 
   light.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
   /**
@@ -151,6 +156,9 @@ int main(int c, char* args[]) {
     mesh_command1.SetTransform(model);
     light.SetPos(glm::vec3(std::sin(GetTime()) * radius, std::cos(GetTime()) * radius, 0.0f));
     model = glm::mat4();
+    model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+    mesh_command3.SetTransform(model);
+    model = glm::mat4();
     model = glm::translate(model, light.GetPos());
     model = glm::scale(model, glm::vec3(0.2f));
     mesh_command2.SetTransform(model);
@@ -159,6 +167,7 @@ int main(int c, char* args[]) {
     */
     Renderer::GetRenderer()->PushBack(&mesh_command1);
     Renderer::GetRenderer()->PushBack(&mesh_command2);
+    Renderer::GetRenderer()->PushBack(&mesh_command3);
     Renderer::GetRenderer()->PushBack(&light);
     Renderer::GetRenderer()->Render();
     DoubleBufferSwap(window);

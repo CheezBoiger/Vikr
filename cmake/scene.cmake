@@ -9,6 +9,12 @@ set(VIKR_GLOB
   ${VIKR_SCENE_DIR}/guid_generator.cpp
   ${VIKR_SCENE_DIR}/scene_node.hpp
   ${VIKR_SCENE_DIR}/scene_node.cpp
+  ${VIKR_SCENE_DIR}/mesh_node.hpp
+  ${VIKR_SCENE_DIR}/mesh_node.cpp
+  ${VIKR_SCENE_DIR}/material_node.hpp
+  ${VIKR_SCENE_DIR}/material_node.cpp
+  ${VIKR_SCENE_DIR}/texture_node.hpp
+  ${VIKR_SCENE_DIR}/texture_node.cpp
   ${VIKR_SCENE_DIR}/scene.hpp
   ${VIKR_SCENE_DIR}/scene.cpp
   ${VIKR_SCENE_DIR}/transform.hpp

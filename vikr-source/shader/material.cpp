@@ -42,6 +42,12 @@ Material::Material(Shader *shader)
 }
 
 
+Material::Material()
+  : Material(nullptr)
+{
+}
+
+
 vvoid Material::SetTexture(std::string name, Texture *texture, vuint32 i) {
   if (texture) {
     m_uniform_samplers[name].texture = texture;

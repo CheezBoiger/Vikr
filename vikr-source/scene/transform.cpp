@@ -9,7 +9,7 @@ namespace vikr {
 
 
 /**
-  
+  Calculate the Transform matrix (or the model matrix if you are a nerd.)
 */
 vvoid Transform::CalculateTransform() {
   glm::mat4 _translation;
@@ -18,7 +18,8 @@ vvoid Transform::CalculateTransform() {
   _translation = glm::translate(_translation, Position);
   _rotation = glm::toMat4(Rotation);
   _scale = glm::scale(_scale, Scale);
-  // Transform matrix is a "sexier" name than Model matrix apparently...
+  // I'd like to "transform" your model matrix, hehhh heehh...
+  // I suck at this...
   m_transformMatrix = _translation * _rotation * _scale;
 }
 } // vikr

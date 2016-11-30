@@ -300,6 +300,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\guid_generator.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene_node.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\mesh_node.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\material_node.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\texture_node.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\transform.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp" />
@@ -358,6 +361,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\guid_generator.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene_node.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\mesh_node.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\material_node.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\texture_node.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\transform.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp"  />

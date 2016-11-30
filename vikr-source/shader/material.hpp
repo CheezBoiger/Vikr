@@ -62,6 +62,7 @@ struct MaterialValue {
 class Material {
   static const std::string kDefaultName;
 public:
+  Material();
   Material(Shader *shader, std::string name);
   Material(Shader *shader);
   Shader *GetShader() { return m_shader; }

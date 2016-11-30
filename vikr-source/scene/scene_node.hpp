@@ -6,8 +6,6 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
-#include <renderer/mesh_command.hpp>
-#include <scene/transform.hpp>
 #include <scene/guid_generator.hpp>
 #include <vector>
 #include <string>
@@ -16,8 +14,17 @@
 namespace vikr {
 
 
-class Mesh;
-class Material;
+/**
+  The scene node type of the structure.
+*/
+enum SceneNodeType {
+  vikr_UNKNOWN,
+  vikr_MESH,
+  vikr_MATERIAL,
+  vikr_TEXTURE,
+  vikr_LINE,
+  vikr_TRIANGLE
+};
 
 
 /**
@@ -43,11 +50,13 @@ public:
     is assigned.
   */
   SceneNode *GetParent() { return m_parent; }
+
   /**
     Get a specific child associated with their tag name.
     If no child is associated with the tag name, nullptr is returned. 
   */
   SceneNode *GetChild(std::string tag);
+
   /**
     Overloaded member function to get the child with the associated guid. 
   */
@@ -63,58 +72,41 @@ public:
     @return
   */
   SceneNode *RemoveChild(std::string tag);
+
   /**
     Add a child to this SceneNode.
   */
   SceneNode *AddChild(SceneNode *obj);
+
   /**
     Sets the parent of this SceneNode for this object.
   */
   vvoid SetParent(SceneNode *parent) { m_parent = parent; }
+
   /**
     Get the children of the SceneNode in the form of a vector.
   */
   std::vector<SceneNode *> *GetChildren() { return &children; }
-  /**
-    Attach material for the associated Mesh. If no mesh is assigned, material doesn't 
-    do much.
-  */
-  vvoid AttachMaterial(Material *material) { mesh_command.SetMaterial(material); }
-  /**
-    Attach mesh for the associated Material. If no Material is assigned, mesh will render
-    without the material.
-  */
-  vvoid AttachMesh(Mesh *mesh) { mesh_command.SetMesh(mesh); }
-  /**
-    Current Material attached to this SceneNode.
-  */
-  Material *GetMaterial() { return mesh_command.GetMaterial(); }
-
-  /**
-    Current Mesh attached to this SceneNode.
-  */
-  Mesh *GetMesh() { return mesh_command.GetMesh(); }
 
   /**
     Read-only GUID.
   */
   guid_t GetGUID() { return guid; }
-
   /**
-    SceneNode's transform.
+    Update the SceneNode's children.
   */
-  Transform                   Transform;
+  virtual vvoid Update() = 0;
 
   /**
     SceneNode's tag (or name).
   */
   std::string                 Tag; /* <<---- Will need to replace! */
 
-private:
+protected:
   /**
     The SceneObject's parent.
   */
-  SceneNode                 *m_parent = nullptr;
+  SceneNode *m_parent                     = nullptr;
 
   /**
     The SceneObject's children.
@@ -122,17 +114,20 @@ private:
   std::vector<SceneNode *>  children;
 
   /**
-    The MeshCommand for the SceneNode. 
-  */
-  /*
-    TODO(Garcia): We will need to abstract this as a reference.
-  */
-  MeshCommand mesh_command;
-
-  /**
     The associated graphical unique id of the SceneNode.
   */
   const guid_t guid;
+  
+  /**
+    Does our SceneNode need to be updated, provided that it's contents where changed?
+  */
+  vbool m_isDirty                         = false;
+
+private:
+  /**
+    Scene Node type.
+  */
+  SceneNodeType m_sceneNodeType           = vikr_UNKNOWN;
 
   /**
     Our renderer has access to this mesh command. 

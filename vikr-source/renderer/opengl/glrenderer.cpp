@@ -100,7 +100,7 @@ Texture *GLRenderer::CreateTexture(TextureTarget target, std::string img_path, v
   vbyte *bytecode = stbi_load(img_path.c_str(), &width, &height, &depth,
                               alpha ? STBI_rgb_alpha : STBI_rgb);
   switch (target) {
-    case vikr_TEXTURE_1D: texture = new GLTexture2D(width); break;
+    case vikr_TEXTURE_1D: texture = new GLTexture1D(width); break;
     case vikr_TEXTURE_2D: texture = new GLTexture2D(width, height); break;
     case vikr_TEXTURE_3D: texture = new GLTexture3D(width, height, depth); break;
     case vikr_TEXTURE_CUBEMAP: // not implemented yet.
