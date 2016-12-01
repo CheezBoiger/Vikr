@@ -16,7 +16,7 @@
 #include <shader/glsl/gl_texture2d.hpp>
 #include <shader/glsl/gl_texture3d.hpp>
 
-#include <mesh/mesh.hpp>
+#include <mesh/opengl/glmesh.hpp>
 
 #include <scene/camera.hpp>
 
@@ -42,8 +42,9 @@ GLRenderer::GLRenderer()
 vint32 GLRenderer::Init() {
   // I don't like dynamically allocated meshes.  -__-
   Quad q;
-  quad = std::make_unique<Mesh>();
-  quad->Create(q.GetPositions(), q.GetNormals(), q.GetUVs());
+  quad = std::make_unique<GLMesh>();
+  quad->Buffer(q.GetPositions(), q.GetNormals(), q.GetUVs());
+  quad->Create();
   StoreShader("screen_shader", "screen_shader.vert", "screen_shader.frag");
   /**
     Wait WTF?!?!

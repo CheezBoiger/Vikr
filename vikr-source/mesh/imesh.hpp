@@ -41,22 +41,32 @@ enum MeshDrawMode {
 };
 
 
+/**
+  Change the Useage type of the Mesh.
+*/
+enum MeshUsageType {
+  vikr_STATIC,
+  vikr_DYNAMIC
+};
+
+
 class IMesh {
 public:
   IMesh() { }
   virtual ~IMesh() { }
 
   virtual vvoid Create() = 0;
-  virtual vvoid Create(std::vector<glm::vec3> positions,
+  virtual vvoid Buffer(std::vector<glm::vec3> positions,
                std::vector<glm::vec3> normals,
                std::vector<glm::vec2> uvs,
                std::vector<vuint32> indices,
                MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
-  virtual vvoid Create(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
+  virtual vvoid Buffer(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
   virtual MeshDrawMode GetMeshMode() = 0;
   virtual vuint32 GetVAO() = 0;
   virtual vuint32 GetVBO() = 0;
   virtual vuint32 GetEBO() = 0;
+  virtual MeshUsageType GetMeshUsageType() = 0;
   virtual GraphicsPipeline GetRenderType() = 0;
 };
 } // vikr

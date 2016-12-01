@@ -5,7 +5,7 @@
 #include <iostream>
 #include <shader/shader.hpp>
 #include <vikr.hpp>
-#include <mesh/mesh.hpp>
+#include <mesh/opengl/glmesh.hpp>
 #include <math/shape/cube.hpp>
 #include <math/shape/sphere.hpp>
 #include <util/vikr_log.hpp>
@@ -100,9 +100,9 @@ int main(int c, char* args[]) {
   InitVikrEngine(vikr_OPENGL);
   Renderer::GetRenderer()->SetCamera(&camera);
   Texture *texture = Renderer::GetRenderer()->CreateTexture(vikr_TEXTURE_2D, "awesomeface.png", true);
-  Mesh mesh;
-  Mesh cube2;
-  Mesh meshlight;
+  GLMesh mesh;
+  GLMesh cube2;
+  GLMesh meshlight;
   MeshCommand mesh_command1;
   MeshCommand mesh_command3;
   MeshCommand mesh_command2;
@@ -119,9 +119,12 @@ int main(int c, char* args[]) {
   /**
     Create meshes.
   */
-  mesh.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
-  cube2.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
-  meshlight.Create(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  mesh.Buffer(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  cube2.Buffer(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  meshlight.Buffer(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  mesh.Create();
+  cube2.Create();
+  meshlight.Create();
   /**
     Reference the materials and meshes into mesh command. 
   */

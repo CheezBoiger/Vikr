@@ -25,8 +25,9 @@ class Mesh : public IMesh {
   static const std::string kDefaultName;
   VIKR_DISALLOW_COPY_AND_ASSIGN(Mesh);
 public:
-  Mesh();
-  Mesh(std::vector<glm::vec3> positions, 
+  Mesh(GraphicsPipeline pipeline = vikr_OPENGL);
+  Mesh(GraphicsPipeline pipeline,
+       std::vector<glm::vec3> positions, 
        std::vector<glm::vec3> normals,
        std::vector<glm::vec2> uvs,
        std::vector<vuint32> indices = std::vector<vuint32>(),
@@ -36,11 +37,11 @@ public:
   /**
     This must be abstracted. Creates the Mesh object based on The type of Renderer.
   */
-  vvoid Create() override;
+  virtual vvoid Create() override = 0;
   /**
     Inputs the vertex data to the Mesh object. 
   */
-  vvoid Create(std::vector<glm::vec3> positions, 
+  vvoid Buffer(std::vector<glm::vec3> positions, 
                std::vector<glm::vec3> normals,
                std::vector<glm::vec2> uvs,
                std::vector<vuint32> indices = std::vector<vuint32>(), 
@@ -49,7 +50,7 @@ public:
   /**
     Create the object using the Vertex Object to store info into.
   */
-  vvoid Create(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) override;
+  vvoid Buffer(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) override;
   /**
     Set the name of this Mesh.
   */
@@ -84,6 +85,10 @@ public:
     Get the name of the Mesh object.
   */
   std::string GetName() { return m_name; }
+  /**
+    Get the usage type.
+  */
+  MeshUsageType GetMeshUsageType() override { return m_usage_type; };
 
 protected:
   std::string m_name;
@@ -93,6 +98,7 @@ protected:
   vuint32 m_vbo;
   vuint32 m_ebo;
   vbool is_transparent;
+  MeshUsageType m_usage_type          = vikr_STATIC;
 
   std::vector<Vertex> m_vertices;
   std::vector<vuint32> m_indices;
