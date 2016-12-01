@@ -17,6 +17,9 @@ namespace vikr {
   The Component type, which helps the Renderer pushback items.
 */
 enum ComponentType {
+  vikr_COMPONENT_NONE,
+  vikr_COMPONENT_MESH,
+  vikr_COMPONENT_RENDERER 
 };
 
 
@@ -25,11 +28,21 @@ enum ComponentType {
 */
 class SceneComponent {
 public:
+  SceneComponent(ComponentType type = vikr_COMPONENT_NONE);
 
+  /**
+    Update component's implementation.
+  */
+  virtual vvoid Update() = 0;
+
+protected:
+  /**
+    The Component type.
+  */
+  ComponentType component_type;
 
 private:
 
-  
 
   /**
     The Graphical Unique  InDentifier for the specified SceneComponent.

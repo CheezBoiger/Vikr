@@ -4,7 +4,13 @@ set(VIKR_SCENE_COMPONENT_DIR ${VIKR_SCENE_DIR}/components)
 set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_SCENE_COMPONENT_DIR}/scene_component.hpp
-  ${VIKR_SCENE_COMPONENT_DIR}/scene_component.cpp)
+  ${VIKR_SCENE_COMPONENT_DIR}/scene_component.cpp
+  ${VIKR_SCENE_COMPONENT_DIR}/transform_component.hpp
+  ${VIKR_SCENE_COMPONENT_DIR}/transform_component.cpp
+  ${VIKR_SCENE_COMPONENT_DIR}/mesh_component.hpp
+  ${VIKR_SCENE_COMPONENT_DIR}/mesh_component.cpp
+  ${VIKR_SCENE_COMPONENT_DIR}/renderer_component.hpp
+  ${VIKR_SCENE_COMPONENT_DIR}/renderer_component.cpp)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}

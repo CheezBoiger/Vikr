@@ -5,7 +5,6 @@
 #include <iostream>
 #include <shader/shader.hpp>
 #include <vikr.hpp>
-#include <mesh/opengl/glmesh.hpp>
 #include <math/shape/cube.hpp>
 #include <math/shape/sphere.hpp>
 #include <util/vikr_log.hpp>
@@ -18,6 +17,7 @@
 #include <math/shape/quad.hpp>
 #include <lighting/point_light.hpp>
 #include <scene/first_person_camera.hpp>
+#include <resources/resource_manager.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;
@@ -82,7 +82,6 @@ int main(int c, char* args[]) {
   VikrWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   VikrWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-
   GLFWwindow* window = VikrCreateGLFWwindow(screen_width, screen_height, "Vikr", nullptr, nullptr); // Windowed
   VikrMakeContextCurrent(window);
   camera.SetViewport(0, 0, screen_width, screen_height);
@@ -100,17 +99,21 @@ int main(int c, char* args[]) {
   InitVikrEngine(vikr_OPENGL);
   Renderer::GetRenderer()->SetCamera(&camera);
   Texture *texture = Renderer::GetRenderer()->CreateTexture(vikr_TEXTURE_2D, "awesomeface.png", true);
-  GLMesh mesh;
-  GLMesh cube2;
-  GLMesh meshlight;
+  Mesh *mesh;
+  Mesh *cube2;
+  Mesh *meshlight;
   MeshCommand mesh_command1;
   MeshCommand mesh_command3;
   MeshCommand mesh_command2;
   Cube cube;
   PointLight light;
+  //light.SetDiffuse(glm::vec3(0.0f, 1.0f, 0.0f));
   // Storing shaders into resources from renderer.
   Renderer::GetRenderer()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
   Renderer::GetRenderer()->StoreShader("light", "test.vert", "light.frag");
+  mesh = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  cube2 = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  meshlight = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   /**
     referencing stored shaders with materials. 
   */
@@ -119,21 +122,16 @@ int main(int c, char* args[]) {
   /**
     Create meshes.
   */
-  mesh.Buffer(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
-  cube2.Buffer(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
-  meshlight.Buffer(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
-  mesh.Create();
-  cube2.Create();
-  meshlight.Create();
+  
   /**
     Reference the materials and meshes into mesh command. 
   */
   mesh_command1.SetMaterial(&material);
   mesh_command3.SetMaterial(&material);
   mesh_command2.SetMaterial(&lightMaterial);
-  mesh_command1.SetMesh(&mesh);
-  mesh_command2.SetMesh(&meshlight);
-  mesh_command3.SetMesh(&cube2);
+  mesh_command1.SetMesh(mesh);
+  mesh_command2.SetMesh(meshlight);
+  mesh_command3.SetMesh(cube2);
 
   light.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
   /**
@@ -142,7 +140,7 @@ int main(int c, char* args[]) {
   material.SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
   material.SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
   material.SetTexture("texas", texture, 0);
-  lightMaterial.SetVector3fv("light_color", glm::vec3(1.0f, 1.0f, 1.0f));
+  lightMaterial.SetVector3fv("light_color", light.GetColor());
 
   // Standard Game Loop
   vreal32 radius = 2.0f;

@@ -5,16 +5,17 @@
 #define __VIKR_CUBEMAP_HPP
 
 #include <shader/texture.hpp>
-
+#include <memory>
 
 namespace vikr {
 
 
-class Cubemap : public Texture {
+class Cubemap {
 public:
-
+  
+  
 protected:
-
+  std::unique_ptr<Texture> texture      = nullptr;
 };
 } // vikr
 #endif // __VIKR_CUBEMAP_HPP

@@ -137,11 +137,13 @@ vvoid GLRenderer::Render() {
     glViewport(viewport->win_x, viewport->win_y, viewport->win_width, viewport->win_height);
     for (RenderTarget *target : pass->Rendertargets) {
       target->Bind();
+      glm::vec3 cc = target->GetClearColor();
       if (target->HasDepthAndStencil()) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
       } else {
         glClear(GL_COLOR_BUFFER_BIT);
       }
+      glClearColor(cc.x, cc.y, cc.z, 1.0f);
       for (RenderCommand *command : commands) {
         switch (command->GetCommandType()) {
           case RenderCommandType::RENDER_MESH: { 
@@ -266,13 +268,13 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
       std::string linear = "linear";
       std::string quadratic = "quadratic";
       shader->SetValue("blinn", true);
-      shader->SetValue(position, m_pointlights[i]->GetPos());
-      shader->SetValue(ambient, glm::vec3(0.05f, 0.05f, 0.05f));
-      shader->SetValue(diffuse, glm::vec3(0.8f, 0.8f, 0.8f));
-      shader->SetValue(specular, glm::vec3(1.0f, 1.0f, 1.0f));
-      shader->SetValue(constant, 1.0f);
-      shader->SetValue(linear, 0.09f);
-      shader->SetValue(quadratic, 0.032f);
+      shader->SetValue(position,  m_pointlights[i]->GetPos());
+      shader->SetValue(ambient,   m_pointlights[i]->GetAmbient());
+      shader->SetValue(diffuse,   m_pointlights[i]->GetDiffuse());
+      shader->SetValue(specular,  m_pointlights[i]->GetSpecular());
+      shader->SetValue(constant,  m_pointlights[i]->GetConstant());
+      shader->SetValue(linear,    m_pointlights[i]->GetLinear());
+      shader->SetValue(quadratic, m_pointlights[i]->GetQuadratic());
     }
     /**
       Require multiple texture targets!

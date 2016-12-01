@@ -68,8 +68,6 @@ public:
   virtual Shader *GetShader(std::string shader_name) = 0;
   virtual Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) = 0;
 
-  //virtual Material *CreateMaterial(std::string name) = 0;
-
   GraphicsPipeline GetRenderType()  { return renderer_type; }
   vvoid SetClearColor(glm::vec3 cc) { clear_color = cc; }
   glm::vec3 GetClearColor() { return clear_color; }
