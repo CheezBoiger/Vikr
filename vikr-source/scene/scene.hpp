@@ -7,7 +7,6 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <scene/guid_generator.hpp>
-#include <unordered_map>
 
 
 namespace vikr {
@@ -28,19 +27,16 @@ public:
   SceneNode *GetRoot() { return root; }
 
   vvoid SetRoot(SceneNode *n_root) { root = n_root; }
+
   /**
-    Get the scene node in the map.
+    Update the graph data structure, starting from root.
   */
-  SceneNode *GetSceneNode(guid_t guid);
+  vvoid Update();
 private:
   /**
     Root SceneObject.
   */
   SceneNode *root = nullptr;
-  /**
-    All objects referenced by the scene.
-  */
-  std::unordered_map<guid_t, SceneNode *> objects; 
 };
 } // vikr
 #endif // __VIKR_SCENE_HPP

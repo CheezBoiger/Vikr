@@ -55,7 +55,8 @@ vvoid Renderer::PushBack(RenderCommand *command) {
 
 vvoid Renderer::PushBack(SceneNode *obj) {
   if (obj) {
-    std::vector<SceneNode *> *children = obj->GetChildren();
+    std::unordered_map<guid_t, SceneNode *> *children = &obj->children;
+    
   }
 }
 

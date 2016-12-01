@@ -7,24 +7,14 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <scene/guid_generator.hpp>
-#include <vector>
+#include <unordered_map>
 #include <string>
 
 
 namespace vikr {
 
 
-/**
-  The scene node type of the structure.
-*/
-enum SceneNodeType {
-  vikr_UNKNOWN,
-  vikr_MESH,
-  vikr_MATERIAL,
-  vikr_TEXTURE,
-  vikr_LINE,
-  vikr_TRIANGLE
-};
+class SceneComponent;
 
 
 /**
@@ -46,7 +36,7 @@ public:
   SceneNode();  
 
   /*
-    Takes the parent of the SceneObject. nulltpr returned if no parent 
+    Takes the parent of the SceneNode. nulltpr returned if no parent 
     is assigned.
   */
   SceneNode *GetParent() { return m_parent; }
@@ -54,6 +44,7 @@ public:
   /**
     Get a specific child associated with their tag name.
     If no child is associated with the tag name, nullptr is returned. 
+    BE AWARE: This performs a linear search for the child with the specified tag!
   */
   SceneNode *GetChild(std::string tag);
 
@@ -68,10 +59,17 @@ public:
     user when a child is removed! User decides what to do with the 
     removed SceneNode. nullptr is returned if child there is no 
     child to remove.
+    BE AWARE: This performs a linear search for the child with the specified tag!
     @param
     @return
   */
   SceneNode *RemoveChild(std::string tag);
+
+  /**
+    Removes child from the SceneNode's children structure. Will return a reference to 
+    removed node, otherwise nullptr is returned if no node was found.
+  */
+  SceneNode *RemoveChild(guid_t guid);
 
   /**
     Add a child to this SceneNode.
@@ -84,18 +82,14 @@ public:
   vvoid SetParent(SceneNode *parent) { m_parent = parent; }
 
   /**
-    Get the children of the SceneNode in the form of a vector.
-  */
-  std::vector<SceneNode *> *GetChildren() { return &children; }
-
-  /**
     Read-only GUID.
   */
   guid_t GetGUID() { return guid; }
+
   /**
     Update the SceneNode's children.
   */
-  virtual vvoid Update() = 0;
+  virtual vvoid Update();
 
   /**
     SceneNode's tag (or name).
@@ -104,17 +98,22 @@ public:
 
 protected:
   /**
-    The SceneObject's parent.
+    The SceneNode's parent.
   */
   SceneNode *m_parent                     = nullptr;
 
   /**
-    The SceneObject's children.
+    The SceneNode's children.
   */
-  std::vector<SceneNode *>  children;
+  std::unordered_map<guid_t, SceneNode *>  children;
 
   /**
-    The associated graphical unique id of the SceneNode.
+    The SceneNode's associated components.
+  */
+  std::unordered_map<guid_t, SceneComponent *> components;
+
+  /**
+    The associated graphical unique id of the SceneNoe.
   */
   const guid_t guid;
   
@@ -124,16 +123,14 @@ protected:
   vbool m_isDirty                         = false;
 
 private:
-  /**
-    Scene Node type.
-  */
-  SceneNodeType m_sceneNodeType           = vikr_UNKNOWN;
 
   /**
     Our renderer has access to this mesh command. 
     It's pretty much your friendly neighborhood Renderer.
+    Comes complete with Scene!
   */
   friend class Renderer;
+  friend class Scene;
 };
 } // vikr
 #endif // __VIKR_SCENE_NODE_HPP
