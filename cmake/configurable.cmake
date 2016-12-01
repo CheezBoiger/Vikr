@@ -32,6 +32,7 @@ set(VIKR_ALG_DIR       ${VIKR_MATH_DIR}/alg/)
 set(VIKR_SHAPE_DIR     ${VIKR_MATH_DIR}/shape/)
 set(VIKR_LIGHTING_DIR  ${VIKR_SOURCE_DIR}/lighting/)
 set(VIKR_RESOURCES_DIR ${VIKR_SOURCE_DIR}/resources/)
+set(VIKR_TOOLS_DIR     ${VIKR_SOURCE_DIR}/tools/)
 
 # Set the directories for the compiler
 include_directories(SYSTEM ${VIKR_SOURCE_DIR})
@@ -52,4 +53,5 @@ include(cmake/scene.cmake)
 include(cmake/shader.cmake)
 include(cmake/util.cmake)
 include(cmake/resources.cmake)
+include(cmake/tools.cmake)
 include(cmake/vikr.cmake)
