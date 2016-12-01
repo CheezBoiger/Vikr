@@ -43,6 +43,12 @@ d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\vikr.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\gl_resources.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\vikr_log.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\stb_image.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\material_node.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\mesh_node.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\texture_node.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\scene_obj.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\scene_component.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\resources.obj
 d:\cmgarcia\github\vikr\build\cmakefiles\generate.stamp
 d:\cmgarcia\github\vikr\build\release\vikr_v0.01.lib
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\release\vikr_v0.01.tlog\cl.command.1.tlog

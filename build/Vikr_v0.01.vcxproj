@@ -323,10 +323,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_assert.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_filesystem.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\vulkan\vk_resources.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\opengl\gl_resources.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\vulkan\vk_resource_manager.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\opengl\gl_resource_manager.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\renderer_builder.hpp" />
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\resources.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\resource_manager.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.hpp" />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\glad\glad.c" >
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
@@ -377,7 +377,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\texture.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\stb\stb_image.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\resources\opengl\gl_resources.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\resources\opengl\gl_resource_manager.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\resources\resource_manager.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.cpp"  />
   </ItemGroup>
   <ItemGroup>

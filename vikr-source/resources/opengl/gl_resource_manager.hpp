@@ -6,6 +6,9 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
+#include <scene/scene.hpp>
+#include <resources/resource_manager.hpp>
+#include <mesh/opengl/glmesh.hpp>
 #include <unordered_map>
 #include <memory>
 #include <string>
@@ -16,15 +19,18 @@ namespace vikr {
 class GLSLShader;
 
 
-class GLResources {
+class GLResourceManager : public ResourceManager {
 public:
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(GLResourceManager);
+  GLResourceManager();
 
-  static vint32 StoreShader(std::string name, GLSLShader *shader);
-  static GLSLShader *GetShader(std::string name);
+  vint32 StoreShader(std::string name, Shader *shader) override;
+  Shader *GetShader(std::string name) override;
 
 private:
   static std::unordered_map<std::string, 
             std::pair<std::string, std::unique_ptr<GLSLShader> > > shaders;
+ 
 };
 } // vikr
 #endif // __VIKR_OPENGL_RESOURCES_HPP

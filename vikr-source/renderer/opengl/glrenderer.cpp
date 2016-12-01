@@ -27,7 +27,7 @@
 #include <lighting/point_light.hpp>
 #include <lighting/light.hpp>
 
-#include <resources/opengl/gl_resources.hpp>
+#include <resources/opengl/gl_resource_manager.hpp>
 
 
 namespace vikr {
@@ -40,6 +40,8 @@ GLRenderer::GLRenderer()
 
 
 vint32 GLRenderer::Init() {
+  GLResourceManager *resource_manager = new GLResourceManager();
+  ResourceManager::SetResourceManager(resource_manager);
   // I don't like dynamically allocated meshes.  -__-
   Quad q;
   quad = std::make_unique<GLMesh>();
@@ -82,14 +84,14 @@ vint32 GLRenderer::StoreShader(std::string shader_name,
   shader.SetIncludeSearchPath(include_path);
   shader.Compile(vs, fs);
   if (shader.IsLinked()) {
-    return GLResources::StoreShader(shader_name, &shader);
+    return ResourceManager::GetResourceManager()->StoreShader(shader_name, &shader);
   }
   return -1;
 }
 
 
 Shader *GLRenderer::GetShader(std::string shader_name) {
-  return GLResources::GetShader(shader_name);
+  return ResourceManager::GetResourceManager()->GetShader(shader_name);
 }
 
 
@@ -161,7 +163,7 @@ vvoid GLRenderer::Render() {
   glViewport(0, 0, original_window_width, original_window_height);
   glClear(GL_COLOR_BUFFER_BIT);
   MeshCommand quadCommand;
-  Material material(GLResources::GetShader("screen_shader"));
+  Material material(GLResourceManager::GetResourceManager()->GetShader("screen_shader"));
   material.SetDepth(false);
   material.SetIsCulling(false);
   material.SetTexture("screenTexture", default_rendertarget->GetTexture(), 0);
