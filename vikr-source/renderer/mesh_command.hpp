@@ -62,6 +62,9 @@ private:
   // Model transform matrix.
   glm::mat4 m_transform;
   // weak ref
+  /*
+    Perhaps consider using guids instead?
+  */
   Mesh *m_mesh                    = nullptr;
   Material *m_material            = nullptr;
   RenderTarget *render_target     = nullptr;

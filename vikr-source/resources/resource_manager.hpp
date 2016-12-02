@@ -6,9 +6,11 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
+#include <scene/guid_generator.hpp>
 #include <glm/glm.hpp>
 #include <memory>
 #include <vector>
+#include <unordered_map>
 
 namespace vikr {
 
@@ -16,6 +18,8 @@ namespace vikr {
 class Shader;
 class Mesh;
 class Material;
+class SceneNode;
+class SceneComponent;
 
 
 /**
@@ -39,15 +43,40 @@ public:
 
   virtual Material *CreateMaterial() = 0;
 
-  static ResourceManager *GetResourceManager() { return resources.get(); }
-  static vvoid SetResourceManager(ResourceManager *r) { resources.reset(r); }
+  /**
+    Much involves the interface design of ResourceManager, but this is common.
+  */
+  SceneNode *CreateSceneNode();
 
+  static ResourceManager *GetResourceManager() { return resource_manager.get(); }
+  static vvoid SetResourceManager(ResourceManager *r) { resource_manager.reset(r); }
 
 private:
-
+  /**
+    Graphics pipeline of the ResourceManager.
+  */
   GraphicsPipeline pipeline;
+  /**
+    Current ResourceManager.
+  */
+  static std::unique_ptr<ResourceManager> resource_manager;
 
-  static std::unique_ptr<ResourceManager> resources;
+};
+
+
+/**
+  Resources
+*/
+class Resources {
+protected:
+
+  /**
+    The resources of scenenode and scenecomponents.
+  */
+  static std::unordered_map<guid_t, std::shared_ptr<SceneNode> > scene_nodes;
+  static std::unordered_map<guid_t, std::shared_ptr<SceneComponent> > scene_components;
+
+  friend class ResourceManager;
 };
 } // vikr
 #endif // __VIKR_RESOURCES_HPP

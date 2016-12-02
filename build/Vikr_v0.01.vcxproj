@@ -300,6 +300,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\cullmode.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\scene_component.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\transform_component.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\light_component.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\camera_component.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\mesh_component.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\renderer_component.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\icamera.hpp" />
@@ -330,6 +332,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\vulkan\vk_resource_manager.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\opengl\gl_resource_manager.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\model_loader.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\renderer_builder.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\resources\resource_manager.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\tools\allocator\detail\pool_allocator.inl" />
@@ -368,6 +371,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_target.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\scene_component.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\transform_component.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\light_component.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\camera_component.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\mesh_component.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\components\renderer_component.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\first_person_camera.cpp"  />
@@ -391,6 +396,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\stb\stb_image.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\util\vikr_log.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\resources\opengl\gl_resource_manager.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\resources\model_loader.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\resources\resource_manager.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\vikr.cpp"  />
   </ItemGroup>

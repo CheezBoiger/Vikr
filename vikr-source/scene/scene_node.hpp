@@ -30,6 +30,8 @@ class SceneComponent;
 */
 class SceneNode {
 public:
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(SceneNode);
+
   /**
     Scene node default constructor.
   */
@@ -82,6 +84,33 @@ public:
   vvoid SetParent(SceneNode *parent) { m_parent = parent; }
 
   /**
+    Add a SceneComponent to the SceneNode, if a component with the 
+    same guid is already inside, then it will return with the 
+    already stored SceneComponent, otherwise SceneComponent will be returned.
+  */
+  SceneComponent *AddComponent(SceneComponent *component);
+
+  /**
+    Get the component inside this SceneNode.
+  */
+  SceneComponent *GetComponent(guid_t guid);
+
+  /**
+    Remove a SceneComponent from the SceneNode with the specified guid.
+    Returns the removed SceneComponent, otherwise nullptr returned if 
+    SceneComponent guid doesn't exist.
+  */
+  SceneComponent *RemoveComponent(guid_t guid);
+
+  /**
+    Remove a SceneComponent with the specified tag name. Returns 
+    the removed SceneComponent if successful, otherwise nullptr if
+    failed. BE WARNED: This performs a linear search for the Component
+    to remove!
+  */
+  //SceneComponent *RemoveComponent(std::string tag);
+  
+  /**
     Read-only GUID.
   */
   guid_t GetGUID() { return guid; }
@@ -113,7 +142,7 @@ protected:
   std::unordered_map<guid_t, SceneComponent *> components;
 
   /**
-    The associated graphical unique id of the SceneNoe.
+    The associated graphical unique id of the SceneNode.
   */
   const guid_t guid;
   
@@ -124,6 +153,7 @@ protected:
 
 private:
 
+  VIKR_DISALLOW_COPY_AND_ASSIGN(SceneNode);
   /**
     Our renderer has access to this mesh command. 
     It's pretty much your friendly neighborhood Renderer.

@@ -18,6 +18,7 @@
 #include <lighting/point_light.hpp>
 #include <scene/first_person_camera.hpp>
 #include <resources/resource_manager.hpp>
+#include <scene/scene_node.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;

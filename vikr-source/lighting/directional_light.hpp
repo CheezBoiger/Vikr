@@ -13,8 +13,13 @@ namespace vikr {
 
 class DirectionalLight : public Light {
 public:
+  DirectionalLight();
 
+  vvoid SetDirection(glm::vec3 direction) { m_direction = direction; }
+  glm::vec3 GetDirection() { return m_direction; }
 private:
+
+  glm::vec3 m_direction;
 };
 } // vikr
 #endif // __VIKR_DIRECTIONAL_LIGHT_HPP

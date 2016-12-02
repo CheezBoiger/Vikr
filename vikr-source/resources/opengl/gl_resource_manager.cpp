@@ -9,11 +9,10 @@ namespace vikr {
 
 
 std::unordered_map<std::string,
-  std::pair<std::string, std::unique_ptr<GLSLShader> > > GLResourceManager::shaders;
+  std::pair<std::string, std::unique_ptr<GLSLShader> > > GLResources::shaders;
 
-
-std::vector<std::shared_ptr<GLMesh> > GLResourceManager::meshes;
-std::vector<std::shared_ptr<Material> > GLResourceManager::materials;
+std::vector<std::shared_ptr<GLMesh> > GLResources::meshes;
+std::vector<std::shared_ptr<Material> > GLResources::materials;
 
 
 GLResourceManager::GLResourceManager()
@@ -25,7 +24,7 @@ GLResourceManager::GLResourceManager()
 vint32 GLResourceManager::StoreShader(std::string name, Shader *shader) {
   vint32 success = 0;
   if (shader && shader->IsLinked()) {
-    shaders[name] = std::make_pair(name, std::make_unique<GLSLShader>(
+    GLResources::shaders[name] = std::make_pair(name, std::make_unique<GLSLShader>(
                     std::move(*static_cast<GLSLShader *>(shader))));
   }
   return success;
@@ -33,8 +32,8 @@ vint32 GLResourceManager::StoreShader(std::string name, Shader *shader) {
 
 
 Shader *GLResourceManager::GetShader(std::string name) {
-  if (shaders.find(name) != shaders.end()) {
-    return static_cast<Shader *>(shaders[name].second.get());
+  if (GLResources::shaders.find(name) != GLResources::shaders.end()) {
+    return static_cast<Shader *>(GLResources::shaders[name].second.get());
   }
   return nullptr;
 }
@@ -48,7 +47,7 @@ Mesh *GLResourceManager::CreateMesh(std::vector<glm::vec3> positions,
   std::shared_ptr<GLMesh> mesh = std::make_shared<GLMesh>();
   mesh->Buffer(positions, normals, uvs, indices);
   mesh->Create();
-  meshes.push_back(mesh);
+  GLResources::meshes.push_back(mesh);
   return mesh.get();
 }
 
@@ -58,7 +57,7 @@ Mesh *GLResourceManager::CreateMesh(std::vector<glm::vec3> positions,
 */
 Material *GLResourceManager::CreateMaterial() {
   std::shared_ptr<Material> material = std::make_shared<Material>();
-  materials.push_back(material);
+  GLResources::materials.push_back(material);
   return material.get();
 }
 } // vikr

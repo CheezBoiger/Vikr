@@ -18,6 +18,8 @@ set(VIKR_GLOB
 
 set (VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_RESOURCES_DIR}/model_loader.hpp
+  ${VIKR_RESOURCES_DIR}/model_loader.cpp
   ${VIKR_RESOURCES_DIR}/renderer_builder.hpp
   ${VIKR_RESOURCES_DIR}/resource_manager.cpp
   ${VIKR_RESOURCES_DIR}/resource_manager.hpp)

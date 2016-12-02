@@ -63,12 +63,29 @@ public:
     Color of the actual light entity.
   */
   vvoid SetColor(glm::vec3 color) { m_color = color; }
-
-  glm::vec3 GetPos() { return m_position; } 
+  /**
+    Get the position of the light.
+  */
+  glm::vec3 GetPos() { return m_position; }
+  /**
+    Get the light ambient (the color at it's most darkest).
+  */ 
   glm::vec3 GetAmbient() { return m_ambient; }
+  /**
+    Get the light diffuse (the color at it's most brightest).
+  */
   glm::vec3 GetDiffuse() { return m_diffuse; }
+  /**
+    Get the light specular (the color highlight).
+  */
   glm::vec3 GetSpecular() { return m_specular; }
+  /**
+    Get the source color, which is to be emitted by a mesh.
+  */
   glm::vec3 GetColor() { return m_color; }
+  /**
+    Get the light's type (spotlight, pointlight, etc).
+  */
   LightType GetLightType() { return type; }
   
 protected:

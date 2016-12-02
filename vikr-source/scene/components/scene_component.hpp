@@ -13,13 +13,19 @@
 namespace vikr {
 
 
+class SceneNode;
+
+
 /**
   The Component type, which helps the Renderer pushback items.
 */
 enum ComponentType {
   vikr_COMPONENT_NONE,
   vikr_COMPONENT_MESH,
-  vikr_COMPONENT_RENDERER 
+  vikr_COMPONENT_RENDERER,
+  vikr_COMPONENT_LIGHT,
+  vikr_COMPONENT_CAMERA,
+  vikr_COMPONENT_TRANSFORM
 };
 
 
@@ -35,6 +41,11 @@ public:
   */
   virtual vvoid Update() = 0;
 
+  guid_t GetGUID() const { return guid; }
+
+  SceneNode *GetOwner() { return owner; }
+  vvoid SetOwner(SceneNode *node) { owner = node; }
+
 protected:
   /**
     The Component type.
@@ -42,12 +53,15 @@ protected:
   ComponentType component_type;
 
 private:
-
+  /**
+    Reference to the owner of this component.
+  */
+  SceneNode *owner;
 
   /**
     The Graphical Unique  InDentifier for the specified SceneComponent.
   */
-  guid_t guid;
+  const guid_t guid;
 };
 } // vikr
 #endif // __VIKR_SCENE_COMPONENT_HPP

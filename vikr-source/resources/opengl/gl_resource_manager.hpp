@@ -19,6 +19,9 @@ namespace vikr {
 class GLSLShader;
 
 
+/**
+  The OpenGL Resource Manager.
+*/
 class GLResourceManager : public ResourceManager {
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(GLResourceManager);
@@ -34,25 +37,27 @@ public:
 
   Material *CreateMaterial() override;
 
-private:
-  static std::unordered_map<std::string, 
-            std::pair<std::string, std::unique_ptr<GLSLShader> > > shaders;
+};
+
+
+/**
+  OpenGL Specific Resources.
+*/
+class GLResources : public Resources {
+  static std::unordered_map<std::string,
+    std::pair<std::string, std::unique_ptr<GLSLShader> > > shaders;
 
   /**
-    Contains PtrToMesh data.
+  Contains PtrToMesh data.
   */
   static std::vector<std::shared_ptr<GLMesh> > meshes;
-  
+
   /**
-    Contains material data.
+  Contains material data.
   */
   static std::vector<std::shared_ptr<Material> > materials;
-  
-  /**
-    Will contain SceneNode data.
-  */
-  static std::unordered_map<guid_t, SceneNode *> scene_nodes;
- 
+
+  friend class GLResourceManager;
 };
 } // vikr
 #endif // __VIKR_OPENGL_RESOURCES_HPP

@@ -48,6 +48,9 @@ d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\stb_image.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\texture.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\material.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\shader.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\camera_component.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\light_component.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\model_loader.obj
 d:\cmgarcia\github\vikr\build\cmakefiles\generate.stamp
 d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.lib
 d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.pdb
