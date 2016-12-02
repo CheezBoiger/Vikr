@@ -112,7 +112,7 @@ int main(int c, char* args[]) {
   Cube cube;
   PointLight light;
   std::vector<glm::vec3> line = {
-    glm::vec3(0.0f, 0.0f, 0.0f),
+    glm::vec3(4.0f, 4.0f, 4.0f),
     glm::vec3(5.0f, 5.0f, 5.0f)
   };
   //light.SetDiffuse(glm::vec3(0.0f, 1.0f, 0.0f));
@@ -142,6 +142,7 @@ int main(int c, char* args[]) {
   mesh_command2.SetMesh(meshlight);
   mesh_command3.SetMesh(cube2);
   p_command.SetMesh(line_mesh);
+  p_command.SetLineWidth(20);
   light.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
   /**
     Set the variables of the shaders associated with the material. 

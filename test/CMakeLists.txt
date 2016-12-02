@@ -21,4 +21,4 @@ add_executable(VikrRendererTest
   ${TEST_GLOB})
 
 
-target_link_libraries(VikrRendererTest Vikr_v0.01)
+target_link_libraries(VikrRendererTest ${VIKR_NAME})

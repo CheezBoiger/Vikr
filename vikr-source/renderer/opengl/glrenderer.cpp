@@ -324,8 +324,12 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
 
 
 vint32 GLRenderer::ExecutePrimitiveCommand(PrimitiveCommand * command) {
+  glEnable(GL_LINE_SMOOTH);
+  glLineWidth(command->GetLineWidth());
   BindVertexArray(command->GetMesh()->GetVAO());
   glDrawArrays(GL_LINES, 0, command->GetMesh()->GetVertices().size());
+  glLineWidth(1);
+  glDisable(GL_LINE_SMOOTH);
   return 1;
 }
 

@@ -449,14 +449,23 @@
     <CustomBuild Include="D:\cmgarcia\github\Vikr\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="vikr-source\scene\components">
-      <UniqueIdentifier>{2D390607-500C-45AC-9C4C-A1AB68F70D72}</UniqueIdentifier>
+    <Filter Include="vikr-source\tools\allocator\detail">
+      <UniqueIdentifier>{1ED5C8D5-797A-4D33-80B1-B6334B600C88}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\tools\allocator">
       <UniqueIdentifier>{5D6D2E5A-D403-4070-AEBC-6D8CE74E99D5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\tools\allocator\detail">
-      <UniqueIdentifier>{1ED5C8D5-797A-4D33-80B1-B6334B600C88}</UniqueIdentifier>
+    <Filter Include="vikr-source\scene\components">
+      <UniqueIdentifier>{2D390607-500C-45AC-9C4C-A1AB68F70D72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\math\alg">
+      <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\math\shape">
+      <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source">
+      <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\glad">
       <UniqueIdentifier>{0A8C6B6F-F0FB-435F-B1B3-74E6D66D3A2D}</UniqueIdentifier>
@@ -493,15 +502,6 @@
     </Filter>
     <Filter Include="vikr-source\tools">
       <UniqueIdentifier>{E10FE65C-0DF8-4034-BF74-DDA91DC17E89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\math\alg">
-      <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\math\shape">
-      <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source">
-      <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\mesh\vulkan">
       <UniqueIdentifier>{93140204-4E55-46D7-B1FD-EAF4F1A7E0D6}</UniqueIdentifier>
