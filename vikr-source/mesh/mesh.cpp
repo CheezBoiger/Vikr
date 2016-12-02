@@ -55,8 +55,16 @@ vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
   for (vuint32 i = 0; i < positions.size(); ++i) {
     Vertex vert;
     vert.position = std::move(positions[i]);
-    vert.normal = std::move(normals[i]);
-    vert.uv = std::move(uvs[i]);
+    if (i < normals.size()) {
+      vert.normal = std::move(normals[i]);
+    } else {
+      vert.normal = glm::vec3();
+    }
+    if (i < uvs.size()) {
+      vert.uv = std::move(uvs[i]);
+    } else {
+      vert.uv = glm::vec2();
+    }
     m_vertices.push_back(std::move(vert));
   }
   m_mode = draw_mode;

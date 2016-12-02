@@ -5,6 +5,7 @@
 #include <renderer/renderer.hpp>
 #include <renderer/render_command.hpp>
 #include <renderer/mesh_command.hpp>
+#include <renderer/primitive_command.hpp>
 #include <renderer/opengl/gl_rendertarget.hpp>
 #include <renderer/pass.hpp>
 
@@ -150,7 +151,10 @@ vvoid GLRenderer::Render() {
             ExecuteMeshCommand(static_cast<MeshCommand *>(command)); 
           } break;
           case RenderCommandType::RENDER_GROUP: break;
-          case RenderCommandType::RENDER_PRIMITIVE: break;
+          case RenderCommandType::RENDER_PRIMITIVE: {
+            ExecutePrimitiveCommand(static_cast<PrimitiveCommand *>(command));
+          } 
+          break;
           default: break;
         }
       }
@@ -309,12 +313,19 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
       case vikr_TRIANGLE_FAN: DrawArrays(GL_TRIANGLE_FAN, 0, vertices); break;
       case vikr_TRIANGLE_STRIP_ADJACENCY : DrawArrays(GL_TRIANGLE_STRIP_ADJACENCY, 0, vertices); break;
     }
-    BindVertexArray(0);
+    //BindVertexArray(0);
   } else {
     VikrLog::DisplayMessage(VIKR_WARNING, "Mesh command rendered with unknown material!!");
   }
 
 
+  return 1;
+}
+
+
+vint32 GLRenderer::ExecutePrimitiveCommand(PrimitiveCommand * command) {
+  BindVertexArray(command->GetMesh()->GetVAO());
+  glDrawArrays(GL_LINES, 0, command->GetMesh()->GetVertices().size());
   return 1;
 }
 

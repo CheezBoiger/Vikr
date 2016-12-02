@@ -19,6 +19,7 @@
 #include <scene/first_person_camera.hpp>
 #include <resources/resource_manager.hpp>
 #include <scene/scene_node.hpp>
+#include <renderer/primitive_command.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;
@@ -102,12 +103,18 @@ int main(int c, char* args[]) {
   Texture *texture = Renderer::GetRenderer()->CreateTexture(vikr_TEXTURE_2D, "awesomeface.png", true);
   Mesh *mesh;
   Mesh *cube2;
+  Mesh *line_mesh;
   Mesh *meshlight;
   MeshCommand mesh_command1;
   MeshCommand mesh_command3;
   MeshCommand mesh_command2;
+  PrimitiveCommand p_command;
   Cube cube;
   PointLight light;
+  std::vector<glm::vec3> line = {
+    glm::vec3(0.0f, 0.0f, 0.0f),
+    glm::vec3(5.0f, 5.0f, 5.0f)
+  };
   //light.SetDiffuse(glm::vec3(0.0f, 1.0f, 0.0f));
   // Storing shaders into resources from renderer.
   Renderer::GetRenderer()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
@@ -115,6 +122,7 @@ int main(int c, char* args[]) {
   mesh = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   cube2 = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   meshlight = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  line_mesh = ResourceManager::GetResourceManager()->CreateMesh(line, std::vector<glm::vec3>(), std::vector<glm::vec2>());
   /**
     referencing stored shaders with materials. 
   */
@@ -133,7 +141,7 @@ int main(int c, char* args[]) {
   mesh_command1.SetMesh(mesh);
   mesh_command2.SetMesh(meshlight);
   mesh_command3.SetMesh(cube2);
-
+  p_command.SetMesh(line_mesh);
   light.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
   /**
     Set the variables of the shaders associated with the material. 
@@ -170,6 +178,7 @@ int main(int c, char* args[]) {
     Renderer::GetRenderer()->PushBack(&mesh_command1);
     Renderer::GetRenderer()->PushBack(&mesh_command2);
     Renderer::GetRenderer()->PushBack(&mesh_command3);
+    Renderer::GetRenderer()->PushBack(&p_command);
     Renderer::GetRenderer()->PushBack(&light);
     Renderer::GetRenderer()->Render();
     DoubleBufferSwap(window);

@@ -31,6 +31,8 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/render_command.cpp
   ${VIKR_RENDERER_DIR}/mesh_command.hpp
   ${VIKR_RENDERER_DIR}/mesh_command.cpp
+  ${VIKR_RENDERER_DIR}/primitive_command.hpp
+  ${VIKR_RENDERER_DIR}/primitive_command.cpp
   ${VIKR_RENDERER_DIR}/group_command.hpp
   ${VIKR_RENDERER_DIR}/group_command.cpp
   ${VIKR_RENDERER_DIR}/render_command_types.hpp

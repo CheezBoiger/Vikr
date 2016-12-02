@@ -19,6 +19,7 @@ namespace vikr {
 
 class Camera;
 class MeshCommand; 
+class PrimitiveCommand;
 class Mesh;
 
 
@@ -50,6 +51,8 @@ public:
   */
   vint32 ExecuteMeshCommand(MeshCommand *cmd);
 
+
+  vint32 ExecutePrimitiveCommand(PrimitiveCommand *cmd);
   /**
     Sets the context of the OpenGL mesh in terms of whether or not 
     to disable/enable blending, depth, or culling

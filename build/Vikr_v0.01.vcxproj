@@ -286,6 +286,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_command.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\mesh_command.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\primitive_command.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\group_command.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_command_types.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_group.hpp" />
@@ -366,6 +367,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_command.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\mesh_command.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\primitive_command.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\group_command.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_queue.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_target.cpp"  />

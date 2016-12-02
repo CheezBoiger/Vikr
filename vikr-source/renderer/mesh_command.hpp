@@ -25,6 +25,7 @@ class RenderTarget;
 */
 class MeshCommand : public RenderCommand {
 public:
+
   MeshCommand();
   // these will need to be manually defined.
   MeshCommand(MeshCommand&& mes_cmd) = default;
