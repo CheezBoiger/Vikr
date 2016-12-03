@@ -7,7 +7,13 @@
 namespace vikr {
 
 
+TransformComponent::TransformComponent()
+  : SceneComponent(vikr_COMPONENT_TRANSFORM)
+{
+}
+
+
 vvoid TransformComponent::Update() {
-  transform->CalculateTransform();
+  transform.CalculateTransform();
 }
 } // vikr

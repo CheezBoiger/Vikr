@@ -60,14 +60,6 @@ public:
   virtual vvoid PushBack(Light *light) override;
   virtual vvoid Sort() override { m_render_queue.Sort(); }
 
-  virtual vint32 StoreShader(std::string shader_name, 
-                             std::string vs, 
-                             std::string fs, 
-                             std::string include_searchpath = ".") = 0;
-
-  virtual Shader *GetShader(std::string shader_name) = 0;
-  virtual Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) = 0;
-
   GraphicsPipeline GetRenderType()  { return renderer_type; }
   vvoid SetClearColor(glm::vec3 cc) { clear_color = cc; }
   glm::vec3 GetClearColor() { return clear_color; }

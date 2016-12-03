@@ -100,7 +100,7 @@ int main(int c, char* args[]) {
   // Initialize the renderer.
   InitVikrEngine(vikr_OPENGL);
   Renderer::GetRenderer()->SetCamera(&camera);
-  Texture *texture = Renderer::GetRenderer()->CreateTexture(vikr_TEXTURE_2D, "awesomeface.png", true);
+  Texture *texture = ResourceManager::GetResourceManager()->CreateTexture(vikr_TEXTURE_2D, "awesomeface.png", true);
   Mesh *mesh;
   Mesh *cube2;
   Mesh *line_mesh;
@@ -117,17 +117,21 @@ int main(int c, char* args[]) {
   };
   light.SetDiffuse(glm::vec3(1.0f, 1.0f, 1.0f));
   // Storing shaders into resources from renderer.
-  Renderer::GetRenderer()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
-  Renderer::GetRenderer()->StoreShader("light", "test.vert", "light.frag");
+  ResourceManager::GetResourceManager()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
+  ResourceManager::GetResourceManager()->StoreShader("light", "test.vert", "light.frag");
   mesh = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   cube2 = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   meshlight = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   line_mesh = ResourceManager::GetResourceManager()->CreateMesh(line, std::vector<glm::vec3>(), std::vector<glm::vec2>());
+  mesh->Create();
+  cube2->Create();
+  meshlight->Create();
+  line_mesh->Create();
   /**
     referencing stored shaders with materials. 
   */
-  Material material(Renderer::GetRenderer()->GetShader("test"));
-  Material lightMaterial(Renderer::GetRenderer()->GetShader("light"));
+  Material material(ResourceManager::GetResourceManager()->GetShader("test"));
+  Material lightMaterial(ResourceManager::GetResourceManager()->GetShader("light"));
   /**
     Create meshes.
   */

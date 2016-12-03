@@ -9,6 +9,12 @@
 namespace vikr {
 
 
+MeshComponent::MeshComponent()
+  : SceneComponent(vikr_COMPONENT_MESH)
+{
+}
+
+
 vvoid MeshComponent::Update() {
 }
 } // vikr

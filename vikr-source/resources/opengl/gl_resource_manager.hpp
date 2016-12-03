@@ -31,11 +31,22 @@ public:
   Shader *GetShader(std::string name) override;
 
   Mesh *CreateMesh(std::vector<glm::vec3> positions,
-                   std::vector<glm::vec3> normals,
-                   std::vector<glm::vec2> uvs,
-                   std::vector<vuint32> indices = std::vector<vuint32>()) override;
+    std::vector<glm::vec3> normals,
+    std::vector<glm::vec2> uvs,
+    std::vector<vuint32> indices = std::vector<vuint32>()) override;
+
+
+  Mesh *CreateMesh(std::vector<Vertex> vertices,
+    std::vector<vuint32> indices = std::vector<vuint32>()) override;
 
   Material *CreateMaterial() override;
+
+  Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;
+
+  vint32 StoreShader(std::string shader_name,
+                     std::string vs,
+                     std::string fs,
+                     std::string include_path = ".") override;
 
 };
 

@@ -14,19 +14,20 @@ namespace vikr {
 
 class TransformComponent : public SceneComponent {
 public:
+  TransformComponent();
 
   vvoid Update() override;
 
   /**
     World Matrix position.
   */
-  vikr::Transform *transform;
+  vikr::Transform transform;
 private:
 
   /**
     Local transform, relative to the parent.
   */
-  vikr::Transform *m_localTransform;
+  vikr::Transform m_localTransform;
 };
 } // vikr
 #endif // __VIKR_TRANSFORM_COMPONENT_HPP

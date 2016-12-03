@@ -13,9 +13,6 @@
 #include <shader/stb/stb_image.h>
 #include <shader/glsl/glsl_shader.hpp>
 #include <shader/glsl/gl_texture.hpp>
-#include <shader/glsl/gl_texture1d.hpp>
-#include <shader/glsl/gl_texture2d.hpp>
-#include <shader/glsl/gl_texture3d.hpp>
 
 #include <mesh/opengl/glmesh.hpp>
 
@@ -48,7 +45,10 @@ vint32 GLRenderer::Init() {
   quad = std::make_unique<GLMesh>();
   quad->Buffer(q.GetPositions(), q.GetNormals(), q.GetUVs());
   quad->Create();
-  StoreShader("screen_shader", "screen_shader.vert", "screen_shader.frag");
+  ResourceManager::GetResourceManager()->StoreShader(
+    "screen_shader", 
+    "screen_shader.vert", 
+    "screen_shader.frag");
   /**
     Wait WTF?!?!
   */
@@ -74,47 +74,6 @@ vint32 GLRenderer::Init() {
   current_renderpass = &default_renderpass;
   m_renderpasses.push_back(&default_renderpass);
   return true;
-}
-
-vint32 GLRenderer::StoreShader(std::string shader_name, 
-                               std::string vs, 
-                               std::string fs, 
-                               std::string include_path) 
-{
-  GLSLShader shader;
-  shader.SetIncludeSearchPath(include_path);
-  shader.Compile(vs, fs);
-  if (shader.IsLinked()) {
-    return ResourceManager::GetResourceManager()->StoreShader(shader_name, &shader);
-  }
-  return -1;
-}
-
-
-Shader *GLRenderer::GetShader(std::string shader_name) {
-  return ResourceManager::GetResourceManager()->GetShader(shader_name);
-}
-
-
-Texture *GLRenderer::CreateTexture(TextureTarget target, std::string img_path, vbool alpha) {
-  Texture *texture = nullptr;
-  vint32 width = 0;
-  vint32 height = 0;
-  vint32 depth = 0;
-  vbyte *bytecode = stbi_load(img_path.c_str(), &width, &height, &depth,
-                              alpha ? STBI_rgb_alpha : STBI_rgb);
-  switch (target) {
-    case vikr_TEXTURE_1D: texture = new GLTexture1D(width); break;
-    case vikr_TEXTURE_2D: texture = new GLTexture2D(width, height); break;
-    case vikr_TEXTURE_3D: texture = new GLTexture3D(width, height, depth); break;
-    case vikr_TEXTURE_CUBEMAP: // not implemented yet.
-    default: break;
-  }
-  if (texture) {
-    texture->Create(bytecode);
-    texture->SetString(img_path);
-  }
-  return texture;
 }
 
 
@@ -164,6 +123,7 @@ vvoid GLRenderer::Render() {
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   
   // TODO(Garcia): Perform Blit and Post processing later on
+  // This also requires deferred shading.
   
   // Final render onto Quad.
   glViewport(0, 0, original_window_width, original_window_height);
@@ -320,6 +280,14 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
 
 
   return 1;
+}
+
+
+vvoid GLRenderer::Draw(
+  GLenum topology, 
+  vuint32 vertices, 
+  vuint32 start) {
+  
 }
 
 

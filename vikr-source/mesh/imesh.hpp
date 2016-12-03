@@ -7,6 +7,7 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
+#include <glm/glm.hpp>
 #include <vector>
 
 namespace vikr {
@@ -56,12 +57,19 @@ public:
   virtual ~IMesh() { }
 
   virtual vvoid Create() = 0;
-  virtual vvoid Buffer(std::vector<glm::vec3> positions,
-               std::vector<glm::vec3> normals,
-               std::vector<glm::vec2> uvs,
-               std::vector<vuint32> indices,
-               MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
-  virtual vvoid Buffer(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
+
+  virtual vvoid Buffer(
+            std::vector<glm::vec3> positions,
+            std::vector<glm::vec3> normals,
+            std::vector<glm::vec2> uvs,
+            std::vector<vuint32> indices,
+            MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
+  
+  virtual vvoid Buffer(
+            std::vector<Vertex> vertices,
+            std::vector<vuint32> indices = std::vector<vuint32>(),
+            MeshDrawMode draw_mode = vikr_TRIANGLES) = 0;
+
   virtual MeshDrawMode GetMeshMode() = 0;
   virtual vuint32 GetVAO() = 0;
   virtual vuint32 GetVBO() = 0;

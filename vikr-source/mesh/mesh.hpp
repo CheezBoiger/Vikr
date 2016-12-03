@@ -41,16 +41,21 @@ public:
   /**
     Inputs the vertex data to the Mesh object. 
   */
-  vvoid Buffer(std::vector<glm::vec3> positions, 
-               std::vector<glm::vec3> normals,
-               std::vector<glm::vec2> uvs,
-               std::vector<vuint32> indices = std::vector<vuint32>(), 
-               MeshDrawMode draw_mode = vikr_TRIANGLES) override;
+  vvoid Buffer(
+    std::vector<glm::vec3> positions, 
+    std::vector<glm::vec3> normals,
+    std::vector<glm::vec2> uvs,
+    std::vector<vuint32> indices = std::vector<vuint32>(), 
+    MeshDrawMode draw_mode = vikr_TRIANGLES) override;
 
   /**
     Create the object using the Vertex Object to store info into.
   */
-  vvoid Buffer(std::vector<Vertex> vertices, MeshDrawMode draw_mode = vikr_TRIANGLES) override;
+  vvoid Buffer(
+    std::vector<Vertex> vertices,
+    std::vector<vuint32> indices = std::vector<vuint32>(), 
+    MeshDrawMode draw_mode = vikr_TRIANGLES) override;
+
   /**
     Set the name of this Mesh.
   */
@@ -91,6 +96,7 @@ public:
   MeshUsageType GetMeshUsageType() override { return m_usage_type; };
 
 protected:
+
   std::string m_name;
   MeshDrawMode m_mode;
   GraphicsPipeline m_render_type;

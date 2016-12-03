@@ -38,14 +38,9 @@ public:
 
   vint32 Init() override;
   vvoid Render() override;
-  vint32 StoreShader(std::string shader_name, 
-                     std::string vs, 
-                     std::string fs, 
-                     std::string include_path = ".") override;
 
-  Shader *GetShader(std::string shader_name) override;
 
-  Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;
+  vvoid Draw(GLenum topology, vuint32 vertices, vuint32 start);
   /**
     Executes the following MeshCommand. This is where we render meshes.
   */

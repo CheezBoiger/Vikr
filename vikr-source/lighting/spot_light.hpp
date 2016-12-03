@@ -17,7 +17,7 @@ namespace vikr {
   Think of spot light as a flashlight or (if you ever went to a theatre play) that light that
   shines down on an actor. A spot light mimicks this approach.
 */
-class SpotLight : public Light, public DirectionalLight, public PointLight {
+class SpotLight : public DirectionalLight, public PointLight {
 public:
   SpotLight();
   

@@ -24,11 +24,11 @@ Mesh::Mesh(GraphicsPipeline pipeline)
 
 
 Mesh::Mesh(GraphicsPipeline pipeline,
-           std::vector<glm::vec3> positions,
-           std::vector<glm::vec3> normals,
-           std::vector<glm::vec2> uvs,
-           std::vector<vuint32> indices,
-           MeshDrawMode draw_mode)
+  std::vector<glm::vec3> positions,
+  std::vector<glm::vec3> normals,
+  std::vector<glm::vec2> uvs,
+  std::vector<vuint32> indices,
+  MeshDrawMode draw_mode)
   : m_vao(0)
   , m_vbo(0)
   , m_ebo(0)
@@ -47,10 +47,10 @@ Mesh::Mesh(GraphicsPipeline pipeline,
 
 
 vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
-                   std::vector<glm::vec3> normals,
-                   std::vector<glm::vec2> uvs,
-                   std::vector<vuint32> indices,
-                   MeshDrawMode draw_mode)
+  std::vector<glm::vec3> normals,
+  std::vector<glm::vec2> uvs,
+  std::vector<vuint32> indices,
+  MeshDrawMode draw_mode)
 {
   for (vuint32 i = 0; i < positions.size(); ++i) {
     Vertex vert;
@@ -67,13 +67,22 @@ vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
     }
     m_vertices.push_back(std::move(vert));
   }
+  if (!indices.empty()) {
+    m_indices = std::move(indices);
+  }
   m_mode = draw_mode;
 }
 
 
-vvoid Mesh::Buffer(std::vector<Vertex> vertices, MeshDrawMode draw_mode) {
+vvoid Mesh::Buffer(std::vector<Vertex> vertices, 
+  std::vector<vuint32> indices, 
+  MeshDrawMode draw_mode) 
+{
   if (!vertices.empty()) {
     m_vertices = std::move(vertices);
+  }
+  if (!indices.empty()) {
+    m_indices = std::move(indices);
   }
   m_mode = draw_mode;
 }
