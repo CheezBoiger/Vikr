@@ -7,7 +7,7 @@
 
 #include <platform/vikr_api.hpp>
 #include <platform/vikr_types.hpp>
-#include <renderer/group_command.hpp>
+#include <renderer/command/group_command.hpp>
 
 // Going to need group command on this one...
 

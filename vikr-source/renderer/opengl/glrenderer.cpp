@@ -3,9 +3,10 @@
 //
 #include <renderer/opengl/glrenderer.hpp>
 #include <renderer/renderer.hpp>
-#include <renderer/render_command.hpp>
-#include <renderer/mesh_command.hpp>
-#include <renderer/primitive_command.hpp>
+#include <renderer/command/render_command.hpp>
+#include <renderer/command/mesh_command.hpp>
+#include <renderer/command/group_command.hpp>
+#include <renderer/command/debug_command.hpp>
 #include <renderer/opengl/gl_rendertarget.hpp>
 #include <renderer/pass.hpp>
 
@@ -106,12 +107,12 @@ vvoid GLRenderer::Render() {
       glClearColor(cc.x, cc.y, cc.z, 1.0f);
       for (RenderCommand *command : commands) {
         switch (command->GetCommandType()) {
-          case RenderCommandType::RENDER_MESH: { 
+          case RenderCommandType::COMMAND_MESH: { 
             ExecuteMeshCommand(static_cast<MeshCommand *>(command)); 
           } break;
-          case RenderCommandType::RENDER_GROUP: break;
-          case RenderCommandType::RENDER_PRIMITIVE: {
-            ExecutePrimitiveCommand(static_cast<PrimitiveCommand *>(command));
+          case RenderCommandType::COMMAND_GROUP: break;
+          case RenderCommandType::COMMAND_DEBUG: {
+            ExecutePrimitiveCommand(static_cast<DebugCommand *>(command));
           } 
           break;
           default: break;
@@ -291,7 +292,7 @@ vvoid GLRenderer::Draw(
 }
 
 
-vint32 GLRenderer::ExecutePrimitiveCommand(PrimitiveCommand * command) {
+vint32 GLRenderer::ExecutePrimitiveCommand(DebugCommand * command) {
   glEnable(GL_LINE_SMOOTH);
   glLineWidth(command->GetLineWidth());
   BindVertexArray(command->GetMesh()->GetVAO());

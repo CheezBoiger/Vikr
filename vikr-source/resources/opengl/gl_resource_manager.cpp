@@ -112,7 +112,7 @@ vint32 GLResourceManager::StoreShader(
   shader.SetIncludeSearchPath(include_path);
   shader.Compile(vs, fs);
   if(shader.IsLinked()) {
-    return ResourceManager::GetResourceManager()->StoreShader(shader_name, &shader);
+    return StoreShader(shader_name, &shader);
   }
   return -1;
 }

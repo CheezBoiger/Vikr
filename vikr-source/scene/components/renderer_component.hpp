@@ -6,6 +6,7 @@
 
 
 #include <scene/components/scene_component.hpp>
+#include <renderer/command/material_command.hpp>
 #include <shader/material.hpp>
 #include <shader/texture.hpp>
 #include <vector>
@@ -26,6 +27,8 @@ public:
 
   vvoid Update() override;
 
+  RenderCommand *GetCommand() override { return &cmd; }
+
   /**
     Material implementation.
   */
@@ -38,6 +41,7 @@ public:
 
 private:
 
+  MaterialCommand cmd;
 }; 
 } // vikr
 #endif // __VIKR_RENDERER_COMPONENT_HPP

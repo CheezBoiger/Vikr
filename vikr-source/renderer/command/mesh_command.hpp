@@ -4,8 +4,8 @@
 #ifndef __VIKR_MESH_COMMAND_HPP
 #define __VIKR_MESH_COMMAND_HPP
 
-#include <renderer/render_command.hpp>
-#include <renderer/render_command_types.hpp>
+#include <renderer/command/render_command.hpp>
+#include <renderer/command/render_command_types.hpp>
 #include <glm/mat4x4.hpp>
 
 

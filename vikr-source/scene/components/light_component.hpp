@@ -17,6 +17,8 @@ public:
   LightComponent();
 
   vvoid Update() override;
+
+  RenderCommand *GetCommand() override;
 };
 } // vikr
 #endif // __VIKR_LIGHT_COMPONENT_HPP

@@ -6,7 +6,6 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
-#include <renderer/mesh_command.hpp>
 #include <glm/vec3.hpp>
 #include <mesh/imesh.hpp>
 #include <string>

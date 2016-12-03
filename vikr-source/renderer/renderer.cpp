@@ -3,8 +3,8 @@
 //
 #include <renderer/renderer.hpp>
 #include <renderer/render_target.hpp>
-#include <renderer/render_command.hpp>
-#include <renderer/mesh_command.hpp>
+#include <renderer/command/render_command.hpp>
+#include <renderer/command/mesh_command.hpp>
 #include <renderer/pass.hpp>
 
 #include <scene/camera.hpp>
@@ -65,7 +65,7 @@ vvoid Renderer::PushBack(SceneNode *obj) {
         for (auto it : trav->children) {
           stack.push_back(it.second);
         }
-        RenderCommand *command = trav->m_render_command;
+        RenderCommand *command = &trav->m_commandList;
         m_render_queue.PushBack(command, current_renderpass);
         visited.insert(trav);
       }

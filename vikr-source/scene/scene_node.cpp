@@ -93,6 +93,7 @@ SceneComponent *SceneNode::AddComponent(SceneComponent *component) {
   if (component) {
     component->SetOwner(this);
     comp = components[component->GetGUID()];
+    m_commandList.Insert(component->GetGUID(), component->GetCommand());
     components[component->GetGUID()] = component;
   }
   return comp;
@@ -104,6 +105,7 @@ SceneComponent *SceneNode::RemoveComponent(guid_t guid) {
   auto it = components.find(guid);
   if (it != components.end()) { 
     component = components[it->second->GetGUID()];
+    m_commandList.Remove(it->second->GetGUID());
     component->SetOwner(nullptr);
     components.erase(it->second->GetGUID());
   }

@@ -7,7 +7,7 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
-#include <renderer/render_command_types.hpp>
+#include <renderer/command/render_command_types.hpp>
 
 
 namespace vikr {

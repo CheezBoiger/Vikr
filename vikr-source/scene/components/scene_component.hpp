@@ -8,6 +8,7 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <scene/guid_generator.hpp>
+#include <renderer/command/render_command.hpp>
 
 
 namespace vikr {
@@ -47,6 +48,8 @@ public:
   vvoid SetOwner(SceneNode *node) { owner = node; }
 
   ComponentType GetComponentType() { return component_type; }
+
+  virtual RenderCommand *GetCommand() = 0;
 
 protected:
   /**

@@ -7,7 +7,8 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <scene/guid_generator.hpp>
-#include <renderer/render_command.hpp>
+#include <renderer/command/render_command.hpp>
+#include <renderer/command/group_command.hpp>
 #include <unordered_map>
 #include <string>
 
@@ -41,12 +42,7 @@ public:
   /**
     Get the RenderCommand.
   */
-  RenderCommand *GetRenderCommand() { return m_render_command; }
-
-  /**
-    Set a RenderCommand to be baked into the SceneNode.
-  */
-  vvoid SetRenderCommand(RenderCommand *cmd) { m_render_command = cmd; }
+  GroupCommand *GetCommand() { return &m_commandList; }
 
   /*
     Takes the parent of the SceneNode. nulltpr returned if no parent 
@@ -167,7 +163,7 @@ private:
   /**
     RenderCommand, which will be manipulated by the Components.
   */
-  RenderCommand *m_render_command         = nullptr;
+  GroupCommand m_commandList;
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(SceneNode);
   /**

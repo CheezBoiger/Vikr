@@ -2,7 +2,7 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <renderer/render_queue.hpp>
-#include <renderer/render_command.hpp>
+#include <renderer/command/render_command.hpp>
 #include <renderer/render_target.hpp>
 
 

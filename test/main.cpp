@@ -19,7 +19,8 @@
 #include <scene/first_person_camera.hpp>
 #include <resources/resource_manager.hpp>
 #include <scene/scene_node.hpp>
-#include <renderer/primitive_command.hpp>
+#include <renderer/command/debug_command.hpp>
+#include <renderer/command/mesh_command.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;
@@ -108,7 +109,7 @@ int main(int c, char* args[]) {
   MeshCommand mesh_command1;
   MeshCommand mesh_command3;
   MeshCommand mesh_command2;
-  PrimitiveCommand p_command;
+  DebugCommand p_command;
   Cube cube;
   PointLight light;
   std::vector<glm::vec3> line = {

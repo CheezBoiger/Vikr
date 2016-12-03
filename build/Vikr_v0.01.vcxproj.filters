@@ -49,19 +49,16 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\glrenderer.cpp">
       <Filter>vikr-source\renderer\opengl</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\render_command.cpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\mesh_command.cpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\group_command.cpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.cpp">
-      <Filter>vikr-source\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_command.cpp">
-      <Filter>vikr-source\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\mesh_command.cpp">
-      <Filter>vikr-source\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\primitive_command.cpp">
-      <Filter>vikr-source\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\group_command.cpp">
       <Filter>vikr-source\renderer</Filter>
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_queue.cpp">
@@ -261,25 +258,37 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\opengl\glrenderer.hpp">
       <Filter>vikr-source\renderer\opengl</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\render_command_types.hpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\render_command.hpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\primitive_command.hpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\light_command.hpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\material_command.hpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\transform_command.hpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\mesh_command.hpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\debug_command.hpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\group_command.hpp">
+      <Filter>vikr-source\renderer\command</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\irenderer.hpp">
       <Filter>vikr-source\renderer</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.hpp">
-      <Filter>vikr-source\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_command.hpp">
-      <Filter>vikr-source\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\mesh_command.hpp">
-      <Filter>vikr-source\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\primitive_command.hpp">
-      <Filter>vikr-source\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\group_command.hpp">
-      <Filter>vikr-source\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_command_types.hpp">
       <Filter>vikr-source\renderer</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\render_group.hpp">
@@ -449,8 +458,17 @@
     <CustomBuild Include="D:\cmgarcia\github\Vikr\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="vikr-source\tools\allocator\detail">
-      <UniqueIdentifier>{1ED5C8D5-797A-4D33-80B1-B6334B600C88}</UniqueIdentifier>
+    <Filter Include="vikr-source\math\alg">
+      <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\math\shape">
+      <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\mesh\vulkan">
+      <UniqueIdentifier>{93140204-4E55-46D7-B1FD-EAF4F1A7E0D6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\mesh\opengl">
+      <UniqueIdentifier>{3D2B60C5-DF0C-4E44-BC3B-9843DF1088FA}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\tools\allocator">
       <UniqueIdentifier>{5D6D2E5A-D403-4070-AEBC-6D8CE74E99D5}</UniqueIdentifier>
@@ -458,14 +476,8 @@
     <Filter Include="vikr-source\scene\components">
       <UniqueIdentifier>{2D390607-500C-45AC-9C4C-A1AB68F70D72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\math\alg">
-      <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\math\shape">
-      <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source">
-      <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
+    <Filter Include="vikr-source\tools\allocator\detail">
+      <UniqueIdentifier>{1ED5C8D5-797A-4D33-80B1-B6334B600C88}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\glad">
       <UniqueIdentifier>{0A8C6B6F-F0FB-435F-B1B3-74E6D66D3A2D}</UniqueIdentifier>
@@ -503,12 +515,6 @@
     <Filter Include="vikr-source\tools">
       <UniqueIdentifier>{E10FE65C-0DF8-4034-BF74-DDA91DC17E89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\mesh\vulkan">
-      <UniqueIdentifier>{93140204-4E55-46D7-B1FD-EAF4F1A7E0D6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\mesh\opengl">
-      <UniqueIdentifier>{3D2B60C5-DF0C-4E44-BC3B-9843DF1088FA}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vikr-source\platform\win32">
       <UniqueIdentifier>{B7A6DFFC-1EAB-4A21-860F-D530384CB737}</UniqueIdentifier>
     </Filter>
@@ -520,6 +526,9 @@
     </Filter>
     <Filter Include="vikr-source\renderer\opengl">
       <UniqueIdentifier>{70FD5DA7-CD88-44A6-A1D0-E862B46B325D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\renderer\command">
+      <UniqueIdentifier>{3318C52A-8B88-41DD-962A-06C2DC5928BA}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\shader\spirv">
       <UniqueIdentifier>{07D290D0-7F7C-4CEC-8A18-9E34E13797E8}</UniqueIdentifier>
@@ -535,6 +544,9 @@
     </Filter>
     <Filter Include="vikr-source\resources\opengl">
       <UniqueIdentifier>{EBE5F335-25F2-4823-86A0-20EF8BBC92FD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source">
+      <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

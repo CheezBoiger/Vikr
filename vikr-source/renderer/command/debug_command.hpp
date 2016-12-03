@@ -5,7 +5,7 @@
 #define __VIKR_PRIMITIVE_COMMAND_HPP
 
 
-#include <renderer/render_command.hpp>
+#include <renderer/command/render_command.hpp>
 #include <mesh/imesh.hpp>
 
 
@@ -15,9 +15,9 @@ namespace vikr {
 class Mesh;
 
 
-class PrimitiveCommand : public RenderCommand {
+class DebugCommand : public RenderCommand {
 public:
-  PrimitiveCommand() : RenderCommand(RenderCommandType::RENDER_PRIMITIVE)  { }
+  DebugCommand() : RenderCommand(RenderCommandType::COMMAND_DEBUG)  { }
   
   vvoid SetColor(glm::vec3 c) { color = c; }
   vvoid SetMesh(Mesh *mesh) { m_mesh = mesh; }

@@ -13,10 +13,12 @@ namespace vikr {
   of some other integer value.
 */
 enum class RenderCommandType {
-  RENDER_MESH,
-  RENDER_GROUP,
-  RENDER_PRIMITIVE,
-  RENDER_TRIANGLES
+  COMMAND_MESH,
+  COMMAND_GROUP,
+  COMMAND_PRIMITIVE,
+  COMMAND_TRANSFORM,
+  COMMAND_MATERIAL,
+  COMMAND_DEBUG
 };
 } // vikr
 #endif // __VIKR_RENDER_COMMAND_TYPES_HPP

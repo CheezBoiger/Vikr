@@ -19,7 +19,11 @@ namespace vikr {
 
 class Camera;
 class MeshCommand; 
+class DebugCommand;
+class GroupCommand;
+class MaterialCommand;
 class PrimitiveCommand;
+class TransformCommand;
 class Mesh;
 
 
@@ -41,13 +45,16 @@ public:
 
 
   vvoid Draw(GLenum topology, vuint32 vertices, vuint32 start);
+  vvoid IndexedDraw(GLenum topology, vuint32 indices, vuint32 vertices, vuint32 start);
   /**
     Executes the following MeshCommand. This is where we render meshes.
   */
   vint32 ExecuteMeshCommand(MeshCommand *cmd);
-
-
+  vint32 ExecutePrimitiveCommand(DebugCommand *cmd);
+  vint32 ExecuteGroupCommand(GroupCommand *cmd);
+  vint32 ExecuteMaterialCommand(MaterialCommand *cmd);
   vint32 ExecutePrimitiveCommand(PrimitiveCommand *cmd);
+  vint32 ExecuteTransformCommand(TransformCommand *cmd);
   /**
     Sets the context of the OpenGL mesh in terms of whether or not 
     to disable/enable blending, depth, or culling

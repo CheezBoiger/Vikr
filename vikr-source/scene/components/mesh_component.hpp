@@ -6,6 +6,7 @@
 
 
 #include <scene/components/scene_component.hpp>
+#include <renderer/command/primitive_command.hpp>
 #include <mesh/mesh.hpp>
 
 
@@ -21,10 +22,16 @@ public:
 
   vvoid Update() override;
 
+  RenderCommand *GetCommand() override { return &cmd; }
+
   /**
     Mesh object to reference.
   */
   Mesh *mesh;
+
+private:
+
+  PrimitiveCommand cmd;
 };
 } // vikr
 #endif // __VIKR_MESH_COMPONENT_HPP
