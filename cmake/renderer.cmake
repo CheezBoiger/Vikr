@@ -25,6 +25,8 @@ set(VIKR_GLOB
 set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_RENDERER_COMMAND_DIR}/render_command_types.hpp
+  ${VIKR_RENDERER_COMMAND_DIR}/manual_commands.hpp
+  ${VIKR_RENDERER_COMMAND_DIR}/manual_commands.cpp
   ${VIKR_RENDERER_COMMAND_DIR}/render_command.hpp
   ${VIKR_RENDERER_COMMAND_DIR}/render_command.cpp
   ${VIKR_RENDERER_COMMAND_DIR}/primitive_command.hpp

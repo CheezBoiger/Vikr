@@ -11,11 +11,17 @@
 namespace vikr {
 
 
+class Material;
+
+
 class MaterialCommand : public RenderCommand {
 public:
-  MaterialCommand() 
-    : RenderCommand(RenderCommandType::COMMAND_MATERIAL) { }
+  MaterialCommand(Material *material = nullptr) 
+    : RenderCommand(RenderCommandType::COMMAND_MATERIAL)
+    , m_material(material) { }
 
+
+  Material *m_material;
 };
 }  // vikr
 #endif // __VIKR_MATERIAL_COMMAND_HPP

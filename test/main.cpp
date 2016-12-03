@@ -100,6 +100,7 @@ int main(int c, char* args[]) {
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
   // Initialize the renderer.
   InitVikrEngine(vikr_OPENGL);
+  SceneNode *node = ResourceManager::GetResourceManager()->CreateSceneNode();
   Renderer::GetRenderer()->SetCamera(&camera);
   Texture *texture = ResourceManager::GetResourceManager()->CreateTexture(vikr_TEXTURE_2D, "awesomeface.png", true);
   Mesh *mesh;

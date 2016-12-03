@@ -1,8 +1,8 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 // 
-#ifndef __VIKR_PRIMITIVE_COMMAND_HPP
-#define __VIKR_PRIMITIVE_COMMAND_HPP
+#ifndef __VIKR_DEBUG_COMMAND_HPP
+#define __VIKR_DEBUG_COMMAND_HPP
 
 
 #include <renderer/command/render_command.hpp>
@@ -34,4 +34,4 @@ private:
   Mesh *m_mesh;
 };
 } // vikr
-#endif // __VIKR_PRIMITIVE_COMMAND_HPP
+#endif // __VIKR_DEBUG_COMMAND_HPP

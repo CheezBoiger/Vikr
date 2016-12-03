@@ -10,12 +10,17 @@
 namespace vikr {
 
 
+class Transform;
+
+
 class TransformCommand : public RenderCommand {
 public:
-  TransformCommand() 
-    : RenderCommand(RenderCommandType::COMMAND_TRANSFORM) { }
+  TransformCommand(Transform *transform = nullptr) 
+    : RenderCommand(RenderCommandType::COMMAND_TRANSFORM)
+    , m_transform(transform) { }
 
 
+  Transform *m_transform;
 };
 } // vikr
 #endif // __VIKR_TRANSFORM_COMMAND_HPP

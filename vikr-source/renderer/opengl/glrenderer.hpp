@@ -24,6 +24,7 @@ class GroupCommand;
 class MaterialCommand;
 class PrimitiveCommand;
 class TransformCommand;
+class LightCommand;
 class Mesh;
 
 
@@ -50,7 +51,7 @@ public:
     Executes the following MeshCommand. This is where we render meshes.
   */
   vint32 ExecuteMeshCommand(MeshCommand *cmd);
-  vint32 ExecutePrimitiveCommand(DebugCommand *cmd);
+  vint32 ExecuteDebugCommand(DebugCommand *cmd);
   vint32 ExecuteGroupCommand(GroupCommand *cmd);
   vint32 ExecuteMaterialCommand(MaterialCommand *cmd);
   vint32 ExecutePrimitiveCommand(PrimitiveCommand *cmd);
@@ -62,6 +63,8 @@ public:
   vvoid SetGLContext(Material *material);
 
 private:
+
+  Shader *current_shader    = nullptr;
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(GLRenderer);
 

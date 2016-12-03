@@ -13,6 +13,8 @@
 namespace vikr {
 
 
+class Renderer;
+
 /**
   Abstract RenderCommand.
 */

@@ -11,12 +11,17 @@
 namespace vikr {
 
 
+class Mesh;
+
 
 class PrimitiveCommand : public RenderCommand {
 public:
-  PrimitiveCommand() 
-    : RenderCommand(RenderCommandType::COMMAND_PRIMITIVE) { }
+  PrimitiveCommand(Mesh *mesh = nullptr) 
+    : RenderCommand(RenderCommandType::COMMAND_PRIMITIVE)
+    , m_mesh(mesh) { }
 
+
+  Mesh *m_mesh;
 };
 } // vikr
 #endif // __VIKR_PRIMITIVE_COMMAND_HPP
