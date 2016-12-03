@@ -30,13 +30,16 @@ public:
   vvoid SetConstant(vreal32 constant);
   vvoid SetLinear(vreal32 linear);
   vvoid SetQuadratic(vreal32 quadratic);
+  vvoid SetRange(vreal32 range) { m_range = range; }
 
   vreal32 GetConstant() { return m_constant; }
   vreal32 GetLinear() { return m_linear; }
   vreal32 GetQuadratic() { return m_quadratic; }
+  vreal32 GetRange() { return m_range; }
 
-private:
+protected:
 
+  vreal32 m_range         = 15.0f;
   vreal32 m_constant      = 1.0f;
   vreal32 m_linear        = 0.09f;
   vreal32 m_quadratic     = 0.032f;

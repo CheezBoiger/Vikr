@@ -46,17 +46,20 @@ public:
   SceneNode *GetOwner() { return owner; }
   vvoid SetOwner(SceneNode *node) { owner = node; }
 
+  ComponentType GetComponentType() { return component_type; }
+
 protected:
   /**
     The Component type.
   */
   ComponentType component_type;
 
-private:
   /**
-    Reference to the owner of this component.
+  Reference to the owner of this component.
   */
   SceneNode *owner;
+
+private:
 
   /**
     The Graphical Unique  InDentifier for the specified SceneComponent.

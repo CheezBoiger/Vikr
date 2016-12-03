@@ -21,15 +21,15 @@ public:
   
   vvoid SetColor(glm::vec3 c) { color = c; }
   vvoid SetMesh(Mesh *mesh) { m_mesh = mesh; }
-  vvoid SetLineWidth(vuint32 width) { line_width = width; }
+  vvoid SetLineWidth(vreal32 width) { line_width = width; }
 
   glm::vec3 GetColor() { return color; } 
   Mesh *GetMesh() { return m_mesh; }
-  vuint32 GetLineWidth() { return line_width; }
+  vreal32 GetLineWidth() { return line_width; }
 
 private:
   glm::vec3 color;
-  vuint32 line_width        = 1;
+  vreal32 line_width        = 1;
 
   Mesh *m_mesh;
 };

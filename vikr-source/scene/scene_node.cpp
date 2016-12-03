@@ -3,6 +3,10 @@
 //
 #include <scene/scene_node.hpp>
 #include <scene/components/scene_component.hpp>
+#include <scene/components/transform_component.hpp>
+#include <scene/components/mesh_component.hpp>
+#include <scene/components/renderer_component.hpp>
+#include <scene/components/light_component.hpp>
 #include <util/vikr_assert.hpp>
 #include <algorithm>
 
@@ -118,13 +122,31 @@ SceneComponent *SceneNode::GetComponent(guid_t guid) {
 
 
 /**
-  Standard update to all chilren.
+  Standard update to all children.
 */
 vvoid SceneNode::Update() {
   for (auto it = components.begin();
        it != components.end();
        ++it)
   {
+    switch (it->second->GetComponentType()) {
+      case vikr_COMPONENT_MESH: {
+        MeshComponent *m = static_cast<MeshComponent *>(it->second);
+      }
+      break;
+      case vikr_COMPONENT_TRANSFORM: {
+        TransformComponent *trans = static_cast<TransformComponent *>(it->second);
+        
+      }
+      break;
+      case vikr_COMPONENT_RENDERER: {
+        RendererComponent *r = static_cast<RendererComponent *>(it->second);
+      }
+      break;
+      default: {
+      }
+      break;
+    }
     it->second->Update();
   }
   for (auto it = children.begin();

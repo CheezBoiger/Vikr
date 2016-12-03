@@ -12,13 +12,15 @@
 namespace vikr {
 
 
+class MeshCommand;
+
+
 class MeshComponent : public SceneComponent {
 public:
   MeshComponent();
 
   vvoid Update() override;
 
-private:
   /**
     Mesh object to reference.
   */

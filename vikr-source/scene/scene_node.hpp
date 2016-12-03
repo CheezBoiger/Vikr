@@ -7,6 +7,7 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <scene/guid_generator.hpp>
+#include <renderer/render_command.hpp>
 #include <unordered_map>
 #include <string>
 
@@ -36,6 +37,16 @@ public:
     Scene node default constructor.
   */
   SceneNode();  
+
+  /**
+    Get the RenderCommand.
+  */
+  RenderCommand *GetRenderCommand() { return m_render_command; }
+
+  /**
+    Set a RenderCommand to be baked into the SceneNode.
+  */
+  vvoid SetRenderCommand(RenderCommand *cmd) { m_render_command = cmd; }
 
   /*
     Takes the parent of the SceneNode. nulltpr returned if no parent 
@@ -134,7 +145,7 @@ protected:
   /**
     The SceneNode's children.
   */
-  std::unordered_map<guid_t, SceneNode *>  children;
+  std::unordered_map<guid_t, SceneNode *> children;
 
   /**
     The SceneNode's associated components.
@@ -153,13 +164,19 @@ protected:
 
 private:
 
+  /**
+    RenderCommand, which will be manipulated by the Components.
+  */
+  RenderCommand *m_render_command         = nullptr;
+
   VIKR_DISALLOW_COPY_AND_ASSIGN(SceneNode);
   /**
     Our renderer has access to this mesh command. 
     It's pretty much your friendly neighborhood Renderer.
-    Comes complete with Scene!
+    Comes complete with Scene and SceneComponent!
   */
   friend class Renderer;
+  friend class SceneComponent;
   friend class Scene;
 };
 } // vikr

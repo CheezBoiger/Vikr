@@ -115,7 +115,7 @@ int main(int c, char* args[]) {
     glm::vec3(4.0f, 4.0f, 4.0f),
     glm::vec3(5.0f, 5.0f, 5.0f)
   };
-  //light.SetDiffuse(glm::vec3(0.0f, 1.0f, 0.0f));
+  light.SetDiffuse(glm::vec3(1.0f, 1.0f, 1.0f));
   // Storing shaders into resources from renderer.
   Renderer::GetRenderer()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
   Renderer::GetRenderer()->StoreShader("light", "test.vert", "light.frag");

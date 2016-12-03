@@ -16,10 +16,14 @@
 #include <shader/spirv/spirv_compiler.hpp>
 
 #include <lighting/point_light.hpp>
+#include <lighting/spot_light.hpp>
+#include <lighting/directional_light.hpp>
 
 #include <util/vikr_log.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+
+#include <set>
 
 namespace vikr {
 
@@ -40,23 +44,31 @@ vvoid Renderer::PushBack(RenderCommand *command) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Pushed RenderCommand was null! Refusing to push to queue!");
     return;
   }
-
-  switch (command->GetCommandType()) {
-    case RenderCommandType::RENDER_MESH: {
-      MeshCommand *mesh = static_cast<MeshCommand *>(command);
-    }
-    break;
-    default:
-    break;
-  }
   m_render_queue.PushBack(command, current_renderpass);
 }
 
 
+/**
+  Traverse, from back to front, the provided Scene using 
+  Depth-First search method.
+*/
 vvoid Renderer::PushBack(SceneNode *obj) {
   if (obj) {
-    std::unordered_map<guid_t, SceneNode *> *children = &obj->children;
-    
+    std::vector<SceneNode *> stack;
+    std::set<SceneNode *> visited;
+    stack.push_back(obj);
+    while (!stack.empty()) {
+      SceneNode *trav = stack.front();
+      stack.pop_back();
+      if (visited.find(trav) == visited.end()) {
+        for (auto it : trav->children) {
+          stack.push_back(it.second);
+        }
+        RenderCommand *command = trav->m_render_command;
+        m_render_queue.PushBack(command, current_renderpass);
+        visited.insert(trav);
+      }
+    }
   }
 }
 
@@ -65,7 +77,13 @@ vvoid Renderer::PushBack(Light *command) {
   if (command != nullptr) {
     switch (command->GetLightType()) {
       case vikr_POINTLIGHT:
-        m_pointlights.push_back(static_cast<PointLight *>(command));
+        m_pointlights.push_back(static_cast<PointLight *>(command)); 
+      break;
+      case vikr_DIRECTIONLIGHT:
+      break;
+      case vikr_SPOTLIGHT:
+      break;
+      default:
       break;
     }
   }

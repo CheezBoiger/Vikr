@@ -17,9 +17,16 @@ public:
 
   vvoid Update() override;
 
+  /**
+    World Matrix position.
+  */
+  vikr::Transform *transform;
+private:
 
-  Transform *Transform;
-
+  /**
+    Local transform, relative to the parent.
+  */
+  vikr::Transform *m_localTransform;
 };
 } // vikr
 #endif // __VIKR_TRANSFORM_COMPONENT_HPP

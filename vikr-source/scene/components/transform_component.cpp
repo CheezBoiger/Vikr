@@ -8,6 +8,6 @@ namespace vikr {
 
 
 vvoid TransformComponent::Update() {
-  Transform->CalculateTransform();
+  transform->CalculateTransform();
 }
 } // vikr
