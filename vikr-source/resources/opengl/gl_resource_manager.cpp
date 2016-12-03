@@ -16,6 +16,7 @@ std::unordered_map<std::string,
 
 std::vector<std::shared_ptr<GLMesh> > GLResources::meshes;
 std::vector<std::shared_ptr<Material> > GLResources::materials;
+std::vector<std::shared_ptr<GLTexture> > GLResources::textures;
 
 
 GLResourceManager::GLResourceManager()
@@ -79,31 +80,33 @@ Material *GLResourceManager::CreateMaterial() {
 
 
 Texture *GLResourceManager::CreateTexture(TextureTarget target, std::string img_path, vbool alpha) {
-  Texture *texture = nullptr;
+  std::shared_ptr<GLTexture> texture = nullptr;
   vint32 width = 0;
   vint32 height = 0;
   vint32 depth = 0;
   vbyte *bytecode = stbi_load(img_path.c_str(), &width, &height, &depth,
                               alpha ? STBI_rgb_alpha : STBI_rgb);
   switch(target) {
-  case vikr_TEXTURE_1D: texture = new GLTexture1D(width); break;
-  case vikr_TEXTURE_2D: texture = new GLTexture2D(width, height); break;
-  case vikr_TEXTURE_3D: texture = new GLTexture3D(width, height, depth); break;
+  case vikr_TEXTURE_1D: texture = std::make_shared<GLTexture1D>(width); break;
+  case vikr_TEXTURE_2D: texture = std::make_shared<GLTexture2D>(width, height); break;
+  case vikr_TEXTURE_3D: texture = std::make_shared<GLTexture3D>(width, height, depth); break;
   case vikr_TEXTURE_CUBEMAP: // not implemented yet.
   default: break;
   }
   if(texture) {
     texture->Create(bytecode);
     texture->SetString(img_path);
+    GLResources::textures.push_back(texture);
   }
-  return texture;
+  return texture.get();
 }
 
 
-vint32 GLResourceManager::StoreShader(std::string shader_name,
-                               std::string vs,
-                               std::string fs,
-                               std::string include_path)
+vint32 GLResourceManager::StoreShader(
+  std::string shader_name,
+  std::string vs,
+  std::string fs,
+  std::string include_path)
 {
   GLSLShader shader;
   shader.SetIncludeSearchPath(include_path);

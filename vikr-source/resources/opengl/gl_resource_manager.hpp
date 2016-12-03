@@ -8,6 +8,7 @@
 #include <platform/vikr_api.hpp>
 #include <scene/scene_node.hpp>
 #include <resources/resource_manager.hpp>
+#include <shader/texture.hpp>
 #include <mesh/opengl/glmesh.hpp>
 #include <unordered_map>
 #include <memory>
@@ -17,6 +18,7 @@ namespace vikr {
 
 
 class GLSLShader;
+class GLTexture;
 
 
 /**
@@ -67,6 +69,7 @@ class GLResources : public Resources {
   Contains material data.
   */
   static std::vector<std::shared_ptr<Material> > materials;
+  static std::vector<std::shared_ptr<GLTexture> > textures;
 
   friend class GLResourceManager;
 };
