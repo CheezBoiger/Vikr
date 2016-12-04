@@ -3,12 +3,12 @@
 
 
 // We can consider ambient if need be.
-struct Material {
-  // sampler2D ambient;
-  sampler2D diffuse;
-  sampler2D specular;
-  // sampler2D albedo;
-  float shininess;
+struct VikrMaterial {
+  sampler2D vikr_TexAmbient;
+  sampler2D vikr_TexSpecular;
+  sampler2D vikr_TexAlbedo;
+  sampler2D vikr_TexNormal;
+  sampler2D vikr_TexRoughness;
 };
 
 #endif // __VIKR_MATERIAL_GLSL

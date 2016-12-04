@@ -37,7 +37,7 @@ Legend:
     - Bump and Parallax Mapping
       - Integrate Tangents and Bitangets into our Vertex object
       - Calculate tangents and bitangents.
-    - Render Target! for Post processing!
+    - Render Target! for Post processing! NEEDS TO REDESIGN IT!!!!!
       - Figure out how to make it easier to use for Targetting specific Meshes
       - Render Queue
         - Use an unordered_map to store key (RenderTarget *) with value (std::vector<RenderCommand>)?

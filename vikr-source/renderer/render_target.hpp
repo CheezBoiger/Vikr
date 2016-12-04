@@ -17,12 +17,16 @@ namespace vikr {
 
 /**
   Render Target for post processing. This is an abstract class
-  designed as a plugin for rendering APIs.
+  designed as a plugin for rendering APIs. 
 
   OpenGL: Associates this object with GLRenderTarget.
   Vulkan: Associates this obejct with VKRenderTarget.
 */
 class RenderTarget {
+  /*
+    TODO(Garcia): Redesign RenderTargets to NOT bind to 
+    a Frame buffer object until we reach our RenderPasses.
+  */
 public:
   RenderTarget() : m_texture(nullptr) { }
   RenderTarget(vuint32 width, vuint32 height);

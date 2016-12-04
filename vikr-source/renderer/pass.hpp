@@ -16,6 +16,9 @@
 namespace vikr {
 
 
+class Framebuffer;
+
+
 /**
   Controls passes that are sent to the Renderer.
 */
@@ -23,6 +26,7 @@ class RenderPass {
 public:
   Viewport Viewport;
   std::vector<RenderTarget *> Rendertargets;
+  Framebuffer *FramebufferObject;
 };
 } // vikr
 #endif // __VIKR_RENDERPASS_HPP
