@@ -7,6 +7,10 @@
 
 namespace vikr {
 
+const glm::vec3 Transform::Front  = glm::vec3(0.0f, 0.0f, -1.0f);
+const glm::vec3 Transform::Right  = glm::vec3(1.0f, 0.0f,  0.0f);
+const glm::vec3 Transform::Up     = glm::vec3(0.0f, 1.0f,  0.0f);
+
 
 /**
   Calculate the Transform matrix (or the model matrix if you are a nerd.)

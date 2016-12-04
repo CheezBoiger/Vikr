@@ -22,7 +22,7 @@ struct PointLight {
 
 
 //uniform sampler2D texas;
-uniform vec3 vikr_camPosition;
+uniform vec3 vikr_CamPosition;
 uniform vec3 obj_specular;
 uniform vec3 obj_diffuse;
 uniform bool blinn;
@@ -40,6 +40,7 @@ vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 vi
   /* Blinn-Phong Implementation! */ 
   // diffuse
   vec3 light_dir = normalize(light.position - frag_coord);
+  float distance = length(light.position - frag_coord);
   float diff = max(dot(light_dir, normal), 0.0f);
   // Specular
   vec3 reflect_dir = reflect(-light_dir, normal);
@@ -51,7 +52,6 @@ vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 vi
     vec3 reflect_dir = reflect(-light_dir, normal);
     spec = pow(max(dot(view_dir, reflect_dir), 0.0f), 32.0f) ;
   }
-  float distance = length(light.position - frag_coord);
   float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
    
   vec3 ambient = light.ambient * obj_diffuse;
@@ -67,7 +67,7 @@ vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 vi
 
 void main() {
   vec3 norm = normalize(Normal);
-  vec3 view_dir = normalize(vikr_camPosition - FragCoords);
+  vec3 view_dir = normalize(vikr_CamPosition - FragCoords);
   vec3 result = vec3(0.0f);
   PointLight light;
   light.position = light_pos;

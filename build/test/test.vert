@@ -10,14 +10,14 @@ out vec3 Position;
 out vec3 FragCoords;
 
 
-uniform mat4 vikr_view;
-uniform mat4 vikr_model;
-uniform mat4 vikr_projection;
+uniform mat4 vikr_View;
+uniform mat4 vikr_Model;
+uniform mat4 vikr_Projection;
 
 void main() {
-  gl_Position = vikr_projection * vikr_view * vikr_model * vec4(position, 1.0f);
+  gl_Position = vikr_Projection * vikr_View * vikr_Model * vec4(position, 1.0f);
   TexCoords = tex_coords;
-   Normal = mat3(transpose(inverse(vikr_model))) * normal;
+   Normal = mat3(transpose(inverse(vikr_Model))) * normal;
    Position = position;
-   FragCoords = vec3(vikr_model * vec4(position, 1.0f));
+   FragCoords = vec3(vikr_Model * vec4(position, 1.0f));
 }

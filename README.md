@@ -10,7 +10,7 @@ is a ton of work to do on it before it can be released as a stable engine.
   
 Currently all resources and implementations within the engine source code is subject to change,
 so keep in mind that this engine is barely newborn (Vulkan isn't even implemented yet,
-OpenGL is 50% finished, and alot of the code needs to be abstracted to allow Vulkan and OpenGL plugins (along with soon to follow DirectX12 and Metal)). I only ask for patience until the engine is fully implemented, cleaned up,
+OpenGL is 90% finished, and alot of the code needs to be abstracted to allow Vulkan and OpenGL plugins (along with soon to follow DirectX12 and Metal)). I only ask for patience until the engine is fully implemented, cleaned up,
 and optimized. Contribution is always welcome!
   
 The Design goal of this renderer is to allow the user to handle memory management, while the Engine merely uses the data

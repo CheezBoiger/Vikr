@@ -24,6 +24,7 @@
 #include <scene/components/transform_component.hpp>
 #include <scene/components/renderer_component.hpp>
 #include <scene/components/mesh_component.hpp>
+#include <glm/gtx/compatibility.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;
@@ -130,7 +131,7 @@ int main(int c, char* args[]) {
   line_mesh = ResourceManager::GetResourceManager()->CreateMesh(line, std::vector<glm::vec3>(), std::vector<glm::vec2>());
   mesh->Create();
   cube2->Create();
-  meshlight->Create();
+  meshlight->Create(); 
   line_mesh->Create();
   /**
     referencing stored shaders with materials. 
@@ -201,6 +202,11 @@ int main(int c, char* args[]) {
     model = glm::translate(model, light.GetPos());
     model = glm::scale(model, glm::vec3(0.2f));
     mesh_command2.SetTransform(model);
+    t->transform.Position = glm::lerp(t->transform.Position, glm::vec3(0.0f, 5.0f, 0.0f), GetDeltaTime());
+    glm::quat r = glm::angleAxis(glm::radians(90.0f), t->transform.Up);
+    r *= glm::angleAxis(glm::radians(90.f), t->transform.Front);
+    t->transform.Rotation = glm::slerp(t->transform.Rotation, r, GetDeltaTime());
+    t->Update();
     /**
       Push back the mesh_commands and light!
     */

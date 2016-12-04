@@ -7,10 +7,10 @@ namespace vikr {
 
 
 FPSCamera::FPSCamera(vreal32 pitch_deg_max,
-                     glm::vec3 pos,
-                     glm::vec3 world_up,
-                     glm::vec3 up,
-                     glm::vec3 front)
+  glm::vec3 pos,
+  glm::vec3 world_up,
+  glm::vec3 up,
+  glm::vec3 front)
   : pitch_max_deg(pitch_deg_max)
   , pitch(0.0f)
   , Camera(pos, world_up, up, front)
@@ -39,7 +39,11 @@ vvoid FPSCamera::Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool con
 
 vvoid FPSCamera::SetLookAt(glm::vec3 look) {
   Camera::SetLookAt(look);
+  glm::vec3 temp = front;
   front = glm::normalize(look_at - pos);
+  vreal32 y = front.y - temp.y;
+  vreal32 theta = std::asin(y / glm::length(front));
+  pitch = theta;
 }
 
 

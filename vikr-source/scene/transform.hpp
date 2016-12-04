@@ -22,20 +22,32 @@ namespace vikr {
 */
 class Transform {
 public:
+
   /**
     Position of the object in world space.
   */
   glm::vec3 Position    = glm::vec3(0.0f);
+
   /**
-    Object scale.
+    Object scale. glm::vec3(1.0f) is it's normal scale.
   */
   glm::vec3 Scale       = glm::vec3(1.0f);
+
   /**
     Object rotation represented as a Quaternion.
   */
-  glm::quat Rotation    = glm::quat();
+  glm::quat Rotation    = glm::quat(glm::vec3(0.0f, 0.0f, 0.0f));
 
+
+  static const glm::vec3 Front;
+  static const glm::vec3 Up;
+  static const glm::vec3 Right;
+  
+  /**
+    Get the Transform of the matrix.
+  */
   glm::mat4 GetTransform() { return m_transformMatrix; }
+
   /**
     Calculate our dear ol' tranform matrix.
 

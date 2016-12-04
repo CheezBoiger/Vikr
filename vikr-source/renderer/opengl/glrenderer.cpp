@@ -220,10 +220,10 @@ vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
   if(material) {
     current_shader = material->GetShader();
     current_shader->Use();
-    current_shader->SetValue("vikr_view", camera->GetView());
-    current_shader->SetValue("vikr_projection", camera->GetProjection());
-    current_shader->SetValue("vikr_model", mesh_cmd->GetTransform());
-    current_shader->SetValue("vikr_camPosition", glm::vec3(camera->GetPos().x,
+    current_shader->SetValue("vikr_View", camera->GetView());
+    current_shader->SetValue("vikr_Projection", camera->GetProjection());
+    current_shader->SetValue("vikr_Model", mesh_cmd->GetTransform());
+    current_shader->SetValue("vikr_CamPosition", glm::vec3(camera->GetPos().x,
                                                    camera->GetPos().y, 
                                                    camera->GetPos().z));
     /*
@@ -302,6 +302,7 @@ vvoid GLRenderer::Draw(
 
 
 vint32 GLRenderer::ExecuteDebugCommand(DebugCommand * command) {
+  current_shader->SetValue("vikr_Model", glm::mat4());
   glEnable(GL_LINE_SMOOTH);
   glLineWidth(command->GetLineWidth());
   BindVertexArray(command->GetMesh()->GetVAO());
@@ -337,10 +338,10 @@ vvoid GLRenderer::SetGLContext(Material *material) {
 
 
 vint32 GLRenderer::ExecuteTransformCommand(TransformCommand *command) {
-  current_shader->SetValue("vikr_view", camera->GetView());
-  current_shader->SetValue("vikr_projection", camera->GetProjection());
-  current_shader->SetValue("vikr_model", command->m_transform->GetTransform());
-  current_shader->SetValue("vikr_camPosition", glm::vec3(camera->GetPos().x,
+  current_shader->SetValue("vikr_View", camera->GetView());
+  current_shader->SetValue("vikr_Projection", camera->GetProjection());
+  current_shader->SetValue("vikr_Model", command->m_transform->GetTransform());
+  current_shader->SetValue("vikr_CamPosition", glm::vec3(camera->GetPos().x,
                    camera->GetPos().y,
                    camera->GetPos().z));
   return 1;

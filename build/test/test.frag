@@ -22,7 +22,7 @@ struct PointLight {
 
 
 //uniform sampler2D texas;
-uniform vec3 vikr_camPosition;
+uniform vec3 vikr_CamPosition;
 uniform vec3 obj_specular;
 uniform vec3 obj_diffuse;
 uniform bool blinn;
@@ -67,7 +67,7 @@ vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 vi
 
 void main() {
   vec3 norm = normalize(Normal);
-  vec3 view_dir = normalize(vikr_camPosition - FragCoords);
+  vec3 view_dir = normalize(vikr_CamPosition - FragCoords);
   vec3 result = vec3(0.0f);
   PointLight light;
   light.position = light_pos;

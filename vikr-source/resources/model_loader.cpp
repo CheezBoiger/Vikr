@@ -80,6 +80,7 @@ SceneNode *ModelLoader::ProcessNode(aiNode *node, const aiScene *scene, std::str
   for (vuint32 i = 0; i < node->mNumChildren; ++i) {
     scene_node->AddChild(ProcessNode(node->mChildren[i], scene, dir));
   }
+  scene_node->Update();
   return scene_node;
 }
 
