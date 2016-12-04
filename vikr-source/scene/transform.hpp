@@ -25,15 +25,15 @@ public:
   /**
     Position of the object in world space.
   */
-  glm::vec3 Position;
+  glm::vec3 Position    = glm::vec3(0.0f);
   /**
     Object scale.
   */
-  glm::vec3 Scale;
+  glm::vec3 Scale       = glm::vec3(1.0f);
   /**
     Object rotation represented as a Quaternion.
   */
-  glm::quat Rotation;
+  glm::quat Rotation    = glm::quat();
 
   glm::mat4 GetTransform() { return m_transformMatrix; }
   /**

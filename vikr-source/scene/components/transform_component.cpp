@@ -14,6 +14,7 @@ TransformComponent::TransformComponent()
 
 
 vvoid TransformComponent::Update() {
+  cmd.m_transform = &transform;
   transform.CalculateTransform();
 }
 } // vikr

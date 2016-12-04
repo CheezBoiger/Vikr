@@ -6,6 +6,7 @@
 
 
 #include <renderer/command/render_command.hpp>
+#include <shader/material.hpp>
 
 
 namespace vikr {

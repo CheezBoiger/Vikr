@@ -317,6 +317,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\transform.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera_frustum.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\spirv\spirv_compiler.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_preprocessor.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture.hpp" />
@@ -388,6 +389,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\scene.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\transform.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera_frustum.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\spirv\spirv_compiler.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_preprocessor.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\gl_texture.cpp"  />

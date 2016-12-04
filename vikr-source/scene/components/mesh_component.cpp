@@ -16,5 +16,6 @@ MeshComponent::MeshComponent()
 
 
 vvoid MeshComponent::Update() {
+  cmd.m_mesh = mesh;
 }
 } // vikr

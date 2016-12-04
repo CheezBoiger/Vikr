@@ -1,62 +1,9 @@
-﻿  Building Custom Rule D:/cmgarcia/github/Vikr/CMakeLists.txt
-  CMake does not need to re-run because D:\cmgarcia\github\Vikr\build\CMakeFiles\generate.stamp is up-to-date.
-  glad.c
-  keyboard.cpp
-  mouse.cpp
-  point_light.cpp
-  directional_light.cpp
-  spot_light.cpp
-  cube.cpp
-  quad.cpp
-  sphere.cpp
-  vkmesh.cpp
-  glmesh.cpp
-  model.cpp
-  mesh.cpp
-  vkrenderer.cpp
-  gl_rendertarget.cpp
-  glrenderer.cpp
-  manual_commands.cpp
-  render_command.cpp
-  mesh_command.cpp
-  group_command.cpp
-  renderer.cpp
-  Generating Code...
-  Compiling...
-  render_queue.cpp
-  render_target.cpp
-  scene_component.cpp
-  transform_component.cpp
-  light_component.cpp
-  camera_component.cpp
-  mesh_component.cpp
-  renderer_component.cpp
-  first_person_camera.cpp
-  guid_generator.cpp
-  scene_node.cpp
-  scene.cpp
-  transform.cpp
-  camera.cpp
-  spirv_compiler.cpp
-  glsl_preprocessor.cpp
-  gl_texture.cpp
-  gl_texture1d.cpp
-  gl_texture2d.cpp
-  gl_texture3d.cpp
-  Generating Code...
-  Compiling...
-  glsl_compiler.cpp
-  glsl_linker.cpp
-  glsl_shader.cpp
-  shader.cpp
-  material.cpp
-  texture.cpp
-  stb_image.cpp
-  vikr_log.cpp
-  gl_resource_manager.cpp
+﻿  glrenderer.cpp
   model_loader.cpp
   resource_manager.cpp
-  vikr.cpp
+  transform_component.cpp
+  scene_node.cpp
+  transform.cpp
   Generating Code...
 vkrenderer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
   Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Debug\Vikr_v0.01.lib

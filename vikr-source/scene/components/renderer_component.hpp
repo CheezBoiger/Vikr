@@ -30,9 +30,9 @@ public:
   RenderCommand *GetCommand() override { return &cmd; }
 
   /**
-    Material implementation.
+  Material implementation.
   */
-  Material *material; 
+  Material *material;
   /**
     Setting textures. These can be in the form of 
     albedo, diffuse, ambient, specular, and what ever else.

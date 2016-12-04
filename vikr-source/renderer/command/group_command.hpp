@@ -25,6 +25,7 @@ public:
 
   RenderCommand *Remove(guid_t guid);
 
+  vvoid Sort();
 
   std::vector<std::pair<guid_t, RenderCommand *>>& GetCommands() { return m_commands; }  
 

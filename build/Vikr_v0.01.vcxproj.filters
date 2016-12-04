@@ -106,6 +106,9 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.cpp">
       <Filter>vikr-source\scene</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera_frustum.cpp">
+      <Filter>vikr-source\scene</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\shader\spirv\spirv_compiler.cpp">
       <Filter>vikr-source\shader\spirv</Filter>
     </ClCompile>
@@ -366,6 +369,9 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera.hpp">
       <Filter>vikr-source\scene</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\scene\camera_frustum.hpp">
+      <Filter>vikr-source\scene</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\spirv\spirv_compiler.hpp">
       <Filter>vikr-source\shader\spirv</Filter>
     </ClInclude>
@@ -464,15 +470,6 @@
     <CustomBuild Include="D:\cmgarcia\github\Vikr\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="vikr-source\tools\allocator">
-      <UniqueIdentifier>{5D6D2E5A-D403-4070-AEBC-6D8CE74E99D5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\tools\allocator\detail">
-      <UniqueIdentifier>{1ED5C8D5-797A-4D33-80B1-B6334B600C88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\scene\components">
-      <UniqueIdentifier>{2D390607-500C-45AC-9C4C-A1AB68F70D72}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vikr-source">
       <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
     </Filter>
@@ -482,11 +479,14 @@
     <Filter Include="vikr-source\math\shape">
       <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\mesh\vulkan">
-      <UniqueIdentifier>{93140204-4E55-46D7-B1FD-EAF4F1A7E0D6}</UniqueIdentifier>
+    <Filter Include="vikr-source\tools\allocator">
+      <UniqueIdentifier>{5D6D2E5A-D403-4070-AEBC-6D8CE74E99D5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\mesh\opengl">
-      <UniqueIdentifier>{3D2B60C5-DF0C-4E44-BC3B-9843DF1088FA}</UniqueIdentifier>
+    <Filter Include="vikr-source\tools\allocator\detail">
+      <UniqueIdentifier>{1ED5C8D5-797A-4D33-80B1-B6334B600C88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\scene\components">
+      <UniqueIdentifier>{2D390607-500C-45AC-9C4C-A1AB68F70D72}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\glad">
       <UniqueIdentifier>{0A8C6B6F-F0FB-435F-B1B3-74E6D66D3A2D}</UniqueIdentifier>
@@ -523,6 +523,12 @@
     </Filter>
     <Filter Include="vikr-source\tools">
       <UniqueIdentifier>{E10FE65C-0DF8-4034-BF74-DDA91DC17E89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\mesh\vulkan">
+      <UniqueIdentifier>{93140204-4E55-46D7-B1FD-EAF4F1A7E0D6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\mesh\opengl">
+      <UniqueIdentifier>{3D2B60C5-DF0C-4E44-BC3B-9843DF1088FA}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\platform\win32">
       <UniqueIdentifier>{B7A6DFFC-1EAB-4A21-860F-D530384CB737}</UniqueIdentifier>

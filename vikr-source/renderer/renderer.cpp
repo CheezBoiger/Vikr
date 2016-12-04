@@ -65,7 +65,8 @@ vvoid Renderer::PushBack(SceneNode *obj) {
         for (auto it : trav->children) {
           stack.push_back(it.second);
         }
-        RenderCommand *command = &trav->m_commandList;
+        GroupCommand *command = &trav->m_commandList;
+        command->Sort();
         m_render_queue.PushBack(command, current_renderpass);
         visited.insert(trav);
       }

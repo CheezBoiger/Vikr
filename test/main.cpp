@@ -21,6 +21,9 @@
 #include <scene/scene_node.hpp>
 #include <renderer/command/debug_command.hpp>
 #include <renderer/command/mesh_command.hpp>
+#include <scene/components/transform_component.hpp>
+#include <scene/components/renderer_component.hpp>
+#include <scene/components/mesh_component.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;
@@ -150,6 +153,25 @@ int main(int c, char* args[]) {
   p_command.SetMesh(line_mesh);
   p_command.SetLineWidth(20);
   light.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+
+  // SceneNode Configs.
+  TransformComponent *t = 
+    static_cast<TransformComponent *>
+    (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_TRANSFORM));
+  t->transform.Position = glm::vec3(1.0f, 0.0f, -1.0f);
+  MeshComponent *mc = 
+    static_cast<MeshComponent *>
+    (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_MESH));
+  mc->mesh = mesh;
+  RendererComponent *rc = 
+    static_cast<RendererComponent *>
+    (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_RENDERER));
+    rc->material = &material;
+  node->AddComponent(t);
+  node->AddComponent(mc);
+  node->AddComponent(rc);
+  node->Update();
+
   /**
     Set the variables of the shaders associated with the material. 
   */
@@ -185,6 +207,7 @@ int main(int c, char* args[]) {
     Renderer::GetRenderer()->PushBack(&mesh_command1);
     Renderer::GetRenderer()->PushBack(&mesh_command2);
     Renderer::GetRenderer()->PushBack(&mesh_command3);
+    Renderer::GetRenderer()->PushBack(node);
     Renderer::GetRenderer()->PushBack(&p_command);
     Renderer::GetRenderer()->PushBack(&light);
     Renderer::GetRenderer()->Render();

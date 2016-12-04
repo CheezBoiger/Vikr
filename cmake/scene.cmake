@@ -30,4 +30,6 @@ set(VIKR_GLOB
   ${VIKR_SCENE_DIR}/transform.hpp
   ${VIKR_SCENE_DIR}/transform.cpp
   ${VIKR_SCENE_DIR}/camera.hpp
-  ${VIKR_SCENE_DIR}/camera.cpp)
+  ${VIKR_SCENE_DIR}/camera.cpp
+  ${VIKR_SCENE_DIR}/camera_frustum.cpp
+  ${VIKR_SCENE_DIR}/camera_frustum.hpp)

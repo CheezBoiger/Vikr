@@ -13,5 +13,6 @@ RendererComponent::RendererComponent()
 
 
 vvoid RendererComponent::Update() {
+  cmd.m_material = material;
 }
 } // vikr

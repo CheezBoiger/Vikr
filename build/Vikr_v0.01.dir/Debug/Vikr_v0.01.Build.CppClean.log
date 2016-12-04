@@ -1,10 +1,10 @@
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vikr_v0.01.pdb
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glad.obj
-d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\render_queue.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\renderer.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\group_command.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\mesh_command.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\render_command.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\manual_commands.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glrenderer.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl_rendertarget.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vkrenderer.obj
@@ -20,7 +20,6 @@ d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\directional_light.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\point_light.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\mouse.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\keyboard.obj
-d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_compiler.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl_texture3d.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl_texture2d.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl_texture1d.obj
@@ -37,8 +36,10 @@ d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\renderer_component.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\mesh_component.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\camera_component.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\light_component.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\transform_component.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\scene_component.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\render_target.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\render_queue.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vikr.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\resource_manager.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\model_loader.obj
@@ -50,11 +51,11 @@ d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\material.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\shader.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_shader.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_linker.obj
-d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\transform_component.obj
-d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\manual_commands.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_compiler.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\camera_frustum.obj
 d:\cmgarcia\github\vikr\build\cmakefiles\generate.stamp
-d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.pdb
 d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.lib
+d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.pdb
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vikr_v0.01.tlog\cl.command.1.tlog
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vikr_v0.01.tlog\cl.read.1.tlog
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vikr_v0.01.tlog\cl.write.1.tlog
