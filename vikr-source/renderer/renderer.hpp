@@ -24,6 +24,8 @@ class Camera;
 class Light;
 class RenderTarget;
 class PointLight;
+class DirectionalLight;
+class SpotLight;
 class Material;
 class Texture;
 
@@ -80,17 +82,45 @@ protected:
     List of commands in the to be rendered.
   */
   RenderQueue m_render_queue;
+
+  /**
+    Pointlights container.
+  */
   std::vector<PointLight *> m_pointlights;
+
+  /**
+    Directional Lights container.
+  */
+  std::vector<DirectionalLight *> m_directionallights;
+
+  /**
+    Spot lights container.
+  */
+  std::vector<SpotLight *> m_spotlights;
+
+  /**
+    Multi render pass should be implemented for post process effects.
+  */
   std::vector<RenderPass *> m_renderpasses;
-  /*
+
+  /**
     The current RenderPass.
   */
   RenderPass *current_renderpass                      = nullptr;
+
   /**
   Screen filled mesh quad.
   */
   std::unique_ptr<Mesh> quad                          = nullptr;
+
+  /**
+    Default render target.
+  */
   std::unique_ptr<RenderTarget> default_rendertarget  = nullptr;
+
+  /**
+    Default RenderPass.
+  */
   RenderPass default_renderpass;
 
   /**

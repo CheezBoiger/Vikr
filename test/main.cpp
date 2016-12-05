@@ -188,7 +188,7 @@ int main(int c, char* args[]) {
     CalculateDeltaTime();
     PollEvents();
     Do_Movement();
-    VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()));
+    VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
     camera.Update();
     glm::mat4 model;
     angle += GetDeltaTime() * 100;

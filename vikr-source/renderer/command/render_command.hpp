@@ -16,7 +16,9 @@ namespace vikr {
 class Renderer;
 
 /**
-  Abstract RenderCommand.
+  Abstract RenderCommand. Perhaps useful cases, the best practice would be 
+  to call an "Execute()" function with an OpenGL or Vulkan context. 
+  This might be considered for future designs. 
 */
 class RenderCommand {
   static const std::string kDefaultName;

@@ -2,11 +2,18 @@
 
 set(VIKR_RESOURCES_OPENGL_DIR ${VIKR_RESOURCES_DIR}/opengl/)
 set(VIKR_RESOURCES_VULKAN_DIR ${VIKR_RESOURCES_DIR}/vulkan/)
+set(VIKR_RESOURCES_VULKAN_DETAIL_DIR ${VIKR_RESOURCES_DIR}/vulkan/detail/)
 
 if (vulkan)
   set(VIKR_GLOB
     ${VIKR_GLOB}
-    ${VIKR_RESOURCES_VULKAN_DIR}/vk_resource_manager.hpp)
+    ${VIKR_RESOURCES_VULKAN_DIR}/vk_resource_manager.hpp
+    ${VIKR_RESOURCES_VULKAN_DIR}/vk_deallocator.hpp)
+
+  set(VIKR_GLOB
+    ${VIKR_GLOB}
+    ${VIKR_RESOURCES_VULKAN_DETAIL_DIR}/vk_deallocator.inl)
+
 endif()
 
 # OpenGL always supported!

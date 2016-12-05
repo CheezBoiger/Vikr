@@ -16,6 +16,8 @@ endif()
 # OpenGL is always Enabled
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_RENDERER_OPENGL_DIR}/gl_framebuffer.hpp
+  ${VIKR_RENDERER_OPENGL_DIR}/gl_framebuffer.cpp
   ${VIKR_RENDERER_OPENGL_DIR}/gl_rendertarget.hpp
   ${VIKR_RENDERER_OPENGL_DIR}/gl_rendertarget.cpp
   ${VIKR_RENDERER_OPENGL_DIR}/glrenderer.hpp
