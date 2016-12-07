@@ -31,7 +31,7 @@ typedef vint32 (*SortingCallback)(RenderCommand *, RenderCommand *);
 */
 class RenderQueue {
 public:
-  vvoid PushBack(RenderCommand *command, RenderPass *target);
+  vvoid PushBack(RenderCommand *command);
   /**
     Objects that are transparent, require sorting in a certain order after opaque objects.
   */
@@ -41,7 +41,7 @@ public:
   */
   vvoid Clear();
 
-  std::vector<RenderCommand *> *GetCommandList(RenderPass *pass) { return &m_command_map[pass]; }
+  std::vector<RenderCommand *> *GetCommandBuffer() { return &m_commandBuffer; }
   /**
     Registers a custom comparator for the render queue.
   */
@@ -62,10 +62,11 @@ protected:
     These commands are deferred.
   */
   std::vector<RenderCommand *> postbatch_commands;
+
   /**
-    RenderPasses for specific defined RenderCommands.
+    These commands are to be executed immediately.
   */
-  std::unordered_map<RenderPass *, std::vector<RenderCommand *>> m_command_map;
+  std::vector<RenderCommand *> m_commandBuffer;
 };
 } // vikr
 #endif // __VIKR_RENDER_QUEUE_HPP

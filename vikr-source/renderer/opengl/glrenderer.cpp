@@ -45,15 +45,6 @@ GLRenderer::GLRenderer()
 vint32 GLRenderer::Init() {
   GLResourceManager *resource_manager = new GLResourceManager();
   ResourceManager::SetResourceManager(resource_manager);
-  // I don't like dynamically allocated meshes.  -__-
-  Quad q;
-  quad = std::make_unique<GLMesh>();
-  quad->Buffer(q.GetPositions(), q.GetNormals(), q.GetUVs());
-  quad->Create();
-  ResourceManager::GetResourceManager()->StoreShader(
-    "screen_shader", 
-    "screen_shader.vert", 
-    "screen_shader.frag");
   /**
     Wait WTF?!?!
   */
@@ -64,20 +55,6 @@ vint32 GLRenderer::Init() {
   m_render_queue.RegisterDeferredComparator([] (RenderCommand *, RenderCommand *) -> vint32 {
     return 0;
   });
-  // Create default rendertarget.
-  default_rendertarget = std::make_unique<GLRenderTarget>();
-  default_rendertarget->SetWidth(1200);
-  default_rendertarget->SetHeight(800);
-  default_rendertarget->Generate();
-  default_rendertarget->BindTexture(0);
-  default_rendertarget->BindDepthStencil();
-  default_rendertarget->IsComplete();
-  default_rendertarget->Unbind();
-  default_renderpass.Rendertargets.push_back(default_rendertarget.get());
-  default_renderpass.Viewport.win_x = 0;
-  default_renderpass.Viewport.win_y = 0;
-  current_renderpass = &default_renderpass;
-  m_renderpasses.push_back(&default_renderpass);
   return true;
 }
 
@@ -85,8 +62,6 @@ vint32 GLRenderer::Init() {
 vvoid GLRenderer::Render() {
   vuint32 original_window_width = camera->GetViewport().win_width;
   vuint32 original_window_height = camera->GetViewport().win_height;
-  default_renderpass.Viewport.win_width = original_window_width;
-  default_renderpass.Viewport.win_height = original_window_height;
   vreal32 aspect = camera->GetAspect();
 
   rendering = true;
@@ -96,55 +71,50 @@ vvoid GLRenderer::Render() {
   Sort();
   // Perform drawing, need to better understand passes for rendering,
   // Pre-batch, batch, and Post-batch drawing.
-  for (RenderPass *pass : m_renderpasses) {
-    std::vector<RenderCommand *> &commands = *m_render_queue.GetCommandList(pass);
-    Viewport  *viewport = &pass->Viewport;
-    glViewport(viewport->win_x, viewport->win_y, viewport->win_width, viewport->win_height);
-    for (RenderTarget *target : pass->Rendertargets) {
-      target->Bind();
-      glm::vec3 cc = target->GetClearColor();
-      if (target->HasDepthAndStencil()) {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-      } else {
-        glClear(GL_COLOR_BUFFER_BIT);
-      }
-      glClearColor(cc.x, cc.y, cc.z, 1.0f);
-      for (RenderCommand *command : commands) {
-        switch (command->GetCommandType()) {
-          case RenderCommandType::COMMAND_MESH: { 
-            ExecuteMeshCommand(static_cast<MeshCommand *>(command)); 
-          } 
-          break;
-          case RenderCommandType::COMMAND_GROUP: { 
-            ExecuteGroupCommand(static_cast<GroupCommand *>(command));
-          }
-          break;
-          case RenderCommandType::COMMAND_DEBUG: {
-            ExecuteDebugCommand(static_cast<DebugCommand *>(command));
-          } 
-          break;
-          default: break;
-        }
-      }
+  if (m_renderpass) {
+    Viewport &viewport = 
+      m_renderpass->Viewport;
+
+    glViewport(
+      viewport.win_x, 
+      viewport.win_y, 
+      viewport.win_width, 
+      viewport.win_height);
+
+    Framebuffer *fbo = m_renderpass->FramebufferObject;
+
+    fbo->Bind();
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+    glClearColor(fbo->GetClearColor().x,
+      fbo->GetClearColor().y,
+      fbo->GetClearColor().z, 
+      1.0f);
+    std::vector<RenderCommand *> *commandBuffer = 
+      m_render_queue.GetCommandBuffer();
+    for (auto command : *commandBuffer) {
+      switch (command->GetCommandType()) {
+        case RenderCommandType::COMMAND_MESH:
+          ExecuteMeshCommand(static_cast<MeshCommand *>(command));
+        break;
+        case RenderCommandType::COMMAND_GROUP:
+          ExecuteGroupCommand(static_cast<GroupCommand *>(command));
+        break;
+        case RenderCommandType::COMMAND_PRIMITIVE:
+          ExecutePrimitiveCommand(static_cast<PrimitiveCommand *>(command));
+        case RenderCommandType::COMMAND_DEBUG:
+          ExecuteDebugCommand(static_cast<DebugCommand *>(command));
+        break;
+        default:
+          VikrLog::DisplayMessage(VIKR_ERROR, "Unkown Command to execute! Ignoring.");
+        break;
+      } 
     }
   }
-  // Remove framebuffers.
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);
   
   // TODO(Garcia): Perform Blit and Post processing later on
   // This also requires deferred shading.
-  
-  // Final render onto Quad.
-  glViewport(0, 0, original_window_width, original_window_height);
-  glClear(GL_COLOR_BUFFER_BIT);
-  MeshCommand quadCommand;
-  Material material(GLResourceManager::GetResourceManager()->GetShader("screen_shader"));
-  material.SetDepth(false);
-  material.SetIsCulling(false);
-  material.SetTexture("screenTexture", default_rendertarget->GetTexture(), 0);
-  quadCommand.SetMesh(quad.get());
-  quadCommand.SetMaterial(&material);
-  ExecuteMeshCommand(&quadCommand);
   // Restore.
   // Clear after.
   m_render_queue.Clear();
@@ -153,69 +123,8 @@ vvoid GLRenderer::Render() {
 }
 
 
-/**
-  This will likely fall into it's own resources class. Needs to be handled by 
-  Material.
-*/
-GLenum GLRenderer::GetDepthFunct(DepthFunc funct) {
-  switch(funct) {
-    case DepthFunc::vikr_DEPTH_ALWAYS: return GL_ALWAYS;
-    case DepthFunc::vikr_DEPTH_EQUAL: return GL_EQUAL;
-    case DepthFunc::vikr_DEPTH_GEQUAL: return GL_GEQUAL;
-    case DepthFunc::vikr_DEPTH_GREATER: return GL_GREATER;
-    case DepthFunc::vikr_DEPTH_LEQUAL: return GL_LEQUAL;
-    case DepthFunc::vikr_DEPTH_LESS: return GL_LESS;
-    case DepthFunc::vikr_DEPTH_NEVER: return GL_NEVER;
-    case DepthFunc::vikr_DEPTH_NOTEQUAL: return GL_NOTEQUAL;
-    default: return GL_LESS;
-  }
-}
-
-/**
-  These need to go into Material! Waste of time searching!
-*/
-GLenum GLRenderer::GetBlendFunct(BlendFunc blend) {
-  switch (blend) {
-    case BlendFunc::vikr_BLEND_CONSTANT_ALPHA: return GL_CONSTANT_ALPHA;
-    case BlendFunc::vikr_BLEND_CONSTANT_COLOR: return GL_CONSTANT_COLOR;
-    case BlendFunc::vikr_BLEND_DST_ALPHA: return GL_DST_ALPHA;
-    case BlendFunc::vikr_BLEND_DST_COLOR: return GL_DST_COLOR;
-    case BlendFunc::vikr_BLEND_GL_ONE_MINUS_CONSTANT_ALPHA: return GL_ONE_MINUS_CONSTANT_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE: return GL_ONE;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR: return GL_ONE_MINUS_CONSTANT_COLOR;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_ALPHA: return GL_ONE_MINUS_DST_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_COLOR: return GL_ONE_MINUS_DST_COLOR;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA: return GL_ONE_MINUS_SRC1_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_COLOR: return GL_ONE_MINUS_SRC_COLOR;
-    case BlendFunc::vikr_BLEND_SRC_ALPHA: return GL_SRC_ALPHA;
-    case BlendFunc::vikr_BLEND_SRC_COLOR: return GL_SRC_COLOR;
-    case BlendFunc::vikr_BLEND_ZERO: return GL_ZERO;
-    default: return GL_ZERO;
-  }
-}
-
-
-GLenum GLRenderer::GetFrontFace(FrontFace mode) {
-  switch (mode) {
-    case FrontFace::vikr_CLOCKWISE: return GL_CW;
-    case FrontFace::vikr_COUNTER_CLOCKWISE: return GL_CCW;
-    default: return GL_CCW;
-  }
-}
-
-
-GLenum GLRenderer::GetCullFace(CullFace face) {
-  switch (face) {
-    case CullFace::vikr_FRONT_FACE: return GL_FRONT;
-    case CullFace::vikr_BACK_FACE: return GL_BACK;
-    default: return GL_BACK;
-  }
-}
-
-
 vint32 GLRenderer::ExecuteMeshCommand(MeshCommand *mesh_cmd) {
   Material *material = mesh_cmd->GetMaterial();
-  SetGLContext(material);
 
   if(material) {
     current_shader = material->GetShader();
@@ -313,30 +222,6 @@ vint32 GLRenderer::ExecuteDebugCommand(DebugCommand * command) {
 }
 
 
-vvoid GLRenderer::SetGLContext(Material *material) {
-  if(material->HasDepth()) {
-    GLEnable(GL_DEPTH_TEST);
-    GLDepthFunc(GLRenderer::GetDepthFunct(material->GetDepthFunc()));
-  } else {
-    glDisable(GL_DEPTH_TEST);
-  }
-  if(material->IsCulling()) {
-    glEnable(GL_CULL_FACE);
-    GLFrontFace(GLRenderer::GetFrontFace(material->GetFrontFace()));
-    GLCullFace(GLRenderer::GetCullFace(material->GetCullFace()));
-  } else {
-    GLDisable(GL_CULL_FACE);
-  }
-  if(material->IsBlending()) {
-    GLEnable(GL_BLEND);
-    GLBlendFunc(GLRenderer::GetBlendFunct(material->GetBlendSrc()),
-                GLRenderer::GetBlendFunct(material->GetBlendDst()));
-  } else {
-    GLDisable(GL_BLEND);
-  }
-}
-
-
 vint32 GLRenderer::ExecuteTransformCommand(TransformCommand *command) {
   current_shader->SetValue("vikr_View", camera->GetView());
   current_shader->SetValue("vikr_Projection", camera->GetProjection());
@@ -364,7 +249,6 @@ vint32 GLRenderer::ExecutePrimitiveCommand(PrimitiveCommand *command) {
 vint32 GLRenderer::ExecuteMaterialCommand(MaterialCommand *command) {
   current_shader = command->m_material->GetShader();
   Material *material = command->m_material;
-  SetGLContext(material);
   current_shader->Use();
   /**
   Require multiple texture targets!

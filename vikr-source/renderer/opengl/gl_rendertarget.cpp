@@ -8,6 +8,76 @@
 namespace vikr {
 
 
+/**
+  This will likely fall into it's own resources class. Needs to be handled by
+  Material.
+*/
+GLenum GLRenderTarget::GetDepthFunct(DepthFunc funct) {
+  switch(funct) {
+  case DepthFunc::vikr_DEPTH_ALWAYS:    return GL_ALWAYS;
+  case DepthFunc::vikr_DEPTH_EQUAL:     return GL_EQUAL;
+  case DepthFunc::vikr_DEPTH_GEQUAL:    return GL_GEQUAL;
+  case DepthFunc::vikr_DEPTH_GREATER:   return GL_GREATER;
+  case DepthFunc::vikr_DEPTH_LEQUAL:    return GL_LEQUAL;
+  case DepthFunc::vikr_DEPTH_LESS:      return GL_LESS;
+  case DepthFunc::vikr_DEPTH_NEVER:     return GL_NEVER;
+  case DepthFunc::vikr_DEPTH_NOTEQUAL:  return GL_NOTEQUAL;
+  default:                              return GL_LESS;
+  }
+}
+
+/**
+  These need to go into Material! Waste of time searching!
+*/
+GLenum GLRenderTarget::GetBlendFunct(BlendFunc blend) {
+  switch(blend) {
+  case BlendFunc::vikr_BLEND_CONSTANT_ALPHA:              return GL_CONSTANT_ALPHA;
+  case BlendFunc::vikr_BLEND_CONSTANT_COLOR:              return GL_CONSTANT_COLOR;
+  case BlendFunc::vikr_BLEND_DST_ALPHA:                   return GL_DST_ALPHA;
+  case BlendFunc::vikr_BLEND_DST_COLOR:                   return GL_DST_COLOR;
+  case BlendFunc::vikr_BLEND_GL_ONE_MINUS_CONSTANT_ALPHA: return GL_ONE_MINUS_CONSTANT_ALPHA;
+  case BlendFunc::vikr_BLEND_ONE:                         return GL_ONE;
+  case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR:    return GL_ONE_MINUS_CONSTANT_COLOR;
+  case BlendFunc::vikr_BLEND_ONE_MINUS_DST_ALPHA:         return GL_ONE_MINUS_DST_ALPHA;
+  case BlendFunc::vikr_BLEND_ONE_MINUS_DST_COLOR:         return GL_ONE_MINUS_DST_COLOR;
+  case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA:         return GL_ONE_MINUS_SRC1_ALPHA;
+  case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_COLOR:         return GL_ONE_MINUS_SRC_COLOR;
+  case BlendFunc::vikr_BLEND_SRC_ALPHA:                   return GL_SRC_ALPHA;
+  case BlendFunc::vikr_BLEND_SRC_COLOR:                   return GL_SRC_COLOR;
+  case BlendFunc::vikr_BLEND_ZERO:                        return GL_ZERO;
+  default:                                                return GL_ZERO;
+  }
+}
+
+
+GLenum GLRenderTarget::GetBlendEq(BlendEq eq) {
+  switch (eq) {
+    case BlendEq::vikr_BLEND_ADD:               return GL_FUNC_ADD;
+    case BlendEq::vikr_BLEND_REVERSE_SUBTRACT:  return GL_FUNC_REVERSE_SUBTRACT;
+    case BlendEq::vikr_BLEND_SUBTRACT:          return GL_FUNC_SUBTRACT;
+    default:                                    return GL_FUNC_ADD;
+  }
+}
+
+
+GLenum GLRenderTarget::GetFrontFace(FrontFace mode) {
+  switch(mode) {
+  case FrontFace::vikr_CLOCKWISE:                       return GL_CW;
+  case FrontFace::vikr_COUNTER_CLOCKWISE:               return GL_CCW;
+  default:                                              return GL_CCW;
+  }
+}
+
+
+GLenum GLRenderTarget::GetCullFace(CullFace face) {
+  switch(face) {
+  case CullFace::vikr_FRONT_FACE:                       return GL_FRONT;
+  case CullFace::vikr_BACK_FACE:                        return GL_BACK;
+  default:                                              return GL_BACK;
+  }
+}
+
+
 GLRenderTarget::GLRenderTarget()
 {
 }
@@ -20,11 +90,6 @@ GLRenderTarget::GLRenderTarget(vuint32 width, vuint32 height)
 
 
 vvoid GLRenderTarget::Generate() {
-  if (!m_fbo) {
-    glGenFramebuffers(1, &m_fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-  }
-
   if (!m_texture) {
     GLTexture2D texture(m_width, m_height);
     texture.SetWidth(m_width);
@@ -45,16 +110,6 @@ vvoid GLRenderTarget::Generate() {
 }
 
 
-vvoid GLRenderTarget::BindTexture(vuint32 index) {
-  if (m_texture) {
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_TEXTURE_2D,
-            m_texture->GetNativeId(), 0);
-  } else {
-    VikrLog::DisplayMessage(VIKR_ERROR, "Framebuffer: Texture was not generated to be bound to!");
-  }
-}
-
-
 vvoid GLRenderTarget::BindDepthStencil() {
   if (m_rbo) {
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
@@ -63,27 +118,38 @@ vvoid GLRenderTarget::BindDepthStencil() {
 }
 
 
-vvoid GLRenderTarget::Bind() {
-  if (m_fbo) { 
-    glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-  }
+vvoid GLRenderTarget::SetBlendDst(BlendFunc funct) {
+  m_blendDst = funct;
+  native_blendDst = GetBlendFunct(funct);
 }
 
 
-vvoid GLRenderTarget::Unbind() {
-  if (m_fbo) {
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  }
+vvoid GLRenderTarget::SetDepthFunc(DepthFunc funct) {
+  m_depthFunc = funct;
+  native_depthFunc = GetDepthFunct(funct);
 }
 
 
-vbool GLRenderTarget::IsComplete() {
-  vbool success = false;
-  if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-    std::cout << "Frame buffer not complete!" << std::endl;
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    return false;
-  }
-  return true;
+vvoid GLRenderTarget::SetBlendSrc(BlendFunc funct) {
+  m_blendSrc = funct;
+  native_blendSrc = GetBlendFunct(funct);
+}
+
+
+vvoid GLRenderTarget::SetBlendEq(BlendEq eq) {
+  m_blendEq = eq;
+  native_blendEq = GetBlendEq(eq);
+}
+
+
+vvoid GLRenderTarget::SetCullFace(CullFace face) {
+  m_cullFace = face;
+  native_cullFace = GetCullFace(face);
+}
+
+
+vvoid GLRenderTarget::SetFrontFace(FrontFace face) {
+  m_frontFace = face;
+  native_frontFace = GetFrontFace(face);
 }
 } // vikr

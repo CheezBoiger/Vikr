@@ -13,12 +13,16 @@ namespace vikr {
 
 
 class Texture;
+class RenderTarget;
 
 
 /**
   Framebuffer abstract. Used to be derived specifically for our Renderers.
   Alittle scary, Vulkan already contains a Framebuffer object for us to use.
   We will use this class to wrap it...
+
+  Allowing Multi RenderPasses requires that we blit a src Framebuffer with a 
+  destination Framebuffer, this can cause some performance penalties.
 
   OpenGL: Associates GLFramebuffer
   Vulkan: Associates VKFramebuffer
@@ -28,33 +32,80 @@ public:
 
   Framebuffer() { }
   Framebuffer(vuint32 width, vuint32 height);
-
-  vvoid SetStencilDepth(vbool stencil_depth) { m_depth_and_stencil = stencil_depth; }
+  
   /** 
     Generate the Framebuffer with this function call.
   */
   virtual vvoid Generate() = 0;  
+  
   /**
     Get the width of our Framebuffer texture scheme.
   */
   vuint32 GetWidth() { return m_width; }
+
+  vvoid SetWidth(vuint32 width) { m_width = width; }
+  vvoid SetHeight(vuint32 height) { m_height = height; }
+  
   /**
     Get the height of out Framebuffer texture scheme. 
   */
   vuint32 GetHeight() { return m_height; }
+  
   /**
     Set the clear color of the Framebuffer. 
   */
   vvoid SetClearColor(glm::vec3 color) { m_clearcolor = color; }
+  
   /**
     Get the clear color of the Framebuffer. 
   */
   glm::vec3 GetClearColor() { return m_clearcolor; }
+  
   /**
     Get the Framebuffer id.
   */
   vuint32 GetId() { return m_fbo; }
 
+  /**
+    Check if this framebuffer is completely structure for use.
+  */
+  virtual vint32 IsComplete() = 0;
+
+  /**
+    Bind the framebuffer.
+  */
+  virtual vvoid Bind() = 0;
+
+  /**
+    Unbind the framebuffer.
+  */
+  virtual vvoid Unbind() = 0;
+
+  /**
+    Clear the Framebuffer render targets and renderbuffer.
+  */
+  virtual vvoid Clear(vuint32 index) = 0;
+
+  /**
+    Clear the depth
+  */
+  virtual vvoid ClearDepthStencil() = 0;
+
+  virtual vvoid ClearTexture(vuint32 attachment) = 0;
+
+  virtual vvoid BindTexture(RenderTarget *target, vuint32 attachment) = 0;
+
+  virtual vvoid BindDepthStencil() = 0;
+
+  virtual vvoid DestroyFramebuffer() = 0;
+
+  std::vector<Texture *> *GetColorAttachements() { return &m_colorAttachments; } 
+
+  /**
+    Check if this framebuffer has depth and stencil.
+  */
+  vbool HasDepthStencil() { return m_depthStencil; }
+  vbool IsMultisampled() { return m_multisampled; }
 
 protected:
   /**
@@ -62,7 +113,8 @@ protected:
     we use "stupid" ptrs because the textures are handled by
     our ResourceManager.
   */
-  std::vector<Texture *> m_textures;
+  std::vector<Texture *> m_colorAttachments;
+
   /**
     The Framebuffer object id.
   */
@@ -71,13 +123,15 @@ protected:
     Associated Renderbuffer object id. 
   */
   vuint32 m_rbo                     = 0;
+
   /**
     Get the clear color for this framebuffer.
   */
   glm::vec3 m_clearcolor            = glm::vec3(0.1f, 0.1f, 0.1f);
   vuint32 m_width                   = 0;
   vuint32 m_height                  = 0;
-  vbool m_depth_and_stencil         = false;
+  vbool m_depthStencil              = false;
+  vbool m_multisampled              = false; // no feature yet.
 };
 } // vikr
 #endif // __VIKR_FRAMEBUFFER_HPP

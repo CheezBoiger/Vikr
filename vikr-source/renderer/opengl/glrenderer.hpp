@@ -25,6 +25,7 @@ class MaterialCommand;
 class PrimitiveCommand;
 class TransformCommand;
 class LightCommand;
+class GLRenderTarget;
 class Mesh;
 
 
@@ -32,10 +33,6 @@ class Mesh;
   Renderer using OpenGL Graphics APIs.
 */
 class GLRenderer : public Renderer {
-  static GLenum GetDepthFunct(DepthFunc funct);
-  static GLenum GetBlendFunct(BlendFunc blend);
-  static GLenum GetCullFace(CullFace face);
-  static GLenum GetFrontFace(FrontFace mode);
 public:
   GLRenderer();
   ~GLRenderer() { }
@@ -46,7 +43,7 @@ public:
 
 
   vvoid Draw(GLenum topology, vuint32 vertices, vuint32 start);
-  vvoid IndexedDraw(GLenum topology, vuint32 indices, vuint32 vertices, vuint32 start);
+
   /**
     Executes the following MeshCommand. This is where we render meshes.
   */
@@ -56,11 +53,6 @@ public:
   vint32 ExecuteMaterialCommand(MaterialCommand *cmd);
   vint32 ExecutePrimitiveCommand(PrimitiveCommand *cmd);
   vint32 ExecuteTransformCommand(TransformCommand *cmd);
-  /**
-    Sets the context of the OpenGL mesh in terms of whether or not 
-    to disable/enable blending, depth, or culling
-  */
-  vvoid SetGLContext(Material *material);
 
 private:
 

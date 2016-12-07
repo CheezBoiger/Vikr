@@ -16,7 +16,16 @@ namespace vikr {
 */
 class GLFramebuffer : public Framebuffer {
 public:
+  GLFramebuffer();
 
+  vvoid Generate() override;
+  vvoid BindDepthStencil() override;
+  vvoid BindTexture(RenderTarget *target, vuint32 index) override;
+
+  vint32 IsComplete() override;
+
+  vvoid Bind() override;
+  vvoid Unbind() override;
 
 private:
   

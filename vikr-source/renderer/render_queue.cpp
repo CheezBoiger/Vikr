@@ -9,9 +9,9 @@
 namespace vikr {
 
 
-vvoid RenderQueue::PushBack(RenderCommand *command, RenderPass *target) {
-  if (command && target) {
-    m_command_map[target].push_back(command);
+vvoid RenderQueue::PushBack(RenderCommand *command) {
+  if (command) {
+    m_commandBuffer.push_back(command);
   }
 }
 
@@ -19,15 +19,13 @@ vvoid RenderQueue::PushBack(RenderCommand *command, RenderPass *target) {
 vvoid RenderQueue::Sort() {
   std::sort(postbatch_commands.begin(), postbatch_commands.end(), deferred_comparator);
   // Standard sort using custom sorting callback.
-  for (std::pair<RenderPass *, std::vector<RenderCommand *>> command : m_command_map) {
-    std::sort(command.second.begin(), command.second.end(), sorting_comparator);
-  }
+  std::sort(m_commandBuffer.begin(), m_commandBuffer.end(), sorting_comparator);
 }
 
 
 vvoid RenderQueue::Clear() {
   postbatch_commands.clear();
-  m_command_map.clear();
+  m_commandBuffer.clear();
 }
 
 

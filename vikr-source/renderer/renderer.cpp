@@ -45,7 +45,7 @@ vvoid Renderer::PushBack(RenderCommand *command) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Pushed RenderCommand was null! Refusing to push to queue!");
     return;
   }
-  m_render_queue.PushBack(command, current_renderpass);
+  m_render_queue.PushBack(command);
 }
 
 
@@ -67,7 +67,7 @@ vvoid Renderer::PushBack(SceneNode *obj) {
         }
         GroupCommand *command = &trav->m_commandList;
         command->Sort();
-        m_render_queue.PushBack(command, current_renderpass);
+        m_render_queue.PushBack(command);
         visited.insert(trav);
       }
     }
@@ -89,11 +89,6 @@ vvoid Renderer::PushBack(Light *command) {
       break;
     }
   }
-}
-
-
-vvoid Renderer::AddRenderPass(RenderPass *renderpass) {
-  m_renderpasses.push_back(renderpass);
 }
 
 

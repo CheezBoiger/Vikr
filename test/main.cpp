@@ -6,7 +6,6 @@
 #include <shader/shader.hpp>
 #include <vikr.hpp>
 #include <math/shape/cube.hpp>
-#include <math/shape/sphere.hpp>
 #include <util/vikr_log.hpp>
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
@@ -24,6 +23,10 @@
 #include <scene/components/transform_component.hpp>
 #include <scene/components/renderer_component.hpp>
 #include <scene/components/mesh_component.hpp>
+#include <math/shape/quad.hpp>
+#include <renderer/pass.hpp>
+#include <renderer/opengl/gl_rendertarget.hpp>
+#include <renderer/opengl/gl_framebuffer.hpp>
 #include <glm/gtx/compatibility.hpp>
 
 using namespace vikr;
@@ -48,6 +51,7 @@ void Do_Movement()
   if(keys[GLFW_KEY_D])
     camera.Move(RIGHT, GetDeltaTime());
 }
+
 
 // Is called whenever a key is pressed/released via GLFW
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -104,119 +108,35 @@ int main(int c, char* args[]) {
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
   // Initialize the renderer.
   InitVikrEngine(vikr_OPENGL);
-  SceneNode *node = ResourceManager::GetResourceManager()->CreateSceneNode();
-  Renderer::GetRenderer()->SetCamera(&camera);
-  Texture *texture = ResourceManager::GetResourceManager()->CreateTexture(vikr_TEXTURE_2D, "awesomeface.png", true);
-  Mesh *mesh;
-  Mesh *cube2;
-  Mesh *line_mesh;
-  Mesh *meshlight;
-  MeshCommand mesh_command1;
-  MeshCommand mesh_command3;
-  MeshCommand mesh_command2;
-  DebugCommand p_command;
-  Cube cube;
-  PointLight light;
-  std::vector<glm::vec3> line = {
-    glm::vec3(4.0f, 4.0f, 4.0f),
-    glm::vec3(5.0f, 5.0f, 5.0f)
-  };
-  light.SetDiffuse(glm::vec3(1.0f, 1.0f, 1.0f));
   // Storing shaders into resources from renderer.
   ResourceManager::GetResourceManager()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
   ResourceManager::GetResourceManager()->StoreShader("light", "test.vert", "light.frag");
-  mesh = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
-  cube2 = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
-  meshlight = ResourceManager::GetResourceManager()->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
-  line_mesh = ResourceManager::GetResourceManager()->CreateMesh(line, std::vector<glm::vec3>(), std::vector<glm::vec2>());
-  mesh->Create();
-  cube2->Create();
-  meshlight->Create(); 
-  line_mesh->Create();
-  /**
-    referencing stored shaders with materials. 
-  */
-  Material material(ResourceManager::GetResourceManager()->GetShader("test"));
-  Material lightMaterial(ResourceManager::GetResourceManager()->GetShader("light"));
-  /**
-    Create meshes.
-  */
+  ResourceManager::GetResourceManager()->StoreShader("screen", "screen_shader.vert", "screen_shader.frag");
   
-  /**
-    Reference the materials and meshes into mesh command. 
-  */
-  mesh_command1.SetMaterial(&material);
-  mesh_command3.SetMaterial(&material);
-  mesh_command2.SetMaterial(&lightMaterial);
-  mesh_command1.SetMesh(mesh);
-  mesh_command2.SetMesh(meshlight);
-  mesh_command3.SetMesh(cube2);
-  p_command.SetMesh(line_mesh);
-  p_command.SetLineWidth(20);
-  light.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+  Material *default_mat = ResourceManager::GetResourceManager()->CreateMaterial();
+  default_mat->SetShader(ResourceManager::GetResourceManager()->GetShader("test"));
 
-  // SceneNode Configs.
-  TransformComponent *t = 
-    static_cast<TransformComponent *>
-    (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_TRANSFORM));
-  t->transform.Position = glm::vec3(1.0f, 0.0f, -1.0f);
-  MeshComponent *mc = 
-    static_cast<MeshComponent *>
-    (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_MESH));
-  mc->mesh = mesh;
-  RendererComponent *rc = 
-    static_cast<RendererComponent *>
-    (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_RENDERER));
-    rc->material = &material;
-  node->AddComponent(t);
-  node->AddComponent(mc);
-  node->AddComponent(rc);
-  node->Update();
+  Material *light_mat = ResourceManager::GetResourceManager()->CreateMaterial();
+  light_mat->SetShader(ResourceManager::GetResourceManager()->GetShader("light"));
 
-  /**
-    Set the variables of the shaders associated with the material. 
-  */
-  material.SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
-  material.SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
-  material.SetTexture("texas", texture, 0);
-  lightMaterial.SetVector3fv("light_color", light.GetColor());
+  RenderPass rp;
+  rp.Viewport.win_x = 0;
+  rp.Viewport.win_y = 0;
+  rp.Viewport.win_width = screen_width;
+  rp.Viewport.win_height = screen_height;
+  GLRenderTarget target;
+  target.Generate();
 
-  // Standard Game Loop
-  vreal32 radius = 2.0f;
-  vreal32 angle = 0.0f;
+  Quad quad;
+  
+
+
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
     PollEvents();
     Do_Movement();
     VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
     camera.Update();
-    glm::mat4 model;
-    angle += GetDeltaTime() * 100;
-    model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
-    mesh_command1.SetTransform(model);
-    light.SetPos(glm::vec3(std::sin(GetTime()) * radius, std::cos(GetTime()) * radius, 0.0f));
-    model = glm::mat4();
-    model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
-    mesh_command3.SetTransform(model);
-    model = glm::mat4();
-    model = glm::translate(model, light.GetPos());
-    model = glm::scale(model, glm::vec3(0.2f));
-    mesh_command2.SetTransform(model);
-    t->transform.Position = glm::lerp(t->transform.Position, glm::vec3(0.0f, 5.0f, 0.0f), GetDeltaTime());
-    glm::quat r = glm::angleAxis(glm::radians(90.0f), t->transform.Up);
-    r *= glm::angleAxis(glm::radians(90.f), t->transform.Front);
-    t->transform.Rotation = glm::slerp(t->transform.Rotation, r, GetDeltaTime());
-    t->Update();
-    /**
-      Push back the mesh_commands and light!
-    */
-    Renderer::GetRenderer()->PushBack(&mesh_command1);
-    Renderer::GetRenderer()->PushBack(&mesh_command2);
-    Renderer::GetRenderer()->PushBack(&mesh_command3);
-    Renderer::GetRenderer()->PushBack(node);
-    Renderer::GetRenderer()->PushBack(&p_command);
-    Renderer::GetRenderer()->PushBack(&light);
-    Renderer::GetRenderer()->Render();
     DoubleBufferSwap(window);
   }
 

@@ -68,7 +68,7 @@ public:
   vbool IsRendering() { return rendering; }
 
 
-  RenderPass *GetCurrentRenderPass() { return current_renderpass; }
+  RenderPass *GetCurrentRenderPass() { return m_renderpass; }
   vvoid AddRenderPass(RenderPass *renderpass);
 
   virtual vint32 CleanupResources();
@@ -99,29 +99,14 @@ protected:
   std::vector<SpotLight *> m_spotlights;
 
   /**
-    Multi render pass should be implemented for post process effects.
-  */
-  std::vector<RenderPass *> m_renderpasses;
-
-  /**
-    The current RenderPass.
-  */
-  RenderPass *current_renderpass                      = nullptr;
-
-  /**
   Screen filled mesh quad.
   */
-  std::unique_ptr<Mesh> quad                          = nullptr;
-
-  /**
-    Default render target.
-  */
-  std::unique_ptr<RenderTarget> default_rendertarget  = nullptr;
+  std::unique_ptr<Mesh> quad          = nullptr;
 
   /**
     Default RenderPass.
   */
-  RenderPass default_renderpass;
+  RenderPass *m_renderpass            = nullptr;
 
   /**
     Currently bound renderer type.

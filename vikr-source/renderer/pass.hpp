@@ -21,12 +21,24 @@ class Framebuffer;
 
 /**
   Controls passes that are sent to the Renderer.
+  Note: This can be a struct.
 */
 class RenderPass {
 public:
-  Viewport Viewport;
+  /**
+    The Given viewport for the RenderPass.
+  */
+  Viewport                    Viewport;
+
+  /**
+    Render target textures and/or depthstencil buffers.
+  */
   std::vector<RenderTarget *> Rendertargets;
-  Framebuffer *FramebufferObject;
+  
+  /**
+    Framebuffer associated with this render pass.
+  */
+  Framebuffer                 *FramebufferObject = nullptr;
 };
 } // vikr
 #endif // __VIKR_RENDERPASS_HPP
