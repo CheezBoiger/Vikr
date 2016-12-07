@@ -3,6 +3,12 @@ Smallscale Renderer using OpenGL 4.3 and Vulkan API graphics.
 Experimental Graphics Renderer Engine. This is a research and experimental
 engine...
 
+# Redesign
+This engine is going to be completely redesigned, The currently implementation is creating much more 
+code smell that expected, and the further it is becoming complicated, the more it begins to pile on
+into a huge mess. This engine **IS UNDERGOING A MAJOR REDESIGN.**
+
+
 # Implementation
 Vikr is still in development, however, this renderer plugin is designed for use in both
 academia, game engines, and for research. It is still at its low implementation, and there
@@ -15,6 +21,7 @@ and optimized. Contribution is always welcome!
   
 The Design goal of this renderer is to allow the user to handle memory management, while the Engine merely uses the data
 given to manipulate the objects it must render. **VERY STRONG** emphasis in avoiding dynamic allocation as much as possible.
+
   
 # Credits and Honorable Mentions
 Credits out to Joey De Vries and his tutorials on OpenGL, which has taught me,

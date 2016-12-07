@@ -15,6 +15,7 @@ class Light;
 class RenderCommand;
 class RenderTarget;
 class SceneNode;
+class RenderDevice;
 
 /**
   Interface Renderer for use with the abstract renderer.
@@ -28,7 +29,7 @@ public:
   virtual vvoid PushBack(SceneNode *obj) = 0;
   virtual vvoid PushBack(Light *light) = 0;
   virtual vvoid Sort() = 0;
-  virtual vint32 Init() = 0;
+  virtual vint32 Init(RenderDevice *device) = 0;
   /**
     Should render the frame. 
    */

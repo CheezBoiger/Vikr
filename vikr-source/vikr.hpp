@@ -22,14 +22,6 @@ VIKR_FORCEINLINE vint32 LoadGlad() {
   }
   return 1;
 }
-/**
-  Initialize the Vikr engine based on what type of Graphics API to load.
-
-  NOTE(Garcia): This WON'T be here for the release. The Renderer is supposed to be
-                created by the programmer, and not this function.
-  @param GraphicsPipeline 
-*/
-Renderer* InitVikrEngine(GraphicsPipeline pipeline);
 
 /**
   

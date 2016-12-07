@@ -5,25 +5,6 @@ set(VIKR_RENDERER_VULKAN_DIR ${VIKR_RENDERER_DIR}/vulkan/)
 set(VIKR_RENDERER_COMMAND_DIR ${VIKR_RENDERER_DIR}/command/)
 
 
-if (vulkan)
-  set(VIKR_GLOB
-    ${VIKR_GLOB}
-    ${VIKR_RENDERER_VULKAN_DIR}/vkrenderer.hpp
-    ${VIKR_RENDERER_VULKAN_DIR}/vkrenderer.cpp)
-endif()
-
-
-# OpenGL is always Enabled
-set(VIKR_GLOB
-  ${VIKR_GLOB}
-  ${VIKR_RENDERER_OPENGL_DIR}/gl_framebuffer.hpp
-  ${VIKR_RENDERER_OPENGL_DIR}/gl_framebuffer.cpp
-  ${VIKR_RENDERER_OPENGL_DIR}/gl_rendertarget.hpp
-  ${VIKR_RENDERER_OPENGL_DIR}/gl_rendertarget.cpp
-  ${VIKR_RENDERER_OPENGL_DIR}/glrenderer.hpp
-  ${VIKR_RENDERER_OPENGL_DIR}/glrenderer.cpp)
-
-
 set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_RENDERER_COMMAND_DIR}/render_command_types.hpp
@@ -47,15 +28,5 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_DIR}/irenderer.hpp
   ${VIKR_RENDERER_DIR}/renderer.hpp
   ${VIKR_RENDERER_DIR}/renderer.cpp
-  ${VIKR_RENDERER_DIR}/render_group.hpp
   ${VIKR_RENDERER_DIR}/render_queue.hpp
-  ${VIKR_RENDERER_DIR}/render_queue.cpp
-  ${VIKR_RENDERER_DIR}/render_target.hpp
-  ${VIKR_RENDERER_DIR}/render_target.cpp
-  ${VIKR_RENDERER_DIR}/viewport.hpp
-  ${VIKR_RENDERER_DIR}/blendmode.hpp
-  ${VIKR_RENDERER_DIR}/depthmode.hpp
-  ${VIKR_RENDERER_DIR}/stencildepth.hpp
-  ${VIKR_RENDERER_DIR}/pass.hpp
-  ${VIKR_RENDERER_DIR}/framebuffer.hpp
-  ${VIKR_RENDERER_DIR}/cullmode.hpp)
+  ${VIKR_RENDERER_DIR}/render_queue.cpp)

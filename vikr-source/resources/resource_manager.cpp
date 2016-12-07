@@ -17,7 +17,7 @@ namespace vikr {
 std::unordered_map<guid_t, std::shared_ptr<SceneNode> > Resources::scene_nodes;
 std::unordered_map<guid_t, std::shared_ptr<SceneComponent> > Resources::scene_components;
 
-std::unique_ptr<ResourceManager> ResourceManager::resource_manager = nullptr;
+ResourceManager *ResourceManager::resource_manager = nullptr;
 
 
 ResourceManager::ResourceManager(GraphicsPipeline pipe)

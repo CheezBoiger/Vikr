@@ -7,8 +7,8 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 
-#include <renderer/render_target.hpp>
-#include <renderer/viewport.hpp>
+#include <graphics/render_target.hpp>
+#include <graphics/viewport.hpp>
 
 #include <vector>
 

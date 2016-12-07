@@ -17,17 +17,17 @@
 #include <lighting/point_light.hpp>
 #include <scene/first_person_camera.hpp>
 #include <resources/resource_manager.hpp>
+#include <resources/model_loader.hpp>
 #include <scene/scene_node.hpp>
 #include <renderer/command/debug_command.hpp>
 #include <renderer/command/mesh_command.hpp>
 #include <scene/components/transform_component.hpp>
 #include <scene/components/renderer_component.hpp>
 #include <scene/components/mesh_component.hpp>
+#include <graphics/gl4/gl4_device.hpp>
 #include <math/shape/quad.hpp>
-#include <renderer/pass.hpp>
-#include <renderer/opengl/gl_rendertarget.hpp>
-#include <renderer/opengl/gl_framebuffer.hpp>
 #include <glm/gtx/compatibility.hpp>
+#include <graphics/gl4/gl4_device.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;
@@ -106,26 +106,17 @@ int main(int c, char* args[]) {
   glfwSetKeyCallback(window, key_callback);
   glfwSetCursorPosCallback(window, mouse_callback);
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-  // Initialize the renderer.
-  InitVikrEngine(vikr_OPENGL);
   // Storing shaders into resources from renderer.
   ResourceManager::GetResourceManager()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
   ResourceManager::GetResourceManager()->StoreShader("light", "test.vert", "light.frag");
   ResourceManager::GetResourceManager()->StoreShader("screen", "screen_shader.vert", "screen_shader.frag");
+  SceneNode *node = ModelLoader::ImportModel("nanosuit/nanosuit.obj", "suitboy");
   
   Material *default_mat = ResourceManager::GetResourceManager()->CreateMaterial();
   default_mat->SetShader(ResourceManager::GetResourceManager()->GetShader("test"));
 
   Material *light_mat = ResourceManager::GetResourceManager()->CreateMaterial();
   light_mat->SetShader(ResourceManager::GetResourceManager()->GetShader("light"));
-
-  RenderPass rp;
-  rp.Viewport.win_x = 0;
-  rp.Viewport.win_y = 0;
-  rp.Viewport.win_width = screen_width;
-  rp.Viewport.win_height = screen_height;
-  GLRenderTarget target;
-  target.Generate();
 
   Quad quad;
   

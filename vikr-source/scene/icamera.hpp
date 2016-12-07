@@ -9,7 +9,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <platform/vikr_time.hpp>
 #include <platform/vikr_types.hpp>
-#include <renderer/viewport.hpp>
+#include <graphics/viewport.hpp>
 
 namespace vikr {
 

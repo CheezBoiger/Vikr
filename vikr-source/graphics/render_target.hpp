@@ -6,17 +6,23 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
-#include <renderer/framebuffer.hpp>
+#include <graphics/framebuffer.hpp>
 #include <shader/texture.hpp>
-#include <renderer/blendmode.hpp>
-#include <renderer/cullmode.hpp>
-#include <renderer/depthmode.hpp>
-#include <renderer/stencildepth.hpp>
+#include <graphics/blendmode.hpp>
+#include <graphics/cullmode.hpp>
+#include <graphics/depthmode.hpp>
+#include <graphics/stencildepth.hpp>
 
 #include <vector>
 #include <memory>
 
 namespace vikr {
+
+
+enum RenderTargetType {
+  render_RENDERBUFFER,
+  render_TEXTURE
+};
 
 
 /**
@@ -47,15 +53,26 @@ public:
 
   Texture *GetTexture() { return m_texture.get(); }
 
+  GraphicsPipeline GetGraphics() { return pipeline; }
+  RenderTargetType GetRenderType() { return m_targetType; }
+
 protected:
 
-  vuint32 m_rbo                             = 0;
   std::unique_ptr<Texture> m_texture        = nullptr;
   vuint32 m_width                           = 0;
   vuint32 m_height                          = 0;  
   vbool m_depthstencil                      = false;
 
   GraphicsPipeline pipeline;
+  RenderTargetType m_targetType             = render_TEXTURE;
+};
+
+
+class RenderBuffer : public RenderTarget {
+public:
+
+private:
+  vuint32 m_rbo       = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_TARGET_HPP

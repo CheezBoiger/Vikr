@@ -75,8 +75,8 @@ public:
   vint32 DestroySceneNode(guid_t guid);
   vint32 DestroyComponent(guid_t guid);
 
-  static ResourceManager *GetResourceManager() { return resource_manager.get(); }
-  static vvoid SetResourceManager(ResourceManager *r) { resource_manager.reset(r); }
+  static ResourceManager *GetResourceManager() { return resource_manager; }
+  static vvoid SetResourceManager(ResourceManager *r) { resource_manager = r; }
 
 private:
   /**
@@ -86,7 +86,7 @@ private:
   /**
     Current ResourceManager.
   */
-  static std::unique_ptr<ResourceManager> resource_manager;
+  static ResourceManager *resource_manager;
 
 };
 

@@ -6,8 +6,6 @@
 
 #include <renderer/irenderer.hpp>
 #include <renderer/render_queue.hpp>
-#include <renderer/render_target.hpp>
-#include <renderer/pass.hpp>
 #include <shader/texture_config.hpp>
 #include <shader/shader.hpp>
 #include <mesh/mesh.hpp>
@@ -32,7 +30,7 @@ class Texture;
 
 /**
   Renderer resources to use with the Renderer. It also serves as an Abstract Renderer.
-  Plugins are initialized via Factory method.
+  Plugins are initialized via Factory method, but overall, this renderer is cross compatible.
 */
 class Renderer : public IRenderer {
 public:
@@ -51,11 +49,11 @@ public:
   /**
     Initialize the current Renderer plugin.
   */  
-  virtual vint32 Init() override = 0;
+  virtual vint32 Init(RenderDevice *device) override;
   /**
     Define the current Renderer plugin, rendering scheme.
   */
-  virtual vvoid Render() override = 0;
+  virtual vvoid Render() override;
 
   virtual vvoid PushBack(RenderCommand *command) override;
   virtual vvoid PushBack(SceneNode *obj) override;
@@ -112,6 +110,10 @@ protected:
     Currently bound renderer type.
   */
   GraphicsPipeline renderer_type;
+  /**
+    Render device used by this Renderer.
+  */
+  RenderDevice *m_renderDevice        = nullptr;
   glm::vec3 clear_color;
   Camera *camera;  
 private:

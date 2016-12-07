@@ -2,18 +2,13 @@
 // Copyright (c) Mario Garcia. Under the MIT License.
 //
 #include <renderer/renderer.hpp>
-#include <renderer/render_target.hpp>
 #include <renderer/command/render_command.hpp>
 #include <renderer/command/mesh_command.hpp>
-#include <renderer/pass.hpp>
 
 #include <scene/camera.hpp>
 #include <scene/scene_node.hpp>
 
 #include <mesh/mesh.hpp>
-
-#include <shader/glsl/glsl_compiler.hpp>
-#include <shader/spirv/spirv_compiler.hpp>
 
 #include <lighting/point_light.hpp>
 #include <lighting/spot_light.hpp>
@@ -22,6 +17,10 @@
 #include <util/vikr_log.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+
+#include <graphics/render_device.hpp>
+#include <graphics/render_context.hpp>
+#include <resources/resource_manager.hpp>
 
 #include <set>
 
@@ -94,6 +93,17 @@ vvoid Renderer::PushBack(Light *command) {
 
 // Cleanup any resources that where handled by the renderer engine.
 vint32 Renderer::CleanupResources() {
+  return 1;
+}
+
+
+vvoid Renderer::Render() {
+}
+
+
+vint32 Renderer::Init(RenderDevice *device) {
+  m_renderDevice = device;
+  ResourceManager::SetResourceManager(device->GetResourceManager());
   return 1;
 }
 } // vikr
