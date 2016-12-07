@@ -1,5 +1,12 @@
 TODO List for the Vikr Renderer Engine.
 
+//
+//
+//     NEW APPROACH: To make the Renderer API easier to handle, and not end up a garbled mess
+//                   The Graphics API needs to be abstracted in the form of Context, and not 
+//                   this renderer approach. This will force a huge setback, but lesson learned:
+//                   DON'T DESIGN A RENDERER INTO A MASHED POTATO.
+
 Legend:
 [X] = Completed.
 [$] = Working on.
