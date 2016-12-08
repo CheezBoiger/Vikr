@@ -24,19 +24,18 @@ class Mesh : public IMesh {
   static const std::string kDefaultName;
   VIKR_DISALLOW_COPY_AND_ASSIGN(Mesh);
 public:
-  Mesh(GraphicsPipeline pipeline = vikr_OPENGL);
+  Mesh(GraphicsPipeline pipeline = vikr_PIPELINE_OPENGL);
   Mesh(GraphicsPipeline pipeline,
        std::vector<glm::vec3> positions, 
        std::vector<glm::vec3> normals,
        std::vector<glm::vec2> uvs,
-       std::vector<vuint32> indices = std::vector<vuint32>(),
-       MeshDrawMode draw_mode = vikr_TRIANGLES);
+       std::vector<vuint32> indices = std::vector<vuint32>());
 
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Mesh);
   /**
     This must be abstracted. Creates the Mesh object based on The type of Renderer.
   */
-  virtual vvoid Create() override = 0;
+  virtual vvoid Create(RenderDevice *device) override;
   /**
     Inputs the vertex data to the Mesh object. 
   */
@@ -44,39 +43,30 @@ public:
     std::vector<glm::vec3> positions, 
     std::vector<glm::vec3> normals,
     std::vector<glm::vec2> uvs,
-    std::vector<vuint32> indices = std::vector<vuint32>(), 
-    MeshDrawMode draw_mode = vikr_TRIANGLES) override;
+    std::vector<vuint32> indices = std::vector<vuint32>()) override;
 
   /**
     Create the object using the Vertex Object to store info into.
   */
   vvoid Buffer(
     std::vector<Vertex> vertices,
-    std::vector<vuint32> indices = std::vector<vuint32>(), 
-    MeshDrawMode draw_mode = vikr_TRIANGLES) override;
+    std::vector<vuint32> indices = std::vector<vuint32>()) override;
 
   /**
     Set the name of this Mesh.
   */
   vvoid SetName(std::string name) { m_name = name; }
-  /**
-    Grab the Vertex Array Object id of this mesh.
-  */
-  vuint32 GetVAO() override { return m_vao; }
+
   /**
     Grab the Vertex Buffer Object id of this mesh.
   */
-  vuint32 GetVBO() override { return m_vbo; }
+  vuint32 GetVertexBufferId() override { return m_vbo; }
   /**
     Grab the Element Buffer Object id of this mesh. Currently only supporting
     drawing of VBOs instead of EBOs.
   */
-  vuint32 GetEBO() override { return m_ebo; }
-  /**
-    Grab the mesh mode of this Mesh object. In other words, grabs the topology
-    of how this mesh is supposed to be drawn with... (eg. Triangles, TriangleStrip?).
-  */
-  MeshDrawMode GetMeshMode() override { return m_mode; }
+  vuint32 GetIndexBufferId() override { return m_ibo; }
+
   /**
     Grab the type of Graphics Pipeline that this mesh is associated with.
   */
@@ -92,18 +82,16 @@ public:
   /**
     Get the usage type.
   */
-  MeshUsageType GetMeshUsageType() override { return m_usage_type; };
+  VertexUsageType GetVertexUsageType() override { return m_usage_type; };
 
 protected:
 
   std::string m_name;
-  MeshDrawMode m_mode;
   GraphicsPipeline m_render_type;
-  vuint32 m_vao;
   vuint32 m_vbo;
-  vuint32 m_ebo;
-  vbool is_transparent;
-  MeshUsageType m_usage_type          = vikr_STATIC;
+  vuint32 m_ibo;
+  vbool is_transparent                  = false;
+  VertexUsageType m_usage_type          = vikr_STATIC;
 
   std::vector<Vertex> m_vertices;
   std::vector<vuint32> m_indices;

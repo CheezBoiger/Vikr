@@ -18,6 +18,8 @@ namespace vikr {
 */
 class TransformComponent : public SceneComponent {
 public:
+  TransformComponent(TransformComponent&& t) = default;
+  TransformComponent& operator=(TransformComponent&& s) = default;
   TransformComponent();
 
   vvoid Update() override;
@@ -36,6 +38,8 @@ private:
   vikr::Transform m_localTransform;
 
   TransformCommand cmd;
+
+  VIKR_DISALLOW_COPY_AND_ASSIGN(TransformComponent);
 };
 } // vikr
 #endif // __VIKR_TRANSFORM_COMPONENT_HPP

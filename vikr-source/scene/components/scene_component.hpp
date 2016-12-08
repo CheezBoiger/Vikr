@@ -35,6 +35,7 @@ enum ComponentType {
 */
 class SceneComponent {
 public:
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(SceneComponent);
   SceneComponent(ComponentType type = vikr_COMPONENT_NONE);
 
   /**
@@ -68,6 +69,8 @@ private:
     The Graphical Unique  InDentifier for the specified SceneComponent.
   */
   const guid_t guid;
+  
+  VIKR_DISALLOW_COPY_AND_ASSIGN(SceneComponent);
 };
 } // vikr
 #endif // __VIKR_SCENE_COMPONENT_HPP

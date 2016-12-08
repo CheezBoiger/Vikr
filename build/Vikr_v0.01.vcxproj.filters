@@ -22,6 +22,9 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_context.cpp">
       <Filter>vikr-source\graphics\vk</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_pipeline_state.cpp">
+      <Filter>vikr-source\graphics\vk</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_device.cpp">
       <Filter>vikr-source\graphics\vk</Filter>
     </ClCompile>
@@ -31,11 +34,20 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_device.cpp">
       <Filter>vikr-source\graphics\gl4</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_pipeline_state.cpp">
+      <Filter>vikr-source\graphics\gl4</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_framebuffer.cpp">
       <Filter>vikr-source\graphics\gl4</Filter>
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_rendertarget.cpp">
       <Filter>vikr-source\graphics\gl4</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\graphics_command.cpp">
+      <Filter>vikr-source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\command_buffer.cpp">
+      <Filter>vikr-source\graphics</Filter>
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\render_target.cpp">
       <Filter>vikr-source\graphics</Filter>
@@ -48,12 +60,6 @@
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\sphere.cpp">
       <Filter>vikr-source\math\shape</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\vulkan\vkmesh.cpp">
-      <Filter>vikr-source\mesh\vulkan</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\opengl\glmesh.cpp">
-      <Filter>vikr-source\mesh\opengl</Filter>
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.cpp">
       <Filter>vikr-source\mesh</Filter>
@@ -201,6 +207,9 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_context.hpp">
       <Filter>vikr-source\graphics\vk</Filter>
     </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_pipeline_state.hpp">
+      <Filter>vikr-source\graphics\vk</Filter>
+    </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_device.hpp">
       <Filter>vikr-source\graphics\vk</Filter>
     </ClInclude>
@@ -208,6 +217,9 @@
       <Filter>vikr-source\graphics\gl4</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_device.hpp">
+      <Filter>vikr-source\graphics\gl4</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_pipeline_state.hpp">
       <Filter>vikr-source\graphics\gl4</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_framebuffer.hpp">
@@ -229,6 +241,15 @@
       <Filter>vikr-source\graphics</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\viewport.hpp">
+      <Filter>vikr-source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\graphics_command.hpp">
+      <Filter>vikr-source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\pipeline_state.hpp">
+      <Filter>vikr-source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\command_buffer.hpp">
       <Filter>vikr-source\graphics</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\framebuffer.hpp">
@@ -273,11 +294,8 @@
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\sphere.hpp">
       <Filter>vikr-source\math\shape</Filter>
     </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\vulkan\vkmesh.hpp">
-      <Filter>vikr-source\mesh\vulkan</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\opengl\glmesh.hpp">
-      <Filter>vikr-source\mesh\opengl</Filter>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\vertex.hpp">
+      <Filter>vikr-source\mesh</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.hpp">
       <Filter>vikr-source\mesh</Filter>
@@ -509,23 +527,38 @@
     <Filter Include="vikr-source">
       <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\graphics\vk">
-      <UniqueIdentifier>{5EFDCFDB-2AB8-4989-BA72-164B7E62D152}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\graphics\gl4">
-      <UniqueIdentifier>{AE9F005F-A5EB-4C48-A263-1465819979D9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vikr-source\math\alg">
       <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\math\shape">
       <UniqueIdentifier>{A7F38C41-AF2A-42F5-9CDB-5832A9122767}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\mesh\vulkan">
-      <UniqueIdentifier>{93140204-4E55-46D7-B1FD-EAF4F1A7E0D6}</UniqueIdentifier>
+    <Filter Include="vikr-source\platform\win32">
+      <UniqueIdentifier>{B7A6DFFC-1EAB-4A21-860F-D530384CB737}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\mesh\opengl">
-      <UniqueIdentifier>{3D2B60C5-DF0C-4E44-BC3B-9843DF1088FA}</UniqueIdentifier>
+    <Filter Include="vikr-source\platform\graphics">
+      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\shader\spirv">
+      <UniqueIdentifier>{07D290D0-7F7C-4CEC-8A18-9E34E13797E8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\shader\glsl">
+      <UniqueIdentifier>{087BCC22-BACF-4F2C-A4FC-E0711121C954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\shader\stb">
+      <UniqueIdentifier>{D8FB1225-AC3C-434A-8A51-710F342B92CD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\resources\vulkan">
+      <UniqueIdentifier>{62FD0179-CEE0-4207-A082-8FBD29E80224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\resources\opengl">
+      <UniqueIdentifier>{EBE5F335-25F2-4823-86A0-20EF8BBC92FD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\graphics\vk">
+      <UniqueIdentifier>{5EFDCFDB-2AB8-4989-BA72-164B7E62D152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\graphics\gl4">
+      <UniqueIdentifier>{AE9F005F-A5EB-4C48-A263-1465819979D9}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\tools\allocator">
       <UniqueIdentifier>{5D6D2E5A-D403-4070-AEBC-6D8CE74E99D5}</UniqueIdentifier>
@@ -574,27 +607,6 @@
     </Filter>
     <Filter Include="vikr-source\tools">
       <UniqueIdentifier>{E10FE65C-0DF8-4034-BF74-DDA91DC17E89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\platform\win32">
-      <UniqueIdentifier>{B7A6DFFC-1EAB-4A21-860F-D530384CB737}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\platform\graphics">
-      <UniqueIdentifier>{5AA62CDA-B101-4783-AF26-0C46ED7A5BD0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\shader\spirv">
-      <UniqueIdentifier>{07D290D0-7F7C-4CEC-8A18-9E34E13797E8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\shader\glsl">
-      <UniqueIdentifier>{087BCC22-BACF-4F2C-A4FC-E0711121C954}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\shader\stb">
-      <UniqueIdentifier>{D8FB1225-AC3C-434A-8A51-710F342B92CD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\resources\vulkan">
-      <UniqueIdentifier>{62FD0179-CEE0-4207-A082-8FBD29E80224}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\resources\opengl">
-      <UniqueIdentifier>{EBE5F335-25F2-4823-86A0-20EF8BBC92FD}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

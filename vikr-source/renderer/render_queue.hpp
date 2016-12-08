@@ -41,7 +41,7 @@ public:
   */
   vvoid Clear();
 
-  std::vector<RenderCommand *> *GetCommandBuffer() { return &m_commandBuffer; }
+  std::vector<RenderCommand *> &GetCommandBuffer() { return m_commandBuffer; }
   /**
     Registers a custom comparator for the render queue.
   */
@@ -53,7 +53,7 @@ public:
   vvoid RegisterDeferredComparator(SortingCallback func) 
     { deferred_comparator = func; }
 
-  std::vector<RenderCommand *> *GetPostbatchCommands() { return &postbatch_commands; }
+  std::vector<RenderCommand *> &GetPostbatchCommands() { return postbatch_commands; }
 
 protected:
   SortingCallback sorting_comparator;

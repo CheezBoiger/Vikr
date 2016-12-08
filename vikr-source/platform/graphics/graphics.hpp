@@ -24,8 +24,9 @@ namespace vikr {
   Graphics Pipeline to implement.
 */
 enum GraphicsPipeline {
-  vikr_OPENGL,
-  vikr_VULKAN
+  vikr_PIPELINE_UNKNOWN,
+  vikr_PIPELINE_OPENGL,
+  vikr_PIPELINE_VULKAN
 };
 
 

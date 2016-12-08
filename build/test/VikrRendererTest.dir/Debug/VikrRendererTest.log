@@ -1,16 +1,9 @@
-﻿glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(context.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(init.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(input.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(window.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_tls.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_tls.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(egl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(egl_context.obj)' or at 'D:\cmgarcia\github\Vikr\build\test\Debug\glfw.pdb'; linking object as if no debug info
-  VikrRendererTest.vcxproj -> D:\cmgarcia\github\Vikr\build\test\Debug\VikrRendererTest.exe
-  VikrRendererTest.vcxproj -> D:/cmgarcia/github/Vikr/build/test/Debug/VikrRendererTest.pdb (Full PDB)
+﻿  main.cpp
+main.obj : error LNK2019: unresolved external symbol "public: void __thiscall vikr::CommandBuffer::Sort(void)" (?Sort@CommandBuffer@vikr@@QAEXXZ) referenced in function "public: virtual void __thiscall vikr::Renderer::Sort(void)" (?Sort@Renderer@vikr@@UAEXXZ)
+Vikr_v0.01.lib(renderer.obj) : error LNK2001: unresolved external symbol "public: void __thiscall vikr::CommandBuffer::Sort(void)" (?Sort@CommandBuffer@vikr@@QAEXXZ)
+main.obj : error LNK2019: unresolved external symbol "public: __thiscall vikr::GL4RenderDevice::GL4RenderDevice(void)" (??0GL4RenderDevice@vikr@@QAE@XZ) referenced in function _main
+Vikr_v0.01.lib(renderer.obj) : error LNK2019: unresolved external symbol "public: __thiscall vikr::CommandBuffer::CommandBuffer(void)" (??0CommandBuffer@vikr@@QAE@XZ) referenced in function "public: __thiscall vikr::Renderer::Renderer(void)" (??0Renderer@vikr@@QAE@XZ)
+Vikr_v0.01.lib(model_loader.obj) : error LNK2019: unresolved external symbol "public: static class vikr::SceneNode * __cdecl vikr::Scene::CreateSceneNode(class vikr::RenderDevice *)" (?CreateSceneNode@Scene@vikr@@SAPAVSceneNode@2@PAVRenderDevice@2@@Z) referenced in function "private: static class vikr::SceneNode * __cdecl vikr::ModelLoader::ProcessNode(class vikr::RenderDevice *,struct aiNode *,struct aiScene const *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ProcessNode@ModelLoader@vikr@@CAPAVSceneNode@2@PAVRenderDevice@2@PAUaiNode@@PBUaiScene@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Vikr_v0.01.lib(scene_node.obj) : error LNK2001: unresolved external symbol "public: virtual void __thiscall vikr::GroupCommand::Execute(class vikr::CommandBuffer *)" (?Execute@GroupCommand@vikr@@UAEXPAVCommandBuffer@2@@Z)
+Vikr_v0.01.lib(transform_component.obj) : error LNK2001: unresolved external symbol "public: virtual void __thiscall vikr::TransformCommand::Execute(class vikr::CommandBuffer *)" (?Execute@TransformCommand@vikr@@UAEXPAVCommandBuffer@2@@Z)
+D:\cmgarcia\github\Vikr\build\test\Debug\VikrRendererTest.exe : fatal error LNK1120: 6 unresolved externals

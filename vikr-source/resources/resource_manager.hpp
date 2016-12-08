@@ -32,7 +32,7 @@ class SceneNode;
 */
 class ResourceManager {
 public:
-  ResourceManager(GraphicsPipeline pipe = vikr_OPENGL);
+  ResourceManager(GraphicsPipeline pipe = vikr_PIPELINE_OPENGL);
 
   virtual ~ResourceManager() { }
 
@@ -66,27 +66,19 @@ public:
     Much involves the interface design of ResourceManager, but this is common.
   */
   SceneNode *CreateSceneNode();
-  // Perhaps we might consider using a template instead?
-  SceneComponent *CreateComponent(ComponentType type);
 
   SceneNode *GetSceneNode(guid_t guid);
-  SceneComponent *GetSceneComponent(guid_t guid);
 
+  /**
+    Destroys SceneNode, It's children remain intact though, so be sure to wipe them out as well.
+  */
   vint32 DestroySceneNode(guid_t guid);
-  vint32 DestroyComponent(guid_t guid);
-
-  static ResourceManager *GetResourceManager() { return resource_manager; }
-  static vvoid SetResourceManager(ResourceManager *r) { resource_manager = r; }
 
 private:
   /**
     Graphics pipeline of the ResourceManager.
   */
   GraphicsPipeline pipeline;
-  /**
-    Current ResourceManager.
-  */
-  static ResourceManager *resource_manager;
 
 };
 
@@ -101,7 +93,6 @@ protected:
     The resources of scenenode and scenecomponents.
   */
   static std::unordered_map<guid_t, std::shared_ptr<SceneNode> > scene_nodes;
-  static std::unordered_map<guid_t, std::shared_ptr<SceneComponent> > scene_components;
 
   friend class ResourceManager;
 };

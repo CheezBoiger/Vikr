@@ -90,24 +90,41 @@ public:
   */
   vvoid SetParent(SceneNode *parent) { m_parent = parent; }
 
-  /**
-    Add a SceneComponent to the SceneNode, if a component with the 
-    same guid is already inside, then it will return with the 
-    already stored SceneComponent, otherwise SceneComponent will be returned.
-  */
-  SceneComponent *AddComponent(SceneComponent *component);
+  template<typename Component>
+  Component *AddComponent() {
+    static_assert(!std::is_copy_assignable<Component>(), 
+      "Component needs to be moveable!");
+    static_assert(std::is_base_of<SceneComponent, Component>(), 
+      "Component is not a SceneComponent!"); 
+    std::unique_ptr<Component> component = std::make_unique<Component>();
+    guid_t ref = component->GetGUID();
+    components[component->GetGUID()] = std::move(component);
+    return static_cast<Component *>(components[ref].get());
+  }
 
   /**
     Get the component inside this SceneNode.
   */
-  SceneComponent *GetComponent(guid_t guid);
+  template<typename Component>
+  Component *GetComponent(guid_t guid) {
+    static_assert(!std::is_copy_assignable<Component>(),
+      "Component needs to be moveable!");
+    static_assert(std::is_base_of<SceneComponent, Component>(),
+      "Component is not a SceneComponent!");
+    Component *component = nullptr;
+    auto it = components.find(guid);
+    if (it != components.end()) {
+      component = components[it->second->GetGUID()].get();
+    }
+    return component;
+  }
 
   /**
     Remove a SceneComponent from the SceneNode with the specified guid.
-    Returns the removed SceneComponent, otherwise nullptr returned if 
+    Returns true if removed SceneComponent, otherwise false returned if 
     SceneComponent guid doesn't exist.
   */
-  SceneComponent *RemoveComponent(guid_t guid);
+  vbool RemoveComponent(guid_t guid);
 
   /**
     Remove a SceneComponent with the specified tag name. Returns 
@@ -139,14 +156,14 @@ protected:
   SceneNode *m_parent                     = nullptr;
 
   /**
-    The SceneNode's children.
+    The SceneNode's children references.
   */
   std::unordered_map<guid_t, SceneNode *> children;
 
   /**
     The SceneNode's associated components.
   */
-  std::unordered_map<guid_t, SceneComponent *> components;
+  std::unordered_map<guid_t, std::unique_ptr<SceneComponent> > components;
 
   /**
     The associated graphical unique id of the SceneNode.

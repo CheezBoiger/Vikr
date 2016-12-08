@@ -53,6 +53,13 @@ d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_shader.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_linker.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\glsl_compiler.obj
 d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl_texture3d.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl_framebuffer.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl4_rendertarget.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl4_framebuffer.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl4_device.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\gl4_context.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vk_device.obj
+d:\cmgarcia\github\vikr\build\vikr_v0.01.dir\debug\vk_context.obj
 d:\cmgarcia\github\vikr\build\cmakefiles\generate.stamp
 d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.lib
 d:\cmgarcia\github\vikr\build\debug\vikr_v0.01.pdb

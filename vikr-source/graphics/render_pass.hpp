@@ -34,11 +34,6 @@ public:
     Render target textures and/or depthstencil buffers.
   */
   std::vector<RenderTarget *> Rendertargets;
-  
-  /**
-    Framebuffer associated with this render pass.
-  */
-  Framebuffer                 *FramebufferObject = nullptr;
 };
 } // vikr
 #endif // __VIKR_RENDERPASS_HPP

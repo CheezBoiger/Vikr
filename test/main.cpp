@@ -107,20 +107,21 @@ int main(int c, char* args[]) {
   glfwSetCursorPosCallback(window, mouse_callback);
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
   // Storing shaders into resources from renderer.
-  ResourceManager::GetResourceManager()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
-  ResourceManager::GetResourceManager()->StoreShader("light", "test.vert", "light.frag");
-  ResourceManager::GetResourceManager()->StoreShader("screen", "screen_shader.vert", "screen_shader.frag");
-  SceneNode *node = ModelLoader::ImportModel("nanosuit/nanosuit.obj", "suitboy");
+  GL4RenderDevice device;
+  Renderer renderer;
+  renderer.Init(&device);
+  renderer.GetDevice()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
+  renderer.GetDevice()->StoreShader("light", "test.vert", "light.frag");
+  renderer.GetDevice()->StoreShader("screen", "screen_shader.vert", "screen_shader.frag");
+  SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), "nanosuit/nanosuit.obj", "suitboy");
   
-  Material *default_mat = ResourceManager::GetResourceManager()->CreateMaterial();
-  default_mat->SetShader(ResourceManager::GetResourceManager()->GetShader("test"));
+  Material *default_mat = renderer.GetDevice()->CreateMaterial();
+  default_mat->SetShader(renderer.GetDevice()->GetShader("test"));
 
-  Material *light_mat = ResourceManager::GetResourceManager()->CreateMaterial();
-  light_mat->SetShader(ResourceManager::GetResourceManager()->GetShader("light"));
+  Material *light_mat = renderer.GetDevice()->CreateMaterial();
+  light_mat->SetShader(renderer.GetDevice()->GetShader("light"));
 
   Quad quad;
-  
-
 
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();

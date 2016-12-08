@@ -88,38 +88,15 @@ SceneNode *SceneNode::RemoveChild(std::string tag) {
 }
 
 
-SceneComponent *SceneNode::AddComponent(SceneComponent *component) {
-  SceneComponent *comp = nullptr;
-  if (component) {
-    component->SetOwner(this);
-    comp = components[component->GetGUID()];
-    m_commandList.Insert(component->GetGUID(), component->GetCommand());
-    components[component->GetGUID()] = component;
-  }
-  return comp;
-}
-
-
-SceneComponent *SceneNode::RemoveComponent(guid_t guid) {
-  SceneComponent *component = nullptr;
+vbool SceneNode::RemoveComponent(guid_t guid) {
+  vbool removed = false;
   auto it = components.find(guid);
   if (it != components.end()) { 
-    component = components[it->second->GetGUID()];
     m_commandList.Remove(it->second->GetGUID());
-    component->SetOwner(nullptr);
     components.erase(it->second->GetGUID());
+    removed = true;
   }
-  return component;
-}
-
-
-SceneComponent *SceneNode::GetComponent(guid_t guid) {
-  SceneComponent *component = nullptr;
-  auto it = components.find(guid);
-  if (it != components.end()) { 
-    component = components[it->second->GetGUID()];
-  }
-  return component;
+  return removed;
 }
 
 
@@ -131,24 +108,6 @@ vvoid SceneNode::Update() {
        it != components.end();
        ++it)
   {
-    switch (it->second->GetComponentType()) {
-      case vikr_COMPONENT_MESH: {
-        MeshComponent *m = static_cast<MeshComponent *>(it->second);
-      }
-      break;
-      case vikr_COMPONENT_TRANSFORM: {
-        TransformComponent *trans = static_cast<TransformComponent *>(it->second);
-        
-      }
-      break;
-      case vikr_COMPONENT_RENDERER: {
-        RendererComponent *r = static_cast<RendererComponent *>(it->second);
-      }
-      break;
-      default: {
-      }
-      break;
-    }
     it->second->Update();
   }
   for (auto it = children.begin();

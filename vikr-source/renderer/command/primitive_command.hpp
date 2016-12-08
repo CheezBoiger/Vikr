@@ -4,7 +4,7 @@
 #ifndef __VIKR_PRIMITIVE_COMMAND_HPP
 #define __VIKR_PRIMITIVE_COMMAND_HPP
 
-
+#include <graphics/render_context.hpp>
 #include <renderer/command/render_command.hpp>
 
 
@@ -20,6 +20,9 @@ public:
     : RenderCommand(RenderCommandType::COMMAND_PRIMITIVE)
     , m_mesh(mesh) { }
 
+
+  vvoid Execute(CommandBuffer *buffer) override {
+  }
 
   Mesh *m_mesh;
 };

@@ -23,6 +23,9 @@ class RenderTarget;
 class RenderPass;
 class RenderDevice;
 class Viewport;
+class Shader;
+class CommandBuffer;
+class PipelineState;
 
 
 /**
@@ -46,12 +49,12 @@ public:
   /**
     Draw function.
   */
-  virtual vvoid Draw(vuint32 vertices) = 0;
+  virtual vvoid Draw(vuint32 start, vuint32 vertices) = 0;
 
   /**
     Draw with indices function.
   */
-  virtual vvoid DrawIndexed(vuint32 indices, vuint32 vertices) = 0;
+  virtual vvoid DrawIndexed(const vvoid *indices, vuint32 vertices) = 0;
 
   /**
     Set texture function.
@@ -72,7 +75,7 @@ public:
 
   virtual vvoid SetBlendMode(BlendFunc src, BlendFunc dst) = 0;
 
-  virtual vvoid SetDepthFunc(vuint32 depth) = 0;
+  virtual vvoid SetDepthFunc(DepthFunc depth) = 0;
 
   virtual vvoid EnableCullMode(vbool enable) = 0;
 
@@ -94,6 +97,12 @@ public:
     Topology.
   */
   virtual vvoid ChangeTopology(Topology topology) = 0;
+
+  virtual Shader *GetCurrentShader() = 0;
+
+  virtual vvoid DigestCommands(CommandBuffer *command_buffer) = 0;
+
+  virtual vvoid ConfigurePipelineState(PipelineState *state) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP

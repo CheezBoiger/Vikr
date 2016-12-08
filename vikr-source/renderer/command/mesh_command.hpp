@@ -25,11 +25,9 @@ class RenderTarget;
 */
 class MeshCommand : public RenderCommand {
 public:
-
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(MeshCommand);
   MeshCommand();
-  // these will need to be manually defined.
-  MeshCommand(MeshCommand&& mes_cmd) = default;
-  MeshCommand& operator=(MeshCommand&& mesh_cmd) = default;
+
   /**
     Determines if the Mesh will be transparent.
   */
@@ -54,6 +52,8 @@ public:
 
   Material *GetMaterial() { return m_material; }
   vvoid SetMaterial(Material *material) { m_material = material; }
+
+  vvoid Execute(CommandBuffer *buffer) override;
 
 private:
   vvoid InitTransform(glm::mat4 model) { m_transform = model; }

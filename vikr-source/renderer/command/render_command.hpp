@@ -14,22 +14,31 @@ namespace vikr {
 
 
 class Renderer;
+class CommandBuffer;
 
 /**
   Abstract RenderCommand. Perhaps useful cases, the best practice would be 
   to call an "Execute()" function with an OpenGL or Vulkan context. 
-  This might be considered for future designs. 
+  This might be considered for future designs. this is an upper level
+  Command buffer, which allows users to create their own commands to 
+  run the Rendering APIs.
 */
 class RenderCommand {
   static const std::string kDefaultName;
 public:
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(RenderCommand);
+
   RenderCommand(RenderCommandType type);
-  RenderCommand(RenderCommand&& rendercommand) = default;
-  RenderCommand& operator=(RenderCommand&& render_command) = default;
   RenderCommandType GetCommandType() { return type; }
 
   std::string GetCommandName() { return m_name; }
   vvoid SetCommandName(std::string name) { m_name = name; }
+
+  /**
+    Talk to command buffer, this is where you input commands 
+    to the Rendering API.
+  */
+  virtual vvoid Execute(CommandBuffer *buffer) = 0;
 
 protected:
   RenderCommandType type;

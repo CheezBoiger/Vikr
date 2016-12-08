@@ -57,7 +57,7 @@ public:
     std::string name, 
     std::string vs, 
     std::string fs, 
-    std::string include) = 0;
+    std::string include = ".") = 0;
   
   /**
     Create material, which is handled by resources.

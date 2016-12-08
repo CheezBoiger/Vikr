@@ -7,12 +7,13 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 #include <scene/guid_generator.hpp>
-
+#include <memory>
 
 namespace vikr {
 
 
 class SceneNode;
+class RenderDevice;
 
 
 /**
@@ -22,6 +23,9 @@ class SceneNode;
 */
 class Scene {
 public:
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(Scene);
+  static SceneNode *CreateSceneNode(RenderDevice *device);
+
   Scene(SceneNode *root = nullptr);
 
   SceneNode *GetRoot() { return root; }
@@ -37,6 +41,8 @@ private:
     Root SceneObject.
   */
   SceneNode *root = nullptr;
+
+  VIKR_DISALLOW_COPY_AND_ASSIGN(Scene);
 };
 } // vikr
 #endif // __VIKR_SCENE_HPP

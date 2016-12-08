@@ -18,10 +18,13 @@ namespace vikr {
 */
 class GroupCommand : public RenderCommand {
 public:
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(GroupCommand);
   GroupCommand() : RenderCommand(RenderCommandType::COMMAND_GROUP) { }
   vvoid Insert(guid_t guid, RenderCommand *command) { 
     m_commands.push_back(std::make_pair(guid, command)); 
   }
+
+  vvoid Execute(CommandBuffer *buffer) override;
 
   RenderCommand *Remove(guid_t guid);
 

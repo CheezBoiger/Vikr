@@ -2,6 +2,7 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <resources/model_loader.hpp>
+#include <scene/scene.hpp>
 
 // Assimp Importers.
 #include <assimp/Importer.hpp>
@@ -16,6 +17,7 @@
 #include <shader/material.hpp>
 #include <shader/texture.hpp>
 #include <mesh/mesh.hpp>
+#include <graphics/render_device.hpp>
 
 #include <util/vikr_log.hpp>
 #include <util/vikr_assert.hpp>
@@ -24,7 +26,7 @@
 namespace vikr {
 
 
-SceneNode *ModelLoader::ImportModel(std::string path, std::string name) {
+SceneNode *ModelLoader::ImportModel(RenderDevice *device, std::string path, std::string name) {
   Assimp::Importer importer;
   SceneNode *node = nullptr;
   const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate 
@@ -35,42 +37,37 @@ SceneNode *ModelLoader::ImportModel(std::string path, std::string name) {
     VIKR_ASSERTION(false);
   } else {
     std::string dir = path.substr(0, path.find_last_of('/'));
-    node = ProcessNode(scene->mRootNode, scene, dir);
+    node = ProcessNode(device, scene->mRootNode, scene, dir);
   }
   return node;
 }
 
 
-SceneNode *ModelLoader::ProcessNode(aiNode *node, const aiScene *scene, std::string dir) {
-  SceneNode *scene_node = ResourceManager::GetResourceManager()->CreateSceneNode();
-  scene_node->AddComponent(ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_TRANSFORM));
+SceneNode *ModelLoader::ProcessNode(
+  RenderDevice *device, 
+  aiNode *node, 
+  const aiScene *scene, 
+  std::string dir) 
+{
+  SceneNode *scene_node = Scene::CreateSceneNode(device);
+  scene_node->AddComponent<TransformComponent>();
   for (vuint32 i = 0; i < node->mNumMeshes; ++i) {
     aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
     aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-    Mesh *m_mesh = ProcessMesh(mesh, scene);
-    Material *m_material = ParseMaterial(material, dir);
+    Mesh *m_mesh = ProcessMesh(device, mesh, scene);
+    Material *m_material = ParseMaterial(device, material, dir);
     if (node->mNumMeshes <= 1) {
-      MeshComponent *mc = 
-          static_cast<MeshComponent *>
-          (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_MESH));
+      MeshComponent *mc = scene_node->AddComponent<MeshComponent>();
       mc->mesh = m_mesh;
-      scene_node->AddComponent(mc);
       if (m_material) {
-        RendererComponent *rp =
-          static_cast<RendererComponent *>
-          (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_RENDERER));
+        RendererComponent *rp = scene_node->AddComponent<RendererComponent>();
         rp->material = m_material;
-        scene_node->AddComponent(rp);
       }
       scene_node->Update();
     } else {
-      SceneNode *child = ResourceManager::GetResourceManager()->CreateSceneNode();
-      MeshComponent *mc = 
-          static_cast<MeshComponent *>
-          (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_MESH));
-      RendererComponent *rp = 
-          static_cast<RendererComponent *>
-          (ResourceManager::GetResourceManager()->CreateComponent(vikr_COMPONENT_RENDERER));
+      SceneNode *child = Scene::CreateSceneNode(device);
+      MeshComponent *mc = scene_node->AddComponent<MeshComponent>();
+      RendererComponent *rp = scene_node->AddComponent<RendererComponent>();
       mc->mesh = m_mesh;
       rp->material = m_material;
       child->Update();
@@ -78,14 +75,14 @@ SceneNode *ModelLoader::ProcessNode(aiNode *node, const aiScene *scene, std::str
     }
   }
   for (vuint32 i = 0; i < node->mNumChildren; ++i) {
-    scene_node->AddChild(ProcessNode(node->mChildren[i], scene, dir));
+    scene_node->AddChild(ProcessNode(device, node->mChildren[i], scene, dir));
   }
   scene_node->Update();
   return scene_node;
 }
 
 
-Mesh *ModelLoader::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
+Mesh *ModelLoader::ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene *scene) {
   Mesh *m_mesh = nullptr;
   std::vector<Vertex> vertices;
   std::vector<vuint32> indices;
@@ -119,19 +116,19 @@ Mesh *ModelLoader::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
   }
   // Create our mesh, the mesh is created and buffered, as well as properly stored,
   // so no need to do much.
-  m_mesh = ResourceManager::GetResourceManager()->CreateMesh(vertices);
+  m_mesh = device->GetResourceManager()->CreateMesh(vertices);
   return m_mesh;
 }
 
 
-Material *ModelLoader::ParseMaterial(aiMaterial *material, std::string dir) {
-  Material *m_material = ResourceManager::GetResourceManager()->CreateMaterial();
+Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material, std::string dir) {
+  Material *m_material = device->GetResourceManager()->CreateMaterial();
   if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
     aiString file;
     material->GetTexture(aiTextureType_DIFFUSE, 0, &file);
     std::string filepath = ModelLoader::ProcessPath(&file, dir);
     Texture *texture = 
-      ResourceManager::GetResourceManager()->CreateTexture(
+      device->GetResourceManager()->CreateTexture(
         TextureTarget::vikr_TEXTURE_2D, 
         filepath, 
         true);
@@ -144,7 +141,7 @@ Material *ModelLoader::ParseMaterial(aiMaterial *material, std::string dir) {
     material->GetTexture(aiTextureType_NORMALS, 0, &file);
     std::string filepath = ProcessPath(&file, dir);
     Texture *texture = 
-      ResourceManager::GetResourceManager()->CreateTexture(
+      device->GetResourceManager()->CreateTexture(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
@@ -157,7 +154,7 @@ Material *ModelLoader::ParseMaterial(aiMaterial *material, std::string dir) {
     material->GetTexture(aiTextureType_SPECULAR, 0, &file);
     std::string filepath = ProcessPath(&file, dir);
     Texture *texture = 
-      ResourceManager::GetResourceManager()->CreateTexture(
+      device->GetResourceManager()->CreateTexture(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
@@ -170,7 +167,7 @@ Material *ModelLoader::ParseMaterial(aiMaterial *material, std::string dir) {
     material->GetTexture(aiTextureType_SHININESS, 0, &file);
     std::string filepath = ProcessPath(&file, dir);
     Texture *texture = 
-      ResourceManager::GetResourceManager()->CreateTexture(
+      device->GetResourceManager()->CreateTexture(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
@@ -183,7 +180,7 @@ Material *ModelLoader::ParseMaterial(aiMaterial *material, std::string dir) {
     material->GetTexture(aiTextureType_AMBIENT, 0, &file);
     std::string filepath = ProcessPath(&file, dir);
     Texture *texture = 
-      ResourceManager::GetResourceManager()->CreateTexture(
+      device->GetResourceManager()->CreateTexture(
         vikr_TEXTURE_2D, 
         filepath, 
         true);

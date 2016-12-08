@@ -15,12 +15,17 @@ class Transform;
 
 class TransformCommand : public RenderCommand {
 public:
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(TransformCommand);
+
   TransformCommand(Transform *transform = nullptr) 
     : RenderCommand(RenderCommandType::COMMAND_TRANSFORM)
     , m_transform(transform) { }
 
+  vvoid Execute(CommandBuffer *buffer) override;
 
   Transform *m_transform;
+private:
+  VIKR_DISALLOW_COPY_AND_ASSIGN(TransformCommand);
 };
 } // vikr
 #endif // __VIKR_TRANSFORM_COMMAND_HPP

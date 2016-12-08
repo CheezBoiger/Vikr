@@ -9,7 +9,6 @@
 #include <scene/scene_node.hpp>
 #include <resources/resource_manager.hpp>
 #include <shader/texture.hpp>
-#include <mesh/opengl/glmesh.hpp>
 #include <unordered_map>
 #include <memory>
 #include <string>
@@ -63,7 +62,7 @@ class GLResources : public Resources {
   /**
   Contains PtrToMesh data.
   */
-  static std::vector<std::shared_ptr<GLMesh> > meshes;
+  static std::vector<std::shared_ptr<Mesh> > meshes;
 
   /**
   Contains material data.

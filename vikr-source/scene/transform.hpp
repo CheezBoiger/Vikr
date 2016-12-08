@@ -22,6 +22,8 @@ namespace vikr {
 */
 class Transform {
 public:
+  Transform() { }
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(Transform);
 
   /**
     Position of the object in world space.

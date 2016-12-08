@@ -20,6 +20,7 @@ namespace vikr {
 
 class SceneNode;
 class SceneComponent;
+class RenderDevice;
 
 
 /**
@@ -30,13 +31,15 @@ class SceneComponent;
 */
 class ModelLoader {
 public:
-
-  static SceneNode *ImportModel(std::string path, std::string name);
+  /**
+    Creates a scene node.
+  */
+  static SceneNode *ImportModel(RenderDevice *device, std::string path, std::string name);
 
 private:
-  static SceneNode *ProcessNode(aiNode *node, const aiScene *scene, std::string dir);
-  static Mesh *ProcessMesh(aiMesh *mesh, const aiScene *scene);
-  static Material *ParseMaterial(aiMaterial *material, std::string dir);
+  static SceneNode *ProcessNode(RenderDevice *device, aiNode *node, const aiScene *scene, std::string dir);
+  static Mesh *ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene *scene);
+  static Material *ParseMaterial(RenderDevice *device, aiMaterial *material, std::string dir);
   static std::string ProcessPath(aiString *path, std::string dir);
 };
 } // vikr

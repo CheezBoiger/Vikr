@@ -4,6 +4,7 @@
 #ifndef __VIKR_RENDERER_HPP
 #define __VIKR_RENDERER_HPP
 
+#include <graphics/command_buffer.hpp>
 #include <renderer/irenderer.hpp>
 #include <renderer/render_queue.hpp>
 #include <shader/texture_config.hpp>
@@ -34,7 +35,7 @@ class Texture;
 */
 class Renderer : public IRenderer {
 public:
-  Renderer(GraphicsPipeline pipeline);
+  Renderer();
 
   virtual ~Renderer() { }
   /**
@@ -58,16 +59,17 @@ public:
   virtual vvoid PushBack(RenderCommand *command) override;
   virtual vvoid PushBack(SceneNode *obj) override;
   virtual vvoid PushBack(Light *light) override;
-  virtual vvoid Sort() override { m_render_queue.Sort(); }
+  virtual vvoid Sort() override { m_commandBuffer.Sort(); }
 
-  GraphicsPipeline GetRenderType()  { return renderer_type; }
   vvoid SetClearColor(glm::vec3 cc) { clear_color = cc; }
   glm::vec3 GetClearColor() { return clear_color; }
   vbool IsRendering() { return rendering; }
 
 
   RenderPass *GetCurrentRenderPass() { return m_renderpass; }
-  vvoid AddRenderPass(RenderPass *renderpass);
+  vvoid SetRenderPass(RenderPass *pass) { m_renderpass = pass; }
+
+  RenderDevice *GetDevice() { return m_renderDevice; }
 
   virtual vint32 CleanupResources();
 
@@ -76,10 +78,8 @@ protected:
     Checks if the renderer is in the middle of rendering.
   */
   vbool rendering = false;
-  /**
-    List of commands in the to be rendered.
-  */
-  RenderQueue m_render_queue;
+
+  CommandBuffer m_commandBuffer;
 
   /**
     Pointlights container.
@@ -99,21 +99,18 @@ protected:
   /**
   Screen filled mesh quad.
   */
-  std::unique_ptr<Mesh> quad          = nullptr;
+  std::unique_ptr<Mesh> quad            = nullptr;
 
   /**
     Default RenderPass.
   */
-  RenderPass *m_renderpass            = nullptr;
+  RenderPass *m_renderpass              = nullptr;
 
-  /**
-    Currently bound renderer type.
-  */
-  GraphicsPipeline renderer_type;
   /**
     Render device used by this Renderer.
   */
-  RenderDevice *m_renderDevice        = nullptr;
+  RenderDevice *m_renderDevice          = nullptr;
+
   glm::vec3 clear_color;
   Camera *camera;  
 private:

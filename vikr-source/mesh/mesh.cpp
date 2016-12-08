@@ -2,6 +2,7 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 // 
 #include <mesh/mesh.hpp>
+#include <graphics/render_device.hpp>
 #include <shader/material.hpp>
 #include <util/vikr_log.hpp>
 #include <memory>
@@ -13,10 +14,8 @@ const std::string Mesh::kDefaultName = "Default_Mesh";
 
 
 Mesh::Mesh(GraphicsPipeline pipeline)
-  : m_vao(0)
-  , m_vbo(0)
-  , m_ebo(0)
-  , m_mode(vikr_TRIANGLES)
+  : m_vbo(0)
+  , m_ibo(0)
   , m_render_type(pipeline)
   , m_name(kDefaultName)
 {
@@ -27,12 +26,9 @@ Mesh::Mesh(GraphicsPipeline pipeline,
   std::vector<glm::vec3> positions,
   std::vector<glm::vec3> normals,
   std::vector<glm::vec2> uvs,
-  std::vector<vuint32> indices,
-  MeshDrawMode draw_mode)
-  : m_vao(0)
-  , m_vbo(0)
-  , m_ebo(0)
-  , m_mode(draw_mode)
+  std::vector<vuint32> indices)
+  : m_vbo(0)
+  , m_ibo(0)
   , m_indices(indices)
   , m_render_type(pipeline)
 {
@@ -49,8 +45,7 @@ Mesh::Mesh(GraphicsPipeline pipeline,
 vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
   std::vector<glm::vec3> normals,
   std::vector<glm::vec2> uvs,
-  std::vector<vuint32> indices,
-  MeshDrawMode draw_mode)
+  std::vector<vuint32> indices)
 {
   for (vuint32 i = 0; i < positions.size(); ++i) {
     Vertex vert;
@@ -70,13 +65,11 @@ vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
   if (!indices.empty()) {
     m_indices = std::move(indices);
   }
-  m_mode = draw_mode;
 }
 
 
 vvoid Mesh::Buffer(std::vector<Vertex> vertices, 
-  std::vector<vuint32> indices, 
-  MeshDrawMode draw_mode) 
+  std::vector<vuint32> indices) 
 {
   if (!vertices.empty()) {
     m_vertices = std::move(vertices);
@@ -84,6 +77,15 @@ vvoid Mesh::Buffer(std::vector<Vertex> vertices,
   if (!indices.empty()) {
     m_indices = std::move(indices);
   }
-  m_mode = draw_mode;
+}
+
+
+vvoid Mesh::Create(RenderDevice *device) { 
+  if (device) {
+    m_vbo = device->CreateVertexBufferId(m_vertices);
+    if (!m_indices.empty()) {
+      m_ibo = device->CreateElementBufferId(m_indices);
+    }
+  }
 }
 } // vikr

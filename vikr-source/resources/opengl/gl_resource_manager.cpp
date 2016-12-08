@@ -4,6 +4,7 @@
 #include <resources/opengl/gl_resource_manager.hpp>
 #include <shader/glsl/glsl_shader.hpp>
 #include <shader/material.hpp>
+#include <mesh/mesh.hpp>
 #include <shader/glsl/gl_texture1d.hpp>
 #include <shader/glsl/gl_texture2d.hpp>
 #include <shader/glsl/gl_texture3d.hpp>
@@ -14,13 +15,13 @@ namespace vikr {
 std::unordered_map<std::string,
   std::pair<std::string, std::unique_ptr<GLSLShader> > > GLResources::shaders;
 
-std::vector<std::shared_ptr<GLMesh> > GLResources::meshes;
+std::vector<std::shared_ptr<Mesh> > GLResources::meshes;
 std::vector<std::shared_ptr<Material> > GLResources::materials;
 std::vector<std::shared_ptr<GLTexture> > GLResources::textures;
 
 
 GLResourceManager::GLResourceManager()
-  : ResourceManager(vikr_OPENGL)
+  : ResourceManager(vikr_PIPELINE_OPENGL)
 {
 }
 
@@ -49,7 +50,7 @@ Mesh *GLResourceManager::CreateMesh(
   std::vector<glm::vec2> uvs,
   std::vector<vuint32> indices) 
 {
-  std::shared_ptr<GLMesh> mesh = std::make_shared<GLMesh>();
+  std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
   mesh->Buffer(positions, normals, uvs, indices);
  // mesh->Create();
   GLResources::meshes.push_back(mesh);
@@ -61,7 +62,7 @@ Mesh *GLResourceManager::CreateMesh(
   std::vector<Vertex> vertices,
   std::vector<vuint32> indices) 
 {
-  std::shared_ptr<GLMesh> mesh = std::make_shared<GLMesh>();
+  std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
   mesh->Buffer(vertices, indices);
   //mesh->Create();
   GLResources::meshes.push_back(mesh);
@@ -98,6 +99,7 @@ Texture *GLResourceManager::CreateTexture(TextureTarget target, std::string img_
     texture->SetString(img_path);
     GLResources::textures.push_back(texture);
   }
+  stbi_image_free(bytecode);
   return texture.get();
 }
 
