@@ -91,6 +91,9 @@ public:
 
   virtual vvoid ClearWithColor(glm::vec4 color) = 0;
 
+  /**
+    Change the Viewport of the screen.
+  */
   virtual vvoid ChangeViewport(Viewport *port) = 0;
 
   /**
@@ -98,11 +101,18 @@ public:
   */
   virtual vvoid ChangeTopology(Topology topology) = 0;
 
+  /**
+    The current shader in the context.
+  */
   virtual Shader *GetCurrentShader() = 0;
 
-  virtual vvoid DigestCommands(CommandBuffer *command_buffer) = 0;
+  /**
+    Digest, or execute commands immediately.
+  */
+  virtual vvoid ExecuteCommands(CommandBuffer *command_buffer) = 0;
 
   virtual vvoid ConfigurePipelineState(PipelineState *state) = 0;
+  virtual vvoid UseShader(Shader *shader) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP

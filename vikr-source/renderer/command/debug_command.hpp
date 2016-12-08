@@ -27,6 +27,8 @@ public:
   Mesh *GetMesh() { return m_mesh; }
   vreal32 GetLineWidth() { return line_width; }
 
+  vvoid Record(CommandBuffer *buffer) override;
+
 private:
   glm::vec3 color;
   vreal32 line_width        = 1;

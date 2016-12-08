@@ -23,7 +23,7 @@ public:
     : RenderCommand(RenderCommandType::COMMAND_MATERIAL)
     , m_material(material) { }
 
-  vvoid Execute(CommandBuffer *buffer) override {
+  vvoid Record(CommandBuffer *buffer) override {
     Shader *shader = m_material->GetShader();
     shader->Use();
   }

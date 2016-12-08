@@ -15,6 +15,7 @@ namespace vikr {
 
 class Renderer;
 class CommandBuffer;
+class RenderContext;
 
 /**
   Abstract RenderCommand. Perhaps useful cases, the best practice would be 
@@ -38,7 +39,7 @@ public:
     Talk to command buffer, this is where you input commands 
     to the Rendering API.
   */
-  virtual vvoid Execute(CommandBuffer *buffer) = 0;
+  virtual vvoid Record(CommandBuffer *buffer) = 0;
 
 protected:
   RenderCommandType type;

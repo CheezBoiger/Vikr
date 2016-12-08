@@ -45,7 +45,7 @@ vvoid Renderer::PushBack(RenderCommand *command) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Pushed RenderCommand was null! Refusing to push to queue!");
     return;
   }
-  command->Execute(&m_commandBuffer);
+  m_renderQueue.PushBack(command);
 }
 
 
@@ -67,7 +67,7 @@ vvoid Renderer::PushBack(SceneNode *obj) {
         }
         GroupCommand *command = &trav->m_commandList;
         command->Sort();
-        command->Execute(&m_commandBuffer);
+        m_renderQueue.PushBack(command);
         visited.insert(trav);
       }
     }
@@ -101,12 +101,17 @@ vint32 Renderer::CleanupResources() {
 
 
 vvoid Renderer::Render() {
-  std::vector<GraphicsCommand *> &commands = m_commandBuffer.GetCommands();
-  if (m_renderpass) {
-    for (GraphicsCommand *command : commands) {
-      command->Execute(m_renderDevice->GetContext());
-    }
+  m_renderQueue.Sort();
+  // Record Commands.
+  CommandBuffer command_buffer; 
+  RenderContext *context = m_renderDevice->GetContext();
+  std::vector<RenderCommand *> &render_commands = m_renderQueue.GetCommandBuffer();
+  for (RenderCommand *command : render_commands) {
+    command->Record(&command_buffer);
   }
+
+  m_renderDevice->GetContext()->ExecuteCommands(&command_buffer);
+  m_renderQueue.Clear();
 }
 
 

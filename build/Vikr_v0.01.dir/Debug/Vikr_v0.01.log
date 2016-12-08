@@ -1,10 +1,24 @@
 ﻿  gl4_context.cpp
-  gl_texture.cpp
-  gl_texture1d.cpp
-  gl_texture2d.cpp
-  gl_texture3d.cpp
+  gl4_device.cpp
+  graphics_command.cpp
+  command_buffer.cpp
+  model.cpp
+  render_command.cpp
+  mesh_command.cpp
+  group_command.cpp
+  renderer.cpp
+  render_queue.cpp
+  scene_component.cpp
+  transform_component.cpp
+  mesh_component.cpp
+  renderer_component.cpp
+  scene_node.cpp
   gl_resource_manager.cpp
+  model_loader.cpp
+  resource_manager.cpp
+  vikr.cpp
   Generating Code...
+command_buffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 graphics_command.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 gl4_framebuffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 gl4_device.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library

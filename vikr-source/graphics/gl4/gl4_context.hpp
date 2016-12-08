@@ -32,6 +32,7 @@ public:
   vvoid SetTexture(Texture *texture, vuint32 index) override;
   vvoid SetRenderTarget(RenderTarget *target, vuint32 index) override;
   vvoid SetRenderPass(RenderPass *pass) override;
+  vvoid UseShader(Shader *shader) override;
 
   /**
     These functions might need to hit the PipelineState instead.
@@ -51,13 +52,24 @@ public:
   vvoid ChangeViewport(Viewport *port) override;
   vvoid ChangeTopology(Topology topology) override;
 
-  vvoid DigestCommands(CommandBuffer *command_buffer) override;
+  vvoid ExecuteCommands(CommandBuffer *command_buffer) override;
   vvoid ConfigurePipelineState(PipelineState *state) override;
   Shader *GetCurrentShader() { return m_currentShader; }
 
 private:
+  /**
+    Current topology.
+  */
   Topology m_currTopology         = VIKR_TRIANGLES;
+  /**
+    Current Framebuffer being used. This might be settled to blit other 
+    Framebuffers.
+  */
   Framebuffer *m_currFramebuffer  = nullptr;
+
+  /**
+    Current Shader being used.
+  */
   Shader *m_currentShader         = nullptr;
 };
 } // vikr

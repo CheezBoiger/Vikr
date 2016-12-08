@@ -114,7 +114,8 @@ public:
     Component *component = nullptr;
     auto it = components.find(guid);
     if (it != components.end()) {
-      component = components[it->second->GetGUID()].get();
+      component = 
+        static_cast<Component *>(components[it->second->GetGUID()].get());
     }
     return component;
   }

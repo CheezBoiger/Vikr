@@ -226,7 +226,7 @@ vvoid GL4RenderContext::ClearWithColor(glm::vec4 color) {
 }
 
 
-vvoid GL4RenderContext::DigestCommands(CommandBuffer *commandbuffer) {
+vvoid GL4RenderContext::ExecuteCommands(CommandBuffer *commandbuffer) {
   if (commandbuffer) {
     for (GraphicsCommand *command : commandbuffer->GetCommands()) {
       command->Execute(this);

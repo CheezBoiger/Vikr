@@ -24,7 +24,7 @@ public:
     m_commands.push_back(std::make_pair(guid, command)); 
   }
 
-  vvoid Execute(CommandBuffer *buffer) override;
+  vvoid Record(CommandBuffer *buffer) override;
 
   RenderCommand *Remove(guid_t guid);
 

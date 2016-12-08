@@ -59,7 +59,7 @@ public:
   virtual vvoid PushBack(RenderCommand *command) override;
   virtual vvoid PushBack(SceneNode *obj) override;
   virtual vvoid PushBack(Light *light) override;
-  virtual vvoid Sort() override { m_commandBuffer.Sort(); }
+  virtual vvoid Sort() override { m_renderQueue.Sort(); }
 
   vvoid SetClearColor(glm::vec3 cc) { clear_color = cc; }
   glm::vec3 GetClearColor() { return clear_color; }
@@ -79,7 +79,9 @@ protected:
   */
   vbool rendering = false;
 
-  CommandBuffer m_commandBuffer;
+  /**
+  */
+  RenderQueue m_renderQueue;
 
   /**
     Pointlights container.

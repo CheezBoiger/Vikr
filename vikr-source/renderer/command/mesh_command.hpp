@@ -53,7 +53,7 @@ public:
   Material *GetMaterial() { return m_material; }
   vvoid SetMaterial(Material *material) { m_material = material; }
 
-  vvoid Execute(CommandBuffer *buffer) override;
+  vvoid Record(CommandBuffer *buffer) override;
 
 private:
   vvoid InitTransform(glm::mat4 model) { m_transform = model; }

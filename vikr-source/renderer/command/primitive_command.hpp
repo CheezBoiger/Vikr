@@ -21,7 +21,7 @@ public:
     , m_mesh(mesh) { }
 
 
-  vvoid Execute(CommandBuffer *buffer) override {
+  vvoid Record(CommandBuffer *buffer) override {
   }
 
   Mesh *m_mesh;

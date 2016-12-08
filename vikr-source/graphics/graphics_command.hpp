@@ -8,13 +8,8 @@
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
 
-#include <functional>
-
 
 namespace vikr {
-
-
-using FunctionCommand = std::function<vvoid()>;
 
 
 class RenderContext;
@@ -25,13 +20,18 @@ class RenderContext;
 */
 class GraphicsCommand {
 public:
-  
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(GraphicsCommand);
+  GraphicsCommand() { }
+  virtual ~GraphicsCommand() { }
 
+  /**
+    Execute command.
+  */
   virtual vvoid Execute(RenderContext *context) = 0;
 
 private:
 
-  FunctionCommand func;
+  VIKR_DISALLOW_COPY_AND_ASSIGN(GraphicsCommand);
 };
 } // vikr
 #endif // __VIKR_GRAPHICS_COMMAND_HPP
