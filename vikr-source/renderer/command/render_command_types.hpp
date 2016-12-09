@@ -13,6 +13,7 @@ namespace vikr {
   of some other integer value.
 */
 enum class RenderCommandType {
+  COMMAND_CAMERA,
   COMMAND_MESH,
   COMMAND_GROUP,
   COMMAND_PRIMITIVE,

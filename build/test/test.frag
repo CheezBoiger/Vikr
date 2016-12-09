@@ -85,6 +85,7 @@ void main() {
   light.diffuse = light_diffuse;
   light.specular = light_specular;
   result = CalculatePointLight(light, norm, FragCoords, view_dir);
-  color = vec4(result, 1.0f); 
+  //color = vec4(result, 1.0f); 
   //color = vec4(texture(texas, TexCoords));
+  color = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }

@@ -306,6 +306,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\vk.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\platform\graphics\graphics.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\render_command_types.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\camera_command.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\manual_commands.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\render_command.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\primitive_command.hpp" />
@@ -341,6 +342,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_compiler.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_linker.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\glsl\glsl_shader.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_uniform_params.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader_config.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\shader.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\shader\material.hpp" />

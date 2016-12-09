@@ -2,6 +2,7 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <graphics/gl4/gl4_context.hpp>
+#include <graphics/gl4/gl4_buffer.hpp>
 #include <graphics/command_buffer.hpp>
 #include <graphics/graphics_command.hpp>
 #include <graphics/render_pass.hpp>
@@ -10,8 +11,11 @@
 #include <graphics/pipeline_state.hpp>
 
 #include <shader/glsl/gl_texture.hpp>
-
+#include <shader/shader_uniform_params.hpp>
 #include <shader/glsl/gl_texture.hpp>
+
+#include <glm/gtc/type_ptr.hpp>
+#include <util/vikr_log.hpp>
 
 
 
@@ -247,5 +251,105 @@ vvoid GL4RenderContext::ExecuteCommands(CommandBuffer *commandbuffer) {
 
 
 vvoid GL4RenderContext::ConfigurePipelineState(PipelineState *state) {
+}
+
+
+vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
+  if (!params || !params->uniforms) { 
+    return;
+  }
+  /*
+    TODO(): Will need to parse these location values in the future.
+  */
+  //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
+
+  for(auto variable : *params->uniforms) {
+    std::string s = variable.first;
+    switch(variable.second.type) {
+    case vikr_BOOL: 
+      glProgramUniform1i(m_currShaderProgram, 
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()), 
+        (vint32)variable.second.m_bool); 
+    break;
+    case vikr_INT: 
+      glProgramUniform1i(m_currShaderProgram,
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+        variable.second.m_integer); 
+    break;
+    case vikr_VEC2: 
+      glProgramUniform2fv(m_currShaderProgram,
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+        1, 
+        glm::value_ptr(variable.second.m_vec2)); 
+    break;
+    case vikr_VEC3: 
+      glProgramUniform3fv(m_currShaderProgram,
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+        1, 
+        glm::value_ptr(variable.second.m_vec3)); 
+    break;
+    case vikr_VEC4: 
+      glProgramUniform4fv(m_currShaderProgram,
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+        1, 
+        glm::value_ptr(variable.second.m_vec4));
+    break;
+    case vikr_MAT2: 
+      glProgramUniformMatrix2fv(m_currShaderProgram,
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(variable.second.m_mat2));
+    break;
+    case vikr_MAT3: 
+      glProgramUniformMatrix3fv(m_currShaderProgram,
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(variable.second.m_mat3)); 
+    break;
+    case vikr_MAT4: 
+      glProgramUniformMatrix4fv(m_currShaderProgram,
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(variable.second.m_mat4));
+    break;
+    case vikr_DOUBLE: 
+      glProgramUniform1d(m_currShaderProgram,
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+        variable.second.m_double);
+    break;
+    case vikr_FLOAT: 
+      glProgramUniform1f(m_currShaderProgram,
+        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+        variable.second.m_float);
+    break;
+    default: break;
+    }
+  }
+  // Bind all texture that was given.
+  if (params->samplers) {
+    for(auto sampler : *params->samplers) {
+      SetTexture(sampler.second.texture, sampler.second.i);
+    }
+  }
+}
+
+
+vvoid GL4RenderContext::ApplyShaderProgram(vuint32 program_id) {
+  if (program_id) {
+    glUseProgram(program_id);
+    m_currShaderProgram = program_id;
+  }
+}
+
+
+vvoid GL4RenderContext::QueryVertexBuffer(VertexBuffer *buffer) {
+  if (buffer) {
+    GL4VertexBuffer *buf = static_cast<GL4VertexBuffer *>(buffer);
+    glBindVertexArray(buf->GetVertexArrayId());
+    
+  }
 }
 } // vikr

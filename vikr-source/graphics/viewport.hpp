@@ -12,8 +12,7 @@ namespace vikr {
   Viewport struct defines the view screen of the camera, and references
   the window's size;
 */
-class Viewport {
-public:
+struct Viewport {
   /**
     Starting pixel width.
   */

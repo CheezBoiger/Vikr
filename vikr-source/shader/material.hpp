@@ -24,37 +24,6 @@ struct VertexAttrib;
 class Texture;
 
 
-/**
-  Sets the Texture samplers into the Material
-*/
-struct TextureSampler {
-  ShaderUniformType type;
-  Texture           *texture;
-  vuint32           i;
-};
-
-
-/**
-  Material values that are added to modify the shader.
-*/
-struct MaterialValue {
-  ShaderUniformType type;
-  union {
-    vbool     m_bool;
-    vint32    m_integer;
-    vreal32   m_float;
-    vreal64   m_double;
-    glm::vec2 m_vec2;
-    glm::vec3 m_vec3;
-    glm::vec4 m_vec4;
-    glm::mat2 m_mat2;
-    glm::mat3 m_mat3;
-    glm::mat4 m_mat4;
-  };
-
-  MaterialValue() { }
-};
-
 
 /**
   Material defines the textures, cull, and blend of the Mesh.

@@ -30,7 +30,7 @@ public:
   /**
     Get the current position of the camera.
   */
-  glm::vec3& GetPos() { return pos; }
+  glm::vec3& GetPos() override { return pos; }
   /**
     Get the front (Z axis) vector of the camera.
   */

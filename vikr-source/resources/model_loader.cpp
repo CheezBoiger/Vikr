@@ -115,7 +115,7 @@ Mesh *ModelLoader::ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene
   }
   // Create our mesh, the mesh is created and buffered, as well as properly stored,
   // so no need to do much.
-  m_mesh = device->GetResourceManager()->CreateMesh(vertices);
+  m_mesh = device->GetResourceManager()->CreateMesh(vertices, indices);
   m_mesh->Create(device);
   return m_mesh;
 }

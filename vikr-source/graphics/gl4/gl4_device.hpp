@@ -33,7 +33,7 @@ public:
 
   Material *CreateMaterial() override;
 
-  vuint32 CreateVertexBufferId(std::vector<Vertex> &vertices, VertexUsageType type) override;
+  std::unique_ptr<VertexBuffer> CreateVertexBufferId(std::vector<Vertex> &vertices, VertexUsageType type) override;
   vuint32 CreateElementBufferId(std::vector<vuint32> &indices, VertexUsageType type) override;
 
   ResourceManager *GetResourceManager() override { return &manager; }

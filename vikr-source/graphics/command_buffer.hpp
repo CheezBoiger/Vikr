@@ -12,7 +12,6 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <memory>
-#include <functional>
 
 
 namespace vikr {
@@ -23,13 +22,11 @@ class GraphicsCommand;
 class RenderContext;
 class RenderTarget;
 class RenderPass;
-class Viewport;
 class PipelineState;
+class VertexBuffer;
 
-/*
-  Speed is key, and we need to say as much as we can.
-*/
-using ShaderUniformFunction = std::function<vvoid()>;
+struct ShaderUniformParams;
+struct Viewport;
 
 
 /**
@@ -58,9 +55,10 @@ public:
   vvoid SetClear();
   vvoid SetClearWithColor(glm::vec4 color);
   vvoid SetChangeViewport(Viewport *viewport);
-  vvoid SetUseShader(Shader *shader);
+  vvoid SetShaderProgram(vuint32 program_id);
   vvoid SetConfigurePipelineState(PipelineState *pipelinestate);
-  vvoid SetShaderUniforms(ShaderUniformFunction func);
+  vvoid SetShaderUniforms(ShaderUniformParams *params);
+  vvoid SetQueryVertexBuffer(VertexBuffer *buffer);
 
 private:
 

@@ -103,6 +103,7 @@ vint32 Renderer::CleanupResources() {
 vvoid Renderer::Render() {
   m_renderDevice->GetContext()->Clear();
   m_renderDevice->GetContext()->ClearWithColor(clear_color);
+
   m_renderQueue.Sort();
   // Record Commands.
   CommandBuffer command_buffer; 
@@ -120,7 +121,7 @@ vint32 Renderer::Init(RenderDevice *device) {
   m_renderDevice = device;
   m_renderQueue.RegisterBatchComparator([] (RenderCommand *a, RenderCommand *b) -> vint32 {
     if (a->GetCommandType() > b->GetCommandType()) {
-      return true;
+      return false;
     } else {
       return false;
     }

@@ -49,8 +49,8 @@ protected:
   vuint32 native_target               = GL_TEXTURE_2D;
   vuint32 native_format               = GL_RGBA;
   vuint32 native_internal_format      = GL_RGBA;
-  vuint32 native_filter_min           = GL_LINEAR;
-  vuint32 native_filter_max           = GL_LINEAR_MIPMAP_LINEAR;
+  vuint32 native_filter_min           = GL_LINEAR_MIPMAP_LINEAR;
+  vuint32 native_filter_max           = GL_LINEAR;
   vuint32 native_wrap_s               = GL_REPEAT;
   vuint32 native_wrap_t               = GL_REPEAT;
   vuint32 native_wrap_r               = GL_REPEAT;

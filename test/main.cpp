@@ -24,6 +24,7 @@
 #include <scene/components/transform_component.hpp>
 #include <scene/components/renderer_component.hpp>
 #include <scene/components/mesh_component.hpp>
+#include <scene/components/camera_component.hpp>
 #include <graphics/gl4/gl4_device.hpp>
 #include <math/shape/quad.hpp>
 #include <glm/gtx/compatibility.hpp>
@@ -114,7 +115,6 @@ int main(int c, char* args[]) {
   renderer.GetDevice()->StoreShader("light", "test.vert", "light.frag");
   renderer.GetDevice()->StoreShader("screen", "screen_shader.vert", "screen_shader.frag");
   SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), "nanosuit/nanosuit.obj", "suitboy");
-  
   Material *default_mat = renderer.GetDevice()->CreateMaterial();
   default_mat->SetShader(renderer.GetDevice()->GetShader("test"));
 
@@ -129,13 +129,18 @@ int main(int c, char* args[]) {
     GetResourceManager()->
     CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   cube_mesh->Create(renderer.GetDevice());
-
+  Transform t;
   PrimitiveCommand pc;
   pc.m_mesh = cube_mesh;  
+  TransformCommand tc;
+  tc.m_transform = &t;
   MaterialCommand mc;
   mc.m_material = default_mat;
   default_mat->SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
   default_mat->SetVector3fv("obj_diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+
+  CameraCommand cc;
+  cc.camera = &camera;
 
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
@@ -143,8 +148,13 @@ int main(int c, char* args[]) {
     Do_Movement();
     VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
     camera.Update();
-    
+
+    t.Position = glm::vec3(0.0f, 0.0f, 0.0f);    
+    t.CalculateTransform();
+
     renderer.PushBack(&mc);
+    renderer.PushBack(&cc);
+    renderer.PushBack(&tc);
     renderer.PushBack(&pc);
     renderer.PushBack(node);
     renderer.Render();

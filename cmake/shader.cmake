@@ -33,6 +33,7 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_SHADER_DIR}/shader_uniform_params.hpp
   ${VIKR_SHADER_DIR}/shader_config.hpp
   ${VIKR_SHADER_DIR}/shader.hpp
   ${VIKR_SHADER_DIR}/shader.cpp

@@ -16,7 +16,7 @@ namespace vikr {
 
 class Material;
 class RenderDevice;
-
+class VertexBuffer;
 
 
 
@@ -38,7 +38,7 @@ public:
             std::vector<Vertex> vertices,
             std::vector<vuint32> indices = std::vector<vuint32>()) = 0;
 
-  virtual vuint32 GetVertexBufferId() = 0;
+  virtual VertexBuffer *GetVertexBuffer() = 0;
   virtual vuint32 GetIndexBufferId() = 0;
   virtual VertexUsageType GetVertexUsageType() = 0;
   virtual GraphicsPipeline GetRenderType() = 0;

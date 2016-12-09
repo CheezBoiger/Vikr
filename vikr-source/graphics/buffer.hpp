@@ -23,7 +23,15 @@ public:
   VertexBuffer() { }
   virtual ~VertexBuffer() { }
 
-  
+  /**
+    Get the Vertex Buffer id.
+  */
+  virtual vuint32 GetVertexBufferId() = 0;
+
+  /**
+    Store a vertex buffer id into this VertexBuffer
+  */
+  virtual vvoid StoreVertexBufferId(vuint32 vbo) = 0;
 };
 } // vikr
 #endif // __VIKR_VERTEX_BUFFER_HPP

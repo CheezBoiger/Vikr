@@ -22,11 +22,14 @@ class Texture;
 class RenderTarget;
 class RenderPass;
 class RenderDevice;
-class Viewport;
 class Shader;
 class CommandBuffer;
 class PipelineState;
-class ShaderUniformParams;
+class VertexBuffer;
+
+
+struct ShaderUniformParams;
+struct Viewport;
 
 
 /**
@@ -120,7 +123,9 @@ public:
   /**
     Applies the shader program within the context.
   */
-  virtual vvoid ApplyShaderProgram(Shader *shader) = 0;
+  virtual vvoid ApplyShaderProgram(vuint32 program_id) = 0;
+
+  virtual vvoid QueryVertexBuffer(VertexBuffer *buffer) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP

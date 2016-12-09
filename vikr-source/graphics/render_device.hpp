@@ -7,9 +7,9 @@
 
 #include <platform/vikr_api.hpp>
 #include <platform/vikr_types.hpp>
+#include <graphics/buffer.hpp>
 #include <shader/texture.hpp>
 #include <mesh/imesh.hpp>
-
 #include <string>
 #include <memory>
 
@@ -26,6 +26,7 @@ class Shader;
 class Material;
 class ResourceManager;
 class RenderContext;
+class VertexBuffer;
 
 /**
   Render Device is an interface, with a driver type format.
@@ -68,7 +69,7 @@ public:
   /**
     Create vertex buffer id.
   */
-  virtual vuint32 CreateVertexBufferId(std::vector<Vertex> &vertices, VertexUsageType type) = 0;
+  virtual std::unique_ptr<VertexBuffer> CreateVertexBufferId(std::vector<Vertex> &vertices, VertexUsageType type) = 0;
 
   virtual vuint32 CreateElementBufferId(std::vector<vuint32> &indices, VertexUsageType type) = 0;
 

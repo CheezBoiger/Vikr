@@ -4,6 +4,8 @@
 #include <graphics/command_buffer.hpp>
 #include <graphics/render_context.hpp>
 #include <graphics/graphics_command.hpp>
+#include <graphics/buffer.hpp>
+#include <shader/shader_uniform_params.hpp>
 
 
 namespace vikr {
@@ -16,15 +18,15 @@ CommandBuffer::CommandBuffer()
 
 class ShaderUniformSetter : public GraphicsCommand {
 public:
-  ShaderUniformSetter(ShaderUniformFunction f)
-    : func(f) { }
+  ShaderUniformSetter(ShaderUniformParams *f)
+    : params(*f) { }
 
   vvoid Execute(RenderContext *context) override {
-    func();
+    context->SetShaderUniforms(&params);
   }
   
 private:
-  ShaderUniformFunction func;
+  ShaderUniformParams params;
 };
 
 
@@ -45,6 +47,36 @@ private:
 };
 
 
+class ShaderProgramSetter : public GraphicsCommand {
+public:
+  ShaderProgramSetter(vuint32 program_id)
+    : program_id(program_id)
+  { }
+
+  vvoid Execute(RenderContext *context) override {
+    context->ApplyShaderProgram(program_id);    
+  }
+
+private:
+  vuint32 program_id;
+};
+
+
+class QueryVertexBufferSetter : public GraphicsCommand {
+public:
+  QueryVertexBufferSetter(VertexBuffer *buf = nullptr)
+    : buffer(buf)
+  { }
+
+  vvoid Execute(RenderContext *context) override {
+    context->QueryVertexBuffer(buffer);
+  }
+
+private:
+  VertexBuffer *buffer;
+};
+
+
 vvoid CommandBuffer::Pushback(std::unique_ptr<GraphicsCommand> &command) {
   m_commandBuffer.push_back(std::move(command));
 }
@@ -55,9 +87,9 @@ vvoid CommandBuffer::Pushback(std::vector<std::unique_ptr<GraphicsCommand> > &co
 }
 
 
-vvoid CommandBuffer::SetShaderUniforms(ShaderUniformFunction func) {
+vvoid CommandBuffer::SetShaderUniforms(ShaderUniformParams *params) {
    m_commandBuffer.push_back(
-      std::make_unique<ShaderUniformSetter>(func));
+      std::make_unique<ShaderUniformSetter>(params));
 }
 
 
@@ -95,10 +127,18 @@ vvoid CommandBuffer::SetChangeViewport(Viewport *viewport) {
 }
 
 
-vvoid CommandBuffer::SetUseShader(Shader *shader) {
+vvoid CommandBuffer::SetShaderProgram(vuint32 program_id) {
+  m_commandBuffer.push_back(
+    std::make_unique<ShaderProgramSetter>(program_id));
 }
 
 
 vvoid CommandBuffer::SetConfigurePipelineState(PipelineState *pipelinestate) {
+}
+
+
+vvoid CommandBuffer::SetQueryVertexBuffer(VertexBuffer *buffer) {
+  m_commandBuffer.push_back(
+    std::make_unique<QueryVertexBufferSetter>(buffer));
 }
 } // vikr

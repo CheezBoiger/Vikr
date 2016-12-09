@@ -14,7 +14,7 @@ const std::string Mesh::kDefaultName = "Default_Mesh";
 
 
 Mesh::Mesh(GraphicsPipeline pipeline)
-  : m_vbo(0)
+  : m_vertexBuffer(nullptr)
   , m_ibo(0)
   , m_render_type(pipeline)
   , m_name(kDefaultName)
@@ -27,7 +27,7 @@ Mesh::Mesh(GraphicsPipeline pipeline,
   std::vector<glm::vec3> normals,
   std::vector<glm::vec2> uvs,
   std::vector<vuint32> indices)
-  : m_vbo(0)
+  : m_vertexBuffer(nullptr)
   , m_ibo(0)
   , m_indices(indices)
   , m_render_type(pipeline)
@@ -82,7 +82,7 @@ vvoid Mesh::Buffer(std::vector<Vertex> vertices,
 
 vvoid Mesh::Create(RenderDevice *device) { 
   if (device) {
-    m_vbo = device->CreateVertexBufferId(m_vertices, m_usage_type);
+    m_vertexBuffer = device->CreateVertexBufferId(m_vertices, m_usage_type);
     if (!m_indices.empty()) {
       m_ibo = device->CreateElementBufferId(m_indices, m_usage_type);
     }

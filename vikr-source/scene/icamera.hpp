@@ -41,6 +41,8 @@ public:
   virtual vvoid Look(glm::vec2 mouse_offset, vreal32 delta, vbool constrain_pitch = true) = 0;
   virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool constrain_pitch = true) = 0;
 
+  virtual glm::vec3 &GetPos() = 0;
+
   virtual glm::mat4 GetView() = 0;
   virtual glm::mat4 GetProjection() = 0;
 

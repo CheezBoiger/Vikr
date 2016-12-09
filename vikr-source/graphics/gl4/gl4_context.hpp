@@ -56,6 +56,10 @@ public:
   vvoid ExecuteCommands(CommandBuffer *command_buffer) override;
   vvoid ConfigurePipelineState(PipelineState *state) override;
 
+  vvoid SetShaderUniforms(ShaderUniformParams *params) override;
+  vvoid ApplyShaderProgram(vuint32 program_id) override;
+  vvoid QueryVertexBuffer(VertexBuffer *buffer) override;
+
 private:
   /**
     Current topology.
@@ -73,6 +77,8 @@ private:
   RenderPass *m_currRenderPass    = nullptr;
 
   PipelineState *pipeline;
+
+  vuint32 m_currShaderProgram     = 0;
 };
 } // vikr
 #endif // __VIKR_GL4_CONTEXT_HPP

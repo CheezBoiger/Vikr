@@ -1,15 +1,5 @@
-﻿  command_buffer.cpp
-  gl4_context.cpp
-  gl4_device.cpp
-  mesh_command.cpp
-  renderer.cpp
-  model_loader.cpp
-  resource_manager.cpp
-  mesh_component.cpp
-  renderer_component.cpp
-  scene_node.cpp
-  vikr.cpp
-  Generating Code...
+﻿  gl4_device.cpp
 graphics_command.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 gl4_framebuffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+gl4_buffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
   Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Debug\Vikr_v0.01.lib

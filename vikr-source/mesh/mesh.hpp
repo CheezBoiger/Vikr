@@ -6,6 +6,7 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
+#include <graphics/buffer.hpp>
 #include <glm/vec3.hpp>
 #include <mesh/imesh.hpp>
 #include <string>
@@ -60,7 +61,7 @@ public:
   /**
     Grab the Vertex Buffer Object id of this mesh.
   */
-  vuint32 GetVertexBufferId() override { return m_vbo; }
+  VertexBuffer *GetVertexBuffer() override { return m_vertexBuffer.get(); }
   /**
     Grab the Element Buffer Object id of this mesh. Currently only supporting
     drawing of VBOs instead of EBOs.
@@ -88,7 +89,7 @@ protected:
 
   std::string m_name;
   GraphicsPipeline m_render_type;
-  vuint32 m_vbo;
+  std::unique_ptr<VertexBuffer> m_vertexBuffer;
   vuint32 m_ibo;
   vbool is_transparent                  = false;
   VertexUsageType m_usage_type          = vikr_STATIC;
