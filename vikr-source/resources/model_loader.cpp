@@ -63,7 +63,6 @@ SceneNode *ModelLoader::ProcessNode(
         RendererComponent *rp = scene_node->AddComponent<RendererComponent>();
         rp->material = m_material;
       }
-      scene_node->Update();
     } else {
       SceneNode *child = Scene::CreateSceneNode(device);
       MeshComponent *mc = scene_node->AddComponent<MeshComponent>();
@@ -117,6 +116,7 @@ Mesh *ModelLoader::ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene
   // Create our mesh, the mesh is created and buffered, as well as properly stored,
   // so no need to do much.
   m_mesh = device->GetResourceManager()->CreateMesh(vertices);
+  m_mesh->Create(device);
   return m_mesh;
 }
 

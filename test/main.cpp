@@ -122,6 +122,20 @@ int main(int c, char* args[]) {
   light_mat->SetShader(renderer.GetDevice()->GetShader("light"));
 
   Quad quad;
+  Cube cube;
+
+  Mesh *cube_mesh = 
+    renderer.GetDevice()->
+    GetResourceManager()->
+    CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  cube_mesh->Create(renderer.GetDevice());
+
+  PrimitiveCommand pc;
+  pc.m_mesh = cube_mesh;  
+  MaterialCommand mc;
+  mc.m_material = default_mat;
+  default_mat->SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
+  default_mat->SetVector3fv("obj_diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
 
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
@@ -129,6 +143,11 @@ int main(int c, char* args[]) {
     Do_Movement();
     VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
     camera.Update();
+    
+    renderer.PushBack(&mc);
+    renderer.PushBack(&pc);
+    renderer.PushBack(node);
+    renderer.Render();
     DoubleBufferSwap(window);
   }
 

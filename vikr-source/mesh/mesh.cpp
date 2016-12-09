@@ -82,9 +82,9 @@ vvoid Mesh::Buffer(std::vector<Vertex> vertices,
 
 vvoid Mesh::Create(RenderDevice *device) { 
   if (device) {
-    m_vbo = device->CreateVertexBufferId(m_vertices);
+    m_vbo = device->CreateVertexBufferId(m_vertices, m_usage_type);
     if (!m_indices.empty()) {
-      m_ibo = device->CreateElementBufferId(m_indices);
+      m_ibo = device->CreateElementBufferId(m_indices, m_usage_type);
     }
   }
 }

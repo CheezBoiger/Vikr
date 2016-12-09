@@ -30,12 +30,12 @@ vint32 GLSLLinker::Link(GLSLCompiler *vs, GLSLCompiler *fs, GLSLCompiler *gs) {
   if(gs != nullptr && !gs->IsCompiled()) {
     gs->Compile();
   }
-  AttachShader(shader->GetShaderId(), vs->GetShaderId());
-  AttachShader(shader->GetShaderId(), fs->GetShaderId());
-  LinkProgram(shader->GetShaderId());
-  GetProgramiv(shader->GetShaderId(), GL_LINK_STATUS, &success);
+  AttachShader(shader->GetProgramId(), vs->GetShaderId());
+  AttachShader(shader->GetProgramId(), fs->GetShaderId());
+  LinkProgram(shader->GetProgramId());
+  GetProgramiv(shader->GetProgramId(), GL_LINK_STATUS, &success);
   if(!success) {
-    GetProgramInfoLog(shader->GetShaderId(), 1024, NULL, log);
+    GetProgramInfoLog(shader->GetProgramId(), 1024, NULL, log);
     VikrLog::DisplayMessage(vikr::VIKR_ERROR, std::string(log));
     return -1;
   }

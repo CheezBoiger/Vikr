@@ -6,6 +6,8 @@
 
 #include <graphics/render_context.hpp>
 #include <renderer/command/render_command.hpp>
+#include <graphics/command_buffer.hpp>
+#include <mesh/mesh.hpp>
 
 
 namespace vikr {
@@ -22,6 +24,7 @@ public:
 
 
   vvoid Record(CommandBuffer *buffer) override {
+    buffer->SetDraw(0, m_mesh->GetVertices().size());
   }
 
   Mesh *m_mesh;

@@ -31,6 +31,7 @@ vint32 GLResourceManager::StoreShader(std::string name, Shader *shader) {
   if (shader && shader->IsLinked()) {
     GLResources::shaders[name] = std::make_pair(name, std::make_unique<GLSLShader>(
                     std::move(*static_cast<GLSLShader *>(shader))));
+    success = true;
   }
   return success;
 }

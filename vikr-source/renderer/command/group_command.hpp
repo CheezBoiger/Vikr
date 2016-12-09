@@ -24,13 +24,17 @@ public:
     m_commands.push_back(std::make_pair(guid, command)); 
   }
 
-  vvoid Record(CommandBuffer *buffer) override;
+  vvoid Record(CommandBuffer *buffer) override {
+    for (auto command : m_commands) {
+      command.second->Record(buffer); 
+    }
+  }
 
   RenderCommand *Remove(guid_t guid);
 
   vvoid Sort();
 
-  std::vector<std::pair<guid_t, RenderCommand *>>& GetCommands() { return m_commands; }  
+  std::vector<std::pair<guid_t, RenderCommand *>> &GetCommands() { return m_commands; }  
 
 private:
   std::vector<std::pair<guid_t, RenderCommand *> > m_commands;  

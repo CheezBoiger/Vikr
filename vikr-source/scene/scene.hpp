@@ -28,9 +28,9 @@ public:
 
   Scene(SceneNode *root = nullptr);
 
-  SceneNode *GetRoot() { return root; }
+  SceneNode *GetRoot() { return m_root; }
 
-  vvoid SetRoot(SceneNode *n_root) { root = n_root; }
+  vvoid SetRoot(SceneNode *n_root) { m_root = n_root; }
 
   /**
     Update the graph data structure, starting from root.
@@ -40,7 +40,7 @@ private:
   /**
     Root SceneObject.
   */
-  SceneNode *root = nullptr;
+  SceneNode *m_root = nullptr;
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(Scene);
 };

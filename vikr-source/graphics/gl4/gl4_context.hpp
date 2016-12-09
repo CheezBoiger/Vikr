@@ -30,12 +30,13 @@ public:
   vvoid Draw(vuint32 start, vuint32 vertices) override;
   vvoid DrawIndexed(const vvoid *indices, vuint32 vertices) override;
   vvoid SetTexture(Texture *texture, vuint32 index) override;
+  
   vvoid SetRenderTarget(RenderTarget *target, vuint32 index) override;
   vvoid SetRenderPass(RenderPass *pass) override;
-  vvoid UseShader(Shader *shader) override;
 
   /**
-    These functions might need to hit the PipelineState instead.
+    These functions might need to hit the PipelineState instead. They involve
+    mostly rasterization.
   */
   vvoid SetBlendEq(BlendEq eq) override;
   vvoid SetBlendMode(BlendFunc src, BlendFunc dst) override;
@@ -54,7 +55,6 @@ public:
 
   vvoid ExecuteCommands(CommandBuffer *command_buffer) override;
   vvoid ConfigurePipelineState(PipelineState *state) override;
-  Shader *GetCurrentShader() { return m_currentShader; }
 
 private:
   /**
@@ -68,9 +68,11 @@ private:
   Framebuffer *m_currFramebuffer  = nullptr;
 
   /**
-    Current Shader being used.
+    Current RenderPass being used.
   */
-  Shader *m_currentShader         = nullptr;
+  RenderPass *m_currRenderPass    = nullptr;
+
+  PipelineState *pipeline;
 };
 } // vikr
 #endif // __VIKR_GL4_CONTEXT_HPP

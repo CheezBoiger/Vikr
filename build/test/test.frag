@@ -36,6 +36,13 @@ uniform float linear;
 uniform float quadratic;
 
 
+uniform sampler2D vikr_TexAlbedo;
+uniform sampler2D vikr_TexNormal;
+uniform sampler2D vikr_TexSpecular;
+uniform sampler2D vikr_TexRoughness;
+uniform sampler2D vikr_TexAmbient;
+
+
 vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 view_dir) {
   /* Blinn-Phong Implementation! */ 
   // diffuse

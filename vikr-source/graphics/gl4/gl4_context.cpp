@@ -111,16 +111,27 @@ vvoid GL4RenderContext::SetTexture(Texture *texture, vuint32 index) {
 
 
 vvoid GL4RenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
-  if (target) {
-    if (m_currFramebuffer) {
-      
-    }
+  if (target && m_currFramebuffer) {
   }
 }
 
 
 vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
+  if (m_currFramebuffer && pass) {
+    ChangeViewport(&pass->Viewport);
+    // Clear up last RenderPass in Framebuffer.
+    std::vector<Texture *> *targets = m_currFramebuffer->GetColorAttachements();
+    for (vuint32 i = 0; i < targets->size(); ++i) {
+      m_currFramebuffer->ClearTexture(i);  
+    }
   
+    // Set up the new RenderPass
+    std::vector<RenderTarget *> &render_targets = pass->Rendertargets;
+    for (vuint32 i = 0; i < render_targets.size(); ++i) {
+      RenderTarget *render_target = render_targets[i];
+      m_currFramebuffer->BindTexture(render_target, i);
+    }
+  }
 }
 
 
@@ -228,7 +239,7 @@ vvoid GL4RenderContext::ClearWithColor(glm::vec4 color) {
 
 vvoid GL4RenderContext::ExecuteCommands(CommandBuffer *commandbuffer) {
   if (commandbuffer) {
-    for (GraphicsCommand *command : commandbuffer->GetCommands()) {
+    for (std::unique_ptr<GraphicsCommand> &command : commandbuffer->GetCommands()) {
       command->Execute(this);
     }
   }

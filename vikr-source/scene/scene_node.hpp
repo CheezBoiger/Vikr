@@ -99,6 +99,7 @@ public:
     std::unique_ptr<Component> component = std::make_unique<Component>();
     guid_t ref = component->GetGUID();
     components[component->GetGUID()] = std::move(component);
+    m_commandList.Insert(ref, components[ref].get()->GetCommand());
     return static_cast<Component *>(components[ref].get());
   }
 

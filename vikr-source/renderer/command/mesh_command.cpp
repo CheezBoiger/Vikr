@@ -5,6 +5,8 @@
 #include <shader/material.hpp>
 #include <shader/shader.hpp>
 #include <mesh/mesh.hpp>
+#include <graphics/command_buffer.hpp>
+
 
 namespace vikr {
 
@@ -15,4 +17,7 @@ MeshCommand::MeshCommand()
 }
 
 
+vvoid MeshCommand::Record(CommandBuffer *buffer) {
+  
+}
 } // vikr

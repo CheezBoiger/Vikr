@@ -9,8 +9,14 @@ set(VIKR_GRAPHICS_GL4_DIR ${VIKR_GRAPHICS_DIR}/gl4/)
 if (vulkan)
   set(VIKR_GLOB
     ${VIKR_GLOB}
+    ${VIKR_GRAPHICS_VK_DIR}/vk_buffer.hpp
+    ${VIKR_GRAPHICS_VK_DIR}/vk_buffer.cpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_context.cpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_context.hpp
+    ${VIKR_GRAPHICS_VK_DIR}/vk_instance.hpp
+    ${VIKR_GRAPHICS_VK_DIR}/vk_instance.cpp
+    ${VIKR_GRAPHICS_VK_DIR}/vk_phydevice.hpp
+    ${VIKR_GRAPHICS_VK_DIR}/vk_phydevice.cpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_pipeline_state.hpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_pipeline_state.cpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_device.hpp
@@ -22,6 +28,8 @@ endif()
 # OpenGL Always enabled!
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_GRAPHICS_GL4_DIR}/gl4_buffer.hpp
+  ${VIKR_GRAPHICS_GL4_DIR}/gl4_buffer.cpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_context.hpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_context.cpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_device.hpp
@@ -42,6 +50,7 @@ set(VIKR_GLOB
   ${VIKR_GRAPHICS_DIR}/depthmode.hpp
   ${VIKR_GRAPHICS_DIR}/stencildepth.hpp
   ${VIKR_GRAPHICS_DIR}/viewport.hpp
+  ${VIKR_GRAPHICS_DIR}/buffer.hpp
   ${VIKR_GRAPHICS_DIR}/graphics_command.hpp
   ${VIKR_GRAPHICS_DIR}/graphics_command.cpp
   ${VIKR_GRAPHICS_DIR}/pipeline_state.hpp

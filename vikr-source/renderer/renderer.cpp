@@ -35,7 +35,7 @@ Renderer *Renderer::renderer = nullptr;
 
 Renderer::Renderer()
   : camera(nullptr)
-  , clear_color(glm::vec3(0.1f, 0.1f, 0.1f)) 
+  , clear_color(glm::vec4(0.1f, 0.1f, 0.1f, 0.1f)) 
 { 
 }
 
@@ -59,7 +59,7 @@ vvoid Renderer::PushBack(SceneNode *obj) {
     std::set<SceneNode *> visited;
     stack.push_back(obj);
     while (!stack.empty()) {
-      SceneNode *trav = stack.front();
+      SceneNode *trav = stack.back();
       stack.pop_back();
       if (visited.find(trav) == visited.end()) {
         for (auto it : trav->children) {
@@ -101,6 +101,8 @@ vint32 Renderer::CleanupResources() {
 
 
 vvoid Renderer::Render() {
+  m_renderDevice->GetContext()->Clear();
+  m_renderDevice->GetContext()->ClearWithColor(clear_color);
   m_renderQueue.Sort();
   // Record Commands.
   CommandBuffer command_buffer; 
@@ -109,7 +111,6 @@ vvoid Renderer::Render() {
   for (RenderCommand *command : render_commands) {
     command->Record(&command_buffer);
   }
-
   m_renderDevice->GetContext()->ExecuteCommands(&command_buffer);
   m_renderQueue.Clear();
 }
@@ -117,7 +118,13 @@ vvoid Renderer::Render() {
 
 vint32 Renderer::Init(RenderDevice *device) {
   m_renderDevice = device;
-
+  m_renderQueue.RegisterBatchComparator([] (RenderCommand *a, RenderCommand *b) -> vint32 {
+    if (a->GetCommandType() > b->GetCommandType()) {
+      return true;
+    } else {
+      return false;
+    }
+  });
   return 1;
 }
 } // vikr

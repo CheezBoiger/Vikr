@@ -51,7 +51,7 @@ SceneNode *SceneNode::AddChild(SceneNode *obj) {
   SceneNode *node = nullptr;
   obj->SetParent(this);
   node = children[obj->guid];
-  children[obj->guid] = node;
+  children[obj->guid] = obj;
   return node;
 }
 

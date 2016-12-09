@@ -14,30 +14,12 @@ const std::string Material::kDefaultName = "default";
 Material::Material(Shader *shader, std::string name)
   : m_name(name)
   , m_shader(shader)
-  , has_depth(true)
-  , is_culling(true)
-  , is_blending(false)
-  , m_frontface(FrontFace::vikr_COUNTER_CLOCKWISE)
-  , m_cullface(CullFace::vikr_BACK_FACE)
-  , m_depth_func(DepthFunc::vikr_DEPTH_LESS)
-  , m_blend_src(BlendFunc::vikr_BLEND_SRC_ALPHA)
-  , m_blend_dst(BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA)
-  , m_blend_equation(BlendEq::vikr_BLEND_ADD)
 {
 }
 
 Material::Material(Shader *shader)
   : m_name(kDefaultName)
   , m_shader(shader)
-  , has_depth(true)
-  , is_culling(true)
-  , is_blending(false)
-  , m_frontface(FrontFace::vikr_COUNTER_CLOCKWISE)
-  , m_cullface(CullFace::vikr_BACK_FACE)
-  , m_depth_func(DepthFunc::vikr_DEPTH_LESS)
-  , m_blend_src(BlendFunc::vikr_BLEND_SRC_ALPHA)
-  , m_blend_dst(BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA)
-  , m_blend_equation(BlendEq::vikr_BLEND_ADD)
 {
 }
 
@@ -57,10 +39,6 @@ vvoid Material::SetTexture(std::string name, Texture *texture, vuint32 i) {
       case vikr_TEXTURE_3D:       m_uniform_samplers[name].type = vikr_SAMPLER3D;    break;
       case vikr_TEXTURE_CUBEMAP:  m_uniform_samplers[name].type = vikr_SAMPLERCUBE;  break;
       default:                    m_uniform_samplers[name].type = vikr_SAMPLER2D;    break;
-    }
-    if (m_shader) {
-      m_shader->Use();
-      m_shader->SetValue(name, (vint32)i); 
     }
   }
 }

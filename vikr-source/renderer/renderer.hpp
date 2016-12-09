@@ -61,7 +61,7 @@ public:
   virtual vvoid PushBack(Light *light) override;
   virtual vvoid Sort() override { m_renderQueue.Sort(); }
 
-  vvoid SetClearColor(glm::vec3 cc) { clear_color = cc; }
+  vvoid SetClearColor(glm::vec4 cc) { clear_color = cc; }
   glm::vec3 GetClearColor() { return clear_color; }
   vbool IsRendering() { return rendering; }
 
@@ -113,7 +113,7 @@ protected:
   */
   RenderDevice *m_renderDevice          = nullptr;
 
-  glm::vec3 clear_color;
+  glm::vec4 clear_color;
   Camera *camera;  
 private:
   /**

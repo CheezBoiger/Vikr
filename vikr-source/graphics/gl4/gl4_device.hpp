@@ -33,12 +33,12 @@ public:
 
   Material *CreateMaterial() override;
 
-  vuint32 CreateVertexBufferId(std::vector<Vertex> &vertices) override;
-  vuint32 CreateElementBufferId(std::vector<vuint32> &indices) override;
+  vuint32 CreateVertexBufferId(std::vector<Vertex> &vertices, VertexUsageType type) override;
+  vuint32 CreateElementBufferId(std::vector<vuint32> &indices, VertexUsageType type) override;
 
-  ResourceManager *GetResourceManager() override;
+  ResourceManager *GetResourceManager() override { return &manager; }
 
-  RenderContext *GetContext() override;
+  RenderContext *GetContext() override { return &context; }
 
 private:
   

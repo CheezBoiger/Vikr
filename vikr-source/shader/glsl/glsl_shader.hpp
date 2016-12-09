@@ -20,18 +20,6 @@ public:
   vvoid Use() override { UseProgram(shader_id); }
   vvoid Cleanup() override { glDeleteProgram(shader_id); }
 
-  vvoid SetValue(std::string name, vint32 value) override;
-  vvoid SetValue(std::string name, vbool value)  override;
-  vvoid SetValue(std::string name, vreal32 value) override;
-  vvoid SetValue(std::string name, vreal64 value) override;
-  vvoid SetValue(std::string name, glm::vec2 value) override;
-  vvoid SetValue(std::string name, glm::vec3 value) override;
-  vvoid SetValue(std::string name, glm::vec4 value) override;
-  vvoid SetValue(std::string name, glm::mat2 value) override;
-  vvoid SetValue(std::string name, glm::mat3 value) override;
-  vvoid SetValue(std::string name, glm::mat4 value) override;
-
-private:
 };
 } // vikr
 #endif // __VIKR_GLSL_SHADER_HPP

@@ -31,20 +31,8 @@ public:
   vvoid SetIncludeSearchPath(std::string path) { include_searchpath = path; }
   virtual vvoid Use() = 0;
   virtual vvoid Cleanup() = 0;
-  vuint32 GetShaderId() { return shader_id; }
+  vuint32 GetProgramId() { return shader_id; }
   vbool IsLinked() { return is_linked; }
-
-  virtual vvoid SetValue(std::string name, vint32 value) = 0;
-  virtual vvoid SetValue(std::string name, vbool value) = 0;
-  virtual vvoid SetValue(std::string name, vreal32 value) = 0;
-  virtual vvoid SetValue(std::string name, vreal64 value) = 0;
-  virtual vvoid SetValue(std::string name, glm::vec2 value) = 0;
-  virtual vvoid SetValue(std::string name, glm::vec3 value) = 0;
-  virtual vvoid SetValue(std::string name, glm::vec4 value) = 0;
-  virtual vvoid SetValue(std::string name, glm::mat2 value) = 0;
-  virtual vvoid SetValue(std::string name, glm::mat3 value) = 0;
-  virtual vvoid SetValue(std::string name, glm::mat4 value) = 0;
-
 
   ShaderType GetShaderType() { return shader_type; }
 

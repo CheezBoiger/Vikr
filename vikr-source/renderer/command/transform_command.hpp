@@ -21,7 +21,9 @@ public:
     : RenderCommand(RenderCommandType::COMMAND_TRANSFORM)
     , m_transform(transform) { }
 
-  vvoid Record(CommandBuffer *buffer) override;
+  vvoid Record(CommandBuffer *buffer) override {
+    
+  }
 
   Transform *m_transform;
 private:

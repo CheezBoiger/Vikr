@@ -26,6 +26,7 @@ class Viewport;
 class Shader;
 class CommandBuffer;
 class PipelineState;
+class ShaderUniformParams;
 
 
 /**
@@ -102,17 +103,24 @@ public:
   virtual vvoid ChangeTopology(Topology topology) = 0;
 
   /**
-    The current shader in the context.
-  */
-  virtual Shader *GetCurrentShader() = 0;
-
-  /**
     Digest, or execute commands immediately.
   */
   virtual vvoid ExecuteCommands(CommandBuffer *command_buffer) = 0;
 
+  /**
+    Configures the pipeline state when needed.
+  */
   virtual vvoid ConfigurePipelineState(PipelineState *state) = 0;
-  virtual vvoid UseShader(Shader *shader) = 0;
+
+  /**
+    Sets the Shader uniforms when needed.
+  */
+  virtual vvoid SetShaderUniforms(ShaderUniformParams *params) = 0;
+
+  /**
+    Applies the shader program within the context.
+  */
+  virtual vvoid ApplyShaderProgram(Shader *shader) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP

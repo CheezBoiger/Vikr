@@ -36,6 +36,7 @@ class RenderDevice {
   VIKR_DISALLOW_COPY_AND_ASSIGN(RenderDevice);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(RenderDevice);
+  RenderDevice() { }
   virtual ~RenderDevice() { }
 
   virtual std::string GetShaderLanguage() = 0;
@@ -67,9 +68,9 @@ public:
   /**
     Create vertex buffer id.
   */
-  virtual vuint32 CreateVertexBufferId(std::vector<Vertex> &vertices) = 0;
+  virtual vuint32 CreateVertexBufferId(std::vector<Vertex> &vertices, VertexUsageType type) = 0;
 
-  virtual vuint32 CreateElementBufferId(std::vector<vuint32> &indices) = 0;
+  virtual vuint32 CreateElementBufferId(std::vector<vuint32> &indices, VertexUsageType type) = 0;
 
   virtual ResourceManager *GetResourceManager() = 0;
   virtual RenderContext *GetContext() = 0;
