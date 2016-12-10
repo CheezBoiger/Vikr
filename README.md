@@ -5,7 +5,7 @@ engine...
 
 # Redesign
 This engine is going to be completely redesigned, The currently implementation is creating much more 
-code smell that expected, and the further it is becoming complicated, the more it begins to pile on
+code smell than expected, and the further it is becoming complicated, the more it begins to pile on
 into a huge mess. This engine **IS UNDERGOING A MAJOR REDESIGN.**
 
 
@@ -13,6 +13,8 @@ into a huge mess. This engine **IS UNDERGOING A MAJOR REDESIGN.**
 Vikr is still in development, however, this renderer plugin is designed for use in both
 academia, game engines, and for research. It is still at its low implementation, and there
 is a ton of work to do on it before it can be released as a stable engine. 
+
+![alt tag](https://raw.githubusercontent.com/Cheezboiger/vikr/master/samples/dragon_ex.png)
   
 Currently all resources and implementations within the engine source code is subject to change,
 so keep in mind that this engine is barely newborn (Vulkan isn't even implemented yet,
