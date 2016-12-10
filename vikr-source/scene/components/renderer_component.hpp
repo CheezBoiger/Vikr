@@ -17,6 +17,8 @@ namespace vikr {
 /**
   Renderer Component is the component that is used to determine the renderer type
   for the MeshComponent (Provided that the SceneNode contains a mesh to work with.
+
+  TODO(): We cannot let the material set the shader unless absolutely required!
 */
 class RendererComponent : public SceneComponent {
 public:

@@ -125,12 +125,17 @@ int main(int c, char* args[]) {
   Cube cube;
   TransformComponent *comp = node->AddComponent<TransformComponent>();
   comp->transform.Scale = glm::vec3(0.1f);
+  comp->transform.Position = glm::vec3(0);
   comp->Update();
   Mesh *cube_mesh = 
     renderer.GetDevice()->
     GetResourceManager()->
     CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+  Mesh *light_mesh =
+    renderer.GetDevice()->GetResourceManager()->
+    CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   cube_mesh->Create(renderer.GetDevice());
+  light_mesh->Create(renderer.GetDevice());
   default_mat->SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
   default_mat->SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
 
@@ -144,10 +149,18 @@ int main(int c, char* args[]) {
 
   PointLight plight;
   plight.SetPos(glm::vec3(1.0f, 1.0f, 1.0f));
-  LightComponent lc;
-  lc.light = &plight;
-  lc.Update();
-  
+  SceneNode *light_object = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
+  MeshComponent *mc = light_object->AddComponent<MeshComponent>();
+  mc->mesh = light_mesh;
+  TransformComponent *light_c = light_object->AddComponent<TransformComponent>();
+  light_c->transform.Position = glm::vec3(5.0f, 5.0f, 5.0f);
+
+  SceneNode *light_node = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
+  LightComponent *lc = light_node->AddComponent<LightComponent>();
+  lc->light = &plight;
+
+  light_object->AddChild(light_node);
+  light_object->Update();
 
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
@@ -155,11 +168,11 @@ int main(int c, char* args[]) {
     Do_Movement();
     VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
     camera.Update();
-    lc.light->SetPos(glm::vec3(std::sin(GetTime()), 1.0f, 1.0f));
-    renderer.PushBack(lc.GetCommand());
+    lc->light->SetPos(glm::vec3(std::sin(GetTime()), 1.0f, 1.0f));
     renderer.PushBack(&cc);
     renderer.PushBack(cube1);
     renderer.PushBack(node);
+    renderer.PushBack(light_object);
     renderer.Render();
     DoubleBufferSwap(window);
   }

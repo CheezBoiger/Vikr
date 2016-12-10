@@ -127,6 +127,8 @@ vint32 Renderer::Init(RenderDevice *device) {
     }
   });
   m_renderDevice->GetContext()->EnableDepthMode(true);
+  m_renderDevice->GetContext()->EnableCullMode(true);
+
   return 1;
 }
 } // vikr

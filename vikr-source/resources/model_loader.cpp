@@ -65,8 +65,8 @@ SceneNode *ModelLoader::ProcessNode(
       }
     } else {
       SceneNode *child = Scene::CreateSceneNode(device);
-      MeshComponent *mc = scene_node->AddComponent<MeshComponent>();
-      RendererComponent *rp = scene_node->AddComponent<RendererComponent>();
+      MeshComponent *mc = child->AddComponent<MeshComponent>();
+      RendererComponent *rp = child->AddComponent<RendererComponent>();
       mc->mesh = m_mesh;
       rp->material = m_material;
       child->Update();
@@ -135,7 +135,7 @@ Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material,
         filepath, 
         true);
     if (texture) {
-      m_material->SetTexture("vikr_TexAlbedo", texture, 3);
+      m_material->SetTexture("vikr_TexAlbedo", texture, 0);
     }
   }
   if (material->GetTextureCount(aiTextureType_NORMALS) > 0) {
@@ -148,7 +148,7 @@ Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material,
         filepath, 
         true);
     if (texture) {
-      m_material->SetTexture("vikr_TexNormal", texture, 4);
+      m_material->SetTexture("vikr_TexNormal", texture, 1);
     }
   }
   if(material->GetTextureCount(aiTextureType_SPECULAR) > 0) {
@@ -161,7 +161,7 @@ Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material,
         filepath, 
         true);
     if (texture) {
-      m_material->SetTexture("vikr_TexSpecular", texture, 5);
+      m_material->SetTexture("vikr_TexSpecular", texture, 2);
     }
   }
   if(material->GetTextureCount(aiTextureType_SHININESS) > 0) {
@@ -174,7 +174,7 @@ Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material,
         filepath, 
         true);
     if (texture) {
-      m_material->SetTexture("vikr_TexRoughness", texture, 6);  
+      m_material->SetTexture("vikr_TexRoughness", texture, 3);  
     }
   }
   if (material->GetTextureCount(aiTextureType_AMBIENT) > 0) {
@@ -187,7 +187,7 @@ Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material,
         filepath, 
         true);
     if (texture) {
-      m_material->SetTexture("vikr_TexAmbient", texture, 7);
+      m_material->SetTexture("vikr_TexAmbient", texture, 4);
     }
   }
   return m_material;
@@ -199,6 +199,6 @@ std::string ModelLoader::ProcessPath(aiString *path, std::string dir) {
   if (m_path.find('/') == std::string::npos) {
     m_path = dir + "/" + m_path;
   }
-  return "cat";
+  return m_path;
 }
 } // vikr

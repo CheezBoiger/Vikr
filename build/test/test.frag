@@ -10,6 +10,8 @@ in vec3 FragCoords;
 out vec4 color;
 
 
+
+
 struct PointLight {
   vec3 position;
   float constant;
@@ -27,6 +29,7 @@ uniform vec3 obj_specular;
 uniform vec3 obj_diffuse;
 uniform bool blinn;
 
+
 uniform vec3 light_pos;
 uniform vec3 light_ambient;
 uniform vec3 light_diffuse;
@@ -35,12 +38,11 @@ uniform float constant;
 uniform float linear;
 uniform float quadratic;
 
-
-//uniform sampler2D vikr_TexAlbedo;
-//uniform sampler2D vikr_TexNormal;
-//uniform sampler2D vikr_TexSpecular;
-//uniform sampler2D vikr_TexRoughness;
-//uniform sampler2D vikr_TexAmbient;
+uniform sampler2D vikr_TexAlbedo;
+uniform sampler2D vikr_TexNormal;
+uniform sampler2D vikr_TexSpecular;
+uniform sampler2D vikr_TexRoughness;
+uniform sampler2D vikr_TexAmbient;
 
 
 vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 view_dir) {
@@ -61,9 +63,9 @@ vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 vi
   }
   float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
    
-  vec3 ambient = light.ambient * obj_diffuse;
-  vec3 diffuse = light.diffuse * diff * obj_diffuse;
-  vec3 specular = light_diffuse * spec * obj_specular; // assuming a bright white color. Can be substituted with light_color
+  vec3 ambient = light.ambient * vec3(texture(vikr_TexAlbedo, TexCoords));
+  vec3 diffuse = light.diffuse * diff * vec3(texture(vikr_TexAlbedo, TexCoords));
+  vec3 specular = light_specular * spec * vec3(texture(vikr_TexSpecular, TexCoords)); // assuming a bright white color. Can be substituted with light_color
   ambient *= attenuation;
   diffuse *= attenuation;
   specular *= attenuation;

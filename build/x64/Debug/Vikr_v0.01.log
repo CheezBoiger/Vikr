@@ -1,0 +1,19 @@
+﻿  keyboard.cpp
+  vk_phydevice.cpp
+  vk_pipeline_state.cpp
+  cube.cpp
+  sphere.cpp
+  first_person_camera.cpp
+  guid_generator.cpp
+  scene_node.cpp
+D:\cmgarcia\github\Vikr\vikr-source\renderer/command/primitive_command.hpp(28): warning C4267: 'argument': conversion from 'size_t' to 'vikr::vuint32', possible loss of data
+  scene.cpp
+  texture.cpp
+  stb_image.cpp
+  model_loader.cpp
+D:\cmgarcia\github\Vikr\vikr-source\renderer/command/primitive_command.hpp(28): warning C4267: 'argument': conversion from 'size_t' to 'vikr::vuint32', possible loss of data
+  Generating Code...
+graphics_command.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+gl4_framebuffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+gl4_buffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\x64\Debug\Vikr_v0.01.lib
