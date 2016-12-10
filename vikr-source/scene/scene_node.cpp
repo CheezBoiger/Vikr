@@ -88,12 +88,12 @@ SceneNode *SceneNode::RemoveChild(std::string tag) {
 }
 
 
-vbool SceneNode::RemoveComponent(guid_t guid) {
+vbool SceneNode::RemoveComponent(ComponentType type) {
   vbool removed = false;
-  auto it = components.find(guid);
+  auto it = components.find(type);
   if (it != components.end()) { 
-    m_commandList.Remove(it->second->GetGUID());
-    components.erase(it->second->GetGUID());
+    m_commandList.Remove(it->second->GetComponentType());
+    components.erase(it->second->GetComponentType());
     removed = true;
   }
   return removed;

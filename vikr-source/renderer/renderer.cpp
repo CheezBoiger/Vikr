@@ -121,11 +121,12 @@ vint32 Renderer::Init(RenderDevice *device) {
   m_renderDevice = device;
   m_renderQueue.RegisterBatchComparator([] (RenderCommand *a, RenderCommand *b) -> vint32 {
     if (a->GetCommandType() > b->GetCommandType()) {
-      return false;
+      return true;
     } else {
       return false;
     }
   });
+  m_renderDevice->GetContext()->EnableDepthMode(true);
   return 1;
 }
 } // vikr

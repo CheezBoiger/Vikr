@@ -36,11 +36,11 @@ uniform float linear;
 uniform float quadratic;
 
 
-uniform sampler2D vikr_TexAlbedo;
-uniform sampler2D vikr_TexNormal;
-uniform sampler2D vikr_TexSpecular;
-uniform sampler2D vikr_TexRoughness;
-uniform sampler2D vikr_TexAmbient;
+//uniform sampler2D vikr_TexAlbedo;
+//uniform sampler2D vikr_TexNormal;
+//uniform sampler2D vikr_TexSpecular;
+//uniform sampler2D vikr_TexRoughness;
+//uniform sampler2D vikr_TexAmbient;
 
 
 vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 frag_coord, vec3 view_dir) {
@@ -85,7 +85,7 @@ void main() {
   light.diffuse = light_diffuse;
   light.specular = light_specular;
   result = CalculatePointLight(light, norm, FragCoords, view_dir);
-  //color = vec4(result, 1.0f); 
+  color = vec4(result, 1.0f); 
   //color = vec4(texture(texas, TexCoords));
-  color = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+  //color = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }

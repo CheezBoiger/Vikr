@@ -2,6 +2,7 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 // 
 #include <scene/components/scene_component.hpp>
+#include <initializer_list>
 
 
 namespace vikr {

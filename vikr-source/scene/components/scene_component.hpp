@@ -10,6 +10,8 @@
 #include <scene/guid_generator.hpp>
 #include <renderer/command/render_command.hpp>
 
+#include <map>
+
 
 namespace vikr {
 

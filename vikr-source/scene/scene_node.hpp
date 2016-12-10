@@ -9,14 +9,12 @@
 #include <scene/guid_generator.hpp>
 #include <renderer/command/render_command.hpp>
 #include <renderer/command/group_command.hpp>
+#include <scene/components/scene_component.hpp>
 #include <unordered_map>
 #include <string>
 
 
 namespace vikr {
-
-
-class SceneComponent;
 
 
 /**
@@ -97,36 +95,36 @@ public:
     static_assert(std::is_base_of<SceneComponent, Component>(), 
       "Component is not a SceneComponent!"); 
     std::unique_ptr<Component> component = std::make_unique<Component>();
-    guid_t ref = component->GetGUID();
-    components[component->GetGUID()] = std::move(component);
-    m_commandList.Insert(ref, components[ref].get()->GetCommand());
-    return static_cast<Component *>(components[ref].get());
+    ComponentType type = component->GetComponentType();
+    guid_t guid = component->GetGUID();
+    components[type] = std::move(component);
+    m_commandList.Insert(guid, components[type].get()->GetCommand());
+    return static_cast<Component *>(components[type].get());
   }
 
   /**
     Get the component inside this SceneNode.
   */
   template<typename Component>
-  Component *GetComponent(guid_t guid) {
-    static_assert(!std::is_copy_assignable<Component>(),
-      "Component needs to be moveable!");
+  Component *GetComponent(ComponentType type) {
     static_assert(std::is_base_of<SceneComponent, Component>(),
       "Component is not a SceneComponent!");
     Component *component = nullptr;
-    auto it = components.find(guid);
+    auto it = components.find(type);
     if (it != components.end()) {
       component = 
-        static_cast<Component *>(components[it->second->GetGUID()].get());
+        static_cast<Component *>(components[it->second->GetComponentType()].get());
     }
     return component;
   }
+
 
   /**
     Remove a SceneComponent from the SceneNode with the specified guid.
     Returns true if removed SceneComponent, otherwise false returned if 
     SceneComponent guid doesn't exist.
   */
-  vbool RemoveComponent(guid_t guid);
+  vbool RemoveComponent(ComponentType type);
 
   /**
     Remove a SceneComponent with the specified tag name. Returns 
@@ -165,7 +163,7 @@ protected:
   /**
     The SceneNode's associated components.
   */
-  std::unordered_map<guid_t, std::unique_ptr<SceneComponent> > components;
+  std::map<ComponentType, std::unique_ptr<SceneComponent> > components;
 
   /**
     The associated graphical unique id of the SceneNode.

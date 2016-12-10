@@ -6,6 +6,8 @@
 
 
 #include <scene/components/scene_component.hpp>
+#include <renderer/command/light_command.hpp>
+#include <lighting/light.hpp>
 
 
 namespace vikr {
@@ -14,11 +16,21 @@ namespace vikr {
 class LightComponent : public SceneComponent {
 public:
 
-  LightComponent();
+  LightComponent() 
+    : SceneComponent(vikr_COMPONENT_LIGHT)
+  { }
 
-  vvoid Update() override;
+  vvoid Update() override {
+    m_command.light = light;
+    // updating?
+  }
 
-  RenderCommand *GetCommand() override;
+  RenderCommand *GetCommand() override { return &m_command; }
+
+  Light *light;
+
+private:
+  LightCommand m_command;
 };
 } // vikr
 #endif // __VIKR_LIGHT_COMPONENT_HPP

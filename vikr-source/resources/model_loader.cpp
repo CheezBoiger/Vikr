@@ -50,7 +50,7 @@ SceneNode *ModelLoader::ProcessNode(
   std::string dir) 
 {
   SceneNode *scene_node = Scene::CreateSceneNode(device);
-  scene_node->AddComponent<TransformComponent>();
+  //scene_node->AddComponent<TransformComponent>();
   for (vuint32 i = 0; i < node->mNumMeshes; ++i) {
     aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
     aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
@@ -97,10 +97,12 @@ Mesh *ModelLoader::ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene
       glm::vec3(mesh->mNormals[i].x,
         mesh->mNormals[i].y,
         mesh->mNormals[i].z);
-    if (mesh->mTextureCoords > 0) {
+    if (mesh->mTextureCoords > 0 && mesh->mTextureCoords[0]) {
       vertex.uv = 
         glm::vec2(mesh->mTextureCoords[0][i].x,
           mesh->mTextureCoords[0][i].y);
+    } else {
+      vertex.uv = glm::vec2(0.0f);
     }
     if (mesh->mTangents > 0) {
       // Calculate tangents.

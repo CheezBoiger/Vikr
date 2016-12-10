@@ -7,8 +7,6 @@
 #include <vikr.hpp>
 #include <math/shape/cube.hpp>
 #include <util/vikr_log.hpp>
-#include <glm/vec4.hpp>
-#include <glm/mat4x4.hpp>
 #include <glm/glm.hpp>
 #include <shader/material.hpp>
 #include <scene/camera.hpp>
@@ -25,6 +23,7 @@
 #include <scene/components/renderer_component.hpp>
 #include <scene/components/mesh_component.hpp>
 #include <scene/components/camera_component.hpp>
+#include <scene/components/light_component.hpp>
 #include <graphics/gl4/gl4_device.hpp>
 #include <math/shape/quad.hpp>
 #include <glm/gtx/compatibility.hpp>
@@ -115,6 +114,7 @@ int main(int c, char* args[]) {
   renderer.GetDevice()->StoreShader("light", "test.vert", "light.frag");
   renderer.GetDevice()->StoreShader("screen", "screen_shader.vert", "screen_shader.frag");
   SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), "nanosuit/nanosuit.obj", "suitboy");
+  
   Material *default_mat = renderer.GetDevice()->CreateMaterial();
   default_mat->SetShader(renderer.GetDevice()->GetShader("test"));
 
@@ -123,24 +123,31 @@ int main(int c, char* args[]) {
 
   Quad quad;
   Cube cube;
-
+  TransformComponent *comp = node->AddComponent<TransformComponent>();
+  comp->transform.Scale = glm::vec3(0.1f);
+  comp->Update();
   Mesh *cube_mesh = 
     renderer.GetDevice()->
     GetResourceManager()->
     CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
   cube_mesh->Create(renderer.GetDevice());
-  Transform t;
-  PrimitiveCommand pc;
-  pc.m_mesh = cube_mesh;  
-  TransformCommand tc;
-  tc.m_transform = &t;
-  MaterialCommand mc;
-  mc.m_material = default_mat;
   default_mat->SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
-  default_mat->SetVector3fv("obj_diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+  default_mat->SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
 
+  SceneNode *cube1 = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
+  cube1->AddComponent<MeshComponent>()->mesh = cube_mesh;
+  cube1->AddComponent<TransformComponent>();
+  cube1->AddComponent<RendererComponent>()->material = default_mat;
+  cube1->Update();
   CameraCommand cc;
   cc.camera = &camera;
+
+  PointLight plight;
+  plight.SetPos(glm::vec3(1.0f, 1.0f, 1.0f));
+  LightComponent lc;
+  lc.light = &plight;
+  lc.Update();
+  
 
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
@@ -148,14 +155,10 @@ int main(int c, char* args[]) {
     Do_Movement();
     VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
     camera.Update();
-
-    t.Position = glm::vec3(0.0f, 0.0f, 0.0f);    
-    t.CalculateTransform();
-
-    renderer.PushBack(&mc);
+    lc.light->SetPos(glm::vec3(std::sin(GetTime()), 1.0f, 1.0f));
+    renderer.PushBack(lc.GetCommand());
     renderer.PushBack(&cc);
-    renderer.PushBack(&tc);
-    renderer.PushBack(&pc);
+    renderer.PushBack(cube1);
     renderer.PushBack(node);
     renderer.Render();
     DoubleBufferSwap(window);
