@@ -53,9 +53,10 @@ public:
   virtual Mesh *CreateMesh(std::vector<Vertex> vertices,
     std::vector<vuint32> indices = std::vector<vuint32>()) = 0;
 
-  virtual Material *CreateMaterial() = 0;
+  virtual Material *CreateMaterial(std::string mat_name) = 0;
 
   virtual Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) = 0;
+  virtual Texture *GetTexture(std::string image_path) = 0;
 
   virtual vint32 StoreShader(std::string shader_name,
                              std::string vs,

@@ -37,10 +37,22 @@ public:
   static SceneNode *ImportModel(RenderDevice *device, std::string path, std::string name);
 
 private:
-  static SceneNode *ProcessNode(RenderDevice *device, aiNode *node, const aiScene *scene, std::string dir);
+  static SceneNode *ProcessNode(RenderDevice *device
+    , aiNode *node
+    , const aiScene *scene
+    , std::string dir
+    , std::string name);
+
   static Mesh *ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene *scene);
-  static Material *ParseMaterial(RenderDevice *device, aiMaterial *material, std::string dir);
+
+  static Material *ParseMaterial(RenderDevice *device
+    , aiMaterial *material
+    , std::string dir
+    , std::string name);
+
   static std::string ProcessPath(aiString *path, std::string dir);
+
+  static std::vector<Texture *> loaded_textures;
 };
 } // vikr
 #endif // __VIKR_MODEL_LOADER_HPP

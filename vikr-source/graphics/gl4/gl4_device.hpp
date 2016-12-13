@@ -31,10 +31,10 @@ public:
   vvoid StoreShader(std::string name,
     std::string vs, std::string fs, std::string include = ".") override;
 
-  Material *CreateMaterial() override;
+  Material *CreateMaterial(std::string name) override;
 
-  std::unique_ptr<VertexBuffer> CreateVertexBufferId(std::vector<Vertex> &vertices, VertexUsageType type) override;
-  vuint32 CreateElementBufferId(std::vector<vuint32> &indices, VertexUsageType type) override;
+  std::unique_ptr<VertexBuffer> CreateVertexBuffer(std::vector<Vertex> &vertices, 
+    std::vector<vuint32> &indices, VertexUsageType type) override;
 
   ResourceManager *GetResourceManager() override { return &manager; }
 

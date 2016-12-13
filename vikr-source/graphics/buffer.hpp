@@ -32,6 +32,10 @@ public:
     Store a vertex buffer id into this VertexBuffer
   */
   virtual vvoid StoreVertexBufferId(vuint32 vbo) = 0;
+
+  virtual vuint32 GetElementBufferId() = 0;
+
+  virtual vvoid StoreElementBufferId(vuint32 ibo) = 0;
 };
 } // vikr
 #endif // __VIKR_VERTEX_BUFFER_HPP

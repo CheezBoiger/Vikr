@@ -64,14 +64,13 @@ public:
   /**
     Create material, which is handled by resources.
   */
-  virtual Material *CreateMaterial() = 0;
+  virtual Material *CreateMaterial(std::string name) = 0;
 
   /**
     Create vertex buffer id.
   */
-  virtual std::unique_ptr<VertexBuffer> CreateVertexBufferId(std::vector<Vertex> &vertices, VertexUsageType type) = 0;
-
-  virtual vuint32 CreateElementBufferId(std::vector<vuint32> &indices, VertexUsageType type) = 0;
+  virtual std::unique_ptr<VertexBuffer> CreateVertexBuffer(std::vector<Vertex> &vertices,
+      std::vector<vuint32> &indices, VertexUsageType type) = 0;
 
   virtual ResourceManager *GetResourceManager() = 0;
   virtual RenderContext *GetContext() = 0;

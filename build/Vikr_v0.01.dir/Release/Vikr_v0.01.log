@@ -1,8 +1,4 @@
 ﻿  model_loader.cpp
-  resource_manager.cpp
-  renderer_component.cpp
-  scene_node.cpp
-  Generating Code...
 graphics_command.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 gl4_framebuffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 gl4_buffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library

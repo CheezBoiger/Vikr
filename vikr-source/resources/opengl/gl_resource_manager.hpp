@@ -40,9 +40,10 @@ public:
   Mesh *CreateMesh(std::vector<Vertex> vertices,
     std::vector<vuint32> indices = std::vector<vuint32>()) override;
 
-  Material *CreateMaterial() override;
+  Material *CreateMaterial(std::string mat_name) override;
 
   Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;
+  Texture *GetTexture(std::string image_path) override;
 
   vint32 StoreShader(std::string shader_name,
                      std::string vs,
@@ -67,8 +68,8 @@ class GLResources : public Resources {
   /**
   Contains material data.
   */
-  static std::vector<std::shared_ptr<Material> > materials;
-  static std::vector<std::shared_ptr<GLTexture> > textures;
+  static std::map<std::string, std::shared_ptr<Material> > materials;
+  static std::map<std::string, std::shared_ptr<GLTexture> > textures;
 
   friend class GLResourceManager;
 };

@@ -96,9 +96,9 @@ int main(int c, char* args[]) {
   GLFWwindow* window = VikrCreateGLFWwindow(screen_width, screen_height, "Vikr", nullptr, nullptr); // Windowed
   VikrMakeContextCurrent(window);
   camera.SetViewport(0, 0, screen_width, screen_height);
-  camera.SetClip(0.1, 1000);
+  camera.SetClip(0.1, 10000);
   camera.SetFOV(45.0f);
-  camera.SetSpeed(5.0f);
+  camera.SetSpeed(100.0f);
   camera.SetSensitivity(0.50f);
   camera.SetLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
   LoadGlad();
@@ -113,27 +113,38 @@ int main(int c, char* args[]) {
   renderer.GetDevice()->StoreShader("test", "test.vert", "test.frag", "../../libs/shader/GLSL");
   renderer.GetDevice()->StoreShader("light", "test.vert", "light.frag");
   renderer.GetDevice()->StoreShader("screen", "screen_shader.vert", "screen_shader.frag");
-  SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), "nanosuit/nanosuit.obj", "suitboy");
-  
-  Material *default_mat = renderer.GetDevice()->CreateMaterial();
+  SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), "common/sponza_obj/sponza.obj", "sponza");
+  SceneNode *nano = ModelLoader::ImportModel(renderer.GetDevice(), "nanosuit/nanosuit.obj", "suitboy");
+  Material *default_mat = renderer.GetDevice()->CreateMaterial("default_mat");
   default_mat->SetShader(renderer.GetDevice()->GetShader("test"));
 
-  Material *light_mat = renderer.GetDevice()->CreateMaterial();
+  Material *light_mat = renderer.GetDevice()->CreateMaterial("light_mat");
   light_mat->SetShader(renderer.GetDevice()->GetShader("light"));
+  light_mat->SetVector3fv("light_color", glm::vec3(1.0f, 1.0f, 1.0f));
 
   Quad quad;
   Cube cube;
+  // suitboy.
+  TransformComponent *suitcomp = nano->AddComponent<TransformComponent>();
+  RendererComponent *nanore = nano->AddComponent<RendererComponent>();
+  nanore->material = default_mat;
+  suitcomp->transform.Scale = glm::vec3(0.5f);
+  nano->Update();
+  
+  // sponza
   TransformComponent *comp = node->AddComponent<TransformComponent>();
-  comp->transform.Scale = glm::vec3(0.1f);
-  comp->transform.Position = glm::vec3(0);
-  comp->Update();
+  RendererComponent *rc = node->AddComponent<RendererComponent>();
+  rc->material = default_mat;
+  comp->transform.Scale = glm::vec3(0.05f);
+  comp->transform.Position = glm::vec3(0.0f, 0.0f, 0.0f);
+  node->Update();
   Mesh *cube_mesh = 
     renderer.GetDevice()->
     GetResourceManager()->
-    CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+    CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
   Mesh *light_mesh =
     renderer.GetDevice()->GetResourceManager()->
-    CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs());
+    CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
   cube_mesh->Create(renderer.GetDevice());
   light_mesh->Create(renderer.GetDevice());
   default_mat->SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -148,7 +159,6 @@ int main(int c, char* args[]) {
   cc.camera = &camera;
 
   PointLight plight;
-  plight.SetPos(glm::vec3(1.0f, 1.0f, 1.0f));
   SceneNode *light_object = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
   MeshComponent *mc = light_object->AddComponent<MeshComponent>();
   mc->mesh = light_mesh;
@@ -168,11 +178,14 @@ int main(int c, char* args[]) {
     Do_Movement();
     VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
     camera.Update();
-    lc->light->SetPos(glm::vec3(std::sin(GetTime()), 1.0f, 1.0f));
-    renderer.PushBack(&cc);
-    renderer.PushBack(cube1);
-    renderer.PushBack(node);
+    lc->light->SetPos(glm::vec3(std::sin(GetTime()), 5.0f, 5.0f));
+    light_c->transform.Position = lc->light->GetPos();
+    light_c->Update();
+    renderer.PushBack(rc->GetCommand());
     renderer.PushBack(light_object);
+    renderer.PushBack(node);
+    renderer.PushBack(nano);
+    renderer.PushBack(&cc);
     renderer.Render();
     DoubleBufferSwap(window);
   }

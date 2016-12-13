@@ -16,6 +16,9 @@ CommandBuffer::CommandBuffer()
 }
 
 
+/**
+  ShaderUniformSetter.
+*/
 class ShaderUniformSetter : public GraphicsCommand {
 public:
   ShaderUniformSetter(ShaderUniformParams *f)
@@ -30,6 +33,9 @@ private:
 };
 
 
+/**
+  DrawSetter.
+*/
 class DrawSetter : public GraphicsCommand {
 public:
   DrawSetter(vuint32 start, vuint32 vertices)
@@ -47,6 +53,9 @@ private:
 };
 
 
+/**
+  ShaderProgramSetter.
+*/
 class ShaderProgramSetter : public GraphicsCommand {
 public:
   ShaderProgramSetter(vuint32 program_id)
@@ -62,6 +71,9 @@ private:
 };
 
 
+/**
+  QueryVertexBufferSetter.
+*/
 class QueryVertexBufferSetter : public GraphicsCommand {
 public:
   QueryVertexBufferSetter(VertexBuffer *buf = nullptr)
@@ -75,6 +87,33 @@ public:
 private:
   VertexBuffer *buffer;
 };
+
+
+/**
+  DrawIndexedSetter.
+*/
+class DrawIndexedSetter : public GraphicsCommand {
+public:
+  DrawIndexedSetter(const vvoid *indices, vuint32 size) 
+    : indices(indices)
+    , size(size) 
+  { }
+  
+  vvoid Execute(RenderContext *context) override {
+    context->DrawIndexed(indices, size);
+  }
+
+private:
+  const vvoid *indices;
+  vuint32 size;
+};
+
+
+//------------------------------------------------------------------------------------
+//
+//                              Command Buffer Functions.
+//
+//------------------------------------------------------------------------------------
 
 
 vvoid CommandBuffer::Pushback(std::unique_ptr<GraphicsCommand> &command) {
@@ -99,7 +138,9 @@ vvoid CommandBuffer::SetDraw(vuint32 start, vuint32 vertices) {
 }
 
 
-vvoid CommandBuffer::SetDrawIndexed(const vvoid *indices, vuint32 vertices) {
+vvoid CommandBuffer::SetDrawIndexed(const vvoid *indices, vuint32 size) {
+  m_commandBuffer.push_back(
+    std::make_unique<DrawIndexedSetter>(indices, size));
 }
 
 
@@ -140,5 +181,10 @@ vvoid CommandBuffer::SetConfigurePipelineState(PipelineState *pipelinestate) {
 vvoid CommandBuffer::SetQueryVertexBuffer(VertexBuffer *buffer) {
   m_commandBuffer.push_back(
     std::make_unique<QueryVertexBufferSetter>(buffer));
+}
+
+
+vvoid CommandBuffer::Execute(RenderContext *context) {
+  context->ExecuteCommands(this);
 }
 } // vikr

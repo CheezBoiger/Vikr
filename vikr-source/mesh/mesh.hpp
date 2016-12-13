@@ -62,11 +62,6 @@ public:
     Grab the Vertex Buffer Object id of this mesh.
   */
   VertexBuffer *GetVertexBuffer() override { return m_vertexBuffer.get(); }
-  /**
-    Grab the Element Buffer Object id of this mesh. Currently only supporting
-    drawing of VBOs instead of EBOs.
-  */
-  vuint32 GetIndexBufferId() override { return m_ibo; }
 
   /**
     Grab the type of Graphics Pipeline that this mesh is associated with.
@@ -76,6 +71,11 @@ public:
     Grab our vertices? TODO(Garcia): This is kind of stupid... lulz.
   */
   std::vector<Vertex>& GetVertices() { return m_vertices; }
+
+  /**
+  */
+  std::vector<vuint32> &GetIndices() { return m_indices; }
+
   /**
     Get the name of the Mesh object.
   */
@@ -90,7 +90,6 @@ protected:
   std::string m_name;
   GraphicsPipeline m_render_type;
   std::unique_ptr<VertexBuffer> m_vertexBuffer;
-  vuint32 m_ibo;
   vbool is_transparent                  = false;
   VertexUsageType m_usage_type          = vikr_STATIC;
 

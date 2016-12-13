@@ -23,6 +23,7 @@
 #include <graphics/command_buffer.hpp>
 #include <graphics/graphics_command.hpp>
 #include <resources/resource_manager.hpp>
+#include <chrono>
 
 #include <set>
 
@@ -109,10 +110,18 @@ vvoid Renderer::Render() {
   CommandBuffer command_buffer; 
   RenderContext *context = m_renderDevice->GetContext();
   std::vector<RenderCommand *> &render_commands = m_renderQueue.GetCommandBuffer();
+  std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
   for (RenderCommand *command : render_commands) {
     command->Record(&command_buffer);
   }
+  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+  VikrLog::DisplayMessage(VIKR_NOTIFY, "Buffered time: " +
+    std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + "us");
+  start = std::chrono::steady_clock::now();
   m_renderDevice->GetContext()->ExecuteCommands(&command_buffer);
+  end = std::chrono::steady_clock::now();
+  VikrLog::DisplayMessage(VIKR_NOTIFY, "Offscreen render time: " +
+    std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + "us");
   m_renderQueue.Clear();
 }
 
@@ -120,14 +129,12 @@ vvoid Renderer::Render() {
 vint32 Renderer::Init(RenderDevice *device) {
   m_renderDevice = device;
   m_renderQueue.RegisterBatchComparator([] (RenderCommand *a, RenderCommand *b) -> vint32 {
-    if (a->GetCommandType() > b->GetCommandType()) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
   });
   m_renderDevice->GetContext()->EnableDepthMode(true);
   m_renderDevice->GetContext()->EnableCullMode(true);
+  //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  
 
   return 1;
 }

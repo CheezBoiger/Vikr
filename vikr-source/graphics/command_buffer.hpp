@@ -60,6 +60,8 @@ public:
   vvoid SetShaderUniforms(ShaderUniformParams *params);
   vvoid SetQueryVertexBuffer(VertexBuffer *buffer);
 
+  vvoid Execute(RenderContext *context);
+
 private:
 
   std::vector<std::unique_ptr<GraphicsCommand> > m_commandBuffer;

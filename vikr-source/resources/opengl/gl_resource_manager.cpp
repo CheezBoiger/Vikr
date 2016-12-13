@@ -16,8 +16,8 @@ std::unordered_map<std::string,
   std::pair<std::string, std::unique_ptr<GLSLShader> > > GLResources::shaders;
 
 std::vector<std::shared_ptr<Mesh> > GLResources::meshes;
-std::vector<std::shared_ptr<Material> > GLResources::materials;
-std::vector<std::shared_ptr<GLTexture> > GLResources::textures;
+std::map<std::string, std::shared_ptr<Material> > GLResources::materials;
+std::map<std::string, std::shared_ptr<GLTexture> > GLResources::textures;
 
 
 GLResourceManager::GLResourceManager()
@@ -29,6 +29,7 @@ GLResourceManager::GLResourceManager()
 vint32 GLResourceManager::StoreShader(std::string name, Shader *shader) {
   vint32 success = 0;
   if (shader && shader->IsLinked()) {
+    shader->SetName(name);
     GLResources::shaders[name] = std::make_pair(name, std::make_unique<GLSLShader>(
                     std::move(*static_cast<GLSLShader *>(shader))));
     success = true;
@@ -74,9 +75,10 @@ Mesh *GLResourceManager::CreateMesh(
 /**
   For now.
 */
-Material *GLResourceManager::CreateMaterial() {
+Material *GLResourceManager::CreateMaterial(std::string name) {
   std::shared_ptr<Material> material = std::make_shared<Material>();
-  GLResources::materials.push_back(material);
+  material->SetName(name);
+  GLResources::materials[material->GetName()] = material;
   return material.get();
 }
 
@@ -98,10 +100,15 @@ Texture *GLResourceManager::CreateTexture(TextureTarget target, std::string img_
   if(texture) {
     texture->Create(bytecode);
     texture->SetString(img_path);
-    GLResources::textures.push_back(texture);
+    GLResources::textures[img_path] = texture;
   }
   stbi_image_free(bytecode);
   return texture.get();
+}
+
+
+Texture *GLResourceManager::GetTexture(std::string img_path) {
+  return GLResources::textures[img_path].get();
 }
 
 

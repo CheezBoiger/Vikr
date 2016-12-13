@@ -38,6 +38,7 @@ public:
   vvoid SetShader(Shader * shader) { m_shader = shader; }
 
   std::string GetName() { return m_name; }
+  vvoid SetName(std::string name) { m_name = name; }
 
 
   GraphicsPipeline GetPipeline() { return pipeline; }

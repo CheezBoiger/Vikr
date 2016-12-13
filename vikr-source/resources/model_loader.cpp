@@ -21,23 +21,29 @@
 
 #include <util/vikr_log.hpp>
 #include <util/vikr_assert.hpp>
+#include <regex>
 
 
 namespace vikr {
 
 
+std::vector<Texture *> ModelLoader::loaded_textures;
+
+
 SceneNode *ModelLoader::ImportModel(RenderDevice *device, std::string path, std::string name) {
   Assimp::Importer importer;
   SceneNode *node = nullptr;
-  const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate 
-                                               | aiProcess_FlipUVs 
-                                               | aiProcess_GenNormals);
+  const aiScene *scene = importer.ReadFile(path, 
+    aiProcess_Triangulate 
+    | aiProcess_ImproveCacheLocality
+    | aiProcess_OptimizeMeshes
+    | aiProcess_FlipUVs
+    | aiProcess_SortByPType);
   if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Model Can not be loaded!");
-    VIKR_ASSERTION(false);
   } else {
     std::string dir = path.substr(0, path.find_last_of('/'));
-    node = ProcessNode(device, scene->mRootNode, scene, dir);
+    node = ProcessNode(device, scene->mRootNode, scene, dir, name);
   }
   return node;
 }
@@ -47,7 +53,8 @@ SceneNode *ModelLoader::ProcessNode(
   RenderDevice *device, 
   aiNode *node, 
   const aiScene *scene, 
-  std::string dir) 
+  std::string dir,
+  std::string name) 
 {
   SceneNode *scene_node = Scene::CreateSceneNode(device);
   //scene_node->AddComponent<TransformComponent>();
@@ -55,28 +62,24 @@ SceneNode *ModelLoader::ProcessNode(
     aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
     aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
     Mesh *m_mesh = ProcessMesh(device, mesh, scene);
-    Material *m_material = ParseMaterial(device, material, dir);
-    if (node->mNumMeshes <= 1) {
-      MeshComponent *mc = scene_node->AddComponent<MeshComponent>();
-      mc->mesh = m_mesh;
-      if (m_material) {
-        RendererComponent *rp = scene_node->AddComponent<RendererComponent>();
-        rp->material = m_material;
-      }
-    } else {
-      SceneNode *child = Scene::CreateSceneNode(device);
-      MeshComponent *mc = child->AddComponent<MeshComponent>();
-      RendererComponent *rp = child->AddComponent<RendererComponent>();
-      mc->mesh = m_mesh;
-      rp->material = m_material;
-      child->Update();
-      scene_node->AddChild(child);
+    m_mesh->SetName(name + std::to_string(i));
+    Material *m_material = ParseMaterial(device, material, dir, name + std::to_string(i));
+    SceneNode *child = Scene::CreateSceneNode(device);
+    MeshComponent *mc = child->AddComponent<MeshComponent>();
+    mc->mesh = m_mesh;
+    if (m_material) {
+      RendererComponent *rc = child->AddComponent<RendererComponent>();
+      rc->material = m_material;
     }
+    child->Update();
+    scene_node->AddChild(child);
   }
   for (vuint32 i = 0; i < node->mNumChildren; ++i) {
-    scene_node->AddChild(ProcessNode(device, node->mChildren[i], scene, dir));
+    scene_node->AddChild(
+      ProcessNode(device, node->mChildren[i], scene, 
+        dir, name + "_" + std::to_string(i)));
   }
-  scene_node->Update();
+  //scene_node->Update();
   return scene_node;
 }
 
@@ -107,12 +110,12 @@ Mesh *ModelLoader::ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene
     if (mesh->mTangents > 0) {
       // Calculate tangents.
     }
-    vertices.push_back(vertex);
+    vertices[i] = vertex;
   }
   for (vuint32 i = 0; i < mesh->mNumFaces; ++i) {
-    aiFace face = mesh->mFaces[i];
-    for (vuint32 j = 0; j < face.mNumIndices; ++j) { 
-      indices.push_back(face.mIndices[j]);
+    aiFace *face = &mesh->mFaces[i];
+    for (vuint32 j = 0; j < face->mNumIndices; ++j) { 
+      indices.push_back(face->mIndices[j]);
     }
   }
   // Create our mesh, the mesh is created and buffered, as well as properly stored,
@@ -123,18 +126,27 @@ Mesh *ModelLoader::ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene
 }
 
 
-Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material, std::string dir) {
-  Material *m_material = device->GetResourceManager()->CreateMaterial();
+Material *ModelLoader::ParseMaterial(
+  RenderDevice *device
+  , aiMaterial *material
+  , std::string dir
+  , std::string name) 
+{
+  Material *m_material = device->GetResourceManager()->CreateMaterial(name);
+  std::string texture_name;
   if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
     aiString file;
     material->GetTexture(aiTextureType_DIFFUSE, 0, &file);
     std::string filepath = ModelLoader::ProcessPath(&file, dir);
-    Texture *texture = 
-      device->GetResourceManager()->CreateTexture(
+    Texture *texture = device->GetResourceManager()->GetTexture(filepath);
+    if (!texture) { 
+      texture = device->GetResourceManager()->CreateTexture(
         TextureTarget::vikr_TEXTURE_2D, 
         filepath, 
         true);
+    }
     if (texture) {
+      texture_name = "vikr_TexAlbedo";
       m_material->SetTexture("vikr_TexAlbedo", texture, 0);
     }
   }
@@ -142,37 +154,58 @@ Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material,
     aiString file;
     material->GetTexture(aiTextureType_NORMALS, 0, &file);
     std::string filepath = ProcessPath(&file, dir);
-    Texture *texture = 
-      device->GetResourceManager()->CreateTexture(
+    Texture *texture = device->GetResourceManager()->GetTexture(filepath);
+    if (!texture) {
+      texture = device->GetResourceManager()->CreateTexture(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
+    }
+    if (texture) {
+      texture_name = "vikr_TexNormal";
+      m_material->SetTexture("vikr_TexNormal", texture, 1);
+    }
+  } else if (material->GetTextureCount(aiTextureType_HEIGHT) > 0) {
+    aiString file;
+    material->GetTexture(aiTextureType_HEIGHT, 0, &file);
+    std::string filepath = ProcessPath(&file, dir);
+    Texture *texture = device->GetResourceManager()->GetTexture(filepath);
+    if (!texture) {
+      texture = device->GetResourceManager()->CreateTexture(
+        vikr_TEXTURE_2D,
+        filepath,
+        true);
+    }
     if (texture) {
       m_material->SetTexture("vikr_TexNormal", texture, 1);
     }
   }
-  if(material->GetTextureCount(aiTextureType_SPECULAR) > 0) {
+  if (material->GetTextureCount(aiTextureType_SPECULAR) > 0) {
     aiString file;
     material->GetTexture(aiTextureType_SPECULAR, 0, &file);
     std::string filepath = ProcessPath(&file, dir);
-    Texture *texture = 
-      device->GetResourceManager()->CreateTexture(
+    Texture *texture = device->GetResourceManager()->GetTexture(filepath);
+    if (!texture) { 
+      texture = device->GetResourceManager()->CreateTexture(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
+    }
     if (texture) {
       m_material->SetTexture("vikr_TexSpecular", texture, 2);
     }
   }
-  if(material->GetTextureCount(aiTextureType_SHININESS) > 0) {
+  if (material->GetTextureCount(aiTextureType_SHININESS) > 0) {
     aiString file;
     material->GetTexture(aiTextureType_SHININESS, 0, &file);
     std::string filepath = ProcessPath(&file, dir);
-    Texture *texture = 
-      device->GetResourceManager()->CreateTexture(
+    Texture *texture = device->GetResourceManager()->GetTexture(filepath);
+    if (!texture) {
+      texture = device->GetResourceManager()->CreateTexture(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
+    }
     if (texture) {
       m_material->SetTexture("vikr_TexRoughness", texture, 3);  
     }
@@ -181,11 +214,13 @@ Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material,
     aiString file;
     material->GetTexture(aiTextureType_AMBIENT, 0, &file);
     std::string filepath = ProcessPath(&file, dir);
-    Texture *texture = 
-      device->GetResourceManager()->CreateTexture(
+    Texture *texture = device->GetResourceManager()->GetTexture(filepath);
+    if (!texture) { 
+      texture = device->GetResourceManager()->CreateTexture(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
+    }
     if (texture) {
       m_material->SetTexture("vikr_TexAmbient", texture, 4);
     }
@@ -195,10 +230,12 @@ Material *ModelLoader::ParseMaterial(RenderDevice *device, aiMaterial *material,
 
 
 std::string ModelLoader::ProcessPath(aiString *path, std::string dir) {
+  std::regex reg("\\\\");
   std::string m_path = std::string(path->C_Str());
   if (m_path.find('/') == std::string::npos) {
     m_path = dir + "/" + m_path;
   }
+  m_path = std::regex_replace(m_path, reg, "/");
   return m_path;
 }
 } // vikr

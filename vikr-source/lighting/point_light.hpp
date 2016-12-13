@@ -41,8 +41,8 @@ protected:
 
   vreal32 m_range         = 15.0f;
   vreal32 m_constant      = 1.0f;
-  vreal32 m_linear        = 0.09f;
-  vreal32 m_quadratic     = 0.032f;
+  vreal32 m_linear        = 0.045f;
+  vreal32 m_quadratic     = 0.0075f;
 };
 } // vikr
 #endif // __VIKR_POINTLIGHT_HPP

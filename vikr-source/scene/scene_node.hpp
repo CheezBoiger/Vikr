@@ -97,6 +97,7 @@ public:
     std::unique_ptr<Component> component = std::make_unique<Component>();
     ComponentType type = component->GetComponentType();
     guid_t guid = component->GetGUID();
+    component->SetOwner(this);
     components[type] = std::move(component);
     m_commandList.Insert(guid, components[type].get()->GetCommand());
     return static_cast<Component *>(components[type].get());

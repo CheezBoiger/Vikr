@@ -58,7 +58,7 @@ public:
   /**
     Draw with indices function.
   */
-  virtual vvoid DrawIndexed(const vvoid *indices, vuint32 vertices) = 0;
+  virtual vvoid DrawIndexed(const vvoid *indices, vuint32 elements) = 0;
 
   /**
     Set texture function.

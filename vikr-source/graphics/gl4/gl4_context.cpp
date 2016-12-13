@@ -94,14 +94,12 @@ vvoid GL4RenderContext::Draw(vuint32 start, vuint32 vertices) {
 }
 
 
-vvoid GL4RenderContext::DrawIndexed(const vvoid *indices, vuint32 vertices) {
-  if (indices) {
-    glDrawElements(
-      GetGLTopology(m_currTopology),
-      vertices,
-      GL_UNSIGNED_INT,
-      indices);
-  }
+vvoid GL4RenderContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
+  glDrawElements(
+    GetGLTopology(m_currTopology),
+    elements,
+    GL_UNSIGNED_INT,
+    indices);
 }
 
 
@@ -246,6 +244,7 @@ vvoid GL4RenderContext::ExecuteCommands(CommandBuffer *commandbuffer) {
     for (std::unique_ptr<GraphicsCommand> &command : commandbuffer->GetCommands()) {
       command->Execute(this);
     }
+    commandbuffer->Clear();
   }
 }
 

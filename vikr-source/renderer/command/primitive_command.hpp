@@ -8,6 +8,7 @@
 #include <renderer/command/render_command.hpp>
 #include <graphics/command_buffer.hpp>
 #include <mesh/mesh.hpp>
+#include <util/vikr_log.hpp>
 
 
 namespace vikr {
@@ -25,7 +26,11 @@ public:
 
   vvoid Record(CommandBuffer *buffer) override {
     buffer->SetQueryVertexBuffer(m_mesh->GetVertexBuffer());
-    buffer->SetDraw(0, m_mesh->GetVertices().size());
+    if (m_mesh->GetIndices().empty()) {
+      buffer->SetDraw(0, m_mesh->GetVertices().size());
+    } else {
+      buffer->SetDrawIndexed(nullptr, m_mesh->GetIndices().size());
+    }
   }
 
   Mesh *m_mesh;

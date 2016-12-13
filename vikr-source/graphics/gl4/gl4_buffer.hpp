@@ -24,10 +24,14 @@ public:
   vvoid StoreVertexArrayId(vuint32 vao) { m_vao = vao; }
   vuint32 GetVertexArrayId() { return m_vao; }
 
+  vuint32 GetElementBufferId() override { return m_ibo; }
+  vvoid StoreElementBufferId(vuint32 ibo) override { m_ibo = ibo; }
+
 private:
 
   vuint32 m_vbo   = 0;
   vuint32 m_vao   = 0;
+  vuint32 m_ibo   = 0;
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(GL4VertexBuffer);
 };

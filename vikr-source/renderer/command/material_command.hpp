@@ -38,6 +38,7 @@ public:
     params.samplers = m_material->GetUniformSamplers();
     params.uniforms = m_material->GetMaterialValues();
     buffer->SetShaderUniforms(&params);
+    
   }
 
 

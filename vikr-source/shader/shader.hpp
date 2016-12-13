@@ -36,10 +36,14 @@ public:
 
   ShaderType GetShaderType() { return shader_type; }
 
+  vvoid SetName(std::string name) { shader_name = name; }
+  std::string GetName() { return shader_name; }
+
 protected:
 
   ShaderType shader_type;
   std::string include_searchpath        = ".";
+  std::string shader_name               = "noname";
 
   vuint32 shader_id;
   vbool is_linked;
