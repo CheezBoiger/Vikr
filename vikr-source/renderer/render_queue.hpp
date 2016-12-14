@@ -32,6 +32,9 @@ typedef vint32 (*SortingCallback)(RenderCommand *, RenderCommand *);
 class RenderQueue {
 public:
   vvoid PushBack(RenderCommand *command);
+  vvoid PushBackDeferred(RenderCommand *command) {
+    deferred_commands.push_back(command);
+  }
   /**
     Objects that are transparent, require sorting in a certain order after opaque objects.
   */
@@ -53,7 +56,7 @@ public:
   vvoid RegisterDeferredComparator(SortingCallback func) 
     { deferred_comparator = func; }
 
-  std::vector<RenderCommand *> &GetPostbatchCommands() { return postbatch_commands; }
+  std::vector<RenderCommand *> &GetDeferredCommands() { return deferred_commands; }
 
 protected:
   SortingCallback sorting_comparator;
@@ -61,7 +64,7 @@ protected:
   /**
     These commands are deferred.
   */
-  std::vector<RenderCommand *> postbatch_commands;
+  std::vector<RenderCommand *> deferred_commands;
 
   /**
     These commands are to be executed immediately.

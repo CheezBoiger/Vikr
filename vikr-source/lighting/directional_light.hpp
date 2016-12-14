@@ -12,6 +12,7 @@ namespace vikr {
 
 
 class DirectionalLight : public Light {
+  static vuint32 directionlight_count;
 public:
   DirectionalLight();
 

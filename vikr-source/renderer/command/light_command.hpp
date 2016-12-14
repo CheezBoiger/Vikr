@@ -31,6 +31,7 @@ public:
       case vikr_POINTLIGHT: 
       {
         PointLight *plight = static_cast<PointLight *>(light);
+        std::string id = std::to_string(plight->GetLightId());
         MaterialValue pos, ambient, diffuse, specular, constant, linear, quad, blinn;
         pos.type = vikr_VEC3; pos.m_vec3 = plight->GetPos();
         ambient.type = vikr_VEC3;     ambient.m_vec3 = plight->GetAmbient();
@@ -39,16 +40,14 @@ public:
         constant.type = vikr_FLOAT;   constant.m_float = plight->GetConstant();
         linear.type = vikr_FLOAT;     linear.m_float = plight->GetLinear();
         quad.type = vikr_FLOAT;       quad.m_float = plight->GetQuadratic();
-        blinn.type = vikr_BOOL;       blinn.m_bool = true;
         light_params = {
-          std::make_pair("blinn", blinn),
-          std::make_pair("light_pos", pos),
-          std::make_pair("light_ambient", ambient),
-          std::make_pair("light_diffuse", diffuse),
-          std::make_pair("light_specular", specular),
-          std::make_pair("constant", constant),
-          std::make_pair("linear", linear),
-          std::make_pair("quadratic", quad)
+          std::make_pair("vikr_pointLights[" + id + "].position", pos),
+          std::make_pair("vikr_pointLights[" + id + "].ambient", ambient),
+          std::make_pair("vikr_pointLights[" + id + "].diffuse", diffuse),
+          std::make_pair("vikr_pointLights[" + id + "].specular", specular),
+          std::make_pair("vikr_pointLights[" + id + "].constant", constant),
+          std::make_pair("vikr_pointLights[" + id + "].linear", linear),
+          std::make_pair("vikr_pointLights[" + id + "].quadratic", quad)
         };
         params.uniforms = &light_params;
       }

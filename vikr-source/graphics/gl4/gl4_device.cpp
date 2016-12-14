@@ -2,7 +2,10 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <graphics/gl4/gl4_device.hpp>
+#include <graphics/gl4/gl4_rendertarget.hpp>
+#include <graphics/gl4/gl4_framebuffer.hpp>
 #include <graphics/gl4/gl4_buffer.hpp>
+#include <shader/glsl/gl_cubemap.hpp>
 #include <util/vikr_log.hpp>
 #include <cstddef>
 
@@ -51,6 +54,9 @@ Material *GL4RenderDevice::CreateMaterial(std::string name) {
 }
 
 
+/**
+  Data is interleaved.
+*/
 std::unique_ptr<VertexBuffer> 
 GL4RenderDevice::CreateVertexBuffer(
   std::vector<Vertex> &vertices, std::vector<vuint32> &indices, VertexUsageType type) 
@@ -86,9 +92,6 @@ GL4RenderDevice::CreateVertexBuffer(
       data.push_back(vertices[i].uv.x);
       data.push_back(vertices[i].uv.y);
     }
-    size_t stride = 3 * sizeof(vreal32);
-    stride += 3 * sizeof(vreal32);
-    stride += 2 * sizeof(vreal32);
     vuint32 offset = 0;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -119,7 +122,22 @@ GL4RenderDevice::CreateVertexBuffer(
 }
 
 
-Framebuffer *GL4RenderDevice::GenerateFramebuffer() {
-  return nullptr; // for now.
+std::unique_ptr<Framebuffer> GL4RenderDevice::CreateFramebuffer() {
+  return std::make_unique<GL4Framebuffer>(); // for now.
+}
+
+
+std::unique_ptr<Renderbuffer> GL4RenderDevice::CreateRenderbuffer(vuint32 width, vuint32 height) {
+  return std::make_unique<GL4Renderbuffer>(width, height);
+}
+
+
+std::unique_ptr<RenderTexture> GL4RenderDevice::CreateRenderTexture(vuint32 width, vuint32 height) {
+  return std::make_unique<GL4RenderTexture>(width, height);
+}
+
+
+std::unique_ptr<Cubemap> GL4RenderDevice::CreateCubemap() {
+  return std::make_unique<GLCubemap>();
 }
 } // vikr 

@@ -32,7 +32,6 @@ public:
   vvoid SetTexture(Texture *texture, vuint32 index) override;
   
   vvoid SetRenderTarget(RenderTarget *target, vuint32 index) override;
-  vvoid SetRenderPass(RenderPass *pass) override;
 
   /**
     These functions might need to hit the PipelineState instead. They involve
@@ -60,21 +59,12 @@ public:
   vvoid ApplyShaderProgram(vuint32 program_id) override;
   vvoid QueryVertexBuffer(VertexBuffer *buffer) override;
 
+
 private:
   /**
     Current topology.
   */
   Topology m_currTopology         = VIKR_TRIANGLES;
-  /**
-    Current Framebuffer being used. This might be settled to blit other 
-    Framebuffers.
-  */
-  Framebuffer *m_currFramebuffer  = nullptr;
-
-  /**
-    Current RenderPass being used.
-  */
-  RenderPass *m_currRenderPass    = nullptr;
 
   PipelineState *pipeline;
 

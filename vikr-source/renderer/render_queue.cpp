@@ -17,14 +17,14 @@ vvoid RenderQueue::PushBack(RenderCommand *command) {
 
 
 vvoid RenderQueue::Sort() {
-  std::sort(postbatch_commands.begin(), postbatch_commands.end(), deferred_comparator);
+  std::sort(deferred_commands.begin(), deferred_commands.end(), deferred_comparator);
   // Standard sort using custom sorting callback.
   std::sort(m_commandBuffer.begin(), m_commandBuffer.end(), sorting_comparator);
 }
 
 
 vvoid RenderQueue::Clear() {
-  postbatch_commands.clear();
+  deferred_commands.clear();
   m_commandBuffer.clear();
 }
 

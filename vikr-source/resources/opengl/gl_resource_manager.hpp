@@ -40,6 +40,8 @@ public:
   Mesh *CreateMesh(std::vector<Vertex> vertices,
     std::vector<vuint32> indices = std::vector<vuint32>()) override;
 
+  Mesh *GetMesh(guid_t guid) override;
+
   Material *CreateMaterial(std::string mat_name) override;
 
   Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;
@@ -63,7 +65,7 @@ class GLResources : public Resources {
   /**
   Contains PtrToMesh data.
   */
-  static std::vector<std::shared_ptr<Mesh> > meshes;
+  static std::map<guid_t, std::shared_ptr<Mesh> > meshes;
 
   /**
   Contains material data.

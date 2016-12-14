@@ -52,6 +52,7 @@ public:
   */
   virtual Mesh *CreateMesh(std::vector<Vertex> vertices,
     std::vector<vuint32> indices = std::vector<vuint32>()) = 0;
+  virtual Mesh *GetMesh(guid_t guid) = 0;
 
   virtual Material *CreateMaterial(std::string mat_name) = 0;
 

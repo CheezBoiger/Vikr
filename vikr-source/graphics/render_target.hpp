@@ -33,45 +33,70 @@ enum RenderTargetType {
   Vulkan: Associates this obejct with VKRenderTarget.
 */
 class RenderTarget {
+  VIKR_DISALLOW_COPY_AND_ASSIGN(RenderTarget);
   /*
     TODO(Garcia): Redesign RenderTargets to NOT bind to 
     a Frame buffer object until we reach our RenderPasses.
   */
 public:
-  RenderTarget();
-  RenderTarget(vuint32 width, vuint32 height);
-  virtual ~RenderTarget();
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(RenderTarget);
+  RenderTarget(GraphicsPipeline pipeline, 
+    vuint32 width,
+    vuint32 height,
+    RenderTargetType type = render_TEXTURE);
+  virtual ~RenderTarget() { }
 
-  virtual vvoid Generate() = 0;
-
-  virtual vvoid BindDepthStencil() = 0;
+  GraphicsPipeline GetPipeline() { return m_pipeline; }
+  RenderTargetType GetRenderType() { return m_targetType; }
 
   vuint32 GetWidth() { return m_width; }
   vuint32 GetHeight() { return m_height; }
 
+  vvoid SetWidth(vuint32 width) { m_width = width; }
+  vvoid SetHeight(vuint32 height) { m_height = height; }
+
   vbool HasDepthAndStencil() { return m_depthstencil; }
-
-  Texture *GetTexture() { return m_texture.get(); }
-
-  GraphicsPipeline GetGraphics() { return pipeline; }
-  RenderTargetType GetRenderType() { return m_targetType; }
 
 protected:
 
-  std::unique_ptr<Texture> m_texture        = nullptr;
-  vuint32 m_width                           = 0;
-  vuint32 m_height                          = 0;  
-  vbool m_depthstencil                      = false;
+  vuint32 m_width = 0;
+  vuint32 m_height = 0;
+  vbool m_depthstencil = false;
 
-  GraphicsPipeline pipeline;
-  RenderTargetType m_targetType             = render_TEXTURE;
+  GraphicsPipeline m_pipeline;
+  RenderTargetType m_targetType = render_TEXTURE;
 };
 
 
-class RenderBuffer : public RenderTarget {
+/**
+  RenderTexture.
+*/
+class RenderTexture : public RenderTarget {
 public:
+  virtual ~RenderTexture() { }
+  RenderTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height);
 
-private:
+  Texture *GetTexture() { return m_texture.get(); }
+
+protected:
+
+  std::unique_ptr<Texture> m_texture = nullptr;
+
+
+};
+
+
+/**
+  RenderBuffer.
+*/
+class Renderbuffer : public RenderTarget {
+public:
+  virtual ~Renderbuffer() { }
+  Renderbuffer(GraphicsPipeline pipeline, vuint32 width, vuint32 height);
+
+  vuint32 GetRenderbufferId() { return m_rbo; }
+  
+protected:
   vuint32 m_rbo       = 0;
 };
 } // vikr

@@ -5,6 +5,8 @@
 #define __VIKR_RENDERER_HPP
 
 #include <graphics/command_buffer.hpp>
+#include <graphics/framebuffer.hpp>
+#include <graphics/render_pass.hpp>
 #include <renderer/irenderer.hpp>
 #include <renderer/render_queue.hpp>
 #include <shader/texture_config.hpp>
@@ -27,6 +29,7 @@ class DirectionalLight;
 class SpotLight;
 class Material;
 class Texture;
+class Framebuffer;
 
 
 /**
@@ -66,14 +69,17 @@ public:
   vbool IsRendering() { return rendering; }
 
 
-  RenderPass *GetCurrentRenderPass() { return m_renderpass; }
-  vvoid SetRenderPass(RenderPass *pass) { m_renderpass = pass; }
+  //RenderPass *GetCurrentRenderPass() { return m_renderpass.get(); }
+  // testing one renderpass.
+  //vvoid SetRenderPass(RenderPass *pass) { m_renderpass.reset(pass); }
 
   RenderDevice *GetDevice() { return m_renderDevice; }
 
   virtual vint32 CleanupResources();
 
 protected:
+
+  vvoid DrawScreenQuad();
   /**
     Checks if the renderer is in the middle of rendering.
   */
@@ -99,22 +105,33 @@ protected:
   std::vector<SpotLight *> m_spotlights;
 
   /**
-  Screen filled mesh quad.
+    Screen filled mesh quad.
   */
-  std::unique_ptr<Mesh> quad            = nullptr;
+  Mesh *m_quad                                  = nullptr;
 
   /**
-    Default RenderPass.
+    Current RenderPass.
   */
-  RenderPass *m_renderpass              = nullptr;
+  std::unique_ptr<RenderPass> m_gBufferPass     = nullptr;
+  std::unique_ptr<RenderPass> m_lightPass       = nullptr;
+
+  Shader *gbufferShader;
+  Shader *lightShader;
+
+  /**
+    Rendertextures.
+  */
+  std::vector<std::unique_ptr<RenderTexture> > m_renderTextures;
+
 
   /**
     Render device used by this Renderer.
   */
-  RenderDevice *m_renderDevice          = nullptr;
+  RenderDevice *m_renderDevice                  = nullptr;
 
   glm::vec4 clear_color;
   Camera *camera;  
+
 private:
   /**
     The current renderer plugin.

@@ -7,6 +7,12 @@
 namespace vikr {
 
 
+/**
+  Pointlight count.
+*/
+vuint32 PointLight::pointlight_count = 0;
+
+
 vvoid PointLight::SetConstant(vreal32 constant) {
   m_constant = constant;
 }

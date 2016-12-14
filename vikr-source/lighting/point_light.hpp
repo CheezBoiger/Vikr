@@ -20,12 +20,24 @@ namespace vikr {
       attenuation = 1.0f / (constant + linear * distance + quadratic * distance^2)
 */
 class PointLight : public Light {
+  /**
+    Keep in mind that this id determines the index of an array of pointlights
+    for your shader, it will not be mapped to an array! You must figure out whether
+    or not a light is in/active, but not destroy it! You may wish to map a light source
+    to a table, but this is not really required.
+  */
+  static vuint32 pointlight_count;
 public:
   PointLight(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), 
              glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f),
              glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f),
              glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f))
-    : Light(vikr_POINTLIGHT, position, diffuse, ambient, specular) { }
+    : Light(vikr_POINTLIGHT
+        , position
+        , pointlight_count
+        , diffuse
+        , ambient
+        , specular) { pointlight_count++; }
 
   vvoid SetConstant(vreal32 constant);
   vvoid SetLinear(vreal32 linear);

@@ -26,6 +26,7 @@ class Shader;
 class CommandBuffer;
 class PipelineState;
 class VertexBuffer;
+class Framebuffer;
 
 
 struct ShaderUniformParams;
@@ -70,11 +71,6 @@ public:
   */
   virtual vvoid SetRenderTarget(RenderTarget *target, vuint32 index) = 0;
 
-  /**
-    One full render pass which enables multiple render targets (MRT).
-  */
-  virtual vvoid SetRenderPass(RenderPass *pass) = 0;
-
   virtual vvoid SetBlendEq(BlendEq eq) = 0;
 
   virtual vvoid SetBlendMode(BlendFunc src, BlendFunc dst) = 0;
@@ -91,8 +87,14 @@ public:
 
   virtual vvoid SetFrontFace(FrontFace face) = 0;
 
+  /**
+    Clear the screen.
+  */
   virtual vvoid Clear() = 0;
 
+  /**
+    Flush the screen with a specified color.
+  */
   virtual vvoid ClearWithColor(glm::vec4 color) = 0;
 
   /**
@@ -125,6 +127,10 @@ public:
   */
   virtual vvoid ApplyShaderProgram(vuint32 program_id) = 0;
 
+  /**
+    Query the Vertex buffer, in this case, it must be called everytime
+    you plan to draw.
+  */
   virtual vvoid QueryVertexBuffer(VertexBuffer *buffer) = 0;
 };
 } // vikr

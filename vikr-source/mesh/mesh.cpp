@@ -17,6 +17,7 @@ Mesh::Mesh(GraphicsPipeline pipeline)
   : m_vertexBuffer(nullptr)
   , m_render_type(pipeline)
   , m_name(kDefaultName)
+  , guid(GUIDGenerator::Generate())
 {
 }
 
@@ -29,6 +30,7 @@ Mesh::Mesh(GraphicsPipeline pipeline,
   : m_vertexBuffer(nullptr)
   , m_indices(indices)
   , m_render_type(pipeline)
+  , guid(GUIDGenerator::Generate())
 {
   for (vuint32 i = 0; i < positions.size(); ++i) {
     Vertex vert;

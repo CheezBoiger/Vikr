@@ -186,5 +186,6 @@ vvoid CommandBuffer::SetQueryVertexBuffer(VertexBuffer *buffer) {
 
 vvoid CommandBuffer::Execute(RenderContext *context) {
   context->ExecuteCommands(this);
+  m_commandBuffer.clear();
 }
 } // vikr

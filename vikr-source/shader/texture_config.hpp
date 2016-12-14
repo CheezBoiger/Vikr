@@ -40,14 +40,22 @@ Texture object.
 enum TextureTarget {
   vikr_TEXTURE_1D,
   vikr_TEXTURE_2D,
+  vikr_TEXTURE_2D_MULTISAMPLE,
   vikr_TEXTURE_3D,
-  vikr_TEXTURE_CUBEMAP
+  vikr_TEXTURE_CUBEMAP,
+  vikr_TEXTURE_CUBEMAP_POSITIVE_X,
+  vikr_TEXTURE_CUBEMAP_NEGATIVE_X,
+  vikr_TEXTURE_CUBEMAP_POSITIVE_Y,
+  vikr_TEXTURE_CUBEMAP_NEGATIVE_Y,
+  vikr_TEXTURE_CUBEMAP_POSITIVE_Z,
+  vikr_TEXTURE_CUBEMAP_NEGATIVE_Z
 };
 
 
 enum TextureFormat {
   vikr_RGB,
-  vikr_RGBA
+  vikr_RGBA,
+  vikr_RGB16F,
 };
 };
 #endif // __VIKR_TEXTURE_CONFIG_HPP

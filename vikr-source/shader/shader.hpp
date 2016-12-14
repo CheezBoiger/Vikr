@@ -39,13 +39,20 @@ public:
   vvoid SetName(std::string name) { shader_name = name; }
   std::string GetName() { return shader_name; }
 
+  vuint32 GetFragId() { return frag_id; }
+  vuint32 GetVertId() { return vert_id; }
+  vuint32 GetGeoId() { return geo_id; }
+
 protected:
 
-  ShaderType shader_type;
+  ShaderType shader_type                = vikr_GLSL;
   std::string include_searchpath        = ".";
   std::string shader_name               = "noname";
 
-  vuint32 shader_id;
+  vuint32 shader_id                     = 0;
+  vuint32 vert_id                       = 0;
+  vuint32 frag_id                       = 0;
+  vuint32 geo_id                        = 0;
   vbool is_linked;
   VIKR_DISALLOW_COPY_AND_ASSIGN(Shader);
 };

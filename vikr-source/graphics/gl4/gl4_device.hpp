@@ -24,7 +24,7 @@ public:
   Texture *GenerateTexture(std::string path,
     TextureTarget target, vbool alpha) override;
   
-  Framebuffer *GenerateFramebuffer() override;
+  std::unique_ptr<Framebuffer> CreateFramebuffer() override;
 
   Shader *GetShader(std::string name) override;
 
@@ -38,7 +38,23 @@ public:
 
   ResourceManager *GetResourceManager() override { return &manager; }
 
+  /**
+    Get the context of this device.
+  */
   RenderContext *GetContext() override { return &context; }
+
+  /**
+    Create a Renderbuffer object for the OpenGL device.
+  */
+  std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height) override;
+
+  /**
+    Create a RenderTexture object for the OpenGL device.
+  */
+  std::unique_ptr<RenderTexture> CreateRenderTexture(vuint32 width, vuint32 height) override;
+
+
+  std::unique_ptr<Cubemap> CreateCubemap() override;
 
 private:
   

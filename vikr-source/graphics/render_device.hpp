@@ -8,6 +8,7 @@
 #include <platform/vikr_api.hpp>
 #include <platform/vikr_types.hpp>
 #include <graphics/buffer.hpp>
+#include <graphics/render_target.hpp>
 #include <shader/texture.hpp>
 #include <mesh/imesh.hpp>
 #include <string>
@@ -20,6 +21,7 @@ namespace vikr {
 class Texture;
 class Framebuffer;
 class Renderbuffer;
+class RenderTexture;
 class RenderTarget;
 class RenderPass;
 class Shader;
@@ -27,6 +29,8 @@ class Material;
 class ResourceManager;
 class RenderContext;
 class VertexBuffer;
+class Cubemap;
+
 
 /**
   Render Device is an interface, with a driver type format.
@@ -48,7 +52,7 @@ public:
   /**
     Generate a framebuffer.
   */
-  virtual Framebuffer *GenerateFramebuffer() = 0;
+  virtual std::unique_ptr<Framebuffer> CreateFramebuffer() = 0;
 
   virtual Shader *GetShader(std::string name) = 0;
 
@@ -74,6 +78,11 @@ public:
 
   virtual ResourceManager *GetResourceManager() = 0;
   virtual RenderContext *GetContext() = 0;
+
+  virtual std::unique_ptr<RenderTexture> CreateRenderTexture(vuint32 width, vuint32 height) = 0;
+  virtual std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height) = 0;
+
+  virtual std::unique_ptr<Cubemap> CreateCubemap() = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_DEVICE_HPP

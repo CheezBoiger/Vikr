@@ -14,6 +14,8 @@ endif()
 # OpenGL always enabled
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_SHADER_GLSL_DIR}/gl_cubemap.hpp
+  ${VIKR_SHADER_GLSL_DIR}/gl_cubemap.cpp
   ${VIKR_SHADER_GLSL_DIR}/glsl_preprocessor.hpp
   ${VIKR_SHADER_GLSL_DIR}/glsl_preprocessor.cpp
   ${VIKR_SHADER_GLSL_DIR}/gl_texture.hpp

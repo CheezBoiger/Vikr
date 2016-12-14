@@ -36,8 +36,15 @@ GLenum GLTexture::GetNativeTextureTarget(TextureTarget target) {
   switch (target) {
     case vikr_TEXTURE_1D: return GL_TEXTURE_1D;
     case vikr_TEXTURE_2D: return GL_TEXTURE_2D; 
+    case vikr_TEXTURE_2D_MULTISAMPLE: return GL_TEXTURE_2D_MULTISAMPLE;
     case vikr_TEXTURE_3D: return GL_TEXTURE_3D;
     case vikr_TEXTURE_CUBEMAP: return GL_TEXTURE_CUBE_MAP;
+    case vikr_TEXTURE_CUBEMAP_POSITIVE_X: return GL_TEXTURE_CUBE_MAP_POSITIVE_X;
+    case vikr_TEXTURE_CUBEMAP_NEGATIVE_X: return GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
+    case vikr_TEXTURE_CUBEMAP_POSITIVE_Y: return GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
+    case vikr_TEXTURE_CUBEMAP_NEGATIVE_Y: return GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
+    case vikr_TEXTURE_CUBEMAP_POSITIVE_Z: return GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
+    case vikr_TEXTURE_CUBEMAP_NEGATIVE_Z: return GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
     default:  return GL_TEXTURE_2D;
   }
 }
@@ -47,6 +54,7 @@ GLenum GLTexture::GetNativeTextureFormat(TextureFormat format) {
   switch (format) {
     case vikr_RGB: return GL_RGB;
     case vikr_RGBA: return GL_RGBA;
+    case vikr_RGB16F: return GL_RGB16F;
     default: return GL_RGBA;
   }  
 }

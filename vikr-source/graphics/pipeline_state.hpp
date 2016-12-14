@@ -53,6 +53,10 @@ public:
   
 private:
 
+  /**
+    Both the Vertex and Fragment shader. 
+    Geometry shader is optional.
+  */
   Shader    *m_shader;
 
   vbool     has_depth;

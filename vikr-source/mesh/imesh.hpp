@@ -7,6 +7,7 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
+#include <scene/guid_generator.hpp>
 #include <mesh/vertex.hpp>
 #include <glm/glm.hpp>
 #include <vector>
@@ -41,6 +42,8 @@ public:
   virtual VertexBuffer *GetVertexBuffer() = 0;
   virtual VertexUsageType GetVertexUsageType() = 0;
   virtual GraphicsPipeline GetRenderType() = 0;
+
+  virtual guid_t GetGUID() = 0;
 };
 } // vikr
 #endif // __VIKR_IMESH_HPP

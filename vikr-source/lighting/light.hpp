@@ -31,13 +31,15 @@ public:
   Light() { }
   Light(LightType light_type,
         glm::vec3 position, 
+        vuint32 id,
         glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f),
         glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f),
         glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f)) 
     : m_position(position)
     , m_ambient(ambient)
     , m_diffuse(diffuse)
-    , m_specular(specular) 
+    , m_specular(specular)
+    , m_lightId(id) 
     , type(light_type) { }
 
   virtual ~Light() { }
@@ -87,6 +89,8 @@ public:
     Get the light's type (spotlight, pointlight, etc).
   */
   LightType GetLightType() { return type; }
+
+  vuint32 GetLightId() { return m_lightId; }
   
 protected:
   /**
@@ -110,6 +114,9 @@ protected:
     Color to depict for the Mesh object.
   */
   glm::vec3 m_color       = glm::vec3(1.0f, 1.0f, 1.0f);
+
+  vuint32 m_lightId = 0;
+
 };
 }
 #endif // __VIKR_LIGHT_HPP

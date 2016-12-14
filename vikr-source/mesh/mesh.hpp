@@ -85,6 +85,8 @@ public:
   */
   VertexUsageType GetVertexUsageType() override { return m_usage_type; };
 
+  guid_t GetGUID() override { return guid; }
+
 protected:
 
   std::string m_name;
@@ -95,6 +97,8 @@ protected:
 
   std::vector<Vertex> m_vertices;
   std::vector<vuint32> m_indices;
+
+  guid_t guid;
 };
 } // vikr
 #endif // __VIKR_MESH_HPP

@@ -15,7 +15,7 @@ namespace vikr {
 std::unordered_map<std::string,
   std::pair<std::string, std::unique_ptr<GLSLShader> > > GLResources::shaders;
 
-std::vector<std::shared_ptr<Mesh> > GLResources::meshes;
+std::map<guid_t, std::shared_ptr<Mesh> > GLResources::meshes;
 std::map<std::string, std::shared_ptr<Material> > GLResources::materials;
 std::map<std::string, std::shared_ptr<GLTexture> > GLResources::textures;
 
@@ -55,7 +55,7 @@ Mesh *GLResourceManager::CreateMesh(
   std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
   mesh->Buffer(positions, normals, uvs, indices);
  // mesh->Create();
-  GLResources::meshes.push_back(mesh);
+  GLResources::meshes[mesh->GetGUID()] = mesh;
   return mesh.get();
 }
 
@@ -67,8 +67,13 @@ Mesh *GLResourceManager::CreateMesh(
   std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
   mesh->Buffer(vertices, indices);
   //mesh->Create();
-  GLResources::meshes.push_back(mesh);
+  GLResources::meshes[mesh->GetGUID()] = mesh;
   return mesh.get();
+}
+
+
+Mesh *GLResourceManager::GetMesh(guid_t guid) {
+  return GLResources::meshes[guid].get();
 }
 
 
