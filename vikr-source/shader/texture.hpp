@@ -36,6 +36,7 @@ public:
   TextureFormat GetInternalFormat() { return m_internal_format; }
   TextureFilterMode GetFilterMin() { return m_filter_min; }
   TextureFilterMode GetFilterMax() {  return m_filter_max; }
+  DataTypeFormat GetDataTypeFormat() { return m_datatype; }
   /**
     Texture coordinate wrapping for coord S. 
   */
@@ -87,6 +88,9 @@ public:
     a Mesh or Quad. This is specified for coord R.
   */
   virtual vvoid SetWrapR(TextureWrapMode mode) = 0;
+
+  virtual vvoid SetDataTypeFormat(DataTypeFormat format) = 0;
+
   /**
     Get the native texture id.
   */
@@ -114,6 +118,7 @@ protected:
   TextureWrapMode   m_wrap_s                    = vikr_TEXTURE_REPEAT;
   TextureWrapMode   m_wrap_t                    = vikr_TEXTURE_REPEAT;
   TextureWrapMode   m_wrap_r                    = vikr_TEXTURE_REPEAT;
+  DataTypeFormat    m_datatype                  = data_UNSIGNED_BYTE;
   vbool             m_mipmapping                = true;
   vbool             m_alpha                     = true;
   vuint32           m_width                     = 0;

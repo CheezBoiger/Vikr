@@ -41,6 +41,9 @@ public:
   */
   virtual vvoid Record(CommandBuffer *buffer) = 0;
 
+  vvoid SetDrawOrder(vint32 order) { m_drawOrder = order; }
+  vint32 GetDrawOrder() { return m_drawOrder; }
+
 protected:
   RenderCommandType type;
 
@@ -49,6 +52,11 @@ private:
     Name of the command.
   */
   std::string m_name;
+
+  /**
+    order of draw.
+  */
+  vint32 m_drawOrder          = 0;
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(RenderCommand);
 };

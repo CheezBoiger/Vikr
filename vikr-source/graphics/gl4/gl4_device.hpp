@@ -51,7 +51,8 @@ public:
   /**
     Create a RenderTexture object for the OpenGL device.
   */
-  std::unique_ptr<RenderTexture> CreateRenderTexture(vuint32 width, vuint32 height) override;
+  std::unique_ptr<RenderTexture> CreateRenderTexture(vuint32 width, vuint32 height, 
+    vbool alpha = false, DataTypeFormat precision = data_UNSIGNED_BYTE) override;
 
 
   std::unique_ptr<Cubemap> CreateCubemap() override;

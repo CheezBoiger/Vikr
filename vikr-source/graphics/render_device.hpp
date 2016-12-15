@@ -79,7 +79,9 @@ public:
   virtual ResourceManager *GetResourceManager() = 0;
   virtual RenderContext *GetContext() = 0;
 
-  virtual std::unique_ptr<RenderTexture> CreateRenderTexture(vuint32 width, vuint32 height) = 0;
+  virtual std::unique_ptr<RenderTexture> CreateRenderTexture(vuint32 width, vuint32 height, 
+    vbool alpha = false, DataTypeFormat precision = data_UNSIGNED_BYTE) = 0;
+
   virtual std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height) = 0;
 
   virtual std::unique_ptr<Cubemap> CreateCubemap() = 0;

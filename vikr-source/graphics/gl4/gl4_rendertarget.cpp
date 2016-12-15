@@ -9,13 +9,15 @@
 namespace vikr {
 
 
-GL4RenderTexture::GL4RenderTexture(vuint32 width, vuint32 height)
-  : RenderTexture(vikr_PIPELINE_OPENGL, width, height)
+GL4RenderTexture::GL4RenderTexture(vuint32 width, vuint32 height, vbool alpha, DataTypeFormat precision)
+  : RenderTexture(vikr_PIPELINE_OPENGL, width, height, alpha)
 {
   m_texture = std::make_unique<GLTexture2D>(width, height);
-  m_texture->SetFilterMin(TextureFilterMode::vikr_TEXTURE_LINEAR);
-  m_texture->SetFormat(TextureFormat::vikr_RGB);
-  m_texture->SetInternalFormat(TextureFormat::vikr_RGB);
+  m_texture->SetFilterMin(TextureFilterMode::vikr_TEXTURE_NEAREST);
+  m_texture->SetFilterMax(TextureFilterMode::vikr_TEXTURE_NEAREST);
+  m_texture->SetFormat(alpha ? TextureFormat::vikr_RGBA : TextureFormat::vikr_RGB);
+  m_texture->SetInternalFormat(alpha ? TextureFormat::vikr_RGBA : TextureFormat::vikr_RGB16F);
+  m_texture->SetDataTypeFormat(precision);
   m_texture->SetMipmapping(false);
   m_texture->Create(nullptr);
 }

@@ -23,7 +23,7 @@ class RenderPass;
 /**
   Sorting callback.
 */
-typedef vint32 (*SortingCallback)(RenderCommand *, RenderCommand *);
+using SortingCallback = std::function<vint32(RenderCommand *, RenderCommand *)>;
 
 
 /**

@@ -132,8 +132,10 @@ std::unique_ptr<Renderbuffer> GL4RenderDevice::CreateRenderbuffer(vuint32 width,
 }
 
 
-std::unique_ptr<RenderTexture> GL4RenderDevice::CreateRenderTexture(vuint32 width, vuint32 height) {
-  return std::make_unique<GL4RenderTexture>(width, height);
+std::unique_ptr<RenderTexture> GL4RenderDevice::CreateRenderTexture(vuint32 width, vuint32 height, 
+  vbool alpha, DataTypeFormat precision) 
+{
+  return std::make_unique<GL4RenderTexture>(width, height, alpha, precision);
 }
 
 

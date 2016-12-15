@@ -43,6 +43,7 @@ public:
   RenderTarget(GraphicsPipeline pipeline, 
     vuint32 width,
     vuint32 height,
+    vbool alpha = false,
     RenderTargetType type = render_TEXTURE);
   virtual ~RenderTarget() { }
 
@@ -61,6 +62,7 @@ protected:
 
   vuint32 m_width = 0;
   vuint32 m_height = 0;
+  vbool alpha      = false;
   vbool m_depthstencil = false;
 
   GraphicsPipeline m_pipeline;
@@ -74,7 +76,7 @@ protected:
 class RenderTexture : public RenderTarget {
 public:
   virtual ~RenderTexture() { }
-  RenderTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height);
+  RenderTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool alpha);
 
   Texture *GetTexture() { return m_texture.get(); }
 

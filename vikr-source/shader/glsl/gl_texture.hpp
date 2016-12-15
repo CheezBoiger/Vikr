@@ -12,10 +12,11 @@ namespace vikr {
 
 class GLTexture : public Texture {
 protected:
-  GLenum GetNativeWrapMode(TextureWrapMode mode);
-  GLenum GetNativeFilterMode(TextureFilterMode mode);
-  GLenum GetNativeTextureTarget(TextureTarget target);
-  GLenum GetNativeTextureFormat(TextureFormat format);
+  static GLenum GetNativeWrapMode(TextureWrapMode mode);
+  static GLenum GetNativeFilterMode(TextureFilterMode mode);
+  static GLenum GetNativeTextureTarget(TextureTarget target);
+  static GLenum GetNativeTextureFormat(TextureFormat format);
+  static GLenum GetNativeDataTypeFormat(DataTypeFormat format);
 public:
   GLTexture();
 
@@ -31,6 +32,7 @@ public:
   vvoid SetWrapS(TextureWrapMode mode) override;
   vvoid SetWrapT(TextureWrapMode mode) override;
   vvoid SetWrapR(TextureWrapMode mode) override;
+  vvoid SetDataTypeFormat(DataTypeFormat format) override;
   vuint32 GetNativeId() override { return id; }
 
   vuint32 GetNativeFormat() { return native_format; }
@@ -41,6 +43,7 @@ public:
   vuint32 GetNativeWrapS() { return native_wrap_s; }
   vuint32 GetNativeWrapT() { return native_wrap_t; }
   vuint32 GetNativeWrapR() { return native_wrap_r; }
+  vuint32 GetNativeDataType() { return native_datatype; }
 
 
 protected:
@@ -50,6 +53,7 @@ protected:
   vuint32 native_format               = GL_RGBA;
   vuint32 native_internal_format      = GL_RGBA;
   vuint32 native_filter_min           = GL_LINEAR_MIPMAP_LINEAR;
+  vuint32 native_datatype             = GL_UNSIGNED_BYTE;
   vuint32 native_filter_max           = GL_LINEAR;
   vuint32 native_wrap_s               = GL_REPEAT;
   vuint32 native_wrap_t               = GL_REPEAT;

@@ -19,8 +19,8 @@ namespace vikr {
   Container holding the values of Material.
 */
 struct ShaderUniformParams {
-    std::map<std::string, MaterialValue>  *uniforms;
-    std::map<std::string, TextureSampler> *samplers;
+  std::map<std::string, MaterialValue>  *uniforms;
+  std::map<std::string, TextureSampler> *samplers;
 };
 } // vikr
 #endif // __VIKR_SHADER_UNIFORM_PARAMS_HPP

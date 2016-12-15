@@ -25,7 +25,7 @@ vint32 GLTexture2D::Create(vbyte *bytecode) {
   native_target = GetNativeTextureTarget(m_target);
   glGenTextures(1, &id);
   Bind();
-  glTexImage2D(native_target, 0, native_internal_format, m_width, m_height, 0, native_format, GL_UNSIGNED_BYTE, bytecode);
+  glTexImage2D(native_target, 0, native_internal_format, m_width, m_height, 0, native_format, native_datatype, bytecode);
   glTexParameteri(native_target, GL_TEXTURE_MIN_FILTER, native_filter_min);
   glTexParameteri(native_target, GL_TEXTURE_MAG_FILTER, native_filter_max);
   glTexParameteri(native_target, GL_TEXTURE_WRAP_S, native_wrap_s);

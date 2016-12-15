@@ -16,7 +16,7 @@ namespace vikr {
 */
 class GL4RenderTexture : public RenderTexture {
 public:
-  GL4RenderTexture(vuint32 width, vuint32 height);
+  GL4RenderTexture(vuint32 width, vuint32 height, vbool alpha, DataTypeFormat precision);
 
 };
 

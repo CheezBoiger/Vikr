@@ -60,6 +60,16 @@ GLenum GLTexture::GetNativeTextureFormat(TextureFormat format) {
 }
 
 
+GLenum GLTexture::GetNativeDataTypeFormat(DataTypeFormat format) {
+  switch (format) {
+    case data_UNSIGNED_BYTE: return GL_UNSIGNED_BYTE;
+    case data_UNSIGNED_INT: return GL_UNSIGNED_INT;
+    case data_FLOAT: return GL_FLOAT;
+    default: return GL_UNSIGNED_BYTE;
+  }
+}
+
+
 GLTexture::GLTexture()
 {
 }
@@ -104,6 +114,12 @@ vvoid GLTexture::SetWrapT(TextureWrapMode mode) {
 vvoid GLTexture::SetWrapR(TextureWrapMode mode) {
   m_wrap_r = mode;
   native_wrap_r = GetNativeWrapMode(m_wrap_r);
+}
+
+
+vvoid GLTexture::SetDataTypeFormat(DataTypeFormat format) {
+  m_datatype = format;
+  native_datatype = GetNativeDataTypeFormat(format);
 }
 
 

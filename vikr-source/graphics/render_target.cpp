@@ -9,8 +9,10 @@ namespace vikr {
 RenderTarget::RenderTarget(GraphicsPipeline pipeline
   , vuint32 width
   , vuint32 height
+  , vbool alpha
   ,  RenderTargetType type)
     : m_targetType(type)
+    , alpha(alpha)
     , m_pipeline(pipeline)
     , m_width(width)
     , m_height(height)
@@ -18,14 +20,14 @@ RenderTarget::RenderTarget(GraphicsPipeline pipeline
 }
 
 
-RenderTexture::RenderTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height)
-  : RenderTarget(pipeline, width, height, render_TEXTURE)
+RenderTexture::RenderTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool alpha)
+  : RenderTarget(pipeline, width, height, alpha, render_TEXTURE)
 {
 }
 
 
 Renderbuffer::Renderbuffer(GraphicsPipeline pipeline, vuint32 width, vuint32 height)
-  : RenderTarget(pipeline, width, height, render_RENDERBUFFER)
+  : RenderTarget(pipeline, width, height, false, render_RENDERBUFFER)
 {
 }
 } // vikr

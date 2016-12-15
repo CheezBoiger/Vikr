@@ -57,5 +57,12 @@ enum TextureFormat {
   vikr_RGBA,
   vikr_RGB16F,
 };
+
+
+enum DataTypeFormat {
+  data_UNSIGNED_BYTE,
+  data_UNSIGNED_INT,
+  data_FLOAT
+};
 };
 #endif // __VIKR_TEXTURE_CONFIG_HPP

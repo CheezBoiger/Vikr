@@ -111,6 +111,7 @@ int main(int c, char* args[]) {
   GL4RenderDevice device;
   Renderer renderer;
   renderer.Init(&device);
+  renderer.SetCamera(&camera);
   renderer.GetDevice()->StoreShader("test", "shaders/test.vert", "shaders/test.frag", "../../libs/shader/GLSL");
   renderer.GetDevice()->StoreShader("light", "shaders/test.vert", "shaders/light.frag");
   renderer.GetDevice()->StoreShader("screen", "shaders/screen_shader.vert", "shaders/screen_shader.frag");
@@ -144,8 +145,6 @@ int main(int c, char* args[]) {
     CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
   cube_mesh->Create(renderer.GetDevice());
   light_mesh->Create(renderer.GetDevice());
-  default_mat->SetVector3fv("obj_specular", glm::vec3(1.0f, 1.0f, 1.0f));
-  default_mat->SetVector3fv("obj_diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
 
   SceneNode *cube1 = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
   cube1->AddComponent<MeshComponent>()->mesh = cube_mesh;
@@ -166,6 +165,7 @@ int main(int c, char* args[]) {
   SceneNode *light_node = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
   LightComponent *lc = light_node->AddComponent<LightComponent>();
   lc->light = &plight;
+  plight.SetDiffuse(glm::vec3(0.0f, 1.0f, 0.0f));
 
   SceneNode *light_node2 = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
   LightComponent *lc2 = light_node2->AddComponent<LightComponent>();

@@ -37,6 +37,7 @@ SceneNode *ModelLoader::ImportModel(RenderDevice *device, std::string path, std:
     aiProcess_Triangulate 
     | aiProcess_ImproveCacheLocality
     | aiProcess_OptimizeMeshes
+    | aiProcess_PreTransformVertices
     | aiProcess_FlipUVs
     | aiProcess_SortByPType);
   if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
@@ -71,6 +72,11 @@ SceneNode *ModelLoader::ProcessNode(
       RendererComponent *rc = child->AddComponent<RendererComponent>();
       rc->material = m_material;
     }
+    // No transform with the model?
+    aiVector3D pos;
+    aiQuaterniont<vreal32> rotation;
+    node->mTransformation.DecomposeNoScaling(rotation, pos);
+    
     child->Update();
     scene_node->AddChild(child);
   }

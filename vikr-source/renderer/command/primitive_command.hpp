@@ -34,6 +34,9 @@ public:
   }
 
   Mesh *m_mesh;
+
+private:
+
 };
 } // vikr
 #endif // __VIKR_PRIMITIVE_COMMAND_HPP
