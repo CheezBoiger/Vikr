@@ -27,7 +27,8 @@ public:
 
   virtual vvoid PushBack(RenderCommand *command) = 0;
   virtual vvoid PushBack(SceneNode *obj) = 0;
-  virtual vvoid PushBack(Light *light) = 0;
+  virtual vvoid PushBackDeferred(RenderCommand *command) = 0;
+
   virtual vvoid Sort() = 0;
   virtual vint32 Init(RenderDevice *device) = 0;
   /**

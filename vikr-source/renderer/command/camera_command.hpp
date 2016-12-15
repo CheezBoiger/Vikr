@@ -7,9 +7,11 @@
 
 #include <renderer/command/render_command.hpp>
 #include <graphics/command_buffer.hpp>
+#include <renderer/renderer.hpp>
 #include <shader/shader_uniform_params.hpp>
 #include <shader/shader_config.hpp>
 #include <scene/icamera.hpp>
+#include <scene/camera.hpp>
 #include <map>
 
 
@@ -26,7 +28,7 @@ public:
   { }
 
   vvoid Record(CommandBuffer *buffer) override {
-    if (camera) {
+    if (camera && (camera == Renderer::GetRenderer()->GetCamera())) {
       MaterialValue projection;
       MaterialValue view;
       MaterialValue position;
@@ -36,9 +38,12 @@ public:
       view.type = vikr_MAT4;
       position.m_vec3 = camera->GetPos();
       position.type = vikr_VEC3;
-      camera_params["vikr_Projection"] = projection;
-      camera_params["vikr_View"] = view;
-      camera_params["vikr_CamPosition"] = position;
+      camera_params = {
+        std::make_pair("vikr_Projection", projection),
+        std::make_pair("vikr_View", view),
+        std::make_pair("vikr_CamPosition", position)
+      };
+      //camera_params["cat"] = { vikr_INT, camera->GetPos() };
       ShaderUniformParams params {
         &camera_params,
         nullptr

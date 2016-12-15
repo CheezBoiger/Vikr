@@ -6,6 +6,7 @@
 #include <renderer/command/mesh_command.hpp>
 #include <renderer/command/primitive_command.hpp>
 #include <renderer/command/transform_command.hpp>
+#include <renderer/command/camera_command.hpp>
 
 #include <scene/camera.hpp>
 #include <scene/scene_node.hpp>
@@ -53,7 +54,11 @@ vvoid Renderer::PushBack(RenderCommand *command) {
     return;
   }
   m_renderQueue.PushBack(command);
-  if (command->GetCommandType() == RenderCommandType::COMMAND_CAMERA) {
+}
+
+
+vvoid Renderer::PushBackDeferred(RenderCommand *command) {
+  if (command) {
     m_renderQueue.PushBackDeferred(command);
   }
 }
@@ -104,25 +109,6 @@ vvoid Renderer::PushBack(SceneNode *obj) {
 }
 
 
-vvoid Renderer::PushBack(Light *command) {
-  if (command != nullptr) {
-    switch (command->GetLightType()) {
-      case vikr_POINTLIGHT:
-        m_pointlights.push_back(static_cast<PointLight *>(command)); 
-      break;
-      case vikr_DIRECTIONLIGHT:
-        m_directionallights.push_back(static_cast<DirectionalLight *>(command));
-      break;
-      case vikr_SPOTLIGHT:
-        m_spotlights.push_back(static_cast<SpotLight *>(command));
-      break;
-      default:
-      break;
-    }
-  }
-}
-
-
 // Cleanup any resources that where handled by the renderer engine.
 vint32 Renderer::CleanupResources() {
   return 1;
@@ -130,6 +116,13 @@ vint32 Renderer::CleanupResources() {
 
 
 vvoid Renderer::Render() {
+  CameraCommand cam;
+  if (camera) {
+    cam.camera = camera;
+    PushBack(&cam);
+    PushBackDeferred(&cam);
+  }
+
   m_renderQueue.Sort();
 
   // Record Commands.
@@ -206,6 +199,7 @@ vvoid Renderer::Render() {
 
 
 vint32 Renderer::Init(RenderDevice *device) {
+  Renderer::SetRenderer(this);
   m_renderDevice = device;
   m_renderQueue.RegisterBatchComparator([&] (RenderCommand *a, RenderCommand *b) -> vint32 {
     vint32 greater = false;

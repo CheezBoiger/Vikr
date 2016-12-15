@@ -151,8 +151,6 @@ int main(int c, char* args[]) {
   cube1->AddComponent<TransformComponent>();
   //cube1->AddComponent<RendererComponent>()->material = default_mat;
   cube1->Update();
-  CameraCommand cc;
-  cc.camera = &camera;
 
   PointLight plight;
   PointLight plight2;
@@ -177,6 +175,7 @@ int main(int c, char* args[]) {
   light_object->AddChild(light_node);
   light_object->Update();
 
+
   while(!WindowShouldClose(window)) {
     CalculateDeltaTime();
     PollEvents();
@@ -190,7 +189,6 @@ int main(int c, char* args[]) {
     renderer.PushBack(light_node2);
     renderer.PushBack(node);
     renderer.PushBack(nano);
-    renderer.PushBack(&cc);
     renderer.Render();
     DoubleBufferSwap(window);
   }

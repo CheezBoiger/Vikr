@@ -11,6 +11,7 @@
 #include <renderer/render_queue.hpp>
 #include <shader/texture_config.hpp>
 #include <shader/shader.hpp>
+#include <shader/cubemap.hpp>
 #include <mesh/mesh.hpp>
 #include <glm/glm.hpp>
 #include <string>
@@ -41,27 +42,55 @@ public:
   Renderer();
 
   virtual ~Renderer() { }
+
   /**
-    TODO(Garcia): This will need to move to resources.
+    Get the Renderer globally.
   */
   static Renderer *GetRenderer() { return renderer; }
+
+  /**
+    NOTE(): If you dynamically allocate a renderer, you need
+    to clean it up yourself by calling "delete" or "free".
+  */
   static vvoid SetRenderer(Renderer *r) { renderer = r; }
 
+  /**
+    Get the Camera that is currently being renderer by the Renderer.
+  */
   Camera *GetCamera() { return camera; }
+  
+  /**
+    Swap two camera pointers.
+  */
   vvoid SwapCamera(Camera *camera) { std::swap(this->camera, camera); }
+
+  /**
+    Set a camera.
+  */
   vvoid SetCamera(Camera *camera) { this->camera = camera; }
+
   /**
     Initialize the current Renderer plugin.
   */  
   virtual vint32 Init(RenderDevice *device) override;
+
   /**
     Define the current Renderer plugin, rendering scheme.
   */
   virtual vvoid Render() override;
 
+  /**
+    Pushback a RenderCommand.
+  */
   virtual vvoid PushBack(RenderCommand *command) override;
+
+  /**
+    Pushback a SceneNode.
+  */
   virtual vvoid PushBack(SceneNode *obj) override;
-  virtual vvoid PushBack(Light *light) override;
+
+  virtual vvoid PushBackDeferred(RenderCommand *command) override;
+
   virtual vvoid Sort() override { m_renderQueue.Sort(); }
 
   vvoid SetClearColor(glm::vec4 cc) { clear_color = cc; }
@@ -90,21 +119,6 @@ protected:
   RenderQueue m_renderQueue;
 
   /**
-    Pointlights container.
-  */
-  std::vector<PointLight *> m_pointlights;
-
-  /**
-    Directional Lights container.
-  */
-  std::vector<DirectionalLight *> m_directionallights;
-
-  /**
-    Spot lights container.
-  */
-  std::vector<SpotLight *> m_spotlights;
-
-  /**
     Screen filled mesh quad.
   */
   Mesh *m_quad                                  = nullptr;
@@ -113,7 +127,10 @@ protected:
     Current RenderPass.
   */
   std::unique_ptr<RenderPass> m_gBufferPass     = nullptr;
-  std::unique_ptr<RenderPass> m_lightPass       = nullptr;
+
+
+  std::unique_ptr<RenderPass> m_shadowPass      = nullptr;
+  
 
   Shader *gbufferShader;
   Shader *lightShader;

@@ -6,6 +6,7 @@
 
 
 #include <lighting/light.hpp>
+#include <shader/cubemap.hpp>
 
 
 namespace vikr {
