@@ -6,7 +6,7 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
-#include <graphics/buffer.hpp>
+#include <graphics/vertexbuffer.hpp>
 #include <glm/vec3.hpp>
 #include <mesh/imesh.hpp>
 #include <string>
@@ -61,7 +61,7 @@ public:
   /**
     Grab the Vertex Buffer Object id of this mesh.
   */
-  VertexBuffer *GetVertexBuffer() override { return m_vertexBuffer.get(); }
+  Vertexbuffer *GetVertexBuffer() override { return m_vertexBuffer.get(); }
 
   /**
     Grab the type of Graphics Pipeline that this mesh is associated with.
@@ -91,7 +91,7 @@ protected:
 
   std::string m_name;
   GraphicsPipeline m_render_type;
-  std::unique_ptr<VertexBuffer> m_vertexBuffer;
+  std::unique_ptr<Vertexbuffer> m_vertexBuffer;
   vbool is_transparent                  = false;
   VertexUsageType m_usage_type          = vikr_STATIC;
 

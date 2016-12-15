@@ -2,7 +2,7 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <graphics/gl4/gl4_context.hpp>
-#include <graphics/gl4/gl4_buffer.hpp>
+#include <graphics/gl4/gl4_vertexbuffer.hpp>
 #include <graphics/command_buffer.hpp>
 #include <graphics/graphics_command.hpp>
 #include <graphics/render_pass.hpp>
@@ -220,7 +220,7 @@ vvoid GL4RenderContext::ClearWithColor(glm::vec4 color) {
 }
 
 
-vvoid GL4RenderContext::ExecuteCommands(CommandBuffer *commandbuffer) {
+vvoid GL4RenderContext::ExecuteCommands(Commandbuffer *commandbuffer) {
   if (commandbuffer) {
     for (std::unique_ptr<GraphicsCommand> &command : commandbuffer->GetCommands()) {
       command->Execute(this);
@@ -230,6 +230,19 @@ vvoid GL4RenderContext::ExecuteCommands(CommandBuffer *commandbuffer) {
 
 
 vvoid GL4RenderContext::ConfigurePipelineState(PipelineState *state) {
+}
+
+
+vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
+  if (pass) {
+    pass->Bind();
+    Clear();
+    ClearWithColor(glm::vec4(pass->ClearColor, 1.0f));
+  } else {
+    // Set back to default.
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    Clear();
+  }
 }
 
 
@@ -324,9 +337,9 @@ vvoid GL4RenderContext::ApplyShaderProgram(vuint32 program_id) {
 }
 
 
-vvoid GL4RenderContext::QueryVertexBuffer(VertexBuffer *buffer) {
+vvoid GL4RenderContext::QueryVertexBuffer(Vertexbuffer *buffer) {
   if (buffer) {
-    GL4VertexBuffer *buf = static_cast<GL4VertexBuffer *>(buffer);
+    GL4Vertexbuffer *buf = static_cast<GL4Vertexbuffer *>(buffer);
     glBindVertexArray(buf->GetVertexArrayId());
     
   }

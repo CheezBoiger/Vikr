@@ -4,14 +4,14 @@
 #include <graphics/command_buffer.hpp>
 #include <graphics/render_context.hpp>
 #include <graphics/graphics_command.hpp>
-#include <graphics/buffer.hpp>
+#include <graphics/vertexbuffer.hpp>
 #include <shader/shader_uniform_params.hpp>
 
 
 namespace vikr {
 
 
-CommandBuffer::CommandBuffer()
+Commandbuffer::Commandbuffer()
 {
 }
 
@@ -76,7 +76,7 @@ private:
 */
 class QueryVertexBufferSetter : public GraphicsCommand {
 public:
-  QueryVertexBufferSetter(VertexBuffer *buf = nullptr)
+  QueryVertexBufferSetter(Vertexbuffer *buf = nullptr)
     : buffer(buf)
   { }
 
@@ -85,7 +85,7 @@ public:
   }
 
 private:
-  VertexBuffer *buffer;
+  Vertexbuffer *buffer;
 };
 
 
@@ -109,6 +109,24 @@ private:
 };
 
 
+/**
+  TopologySetter.
+*/
+class TopologySetter : public GraphicsCommand {
+public:
+  TopologySetter(Topology topo)
+    : t(topo) 
+  { }
+
+  vvoid Execute(RenderContext *context) override {
+    context->ChangeTopology(t);
+  }
+
+private:
+  Topology t;
+};
+
+
 //------------------------------------------------------------------------------------
 //
 //                              Command Buffer Functions.
@@ -116,75 +134,77 @@ private:
 //------------------------------------------------------------------------------------
 
 
-vvoid CommandBuffer::Pushback(std::unique_ptr<GraphicsCommand> &command) {
+vvoid Commandbuffer::Pushback(std::unique_ptr<GraphicsCommand> &command) {
   m_commandBuffer.push_back(std::move(command));
 }
 
 
-vvoid CommandBuffer::Pushback(std::vector<std::unique_ptr<GraphicsCommand> > &commands) {
+vvoid Commandbuffer::Pushback(std::vector<std::unique_ptr<GraphicsCommand> > &commands) {
   
 }
 
 
-vvoid CommandBuffer::SetShaderUniforms(ShaderUniformParams *params) {
+vvoid Commandbuffer::SetShaderUniforms(ShaderUniformParams *params) {
    m_commandBuffer.push_back(
       std::make_unique<ShaderUniformSetter>(params));
 }
 
 
-vvoid CommandBuffer::SetDraw(vuint32 start, vuint32 vertices) {
+vvoid Commandbuffer::SetDraw(vuint32 start, vuint32 vertices) {
   m_commandBuffer.push_back(
     std::make_unique<DrawSetter>(start, vertices));
 }
 
 
-vvoid CommandBuffer::SetDrawIndexed(const vvoid *indices, vuint32 size) {
+vvoid Commandbuffer::SetDrawIndexed(const vvoid *indices, vuint32 size) {
   m_commandBuffer.push_back(
     std::make_unique<DrawIndexedSetter>(indices, size));
 }
 
 
-vvoid CommandBuffer::SetTopology(Topology topology) {
+vvoid Commandbuffer::SetTopology(Topology topology) {
+  m_commandBuffer.push_back(
+    std::make_unique<TopologySetter>(topology));
 }
 
 
-vvoid CommandBuffer::SetRenderTarget(RenderTarget *target) {
+vvoid Commandbuffer::SetRenderTarget(RenderTarget *target) {
 }
 
 
-vvoid CommandBuffer::SetRenderPass(RenderPass *pass) {
+vvoid Commandbuffer::SetRenderPass(RenderPass *pass) {
 }
 
 
-vvoid CommandBuffer::SetClear() {
+vvoid Commandbuffer::SetClear() {
 }
 
 
-vvoid CommandBuffer::SetClearWithColor(glm::vec4 color) {
+vvoid Commandbuffer::SetClearWithColor(glm::vec4 color) {
 }
 
 
-vvoid CommandBuffer::SetChangeViewport(Viewport *viewport) {
+vvoid Commandbuffer::SetChangeViewport(Viewport *viewport) {
 }
 
 
-vvoid CommandBuffer::SetShaderProgram(vuint32 program_id) {
+vvoid Commandbuffer::SetShaderProgram(vuint32 program_id) {
   m_commandBuffer.push_back(
     std::make_unique<ShaderProgramSetter>(program_id));
 }
 
 
-vvoid CommandBuffer::SetConfigurePipelineState(PipelineState *pipelinestate) {
+vvoid Commandbuffer::SetConfigurePipelineState(PipelineState *pipelinestate) {
 }
 
 
-vvoid CommandBuffer::SetQueryVertexBuffer(VertexBuffer *buffer) {
+vvoid Commandbuffer::SetQueryVertexBuffer(Vertexbuffer *buffer) {
   m_commandBuffer.push_back(
     std::make_unique<QueryVertexBufferSetter>(buffer));
 }
 
 
-vvoid CommandBuffer::Execute(RenderContext *context) {
+vvoid Commandbuffer::Execute(RenderContext *context) {
   context->ExecuteCommands(this);
   m_commandBuffer.clear();
 }

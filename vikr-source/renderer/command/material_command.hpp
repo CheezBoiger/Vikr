@@ -27,7 +27,7 @@ public:
     : RenderCommand(RenderCommandType::COMMAND_MATERIAL)
     , m_material(material) { }
 
-  vvoid Record(CommandBuffer *buffer) override {
+  vvoid Record(Commandbuffer *buffer) override {
     ShaderUniformParams params;
     Shader *shader = m_material->GetShader();
     //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));

@@ -20,7 +20,8 @@ RenderTarget::RenderTarget(GraphicsPipeline pipeline
 }
 
 
-RenderTexture::RenderTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool alpha)
+RenderTexture::RenderTexture(GraphicsPipeline pipeline, 
+  vuint32 width, vuint32 height, vbool alpha)
   : RenderTarget(pipeline, width, height, alpha, render_TEXTURE)
 {
 }

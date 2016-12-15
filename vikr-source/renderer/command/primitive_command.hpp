@@ -24,7 +24,7 @@ public:
     , m_mesh(mesh) { }
 
 
-  vvoid Record(CommandBuffer *buffer) override {
+  vvoid Record(Commandbuffer *buffer) override {
     buffer->SetQueryVertexBuffer(m_mesh->GetVertexBuffer());
     if (m_mesh->GetIndices().empty()) {
       buffer->SetDraw(0, m_mesh->GetVertices().size());

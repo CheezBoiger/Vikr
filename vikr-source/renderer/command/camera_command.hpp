@@ -27,7 +27,7 @@ public:
     : RenderCommand(RenderCommandType::COMMAND_CAMERA)
   { }
 
-  vvoid Record(CommandBuffer *buffer) override {
+  vvoid Record(Commandbuffer *buffer) override {
     if (camera && (camera == Renderer::GetRenderer()->GetCamera())) {
       MaterialValue projection;
       MaterialValue view;

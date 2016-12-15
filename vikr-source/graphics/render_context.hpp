@@ -23,9 +23,9 @@ class RenderTarget;
 class RenderPass;
 class RenderDevice;
 class Shader;
-class CommandBuffer;
+class Commandbuffer;
 class PipelineState;
-class VertexBuffer;
+class Vertexbuffer;
 class Framebuffer;
 
 
@@ -71,6 +71,9 @@ public:
   */
   virtual vvoid SetRenderTarget(RenderTarget *target, vuint32 index) = 0;
 
+
+  virtual vvoid SetRenderPass(RenderPass *pass) = 0;
+
   virtual vvoid SetBlendEq(BlendEq eq) = 0;
 
   virtual vvoid SetBlendMode(BlendFunc src, BlendFunc dst) = 0;
@@ -110,7 +113,7 @@ public:
   /**
     Digest, or execute commands immediately.
   */
-  virtual vvoid ExecuteCommands(CommandBuffer *command_buffer) = 0;
+  virtual vvoid ExecuteCommands(Commandbuffer *command_buffer) = 0;
 
   /**
     Configures the pipeline state when needed.
@@ -131,7 +134,7 @@ public:
     Query the Vertex buffer, in this case, it must be called everytime
     you plan to draw.
   */
-  virtual vvoid QueryVertexBuffer(VertexBuffer *buffer) = 0;
+  virtual vvoid QueryVertexBuffer(Vertexbuffer *buffer) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP

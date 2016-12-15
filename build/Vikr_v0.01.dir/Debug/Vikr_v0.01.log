@@ -1,8 +1,3 @@
 ﻿  renderer.cpp
-D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.cpp(98): warning C4244: 'argument': conversion from 'float' to 'vikr::vint32', possible loss of data
-D:\cmgarcia\github\Vikr\vikr-source\renderer\renderer.cpp(100): warning C4244: 'argument': conversion from 'float' to 'vikr::vint32', possible loss of data
-  vikr.cpp
-  Generating Code...
-graphics_command.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-gl4_buffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+gl4_vertexbuffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
   Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Debug\Vikr_v0.01.lib

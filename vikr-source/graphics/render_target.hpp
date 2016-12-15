@@ -84,7 +84,6 @@ protected:
 
   std::unique_ptr<Texture> m_texture = nullptr;
 
-
 };
 
 

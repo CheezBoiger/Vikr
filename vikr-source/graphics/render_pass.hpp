@@ -55,26 +55,28 @@ public:
     Update the RenderTargets
   */
   vvoid UpdateRenderTargets() {
-    FramebufferObject->Bind();
-    // Clear up last RenderPass in Framebuffer.
-    std::vector<Texture *> *targets = FramebufferObject->GetColorAttachments();
-    for (vuint32 i = 0; i < targets->size(); ++i) {
-      FramebufferObject->ClearTexture(i);
+    if (FramebufferObject) {
+      FramebufferObject->Bind();
+      // Clear up last RenderPass in Framebuffer.
+      std::vector<Texture *> *targets = FramebufferObject->GetColorAttachments();
+      for (vuint32 i = 0; i < targets->size(); ++i) {
+        FramebufferObject->ClearTexture(i);
+      }
+      // Set up the new RenderPass
+      std::vector<std::unique_ptr<RenderTexture> > &render_targets = RenderTextures;
+      for (vuint32 i = 0; i < render_targets.size(); ++i) {
+        RenderTexture *render_target = render_targets[i].get();
+        FramebufferObject->BindTexture(render_target, i);
+      }
+      FramebufferObject->Validate();
+      if (Depthbuffer) {
+        FramebufferObject->BindDepthStencilBuffer(Depthbuffer.get());
+      }
+      if(!FramebufferObject->IsComplete()) {
+        VikrLog::DisplayMessage(VIKR_ERROR, "Framebuffer is not complete!");
+      }
+      FramebufferObject->Unbind();
     }
-    // Set up the new RenderPass
-    std::vector<std::unique_ptr<RenderTexture> > &render_targets = RenderTextures;
-    for (vuint32 i = 0; i < render_targets.size(); ++i) {
-      RenderTexture *render_target = render_targets[i].get();
-      FramebufferObject->BindTexture(render_target, i);
-    }
-    FramebufferObject->Validate();
-    if (Depthbuffer) {
-      FramebufferObject->BindDepthStencilBuffer(Depthbuffer.get());
-    }
-    if(!FramebufferObject->IsComplete()) {
-      VikrLog::DisplayMessage(VIKR_ERROR, "Framebuffer is not complete!");
-    }
-    FramebufferObject->Unbind();
   }
 
 

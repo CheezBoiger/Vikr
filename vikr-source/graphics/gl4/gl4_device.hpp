@@ -33,7 +33,7 @@ public:
 
   Material *CreateMaterial(std::string name) override;
 
-  std::unique_ptr<VertexBuffer> CreateVertexBuffer(std::vector<Vertex> &vertices, 
+  std::unique_ptr<Vertexbuffer> CreateVertexBuffer(std::vector<Vertex> &vertices, 
     std::vector<vuint32> &indices, VertexUsageType type) override;
 
   ResourceManager *GetResourceManager() override { return &manager; }
@@ -51,7 +51,7 @@ public:
   /**
     Create a RenderTexture object for the OpenGL device.
   */
-  std::unique_ptr<RenderTexture> CreateRenderTexture(vuint32 width, vuint32 height, 
+  std::unique_ptr<RenderTexture> CreateRenderTexture(std::string t_name, vuint32 width, vuint32 height, 
     vbool alpha = false, DataTypeFormat precision = data_UNSIGNED_BYTE) override;
 
 

@@ -104,7 +104,7 @@ Texture *GLResourceManager::CreateTexture(TextureTarget target, std::string img_
   }
   if(texture) {
     texture->Create(bytecode);
-    texture->SetString(img_path);
+    texture->SetPath(img_path);
     GLResources::textures[img_path] = texture;
   }
   stbi_image_free(bytecode);

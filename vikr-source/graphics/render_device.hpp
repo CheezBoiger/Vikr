@@ -7,7 +7,7 @@
 
 #include <platform/vikr_api.hpp>
 #include <platform/vikr_types.hpp>
-#include <graphics/buffer.hpp>
+#include <graphics/vertexbuffer.hpp>
 #include <graphics/render_target.hpp>
 #include <shader/texture.hpp>
 #include <mesh/imesh.hpp>
@@ -28,7 +28,7 @@ class Shader;
 class Material;
 class ResourceManager;
 class RenderContext;
-class VertexBuffer;
+class Vertexbuffer;
 class Cubemap;
 
 
@@ -73,17 +73,20 @@ public:
   /**
     Create vertex buffer id.
   */
-  virtual std::unique_ptr<VertexBuffer> CreateVertexBuffer(std::vector<Vertex> &vertices,
+  virtual std::unique_ptr<Vertexbuffer> CreateVertexBuffer(std::vector<Vertex> &vertices,
       std::vector<vuint32> &indices, VertexUsageType type) = 0;
 
   virtual ResourceManager *GetResourceManager() = 0;
   virtual RenderContext *GetContext() = 0;
 
-  virtual std::unique_ptr<RenderTexture> CreateRenderTexture(vuint32 width, vuint32 height, 
+  virtual std::unique_ptr<RenderTexture> CreateRenderTexture(std::string t_name, vuint32 width, vuint32 height, 
     vbool alpha = false, DataTypeFormat precision = data_UNSIGNED_BYTE) = 0;
 
   virtual std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height) = 0;
 
+  /**
+  
+  */
   virtual std::unique_ptr<Cubemap> CreateCubemap() = 0;
 };
 } // vikr

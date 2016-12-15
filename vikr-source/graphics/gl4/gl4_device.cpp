@@ -4,7 +4,7 @@
 #include <graphics/gl4/gl4_device.hpp>
 #include <graphics/gl4/gl4_rendertarget.hpp>
 #include <graphics/gl4/gl4_framebuffer.hpp>
-#include <graphics/gl4/gl4_buffer.hpp>
+#include <graphics/gl4/gl4_vertexbuffer.hpp>
 #include <shader/glsl/gl_cubemap.hpp>
 #include <util/vikr_log.hpp>
 #include <cstddef>
@@ -57,11 +57,11 @@ Material *GL4RenderDevice::CreateMaterial(std::string name) {
 /**
   Data is interleaved.
 */
-std::unique_ptr<VertexBuffer> 
+std::unique_ptr<Vertexbuffer> 
 GL4RenderDevice::CreateVertexBuffer(
   std::vector<Vertex> &vertices, std::vector<vuint32> &indices, VertexUsageType type) 
 {
-  GL4VertexBuffer gbo;
+  GL4Vertexbuffer gbo;
   vuint32 vbo;
   vuint32 vao;
   vuint32 ibo = -1;
@@ -118,7 +118,7 @@ GL4RenderDevice::CreateVertexBuffer(
     gbo.StoreElementBufferId(ibo);
   }
 
-  return std::make_unique<GL4VertexBuffer>(std::move(gbo));
+  return std::make_unique<GL4Vertexbuffer>(std::move(gbo));
 }
 
 
@@ -132,10 +132,10 @@ std::unique_ptr<Renderbuffer> GL4RenderDevice::CreateRenderbuffer(vuint32 width,
 }
 
 
-std::unique_ptr<RenderTexture> GL4RenderDevice::CreateRenderTexture(vuint32 width, vuint32 height, 
-  vbool alpha, DataTypeFormat precision) 
+std::unique_ptr<RenderTexture> GL4RenderDevice::CreateRenderTexture(std::string t_name, 
+  vuint32 width, vuint32 height, vbool alpha, DataTypeFormat precision) 
 {
-  return std::make_unique<GL4RenderTexture>(width, height, alpha, precision);
+  return std::make_unique<GL4RenderTexture>(t_name, width, height, alpha, precision);
 }
 
 

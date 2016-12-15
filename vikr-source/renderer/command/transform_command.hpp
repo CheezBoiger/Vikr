@@ -31,7 +31,7 @@ public:
     }
 
 
-  vvoid Record(CommandBuffer *buffer) override {
+  vvoid Record(Commandbuffer *buffer) override {
     MaterialValue mat;
     mat.m_mat4 = m_transform->GetTransform();
     mat.type = vikr_MAT4;

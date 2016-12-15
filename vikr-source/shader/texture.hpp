@@ -55,6 +55,7 @@ public:
   vbool IsMipmapping() { return m_mipmapping; }
   vint32 GetWidth() { return m_width; }
   std::string GetPath() { return m_path; }
+  std::string GetName() { return m_name; }
   /**
     Create the Texture object.
   */
@@ -102,11 +103,13 @@ public:
   /**
     Grab the path of the image file that this texture is going to load.
   */
-  vvoid SetString(std::string path) { m_path = path; }
+  vvoid SetPath(std::string path) { m_path = path; }
   /**
     Width size of the texture object.
   */
   vvoid SetWidth(vint32 width) { m_width = width; }
+
+  vvoid SetName(std::string name) { m_name = name; }
 
 protected:
 
@@ -123,6 +126,7 @@ protected:
   vbool             m_alpha                     = true;
   vuint32           m_width                     = 0;
   std::string       m_path                      = "";
+  std::string       m_name                      = "noname";
 
 private:
   VIKR_DISALLOW_COPY_AND_ASSIGN(Texture);

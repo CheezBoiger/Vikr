@@ -170,6 +170,7 @@ int main(int c, char* args[]) {
   lc2->light = &plight2;
   plight2.SetPos(glm::vec3(0.0f, 10.0f, 0.0f));
   plight2.SetDiffuse(glm::vec3(1.0f, 0.0f, 0.0f));
+  plight2.SetSpecular(glm::vec3(1.0f, 0.0f, 0.0f));
   light_node2->Update();
 
   light_object->AddChild(light_node);

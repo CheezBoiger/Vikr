@@ -23,7 +23,7 @@ class RenderContext;
 class RenderTarget;
 class RenderPass;
 class PipelineState;
-class VertexBuffer;
+class Vertexbuffer;
 
 struct ShaderUniformParams;
 struct Viewport;
@@ -35,9 +35,9 @@ struct Viewport;
 
   Manual commands must be set here.
 */
-class CommandBuffer {
+class Commandbuffer {
 public:
-  CommandBuffer();
+  Commandbuffer();
 
   vvoid Clear() { m_commandBuffer.clear(); }
 
@@ -58,7 +58,7 @@ public:
   vvoid SetShaderProgram(vuint32 program_id);
   vvoid SetConfigurePipelineState(PipelineState *pipelinestate);
   vvoid SetShaderUniforms(ShaderUniformParams *params);
-  vvoid SetQueryVertexBuffer(VertexBuffer *buffer);
+  vvoid SetQueryVertexBuffer(Vertexbuffer *buffer);
 
   vvoid Execute(RenderContext *context);
 

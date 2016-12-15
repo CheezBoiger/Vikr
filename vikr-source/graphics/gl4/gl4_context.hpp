@@ -52,13 +52,14 @@ public:
   vvoid ChangeViewport(Viewport *port) override;
   vvoid ChangeTopology(Topology topology) override;
 
-  vvoid ExecuteCommands(CommandBuffer *command_buffer) override;
+  vvoid ExecuteCommands(Commandbuffer *command_buffer) override;
   vvoid ConfigurePipelineState(PipelineState *state) override;
 
   vvoid SetShaderUniforms(ShaderUniformParams *params) override;
   vvoid ApplyShaderProgram(vuint32 program_id) override;
-  vvoid QueryVertexBuffer(VertexBuffer *buffer) override;
+  vvoid QueryVertexBuffer(Vertexbuffer *buffer) override;
 
+  vvoid SetRenderPass(RenderPass *pass) override;
 
 private:
   /**

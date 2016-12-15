@@ -13,6 +13,8 @@
 
 #include <mesh/mesh.hpp>
 
+#include <shader/material.hpp>
+
 #include <lighting/point_light.hpp>
 #include <lighting/spot_light.hpp>
 #include <lighting/directional_light.hpp>
@@ -95,9 +97,10 @@ vvoid Renderer::PushBack(SceneNode *obj) {
             // transparent, sort them from shortest to highest distance, and finally
             // draw them after Opaque objects.
             if (camera) {
-              c.second->SetDrawOrder(glm::length(camera->GetPos() - location));
+              c.second->SetDrawOrder(
+                static_cast<vint32>(glm::length(camera->GetPos() - location)));
             } else {
-              c.second->SetDrawOrder(glm::length(location));
+              c.second->SetDrawOrder(static_cast<vint32>(glm::length(location)));
             }
             m_renderQueue.PushBack(c.second);
           }
@@ -126,8 +129,8 @@ vvoid Renderer::Render() {
   m_renderQueue.Sort();
 
   // Record Commands.
-  CommandBuffer command_buffer; 
-  CommandBuffer deferred_buffer;
+  Commandbuffer command_buffer; 
+  Commandbuffer deferred_buffer;
   RenderContext *context = m_renderDevice->GetContext();
   std::vector<RenderCommand *> &render_commands = m_renderQueue.GetCommandBuffer();
   std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
@@ -143,50 +146,21 @@ vvoid Renderer::Render() {
   VikrLog::DisplayMessage(VIKR_NOTIFY, "Buffered time: " +
     std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + "us");
   
-  m_gBufferPass->Bind();
-  m_renderDevice->GetContext()->Clear();
-  m_renderDevice->GetContext()->ClearWithColor(clear_color);
+  // Set the Gbuffer pass.
+  context->SetRenderPass(m_gBufferPass.get());
   context->ApplyShaderProgram(gbufferShader->GetProgramId());
   start = std::chrono::steady_clock::now();
   context->ExecuteCommands(&command_buffer);
   end = std::chrono::steady_clock::now();
   VikrLog::DisplayMessage(VIKR_NOTIFY, "gbuffer render time: " +
     std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + "us");
-  m_gBufferPass->Unbind();
 
   // Deferred Shading pass.
 
+  
+  // Set back to the default RenderPass.
+  context->SetRenderPass(nullptr);
   context->ApplyShaderProgram(lightShader->GetProgramId());
-  // This is kind of ridiculous.
-  // Might need to think of a newer design.
-  {
-    ShaderUniformParams params;
-    std::map<std::string, MaterialValue> valueset;
-    MaterialValue gpos, gnorm, galb, gspec, gamb;
-    gpos.m_integer      = 0;
-    gpos.type           = vikr_INT;
-    gnorm.m_integer     = 1;
-    gnorm.type          = vikr_INT; 
-    galb.m_integer      = 2;
-    galb.type           = vikr_INT;
-    gspec.m_integer     = 3; 
-    gspec.type          = vikr_INT;
-    gamb.m_integer      = 4; 
-    gamb.type           = vikr_INT;
-    params.uniforms = &valueset;
-    params.samplers = nullptr;
-    valueset = {
-      std::make_pair("gPosition", gpos),
-      std::make_pair("gNormal", gnorm),
-      std::make_pair("gAlbedo", galb),
-      std::make_pair("gSpecular", gspec),
-      std::make_pair("gAmbient", gamb)
-    };
-    context->SetShaderUniforms(&params);
-  }
-
-  context->Clear();
-  context->ClearWithColor(clear_color);
   for (vuint32 i = 0; i < m_gBufferPass->RenderTextures.size(); ++i) {
     context->SetTexture(m_gBufferPass->RenderTextures[i]->GetTexture(), i);
   }
@@ -213,11 +187,7 @@ vint32 Renderer::Init(RenderDevice *device) {
   });
   m_renderDevice->GetContext()->EnableDepthMode(true);
   m_renderDevice->GetContext()->EnableCullMode(true);
-  //m_renderDevice->GetContext()->EnableBlendMode(true);
-  m_renderDevice->GetContext()->SetBlendMode(
-    BlendFunc::vikr_BLEND_SRC_ALPHA, 
-    BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA);
-  //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 
   // Create the ScreenQuad.
   Quad quad;
@@ -232,11 +202,16 @@ vint32 Renderer::Init(RenderDevice *device) {
             practically hardcoded.
   */
   m_gBufferPass = std::make_unique<RenderPass>();
-  m_gBufferPass->RenderTextures.push_back(m_renderDevice->CreateRenderTexture(1200, 800, false, data_FLOAT));
-  m_gBufferPass->RenderTextures.push_back(m_renderDevice->CreateRenderTexture(1200, 800, false, data_FLOAT));
-  m_gBufferPass->RenderTextures.push_back(m_renderDevice->CreateRenderTexture(1200, 800, true, data_UNSIGNED_BYTE));
-  m_gBufferPass->RenderTextures.push_back(m_renderDevice->CreateRenderTexture(1200, 800, true, data_UNSIGNED_BYTE));
-  m_gBufferPass->RenderTextures.push_back(m_renderDevice->CreateRenderTexture(1200, 800, true, data_UNSIGNED_BYTE));
+  m_gBufferPass->RenderTextures
+    .push_back(m_renderDevice->CreateRenderTexture("gPosition", 1200, 800, false, data_FLOAT));
+  m_gBufferPass->RenderTextures
+    .push_back(m_renderDevice->CreateRenderTexture("gNormal", 1200, 800, false, data_FLOAT));
+  m_gBufferPass->RenderTextures
+    .push_back(m_renderDevice->CreateRenderTexture("gAlbedo", 1200, 800, true, data_UNSIGNED_BYTE));
+  m_gBufferPass->RenderTextures
+    .push_back(m_renderDevice->CreateRenderTexture("gSpecular", 1200, 800, true, data_UNSIGNED_BYTE));
+  m_gBufferPass->RenderTextures
+    .push_back(m_renderDevice->CreateRenderTexture("gAmbient" , 1200, 800, true, data_UNSIGNED_BYTE));
   m_gBufferPass->Depthbuffer = m_renderDevice->CreateRenderbuffer(1200, 800);
   m_gBufferPass->FramebufferObject = m_renderDevice->CreateFramebuffer();
   m_gBufferPass->FramebufferObject->Generate();
@@ -248,12 +223,23 @@ vint32 Renderer::Init(RenderDevice *device) {
   m_renderDevice->GetResourceManager()->StoreShader("lightpass", "shaders/lightpass.vert", "shaders/lightpass.frag");
   lightShader = m_renderDevice->GetResourceManager()->GetShader("lightpass");
 
+  // Initialize the light parameters for the light shader.
+  m_renderDevice->GetContext()->ApplyShaderProgram(lightShader->GetProgramId());
+  Material setup;
+  setup.SetInt("gPosition", 0);
+  setup.SetInt("gNormal", 1);
+  setup.SetInt("gAlbedo", 2);
+  setup.SetInt("gSpecular", 3);
+  setup.SetInt("gAmbient", 4);
+  ShaderUniformParams param = {setup.GetMaterialValues(), nullptr};
+  m_renderDevice->GetContext()->SetShaderUniforms(&param);
+
   return 1;
 }
 
 
 vvoid Renderer::DrawScreenQuad() {
-  CommandBuffer buffer;
+  Commandbuffer buffer;
   PrimitiveCommand command;
   command.m_mesh = m_quad;
   command.Record(&buffer);
