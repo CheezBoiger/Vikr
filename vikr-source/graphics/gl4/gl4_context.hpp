@@ -57,7 +57,7 @@ public:
 
   vvoid SetShaderUniforms(ShaderUniformParams *params) override;
   vvoid ApplyShaderProgram(vuint32 program_id) override;
-  vvoid QueryVertexBuffer(Vertexbuffer *buffer) override;
+  vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
 
   vvoid SetRenderPass(RenderPass *pass) override;
 

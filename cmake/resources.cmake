@@ -8,11 +8,11 @@ if (vulkan)
   set(VIKR_GLOB
     ${VIKR_GLOB}
     ${VIKR_RESOURCES_VULKAN_DIR}/vk_resource_manager.hpp
-    ${VIKR_RESOURCES_VULKAN_DIR}/vk_deallocator.hpp)
+    ${VIKR_RESOURCES_VULKAN_DIR}/vk_memorymanager.hpp)
 
   set(VIKR_GLOB
     ${VIKR_GLOB}
-    ${VIKR_RESOURCES_VULKAN_DETAIL_DIR}/vk_deallocator.inl)
+    ${VIKR_RESOURCES_VULKAN_DETAIL_DIR}/vk_memorymanager.inl)
 
 endif()
 

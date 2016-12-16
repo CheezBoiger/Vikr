@@ -337,7 +337,7 @@ vvoid GL4RenderContext::ApplyShaderProgram(vuint32 program_id) {
 }
 
 
-vvoid GL4RenderContext::QueryVertexBuffer(Vertexbuffer *buffer) {
+vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
   if (buffer) {
     GL4Vertexbuffer *buf = static_cast<GL4Vertexbuffer *>(buffer);
     glBindVertexArray(buf->GetVertexArrayId());

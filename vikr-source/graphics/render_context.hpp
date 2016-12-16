@@ -134,7 +134,7 @@ public:
     Query the Vertex buffer, in this case, it must be called everytime
     you plan to draw.
   */
-  virtual vvoid QueryVertexBuffer(Vertexbuffer *buffer) = 0;
+  virtual vvoid QueryVertexbuffer(Vertexbuffer *buffer) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP

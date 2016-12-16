@@ -74,14 +74,14 @@ private:
 /**
   QueryVertexBufferSetter.
 */
-class QueryVertexBufferSetter : public GraphicsCommand {
+class QueryVertexbufferSetter : public GraphicsCommand {
 public:
-  QueryVertexBufferSetter(Vertexbuffer *buf = nullptr)
+  QueryVertexbufferSetter(Vertexbuffer *buf = nullptr)
     : buffer(buf)
   { }
 
   vvoid Execute(RenderContext *context) override {
-    context->QueryVertexBuffer(buffer);
+    context->QueryVertexbuffer(buffer);
   }
 
 private:
@@ -198,9 +198,9 @@ vvoid Commandbuffer::SetConfigurePipelineState(PipelineState *pipelinestate) {
 }
 
 
-vvoid Commandbuffer::SetQueryVertexBuffer(Vertexbuffer *buffer) {
+vvoid Commandbuffer::SetQueryVertexbuffer(Vertexbuffer *buffer) {
   m_commandBuffer.push_back(
-    std::make_unique<QueryVertexBufferSetter>(buffer));
+    std::make_unique<QueryVertexbufferSetter>(buffer));
 }
 
 

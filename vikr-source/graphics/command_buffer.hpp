@@ -58,7 +58,7 @@ public:
   vvoid SetShaderProgram(vuint32 program_id);
   vvoid SetConfigurePipelineState(PipelineState *pipelinestate);
   vvoid SetShaderUniforms(ShaderUniformParams *params);
-  vvoid SetQueryVertexBuffer(Vertexbuffer *buffer);
+  vvoid SetQueryVertexbuffer(Vertexbuffer *buffer);
 
   vvoid Execute(RenderContext *context);
 

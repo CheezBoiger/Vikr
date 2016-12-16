@@ -15,6 +15,8 @@ if (vulkan)
     ${VIKR_GRAPHICS_VK_DIR}/vk_context.hpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_instance.hpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_instance.cpp
+    ${VIKR_GRAPHICS_VK_DIR}/vk_logdevice.hpp
+    ${VIKR_GRAPHICS_VK_DIR}/vk_logdevice.cpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_phydevice.hpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_phydevice.cpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_pipeline_state.hpp

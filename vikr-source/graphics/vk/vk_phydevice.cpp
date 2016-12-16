@@ -39,12 +39,14 @@ vbool VKPhysicalDevice::IsSuitable(VkPhysicalDevice &device) {
   VkPhysicalDeviceProperties properties;
   VkPhysicalDeviceFeatures features;
   VkPhysicalDeviceMemoryProperties memory_properties;
+  VKQueueFamily family = VKQueueFamily::FindQueueFamilies(device);
   vkGetPhysicalDeviceProperties(device, &properties);
   vkGetPhysicalDeviceFeatures(device, &features);
   vkGetPhysicalDeviceMemoryProperties(device, &memory_properties);
   // Nothing with memory properties for now.
   return  properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && 
-          features.geometryShader;
+          features.geometryShader && 
+          family.IsComplete();
 }
 
 
@@ -79,5 +81,25 @@ vint32 VKPhysicalDevice::RateDeviceCompatibility(VkPhysicalDevice &device) {
     score = 0;
   }
   return score;
+}
+
+
+VKQueueFamily VKQueueFamily::FindQueueFamilies(VkPhysicalDevice device) {
+  VKQueueFamily family;
+  vuint32 queue_family_count = 0;
+  vkGetPhysicalDeviceQueueFamilyProperties(device, &queue_family_count, nullptr);
+  std::vector<VkQueueFamilyProperties> queue_familes(queue_family_count);
+  vkGetPhysicalDeviceQueueFamilyProperties(device, &queue_family_count, queue_familes.data());
+  vint32 i = 0;
+  for (const auto &queue_family : queue_familes) {
+    if (queue_family.queueCount > 0 && queue_family.queueFlags && VK_QUEUE_GRAPHICS_BIT) {
+      family.gfrFamily = i;
+    }
+    if (family.IsComplete()) {
+      break;
+    }
+    i++;
+  }
+  return family;
 }
 } // vikr

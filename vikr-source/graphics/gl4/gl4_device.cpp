@@ -58,7 +58,7 @@ Material *GL4RenderDevice::CreateMaterial(std::string name) {
   Data is interleaved.
 */
 std::unique_ptr<Vertexbuffer> 
-GL4RenderDevice::CreateVertexBuffer(
+GL4RenderDevice::CreateVertexbuffer(
   std::vector<Vertex> &vertices, std::vector<vuint32> &indices, VertexUsageType type) 
 {
   GL4Vertexbuffer gbo;

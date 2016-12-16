@@ -73,7 +73,7 @@ public:
   /**
     Create vertex buffer id.
   */
-  virtual std::unique_ptr<Vertexbuffer> CreateVertexBuffer(std::vector<Vertex> &vertices,
+  virtual std::unique_ptr<Vertexbuffer> CreateVertexbuffer(std::vector<Vertex> &vertices,
       std::vector<vuint32> &indices, VertexUsageType type) = 0;
 
   virtual ResourceManager *GetResourceManager() = 0;

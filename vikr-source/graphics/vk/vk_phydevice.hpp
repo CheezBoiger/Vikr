@@ -49,5 +49,26 @@ private:
   */
   static VkPhysicalDevice m_physicalDevice;
 };
+
+
+/**
+  Queue family search.
+*/
+class VKQueueFamily {
+public:
+  /**
+    Simple check to see if queue family contains at least graphics commands. 
+  */
+  vbool IsComplete() { return gfrFamily >= 0; }
+
+  /**
+    Find us a queue family for rendering.
+  */
+  static VKQueueFamily FindQueueFamilies(VkPhysicalDevice device);
+  
+
+private:
+  int gfrFamily = -1;
+};
 } // vikr
 #endif // __VIKR_PHYDEVICE_HPP

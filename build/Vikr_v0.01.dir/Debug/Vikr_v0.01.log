@@ -1,3 +1,51 @@
-﻿  renderer.cpp
+﻿  point_light.cpp
+  directional_light.cpp
+  vk_vertexbuffer.cpp
+  vk_context.cpp
+  vk_logdevice.cpp
+  vk_phydevice.cpp
+  gl4_vertexbuffer.cpp
+  gl4_context.cpp
+  gl4_device.cpp
+  gl4_framebuffer.cpp
+  gl4_rendertarget.cpp
+  command_buffer.cpp
+  render_target.cpp
+  cube.cpp
+  quad.cpp
+  model.cpp
+  mesh.cpp
+  render_command.cpp
+  mesh_command.cpp
+  group_command.cpp
+  Generating Code...
+  Compiling...
+  renderer.cpp
+  render_queue.cpp
+  scene_component.cpp
+  transform_component.cpp
+  camera_component.cpp
+  mesh_component.cpp
+  renderer_component.cpp
+  scene_node.cpp
+  scene.cpp
+  gl_cubemap.cpp
+  gl_texture.cpp
+  gl_texture1d.cpp
+  gl_texture2d.cpp
+  gl_texture3d.cpp
+  glsl_linker.cpp
+  glsl_shader.cpp
+  shader.cpp
+  material.cpp
+  texture.cpp
+  gl_resource_manager.cpp
+  Generating Code...
+  Compiling...
+  model_loader.cpp
+  resource_manager.cpp
+  vikr.cpp
+  Generating Code...
 gl4_vertexbuffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+vk_context.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
   Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Debug\Vikr_v0.01.lib
