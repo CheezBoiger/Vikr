@@ -48,9 +48,10 @@ public:
   Texture *GetTexture(std::string image_path) override;
 
   vint32 StoreShader(std::string shader_name,
-                     std::string vs,
-                     std::string fs,
-                     std::string include_path = ".") override;
+    std::string vs,
+    std::string fs,
+    std::string include_path = ".",
+    std::string gs = "") override;
 
 };
 

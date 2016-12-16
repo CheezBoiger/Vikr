@@ -62,8 +62,9 @@ public:
   virtual vvoid StoreShader(
     std::string name, 
     std::string vs, 
-    std::string fs, 
-    std::string include = ".") = 0;
+    std::string fs,
+    std::string include = ".",
+    std::string gs = "") = 0;
   
   /**
     Create material, which is handled by resources.

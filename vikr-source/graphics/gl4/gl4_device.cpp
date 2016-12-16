@@ -40,7 +40,7 @@ Shader *GL4RenderDevice::GetShader(std::string name) {
 
 vvoid GL4RenderDevice::StoreShader(
   std::string name, std::string vs, 
-  std::string fs, std::string include) 
+  std::string fs, std::string include, std::string gs) 
 {
   vint32 success =  manager.StoreShader(name, vs, fs, include);
   if (!success) {

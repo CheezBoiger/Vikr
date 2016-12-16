@@ -387,7 +387,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_phydevice.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_pipeline_state.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_device.cpp"  />
-    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_vertexbuffer.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_context.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_device.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\gl4\gl4_pipeline_state.cpp"  />

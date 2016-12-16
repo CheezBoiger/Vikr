@@ -24,6 +24,7 @@ vvoid GLSLShader::Compile(std::string vs, std::string fs, std::string gs) {
   GLSLLinker linker(this);
   vert.GetPreprocessor()->SetSourceDirectory(include_searchpath);
   frag.GetPreprocessor()->SetSourceDirectory(include_searchpath);
+  geo.GetPreprocessor()->SetSourceDirectory(include_searchpath);
   vert.Compile();
   frag.Compile();
   if (!gs.empty()) {

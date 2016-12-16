@@ -6,5 +6,7 @@
 namespace vikr {
 
 
-
+VKContext::VKContext()
+{
+}
 } // vikr

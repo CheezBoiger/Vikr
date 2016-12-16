@@ -54,6 +54,9 @@ std::string GLSLPreprocessor::Preprocess(std::string filepath) {
 
 
 vvoid GLSLPreprocessor::SetSourceDirectory(std::string path) {
+  if (path.empty()) {
+    path = ".";
+  }
   // We need to use Filesystem to check if path exists.
   source_directory = path;
 }

@@ -3,9 +3,12 @@
 //
 #include <shader/glsl/glsl_compiler.hpp>
 #include <util/vikr_filesystem.hpp>
+#include <util/vikr_log.hpp>
+
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <array>
 
 namespace vikr {
 
@@ -29,15 +32,17 @@ vvoid GLSLCompiler::LoadShaderFile() {
 
 vvoid GLSLCompiler::Compile() {
   LoadShaderFile();
-  vint32 success;
-  GLchar log[1024];
-  CompileShader(shader_id);
-  GetShaderiv(shader_id, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    GetShaderInfoLog(shader_id, 1024, NULL, log);
-    std::cout << log << std::endl;
-  } else {
-    compiled = true;
+  vint32 success = false;
+  std::array<GLchar, 1024> log;
+  if (!filepath.empty()) {
+    CompileShader(shader_id);
+    GetShaderiv(shader_id, GL_COMPILE_STATUS, &success);
+    if(!success) {
+      GetShaderInfoLog(shader_id, log.size(), NULL, log.data());
+      VikrLog::DisplayMessage(VIKR_ERROR, std::string(log.data()));
+    } else {
+      compiled = true;
+    }
   }
 }
 } // vikr

@@ -76,7 +76,6 @@ SceneNode *ModelLoader::ProcessNode(
     aiVector3D pos;
     aiQuaterniont<vreal32> rotation;
     node->mTransformation.DecomposeNoScaling(rotation, pos);
-    
     child->Update();
     scene_node->AddChild(child);
   }

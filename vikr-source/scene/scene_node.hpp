@@ -88,6 +88,10 @@ public:
   */
   vvoid SetParent(SceneNode *parent) { m_parent = parent; }
 
+  
+  /**
+    Add a component into the SceneNode.
+  */
   template<typename Component>
   Component *AddComponent() {
     static_assert(!std::is_copy_assignable<Component>(), 

@@ -234,6 +234,8 @@ vint32 Renderer::Init(RenderDevice *device) {
   ShaderUniformParams param = {setup.GetMaterialValues(), nullptr};
   m_renderDevice->GetContext()->SetShaderUniforms(&param);
 
+  
+
   return 1;
 }
 

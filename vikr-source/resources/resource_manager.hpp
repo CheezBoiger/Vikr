@@ -62,7 +62,8 @@ public:
   virtual vint32 StoreShader(std::string shader_name,
                              std::string vs,
                              std::string fs,
-                             std::string include_searchpath = ".") = 0;
+                             std::string include_searchpath = ".",
+                             std::string gs = "") = 0;
 
   /**
     Much involves the interface design of ResourceManager, but this is common.

@@ -129,7 +129,7 @@ protected:
   std::unique_ptr<RenderPass> m_gBufferPass     = nullptr;
 
 
-  std::unique_ptr<RenderPass> m_lightPass       = nullptr;
+  std::unique_ptr<RenderPass> m_shadowPass      = nullptr;
   
 
   Shader *gbufferShader;

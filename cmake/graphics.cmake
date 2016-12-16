@@ -31,7 +31,7 @@ endif()
 set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_vertexbuffer.hpp
-  ${VIKR_GRAPHICS_GL4_DIR}/gl4_vertexbuffer.cpp
+#  ${VIKR_GRAPHICS_GL4_DIR}/gl4_vertexbuffer.cpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_context.hpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_context.cpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_device.hpp

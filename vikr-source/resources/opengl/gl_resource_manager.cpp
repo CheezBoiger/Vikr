@@ -121,11 +121,12 @@ vint32 GLResourceManager::StoreShader(
   std::string shader_name,
   std::string vs,
   std::string fs,
-  std::string include_path)
+  std::string include_path,
+  std::string gs)
 {
   GLSLShader shader;
   shader.SetIncludeSearchPath(include_path);
-  shader.Compile(vs, fs);
+  shader.Compile(vs, fs, gs);
   if(shader.IsLinked()) {
     return StoreShader(shader_name, &shader);
   }

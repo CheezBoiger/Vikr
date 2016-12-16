@@ -6,6 +6,8 @@
 #include <shader/shader.hpp>
 #include <util/vikr_log.hpp>
 
+#include <array>
+
 namespace vikr {
 
 
@@ -16,27 +18,25 @@ GLSLLinker::GLSLLinker(Shader *shader)
 
 
 vint32 GLSLLinker::Link(GLSLCompiler *vs, GLSLCompiler *fs, GLSLCompiler *gs) {
-  GLSLCompiler *vs_compiler = nullptr;
-  GLSLCompiler *fs_compiler = nullptr;
-  GLSLCompiler *gs_compiler = nullptr;
   vint32 success;
-  GLchar log[1024];
-  if(!vs->IsCompiled()) {
-    vs->Compile();
+  std::array<GLchar, 1024> log;
+  if(!vs->IsCompiled() || !fs->IsCompiled()) {
+    VikrLog::DisplayMessage(VIKR_ERROR, "Linker can not link uncompiled shaders!");
+    return 0;
   }
-  if(!fs->IsCompiled()) {
-    fs->Compile();
-  }
-  if(gs != nullptr && !gs->IsCompiled()) {
+  if(gs && !gs->IsCompiled()) {
     gs->Compile();
   }
   AttachShader(shader->GetProgramId(), vs->GetShaderId());
   AttachShader(shader->GetProgramId(), fs->GetShaderId());
+  if (gs->IsCompiled()) {
+    AttachShader(shader->GetProgramId(), gs->GetShaderId());
+  }
   LinkProgram(shader->GetProgramId());
   GetProgramiv(shader->GetProgramId(), GL_LINK_STATUS, &success);
   if(!success) {
-    GetProgramInfoLog(shader->GetProgramId(), 1024, NULL, log);
-    VikrLog::DisplayMessage(vikr::VIKR_ERROR, std::string(log));
+    GetProgramInfoLog(shader->GetProgramId(), 1024, NULL, log.data());
+    VikrLog::DisplayMessage(vikr::VIKR_ERROR, std::string(log.data()));
     return -1;
   }
   vs->Cleanup();
