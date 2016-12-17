@@ -68,6 +68,8 @@ public:
 
   const Resource *operator &( ) const { return &obj; }
 
+  Resource &Get() { return obj; }
+
   Resource *Replace() { Cleanup(); return &obj; }
 
   operator Resource() const { return obj; }

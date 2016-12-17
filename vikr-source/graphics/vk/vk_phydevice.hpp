@@ -66,9 +66,10 @@ public:
   */
   static VKQueueFamily FindQueueFamilies(VkPhysicalDevice device);
   
+  vuint32 GetGFRFamily() { return gfrFamily; }
 
 private:
-  int gfrFamily = -1;
+  vint32 gfrFamily = -1;
 };
 } // vikr
 #endif // __VIKR_PHYDEVICE_HPP

@@ -17,6 +17,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <util/vikr_log.hpp>
 
+#include <input/window.hpp>
+
 
 
 namespace vikr {
@@ -343,5 +345,10 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
     glBindVertexArray(buf->GetVertexArrayId());
     
   }
+}
+
+
+vvoid GL4RenderContext::Present() {
+  glfwSwapBuffers(Window::GetMainWindow());
 }
 } // vikr

@@ -73,9 +73,10 @@ public:
   SceneNode *GetSceneNode(guid_t guid);
 
   /**
-    Destroys SceneNode, It's children remain intact though, so be sure to wipe them out as well.
+    Destroys SceneNode, along with a choice of whether or not you wish to 
+    destroy the entire subtree heirarchy.
   */
-  vint32 DestroySceneNode(guid_t guid);
+  vint32 DestroySceneNode(guid_t guid, vbool destroy_subtree);
 
 private:
   /**

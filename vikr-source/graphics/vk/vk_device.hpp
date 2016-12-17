@@ -8,6 +8,7 @@
 #include <platform/vikr_api.hpp>
 #include <platform/vikr_types.hpp>
 #include <graphics/render_device.hpp>
+#include <graphics/vk/vk_context.hpp>
 #include <graphics/vk/vk_phydevice.hpp>
 #include <resources/vulkan/vk_memorymanager.hpp>
 
@@ -50,7 +51,7 @@ public:
 
   ResourceManager *GetResourceManager() override;
 
-  RenderContext *GetContext() override;
+  RenderContext *GetContext() override { return &context; }
 
   std::unique_ptr<RenderTexture> CreateRenderTexture(std::string t_name, vuint32 width, vuint32 height,
     vbool alpha = false, DataTypeFormat precision = data_UNSIGNED_BYTE) override;
@@ -62,13 +63,23 @@ public:
 
 private:
 
+  vvoid Setup();
+
+  vvoid CreateInstance();
+
+  vvoid DeterminePhysicalDevice();
+
   vvoid CreateLogicalDevices();
 
+  vvoid CreateSurface();
   
 
+  VkPhysicalDevice physical_device      { VK_NULL_HANDLE };
+  VkMemoryManager<VkInstance> instance  { vkDestroyInstance };
+  VkMemoryManager<VkDevice> device      { vkDestroyDevice };
+  VkMemoryManager<VkSurfaceKHR> surface { instance, vkDestroySurfaceKHR}; 
 
-  VkMemoryManager<VkInstance> instance;
-  VkMemoryManager<VkDevice> device;
+  VKContext context;
 };
 } // vikr
 #endif // __VIKR_VK_DEVICE_HPP

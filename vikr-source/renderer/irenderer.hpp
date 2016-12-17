@@ -16,6 +16,7 @@ class RenderCommand;
 class RenderTarget;
 class SceneNode;
 class RenderDevice;
+class ICamera;
 
 /**
   Interface Renderer for use with the abstract renderer.
@@ -31,6 +32,10 @@ public:
 
   virtual vvoid Sort() = 0;
   virtual vint32 Init(RenderDevice *device) = 0;
+
+  virtual ICamera *GetCamera() = 0;
+  virtual vvoid SetCamera(ICamera *camera) = 0;
+
   /**
     Should render the frame. 
    */

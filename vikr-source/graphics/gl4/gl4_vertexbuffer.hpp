@@ -11,6 +11,9 @@
 namespace vikr {
 
 
+/**
+  OpenGL Vertexbuffer, for storing vertex data to send. 
+*/
 class GL4Vertexbuffer : public Vertexbuffer {
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(GL4Vertexbuffer);

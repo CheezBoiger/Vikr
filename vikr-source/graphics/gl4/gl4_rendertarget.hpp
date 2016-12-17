@@ -12,7 +12,7 @@ namespace vikr {
 
 
 /**
-  Going to need to redo this program.
+  OpenGL Render Texture.
 */
 class GL4RenderTexture : public RenderTexture {
 public:
@@ -22,6 +22,9 @@ public:
 };
 
 
+/**
+  OpenGL Renderbuffer. 
+*/
 class GL4Renderbuffer : public Renderbuffer {
 public:
   GL4Renderbuffer(vuint32 width, vuint32 height);

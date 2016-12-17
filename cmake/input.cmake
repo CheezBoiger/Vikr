@@ -8,4 +8,6 @@ set(VIKR_GLOB
   ${VIKR_INPUT_DIR}/keyboard.hpp
   ${VIKR_INPUT_DIR}/keyboard.cpp
   ${VIKR_INPUT_DIR}/mouse.hpp
-  ${VIKR_INPUT_DIR}/mouse.cpp)
+  ${VIKR_INPUT_DIR}/mouse.cpp
+  ${VIKR_INPUT_DIR}/window.hpp
+  ${VIKR_INPUT_DIR}/window.cpp)

@@ -6,7 +6,7 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
-#include <resources/vulkan/vk_deallocator.hpp>
+#include <resources/vulkan/vk_memorymanager.hpp>
 
 namespace vikr {
 

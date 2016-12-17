@@ -15,7 +15,7 @@ namespace vikr {
 
 /**
   Texture object, abstraction. This is the texture that is associated with 
-  Materials, Meshes, and SceneObjects.
+  Materials, Meshes, RenderTargets, Cubemaps, and SceneObjects.
 */
 class Texture {
 protected:
@@ -53,9 +53,22 @@ public:
     Determines if the Texture is mipmapped.
   */
   vbool IsMipmapping() { return m_mipmapping; }
+
+  /**
+    Get the width of the texture image.
+  */
   vint32 GetWidth() { return m_width; }
+
+  /**
+    Get the path to the source image file of this texture.
+  */
   std::string GetPath() { return m_path; }
+
+  /**
+    Get the name of this texture.
+  */
   std::string GetName() { return m_name; }
+
   /**
     Create the Texture object.
   */

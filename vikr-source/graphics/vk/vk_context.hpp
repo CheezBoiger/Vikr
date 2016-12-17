@@ -59,12 +59,14 @@ public:
 
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
 
+  vvoid Present() override;
 
 
+  VkQueue &GetGraphicsQueue() { return m_queueGraphicsBuffer; }
 
 private:
 
-
+  VkQueue m_queueGraphicsBuffer;
 };
 } // vikr
 #endif // __VIKR_VK_CONTEXT_HPP

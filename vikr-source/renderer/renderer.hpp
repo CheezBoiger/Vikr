@@ -57,17 +57,12 @@ public:
   /**
     Get the Camera that is currently being renderer by the Renderer.
   */
-  Camera *GetCamera() { return camera; }
-  
-  /**
-    Swap two camera pointers.
-  */
-  vvoid SwapCamera(Camera *camera) { std::swap(this->camera, camera); }
+  ICamera *GetCamera() override { return camera; }
 
   /**
     Set a camera.
   */
-  vvoid SetCamera(Camera *camera) { this->camera = camera; }
+  vvoid SetCamera(ICamera *camera) override { this->camera = camera; }
 
   /**
     Initialize the current Renderer plugin.
@@ -147,7 +142,7 @@ protected:
   RenderDevice *m_renderDevice                  = nullptr;
 
   glm::vec4 clear_color;
-  Camera *camera;  
+  ICamera *camera;  
 
 private:
   /**

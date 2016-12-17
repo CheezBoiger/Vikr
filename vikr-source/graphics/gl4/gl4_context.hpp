@@ -61,6 +61,8 @@ public:
 
   vvoid SetRenderPass(RenderPass *pass) override;
 
+  vvoid Present() override;
+
 private:
   /**
     Current topology.

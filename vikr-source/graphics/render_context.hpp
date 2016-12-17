@@ -135,6 +135,11 @@ public:
     you plan to draw.
   */
   virtual vvoid QueryVertexbuffer(Vertexbuffer *buffer) = 0;
+
+  /**
+    Present the Image onto the screen.
+  */
+  virtual vvoid Present() = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP

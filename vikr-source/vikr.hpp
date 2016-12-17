@@ -13,13 +13,25 @@
 #include <renderer/renderer.hpp>
 
 namespace vikr {
+namespace detail {
 
+
+static vbool glad_loaded = false;
+} // detail;
+
+
+vint32 InitVikr(GraphicsPipeline graphicsAPI);
+
+
+
+VIKR_FORCEINLINE vbool GladLoaded() { return detail::glad_loaded; }
 /**
 */
 VIKR_FORCEINLINE vint32 LoadGlad() {
   if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     return -1;
   }
+  detail::glad_loaded = true;
   return 1;
 }
 

@@ -28,84 +28,46 @@
 #include <math/shape/quad.hpp>
 #include <glm/gtx/compatibility.hpp>
 #include <graphics/gl4/gl4_device.hpp>
+#include <input/window.hpp>
+#include <input/mouse.hpp>
+#include <input/keyboard.hpp>
+#include <util/vikr_assert.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;
 unsigned int screen_height = 800;
-vbool firstMouse = true;
 FPSCamera camera(89.0f, glm::vec3(0.0f, 5.0f, 5.0f));
-vbool keys[1024];
-double lastX = static_cast<double>(screen_width);
-double lastY = static_cast<double>(screen_height);
 
 
 void Do_Movement()
 {
   // Camera controls
-  if(keys[GLFW_KEY_W])
+  if(Keyboard::IsPressed(Keyboard::KEY_W) || Keyboard::IsRepeating(Keyboard::KEY_W))
     camera.Move(FORWARD, GetDeltaTime());
-  if(keys[GLFW_KEY_S])
+  if(Keyboard::IsPressed(Keyboard::KEY_S) || Keyboard::IsRepeating(Keyboard::KEY_S))
     camera.Move(BACK, GetDeltaTime());
-  if(keys[GLFW_KEY_A])
+  if(Keyboard::IsPressed(Keyboard::KEY_A) || Keyboard::IsRepeating(Keyboard::KEY_A))
     camera.Move(LEFT, GetDeltaTime());
-  if(keys[GLFW_KEY_D])
+  if(Keyboard::IsPressed(Keyboard::KEY_D) || Keyboard::IsRepeating(Keyboard::KEY_D))
     camera.Move(RIGHT, GetDeltaTime());
 }
 
 
-// Is called whenever a key is pressed/released via GLFW
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
-{
-  if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, GL_TRUE);
-  if(key >= 0 && key < 1024)
-  {
-    if(action == GLFW_PRESS)
-      keys[key] = true;
-    else if(action == GLFW_RELEASE)
-      keys[key] = false;
-  }
-}
-
-
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
-{
-  if(firstMouse)
-  {
-    lastX = xpos;
-    lastY = ypos;
-    firstMouse = false;
-  }
-
-  vreal32 xoffset = static_cast<vreal32>(xpos - lastX);
-  vreal32 yoffset = static_cast<vreal32>(lastY - ypos);
-
-  lastX = xpos;
-  lastY = ypos;
-  camera.Look(xoffset, yoffset, GetDeltaTime());
-}
-
-
 int main(int c, char* args[]) {
-  glfwInit();
-  VikrWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  VikrWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  VikrWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  VikrWindowHint(GLFW_RESIZABLE, GL_FALSE);
+  InitVikr(vikr_PIPELINE_OPENGL);
+  Window::CreateVikrWindow(1200, 800, "Vikr");
+  // Options.
+  Keyboard::RegisterKeyboardCallback(Keyboard::DefaultKeyCallback);
+  Mouse::RegisterMouseCallback(Mouse::DefaultMouseCallback);
+  Mouse::SetMouseMode(Mouse::Mode::MOUSE_CURSOR_DISABLED);
 
-  GLFWwindow* window = VikrCreateGLFWwindow(screen_width, screen_height, "Vikr", nullptr, nullptr); // Windowed
-  VikrMakeContextCurrent(window);
   camera.SetViewport(0, 0, screen_width, screen_height);
   camera.SetClip(0.1, 10000);
   camera.SetFOV(45.0f);
   camera.SetSpeed(100.0f);
   camera.SetSensitivity(0.50f);
   camera.SetLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
-  LoadGlad();
-  // Options 
-  glfwSetKeyCallback(window, key_callback);
-  glfwSetCursorPosCallback(window, mouse_callback);
-  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
   // Storing shaders into resources from renderer.
   VikrLog::UnSupress(VIKR_WARNING);
   GL4RenderDevice device;
@@ -177,7 +139,7 @@ int main(int c, char* args[]) {
   light_object->Update();
 
 
-  while(!WindowShouldClose(window)) {
+  while(!Window::IsClosed()) {
     CalculateDeltaTime();
     PollEvents();
     Do_Movement();
@@ -191,7 +153,7 @@ int main(int c, char* args[]) {
     renderer.PushBack(node);
     renderer.PushBack(nano);
     renderer.Render();
-    DoubleBufferSwap(window);
+    renderer.GetDevice()->GetContext()->Present();
   }
 
 /*
@@ -213,7 +175,5 @@ int main(int c, char* args[]) {
   }
 */
   vikr::Cleanup();
-  vikr::VikrDestroyWindow(window);
-  vikr::VikrTerminateGLFW();
   return 0;
 }
