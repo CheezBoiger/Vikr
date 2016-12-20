@@ -50,10 +50,12 @@ Mesh *GLResourceManager::CreateMesh(
   std::vector<glm::vec3> positions,
   std::vector<glm::vec3> normals,
   std::vector<glm::vec2> uvs,
-  std::vector<vuint32> indices) 
+  std::vector<vuint32> indices,
+  std::vector<glm::vec3> tangents,
+  std::vector<glm::vec3> bitangents) 
 {
   std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-  mesh->Buffer(positions, normals, uvs, indices);
+  mesh->Buffer(positions, normals, uvs, indices, tangents, bitangents);
  // mesh->Create();
   GLResources::meshes[mesh->GetGUID()] = mesh;
   return mesh.get();

@@ -45,7 +45,9 @@ Mesh::Mesh(GraphicsPipeline pipeline,
 vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
   std::vector<glm::vec3> normals,
   std::vector<glm::vec2> uvs,
-  std::vector<vuint32> indices)
+  std::vector<vuint32> indices,
+  std::vector<glm::vec3> tangents,
+  std::vector<glm::vec3> bitangents)
 {
   for (vuint32 i = 0; i < positions.size(); ++i) {
     Vertex vert;
@@ -59,6 +61,16 @@ vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
       vert.uv = std::move(uvs[i]);
     } else {
       vert.uv = glm::vec2();
+    }
+    if (i < tangents.size()) {
+      vert.tangent = std::move(tangents[i]);
+    } else {
+      vert.tangent = glm::vec3(0);
+    }
+    if (i < bitangents.size()) {
+      vert.bitangent = std::move(bitangents[i]);
+    } else {
+      vert.bitangent = glm::vec3(0);
     }
     m_vertices.push_back(std::move(vert));
   }

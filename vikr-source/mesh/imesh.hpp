@@ -30,10 +30,12 @@ public:
   virtual vvoid Create(RenderDevice *device) = 0;
 
   virtual vvoid Buffer(
-            std::vector<glm::vec3> positions,
-            std::vector<glm::vec3> normals,
-            std::vector<glm::vec2> uvs,
-            std::vector<vuint32> indices) = 0;
+    std::vector<glm::vec3> positions,
+    std::vector<glm::vec3> normals,
+    std::vector<glm::vec2> uvs,
+    std::vector<vuint32> indices,
+    std::vector<glm::vec3> tangents,
+    std::vector<glm::vec3> bitangents) = 0;
   
   virtual vvoid Buffer(
             std::vector<Vertex> vertices,

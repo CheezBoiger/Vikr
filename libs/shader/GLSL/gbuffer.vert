@@ -5,10 +5,16 @@
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec2 texCoords;
+layout (location = 3) in vec3 tangent;
+layout (location = 4) in vec3 bitangent;
 
-out vec3 FragPos;
-out vec2 TexCoords;
-out vec3 Normal;
+out VERT_OUT {
+  vec3 FragPos;
+  vec2 TexCoords;
+  vec3 Normal;
+  vec3 Tangent;
+  vec3 Bitangent;
+} vs_out;
 
 uniform mat4 vikr_Model;
 uniform mat4 vikr_View;
@@ -16,10 +22,15 @@ uniform mat4 vikr_Projection;
 
 void main() {
   vec4 worldPosition = vikr_Model * vec4(position, 1.0f);
-  FragPos = worldPosition.xyz;
+  vs_out.FragPos = worldPosition.xyz;
   gl_Position = vikr_Projection * vikr_View * worldPosition;
-  TexCoords = texCoords;
+  vs_out.TexCoords = texCoords;
   
   mat3 normalMat = transpose(inverse(mat3(vikr_Model)));
-  Normal = normalMat * normal;
+  vs_out.Normal = normalMat * normal;
+  
+  vec3 T = normalize(normalMat * tangent);
+  vec3 B = normalize(normalMat * bitangent);
+  vs_out.Tangent = T;
+  vs_out.Bitangent = B;
 }

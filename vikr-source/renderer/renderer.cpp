@@ -222,6 +222,12 @@ vint32 Renderer::Init(RenderDevice *device) {
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gAmbient" , 
       Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+  m_gBufferPass->RenderTargets
+    .push_back(m_renderDevice->CreateRenderTexture("gTangent",
+      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+  m_gBufferPass->RenderTargets
+    .push_back(m_renderDevice->CreateRenderTexture("gBitangent",
+      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
   m_gBufferPass->Depthbuffer = m_renderDevice->CreateRenderbuffer(Window::GetWindowWidth(), 
     Window::GetWindowHeight());
 
@@ -250,6 +256,8 @@ vint32 Renderer::Init(RenderDevice *device) {
   setup.SetInt("gAlbedo", 2);
   setup.SetInt("gSpecular", 3);
   setup.SetInt("gAmbient", 4);
+  setup.SetInt("gTangent", 5);
+  setup.SetInt("gBitangent", 6);
   ShaderUniformParams param = {setup.GetMaterialValues(), nullptr};
   m_renderDevice->GetContext()->SetShaderUniforms(&param);
 

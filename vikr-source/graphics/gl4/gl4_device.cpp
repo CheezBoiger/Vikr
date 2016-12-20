@@ -91,6 +91,12 @@ GL4RenderDevice::CreateVertexbuffer(
       data.push_back(vertices[i].normal.z);
       data.push_back(vertices[i].uv.x);
       data.push_back(vertices[i].uv.y);
+      data.push_back(vertices[i].tangent.x);
+      data.push_back(vertices[i].tangent.y);
+      data.push_back(vertices[i].tangent.z);
+      data.push_back(vertices[i].bitangent.x);
+      data.push_back(vertices[i].bitangent.y);
+      data.push_back(vertices[i].bitangent.z);
     }
     vuint32 offset = 0;
     glGenVertexArrays(1, &vao);
@@ -112,6 +118,12 @@ GL4RenderDevice::CreateVertexbuffer(
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (vvoid *)offset);
     offset += sizeof(vreal32) * 2;
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (vvoid *)offset);
+    offset += sizeof(vreal32) * 3;
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (vvoid *)offset);
+    offset += sizeof(vreal32) * 3;
     glBindVertexArray(0);
     gbo.StoreVertexArrayId(vao);
     gbo.StoreVertexBufferId(vbo);

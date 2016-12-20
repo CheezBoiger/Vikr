@@ -37,6 +37,7 @@ SceneNode *ModelLoader::ImportModel(RenderDevice *device, std::string path, std:
     aiProcess_Triangulate 
     | aiProcess_ImproveCacheLocality
     | aiProcess_OptimizeMeshes
+    | aiProcess_CalcTangentSpace
     | aiProcess_PreTransformVertices
     | aiProcess_FlipUVs
     | aiProcess_SortByPType);
@@ -114,6 +115,16 @@ Mesh *ModelLoader::ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene
     }
     if (mesh->mTangents > 0) {
       // Calculate tangents.
+      vertex.tangent = glm::vec3(mesh->mTangents[i].x,
+        mesh->mTangents[i].y,
+        mesh->mTangents[i].z);
+    }
+    if (mesh->mBitangents > 0) {
+      vertex.bitangent = glm::vec3(mesh->mBitangents[i].x,
+        mesh->mBitangents[i].y,
+        mesh->mBitangents[i].z);
+    } else {
+      vertex.bitangent = glm::vec3(0);
     }
     vertices[i] = vertex;
   }
