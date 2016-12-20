@@ -2,6 +2,7 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <graphics/gl4/gl4_rendertarget.hpp>
+#include <lighting/light.hpp>
 #include <shader/glsl/gl_texture2d.hpp>
 #include <util/vikr_log.hpp>
 
@@ -33,5 +34,20 @@ GL4Renderbuffer::GL4Renderbuffer(vuint32 width, vuint32 height)
   glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
   glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
   glBindRenderbuffer(GL_RENDERBUFFER, 0);
+}
+
+
+GL4RenderDepthTexture::GL4RenderDepthTexture(std::string name, vuint32 width, 
+  vuint32 height, DataTypeFormat precision)
+  : RenderDepthTexture(vikr_PIPELINE_OPENGL, width, height)
+{
+  glGenTextures(1, &id);
+  glBindTexture(GL_TEXTURE_2D, id);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+               SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 }
 } // vikr

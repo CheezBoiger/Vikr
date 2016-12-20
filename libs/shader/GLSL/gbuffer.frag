@@ -1,3 +1,6 @@
+//
+// Copyright (c) Mario Garcia, Under the MIT License.
+//
 #version 430 core
 layout (location = 0) out vec3 gPosition;
 layout (location = 1) out vec3 gNormal;

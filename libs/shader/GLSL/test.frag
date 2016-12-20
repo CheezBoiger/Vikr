@@ -1,3 +1,6 @@
+//
+// Copyright (c) Mario Garcia, Under the MIT License.
+//
 #version 430 core
 
 #include "test.glsl"

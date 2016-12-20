@@ -7,6 +7,7 @@
 
 #include <renderer/command/render_command.hpp>
 #include <lighting/point_light.hpp>
+#include <lighting/directional_light.hpp>
 #include <shader/shader_uniform_params.hpp>
 #include <shader/shader_config.hpp>
 #include <graphics/command_buffer.hpp>
@@ -49,12 +50,18 @@ public:
           std::make_pair("vikr_pointLights[" + id + "].linear", linear),
           std::make_pair("vikr_pointLights[" + id + "].quadratic", quad)
         };
-        params.uniforms = &light_params;
       }
       break;
       case vikr_DIRECTIONLIGHT:
       {
-        // nothing yet.
+        DirectionalLight *dlight = static_cast<DirectionalLight *>(light);
+        Material dir_mat;
+        std::string id = std::to_string(dlight->GetLightId());
+        dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].direction", dlight->GetDirection());
+        dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].ambient", dlight->GetAmbient());
+        dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].diffuse", dlight->GetDiffuse());
+        dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].specular", dlight->GetSpecular());
+        light_params = std::move(*dir_mat.GetMaterialValues());
       }
       break;
       case vikr_SPOTLIGHT:
@@ -65,6 +72,7 @@ public:
       default:
       break;
     }
+    params.uniforms = &light_params;
     buffer->SetShaderUniforms(&params);
   }
 

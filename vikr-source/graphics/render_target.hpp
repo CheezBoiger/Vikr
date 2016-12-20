@@ -15,13 +15,15 @@
 
 #include <vector>
 #include <memory>
+#include <string>
 
 namespace vikr {
 
 
 enum RenderTargetType {
   render_RENDERBUFFER,
-  render_TEXTURE
+  render_TEXTURE,
+  render_DEPTH_TEXTURE
 };
 
 
@@ -99,6 +101,19 @@ public:
   
 protected:
   vuint32 m_rbo       = 0;
+};
+
+
+class RenderDepthTexture : public RenderTarget {
+public:
+  virtual ~RenderDepthTexture() { }
+  RenderDepthTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height);
+  
+  vuint32 GetTextureId() { return id; }
+
+protected:
+
+  vuint32 id = -1;
 };
 } // vikr
 #endif // __VIKR_RENDER_TARGET_HPP

@@ -17,6 +17,19 @@ class RenderTarget;
 class Renderbuffer;
 
 
+enum class BufferMode {
+  BUFFER_NONE,
+  BUFFER_FRONT_LEFT,
+  BUFFER_FRONT_RIGHT,
+  BUFFER_BACK_LEFT,
+  BUFFER_BACK_RIGHT,
+  BUFFER_FRONT,
+  BUFFER_BACK,
+  BUFFER_LEFT,
+  BUFFER_RIGHT
+};
+
+
 /**
   Framebuffer abstract. Used to be derived specifically for our Renderers.
   Alittle scary, Vulkan already contains a Framebuffer object for us to use.
@@ -96,6 +109,9 @@ public:
   */
   virtual vint32 HasDepthStencil() = 0;
   virtual vint32 IsMultisampled() = 0;
+
+  virtual vvoid Readbuffer(BufferMode mode) = 0;
+  virtual vvoid Writebuffer(BufferMode mode) = 0;
 };
 } // vikr
 #endif // __VIKR_FRAMEBUFFER_HPP

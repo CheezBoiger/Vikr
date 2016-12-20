@@ -123,12 +123,30 @@ protected:
   */
   std::unique_ptr<RenderPass> m_gBufferPass     = nullptr;
 
-
+  /**
+    shadow pass.
+  */
   std::unique_ptr<RenderPass> m_shadowPass      = nullptr;
   
+  /**
+    Gbuffer shader.
+  */
+  Shader *gbufferShader                         = nullptr;
 
-  Shader *gbufferShader;
-  Shader *lightShader;
+  /**
+    light shader.
+  */
+  Shader *lightShader                           = nullptr;
+
+  /**
+    shadow shader.
+  */
+  Shader *shadowshader                          = nullptr;
+
+  /**
+    depth shader.
+  */
+  Shader *depthshader                           = nullptr;
 
   /**
     Rendertextures.

@@ -26,6 +26,8 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_RENDERER_DIR}/shadowmap.hpp
+  ${VIKR_RENDERER_DIR}/shadowmap.cpp
   ${VIKR_RENDERER_DIR}/irenderer.hpp
   ${VIKR_RENDERER_DIR}/renderer.hpp
   ${VIKR_RENDERER_DIR}/renderer.cpp

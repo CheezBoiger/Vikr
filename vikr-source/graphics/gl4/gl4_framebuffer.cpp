@@ -12,6 +12,22 @@
 namespace vikr {
 
 
+vuint32 GL4Framebuffer::GetFramebufferMode(BufferMode mode) {
+  switch (mode) {
+    case BufferMode::BUFFER_BACK: return GL_BACK;
+    case BufferMode::BUFFER_BACK_LEFT: return GL_BACK_LEFT;
+    case BufferMode::BUFFER_BACK_RIGHT: return GL_BACK_RIGHT;
+    case BufferMode::BUFFER_FRONT: return GL_FRONT;
+    case BufferMode::BUFFER_FRONT_LEFT: return GL_FRONT_LEFT;
+    case BufferMode::BUFFER_FRONT_RIGHT: return GL_FRONT_RIGHT;
+    case BufferMode::BUFFER_LEFT: return GL_LEFT;
+    case BufferMode::BUFFER_RIGHT: return GL_RIGHT;
+    case BufferMode::BUFFER_NONE: 
+    default: return GL_NONE;
+  }
+}
+
+
 GL4Framebuffer::GL4Framebuffer()
 {
 }
@@ -114,5 +130,15 @@ vvoid GL4Framebuffer::Validate() {
     count++;
   }
   glDrawBuffers(count, attachments);
+}
+
+
+vvoid GL4Framebuffer::Readbuffer(BufferMode mode) {
+  glReadBuffer(GL4Framebuffer::GetFramebufferMode(mode));
+}
+
+
+vvoid GL4Framebuffer::Writebuffer(BufferMode mode) {
+  glDrawBuffer(GL4Framebuffer::GetFramebufferMode(mode));
 }
 } // vikr

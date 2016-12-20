@@ -1,3 +1,6 @@
+//
+// Copyright (c) Mario Garcia, Under the MIT License.
+//
 #version 430 core
 out vec4 FragColor;
 
@@ -35,10 +38,13 @@ struct DirectionalLight {
 };
 
 
-#define MAX_LIGHTS 2
+#define MAX_POINTLIGHTS 2
+#define MAX_DIRECTIONALLIGHTS 1
 
-uniform PointLight vikr_pointLights[MAX_LIGHTS];
+uniform DirectionalLight vikr_directionalLights[MAX_DIRECTIONALLIGHTS];
+uniform PointLight vikr_pointLights[MAX_POINTLIGHTS];
 uniform vec3 vikr_CamPosition;
+uniform bool gamma;
 
 
 vec3 CalculateDirectionalLight(DirectionalLight light, vec3 Normal, 
@@ -67,7 +73,7 @@ vec3 CalculatePointLight(PointLight light, vec3 Normal, vec3 frag_coord,
   float spec = 0.0f;
   vec3 halfway_dir = normalize(light_dir + view_dir);
   spec = pow(max(dot(Normal, halfway_dir), 0.0f), 32.0f);
-  float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+  float attenuation = 1.0f / (distance * distance);//(light.constant + light.linear * distance + light.quadratic * (distance * distance));
    
   vec3 ambient = light.ambient * vec3(Ambient);
   vec3 diffuse = light.diffuse * diff * vec3(Diffuse);
@@ -92,11 +98,13 @@ void main() {
   
   vec4 result = vec4(0.0f);
   
-  
-  for (int i = 0; i < MAX_LIGHTS; ++i) {
+  for (int i = 0; i < MAX_DIRECTIONALLIGHTS; ++i) {
+    //result += CalculateDirectionalLight(vikr_directionalLights[i], Normal, FragPos, view_dir, Diffuse, Specular, Ambient);
+  }
+  for (int i = 0; i < MAX_POINTLIGHTS; ++i) {
     result += CalculatePointLight(vikr_pointLights[i], Normal, FragPos, view_dir, Diffuse, Specular, Ambient);
   }
-  
+  result = vec4(pow(result.rgb, vec3(1.0/2.2)), result.a);
   FragColor = vec4(result);
   //FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }

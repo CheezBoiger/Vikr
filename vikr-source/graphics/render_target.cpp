@@ -31,4 +31,11 @@ Renderbuffer::Renderbuffer(GraphicsPipeline pipeline, vuint32 width, vuint32 hei
   : RenderTarget(pipeline, width, height, false, render_RENDERBUFFER)
 {
 }
+
+
+RenderDepthTexture::RenderDepthTexture(GraphicsPipeline pipeline, vuint32 width, 
+  vuint32 height)
+  : RenderTarget(pipeline, width, height, false, render_DEPTH_TEXTURE)
+{
+}
 } // vikr

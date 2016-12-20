@@ -32,6 +32,8 @@
 #include <graphics/blendmode.hpp>
 #include <graphics/framebuffer.hpp>
 #include <resources/resource_manager.hpp>
+
+#include <input/window.hpp>
 #include <chrono>
 
 #include <set>
@@ -161,11 +163,10 @@ vvoid Renderer::Render() {
   // Set back to the default RenderPass.
   context->SetRenderPass(nullptr);
   context->ApplyShaderProgram(lightShader->GetProgramId());
-  for (vuint32 i = 0; i < m_gBufferPass->RenderTextures.size(); ++i) {
-    context->SetTexture(m_gBufferPass->RenderTextures[i]->GetTexture(), i);
+  for (vuint32 i = 0; i < m_gBufferPass->RenderTargets.size(); ++i) {
+    context->SetRenderTarget(m_gBufferPass->RenderTargets[i].get(), i);   
   }
   context->ExecuteCommands(&deferred_buffer);
-
   DrawScreenQuad();
 
   m_renderQueue.Clear();
@@ -202,26 +203,44 @@ vint32 Renderer::Init(RenderDevice *device) {
             practically hardcoded.
   */
   m_gBufferPass = std::make_unique<RenderPass>();
-  m_gBufferPass->RenderTextures
-    .push_back(m_renderDevice->CreateRenderTexture("gPosition", 1200, 800, false, data_FLOAT));
-  m_gBufferPass->RenderTextures
-    .push_back(m_renderDevice->CreateRenderTexture("gNormal", 1200, 800, false, data_FLOAT));
-  m_gBufferPass->RenderTextures
-    .push_back(m_renderDevice->CreateRenderTexture("gAlbedo", 1200, 800, true, data_UNSIGNED_BYTE));
-  m_gBufferPass->RenderTextures
-    .push_back(m_renderDevice->CreateRenderTexture("gSpecular", 1200, 800, true, data_UNSIGNED_BYTE));
-  m_gBufferPass->RenderTextures
-    .push_back(m_renderDevice->CreateRenderTexture("gAmbient" , 1200, 800, true, data_UNSIGNED_BYTE));
-  m_gBufferPass->Depthbuffer = m_renderDevice->CreateRenderbuffer(1200, 800);
+  m_gBufferPass->Viewport.win_x = 0;
+  m_gBufferPass->Viewport.win_y = 0;
+  m_gBufferPass->Viewport.win_width = Window::GetWindowWidth();
+  m_gBufferPass->Viewport.win_height = Window::GetWindowHeight();
+  m_gBufferPass->RenderTargets
+    .push_back(m_renderDevice->CreateRenderTexture("gPosition", 
+      Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
+  m_gBufferPass->RenderTargets
+    .push_back(m_renderDevice->CreateRenderTexture("gNormal", 
+      Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
+  m_gBufferPass->RenderTargets
+    .push_back(m_renderDevice->CreateRenderTexture("gAlbedo", 
+      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+  m_gBufferPass->RenderTargets
+    .push_back(m_renderDevice->CreateRenderTexture("gSpecular", 
+      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+  m_gBufferPass->RenderTargets
+    .push_back(m_renderDevice->CreateRenderTexture("gAmbient" , 
+      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+  m_gBufferPass->Depthbuffer = m_renderDevice->CreateRenderbuffer(Window::GetWindowWidth(), 
+    Window::GetWindowHeight());
+
   m_gBufferPass->FramebufferObject = m_renderDevice->CreateFramebuffer();
   m_gBufferPass->FramebufferObject->Generate();
   m_gBufferPass->UpdateRenderTargets();
-  
+
+  /*
+    Gbuffer shader.
+  */
   m_renderDevice->GetResourceManager()->StoreShader("gbuffer", "shaders/gbuffer.vert", "shaders/gbuffer.frag");
   gbufferShader = m_renderDevice->GetResourceManager()->GetShader("gbuffer");
 
+  /*
+    Light shader.
+  */
   m_renderDevice->GetResourceManager()->StoreShader("lightpass", "shaders/lightpass.vert", "shaders/lightpass.frag");
   lightShader = m_renderDevice->GetResourceManager()->GetShader("lightpass");
+  
 
   // Initialize the light parameters for the light shader.
   m_renderDevice->GetContext()->ApplyShaderProgram(lightShader->GetProgramId());

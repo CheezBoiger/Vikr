@@ -29,5 +29,11 @@ class GL4Renderbuffer : public Renderbuffer {
 public:
   GL4Renderbuffer(vuint32 width, vuint32 height);
 };
+
+
+class GL4RenderDepthTexture : public RenderDepthTexture {
+public:
+  GL4RenderDepthTexture(std::string name, vuint32 width, vuint32 height, DataTypeFormat precision);
+};
 } // vikr
 #endif // __VIKR_GL4_RENDERTARGET_HPP

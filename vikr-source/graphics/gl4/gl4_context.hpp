@@ -29,7 +29,7 @@ public:
   */
   vvoid Draw(vuint32 start, vuint32 vertices) override;
   vvoid DrawIndexed(const vvoid *indices, vuint32 elements) override;
-  vvoid SetTexture(Texture *texture, vuint32 index) override;
+  vvoid SetTexture(vuint32 texture, vuint32 target, vuint32 index) override;
   
   vvoid SetRenderTarget(RenderTarget *target, vuint32 index) override;
 

@@ -15,6 +15,7 @@ namespace vikr {
   GL4 framebuffer.
 */
 class GL4Framebuffer : public Framebuffer {
+  vuint32 GetFramebufferMode(BufferMode mode);
 public:
   GL4Framebuffer();
 
@@ -41,6 +42,9 @@ public:
   std::vector<Texture *> *GetColorAttachments() override { return &m_colorAttachments; }
 
   vvoid Validate() override;
+
+  vvoid Readbuffer(BufferMode mode) override;
+  vvoid Writebuffer(BufferMode mode) override;
   
 
 private:

@@ -23,6 +23,10 @@ enum LightType {
 };
 
 
+const vuint32 SHADOW_WIDTH = 1024;
+const vuint32 SHADOW_HEIGHT = 1024;
+
+
 /**
   Light Abstract. Contains common variables to emit light.
 */
@@ -116,6 +120,9 @@ protected:
   glm::vec3 m_color       = glm::vec3(1.0f, 1.0f, 1.0f);
 
   vuint32 m_lightId = 0;
+
+
+  glm::mat4 m_lightSpaceMatrix;
 
 };
 }

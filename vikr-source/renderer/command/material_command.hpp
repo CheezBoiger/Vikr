@@ -41,7 +41,6 @@ public:
     
   }
 
-
   Material *m_material;
 
 };

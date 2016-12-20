@@ -13,6 +13,7 @@
 #include <shader/texture.hpp>
 #include <math/shape/quad.hpp>
 #include <lighting/point_light.hpp>
+#include <lighting/directional_light.hpp>
 #include <scene/first_person_camera.hpp>
 #include <resources/resource_manager.hpp>
 #include <resources/model_loader.hpp>
@@ -116,6 +117,7 @@ int main(int c, char* args[]) {
 
   PointLight plight;
   PointLight plight2;
+  DirectionalLight dlight1;
   SceneNode *light_object = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
   MeshComponent *mc = light_object->AddComponent<MeshComponent>();
   mc->mesh = light_mesh;
@@ -135,6 +137,13 @@ int main(int c, char* args[]) {
   plight2.SetSpecular(glm::vec3(1.0f, 0.0f, 0.0f));
   light_node2->Update();
 
+  SceneNode *dlight_node1 = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
+  LightComponent *dc1 = dlight_node1->AddComponent<LightComponent>();
+  dc1->light = &dlight1;
+  dlight1.SetDirection(glm::vec3(0.0f, -1.0f, -1.0f));
+  dlight1.SetDiffuse(glm::vec3(1.0f, 1.0f, 1.0f));
+  dc1->Update();
+
   light_object->AddChild(light_node);
   light_object->Update();
 
@@ -150,6 +159,7 @@ int main(int c, char* args[]) {
     light_c->Update();
     renderer.PushBack(light_object);
     renderer.PushBack(light_node2);
+    renderer.PushBack(dlight_node1);
     renderer.PushBack(node);
     renderer.PushBack(nano);
     renderer.Render();

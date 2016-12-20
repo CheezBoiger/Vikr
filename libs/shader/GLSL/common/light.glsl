@@ -1,3 +1,6 @@
+//
+// Copyright (c) Mario Garcia, Under the MIT license.
+//
 #ifndef __VIKR_LIGHT_GLSL
 #define __VIKR_LIGHT_GLSL
 

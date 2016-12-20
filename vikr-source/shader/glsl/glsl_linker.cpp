@@ -37,14 +37,15 @@ vint32 GLSLLinker::Link(GLSLCompiler *vs, GLSLCompiler *fs, GLSLCompiler *gs) {
   if(!success) {
     GetProgramInfoLog(shader->GetProgramId(), 1024, NULL, log.data());
     VikrLog::DisplayMessage(vikr::VIKR_ERROR, std::string(log.data()));
-    return -1;
   }
   vs->Cleanup();
   fs->Cleanup();
   if(gs != nullptr) {
     gs->Cleanup();
   }
-  is_linked = true;
+  if (success) {
+    is_linked = true;
+  }
   return 1;
 }
 } // vikr

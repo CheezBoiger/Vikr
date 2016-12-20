@@ -16,6 +16,7 @@
 
 #include <glm/gtc/type_ptr.hpp>
 #include <util/vikr_log.hpp>
+#include <util/vikr_assert.hpp>
 
 #include <input/window.hpp>
 
@@ -85,6 +86,7 @@ GLenum GetGLBlendEq(BlendEq eq) {
 
 GL4RenderContext::GL4RenderContext()
 {
+  //glEnable(GL_FRAMEBUFFER_SRGB);
 }
 
 
@@ -93,6 +95,7 @@ vvoid GL4RenderContext::Draw(vuint32 start, vuint32 vertices) {
     GetGLTopology(m_currTopology), 
     start, 
     vertices);
+  VIKR_ASSERT(glGetError() == 0);
 }
 
 
@@ -102,20 +105,34 @@ vvoid GL4RenderContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
     elements,
     GL_UNSIGNED_INT,
     indices);
+  VIKR_ASSERT(glGetError() == 0);
 }
 
 
-vvoid GL4RenderContext::SetTexture(Texture *texture, vuint32 index) {
-  GLTexture *tex = static_cast<GLTexture *>(texture);  
-  if (texture) {
-    glActiveTexture(GL_TEXTURE0 + index);
-    glBindTexture(tex->GetNativeTarget(), tex->GetNativeId());
-  }
+vvoid GL4RenderContext::SetTexture(vuint32 texture, vuint32 target, vuint32 index) {  
+  glActiveTexture(GL_TEXTURE0 + index);
+  glBindTexture(target, texture);
+  VIKR_ASSERT(glGetError() == 0);
 }
 
 
 vvoid GL4RenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
   if (target) {
+    switch (target->GetRenderType()) {
+      case RenderTargetType::render_TEXTURE: {
+        RenderTexture *texture = static_cast<RenderTexture *>(target);
+        GLTexture *tex = static_cast<GLTexture *>(texture->GetTexture());
+        SetTexture(texture->GetTexture()->GetNativeId(), tex->GetNativeTarget(), index);
+      }
+      break;
+      case RenderTargetType::render_DEPTH_TEXTURE: {
+        RenderDepthTexture *depth_texture = 
+          static_cast<RenderDepthTexture *>(target);
+        
+      }
+      break;
+      default: break;
+    }
   }
 }
 
@@ -237,11 +254,14 @@ vvoid GL4RenderContext::ConfigurePipelineState(PipelineState *state) {
 
 vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
   if (pass) {
+    Viewport *view = &pass->Viewport;
+    glViewport(view->win_x, view->win_y, view->win_width, view->win_height);
     pass->Bind();
     Clear();
     ClearWithColor(glm::vec4(pass->ClearColor, 1.0f));
   } else {
     // Set back to default.
+    glViewport(0, 0, Window::GetWindowWidth(), Window::GetWindowHeight());
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     Clear();
   }
@@ -325,9 +345,11 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
   // Bind all texture that was given.
   if (params->samplers) {
     for(auto sampler : *params->samplers) {
-      SetTexture(sampler.second.texture, sampler.second.i);
+      GLTexture *texture = static_cast<GLTexture *>(sampler.second.texture);
+      SetTexture(texture->GetNativeId(), texture->GetNativeTarget(), sampler.second.i);
     }
   }
+  VIKR_ASSERT(glGetError() == 0);
 }
 
 
@@ -345,6 +367,7 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
     glBindVertexArray(buf->GetVertexArrayId());
     
   }
+  VIKR_ASSERT(glGetError() == 0);
 }
 
 
