@@ -22,7 +22,7 @@ given to manipulate the objects it must render. **VERY STRONG** emphasis in avoi
 The image below describes the current, stable, implementation of the Vikr Renderer:
   
 Keep in mind that the following image was rendered in OpenGL:
-![alt tag](https://raw.githubusercontent.com/Cheezboiger/vikr/master/samples/deferred_sample.png)
+![alt tag](https://raw.githubusercontent.com/Cheezboiger/vikr/master/samples/bump.png)
 
 Current Features:
   - Working Scene Graph with customizable components.
@@ -30,6 +30,7 @@ Current Features:
   - Deferred Shading and lighting.
   - OpenGL Ready.
   - Blinn-Phong default shading
+  - Bumpmaps (Tangent and BiTangent spaces)
   - Graphics Layer hardware abstraction with plugin Render Devices (This allows easier plugins for OpenGL, Vulkan, etc...)
   - GLSL Compiler, Preprocessor, and Linker ready.
   - Quaternion-based Motion Camera.
@@ -40,7 +41,6 @@ Work in Progress:
   - Shadow Mapping
   - SSAO
   - Cubemaps (skyboxes as well).
-  - Bumpmaps (Tangent and BiTangent spaces)
   - Parallax Mapping
   - HDR and Bloom
 
