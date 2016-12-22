@@ -65,7 +65,7 @@ int main(int c, char* args[]) {
   camera.SetViewport(0, 0, screen_width, screen_height);
   camera.SetClip(0.1, 10000);
   camera.SetFOV(45.0f);
-  camera.SetSpeed(50.0f);
+  camera.SetSpeed(30.0f);
   camera.SetSensitivity(0.50f);
   camera.SetLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 
