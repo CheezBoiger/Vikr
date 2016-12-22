@@ -65,7 +65,7 @@ int main(int c, char* args[]) {
   camera.SetViewport(0, 0, screen_width, screen_height);
   camera.SetClip(0.1, 10000);
   camera.SetFOV(45.0f);
-  camera.SetSpeed(100.0f);
+  camera.SetSpeed(50.0f);
   camera.SetSensitivity(0.50f);
   camera.SetLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 
@@ -78,7 +78,7 @@ int main(int c, char* args[]) {
   renderer.GetDevice()->StoreShader("test", "shaders/test.vert", "shaders/test.frag", "../../libs/shader/GLSL");
   renderer.GetDevice()->StoreShader("light", "shaders/test.vert", "shaders/light.frag");
   renderer.GetDevice()->StoreShader("screen", "shaders/screen_shader.vert", "shaders/screen_shader.frag");
-  SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), "common/sponza_obj/sponza.obj", "sponza");
+  SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), "common/sponza_cry/sponza.obj", "sponza");
   SceneNode *nano = ModelLoader::ImportModel(renderer.GetDevice(), "nanosuit/nanosuit.obj", "suitboy");
   Material *default_mat = renderer.GetDevice()->CreateMaterial("default_mat");
   default_mat->SetShader(renderer.GetDevice()->GetShader("test"));
@@ -152,7 +152,7 @@ int main(int c, char* args[]) {
     CalculateDeltaTime();
     PollEvents();
     Do_Movement();
-    VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
+    VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPMS()) + " Frames/s");
     camera.Update();
     lc->light->SetPos(glm::vec3(std::sin(GetTime()) * 50.0f, 5.0f, 5.0f));
     light_c->transform.Position = lc->light->GetPos();

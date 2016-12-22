@@ -212,7 +212,7 @@ vint32 Renderer::Init(RenderDevice *device) {
       Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gNormal", 
-      Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
+      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gAlbedo", 
       Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
@@ -224,10 +224,13 @@ vint32 Renderer::Init(RenderDevice *device) {
       Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gTangent",
-      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+      Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gBitangent",
-      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+      Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
+  m_gBufferPass->RenderTargets
+    .push_back(m_renderDevice->CreateRenderTexture("gNorm",
+               Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
   m_gBufferPass->Depthbuffer = m_renderDevice->CreateRenderbuffer(Window::GetWindowWidth(), 
     Window::GetWindowHeight());
 
@@ -241,6 +244,7 @@ vint32 Renderer::Init(RenderDevice *device) {
   m_renderDevice->GetResourceManager()->StoreShader("gbuffer", "shaders/gbuffer.vert", "shaders/gbuffer.frag");
   gbufferShader = m_renderDevice->GetResourceManager()->GetShader("gbuffer");
 
+  m_renderDevice->GetContext()->ApplyShaderProgram(gbufferShader->GetProgramId());
   /*
     Light shader.
   */
@@ -258,6 +262,7 @@ vint32 Renderer::Init(RenderDevice *device) {
   setup.SetInt("gAmbient", 4);
   setup.SetInt("gTangent", 5);
   setup.SetInt("gBitangent", 6);
+  setup.SetInt("gNorm", 7);
   ShaderUniformParams param = {setup.GetMaterialValues(), nullptr};
   m_renderDevice->GetContext()->SetShaderUniforms(&param);
 

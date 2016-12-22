@@ -36,9 +36,8 @@ SceneNode *ModelLoader::ImportModel(RenderDevice *device, std::string path, std:
   const aiScene *scene = importer.ReadFile(path, 
     aiProcess_Triangulate 
     | aiProcess_ImproveCacheLocality
-    | aiProcess_OptimizeMeshes
     | aiProcess_CalcTangentSpace
-    | aiProcess_PreTransformVertices
+    | aiProcess_OptimizeMeshes
     | aiProcess_FlipUVs
     | aiProcess_SortByPType);
   if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
@@ -150,6 +149,7 @@ Material *ModelLoader::ParseMaterial(
 {
   Material *m_material = device->GetResourceManager()->CreateMaterial(name);
   std::string texture_name;
+  vbool mask = 0x0;
   if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
     aiString file;
     material->GetTexture(aiTextureType_DIFFUSE, 0, &file);
@@ -164,6 +164,7 @@ Material *ModelLoader::ParseMaterial(
     if (texture) {
       texture_name = "vikr_TexAlbedo";
       m_material->SetTexture("vikr_TexAlbedo", texture, 0);
+      mask |= 0x1;
     }
   }
   if (material->GetTextureCount(aiTextureType_NORMALS) > 0) {
@@ -180,6 +181,7 @@ Material *ModelLoader::ParseMaterial(
     if (texture) {
       texture_name = "vikr_TexNormal";
       m_material->SetTexture("vikr_TexNormal", texture, 1);
+      mask |= 0x2;
     }
   } else if (material->GetTextureCount(aiTextureType_HEIGHT) > 0) {
     aiString file;
@@ -194,6 +196,7 @@ Material *ModelLoader::ParseMaterial(
     }
     if (texture) {
       m_material->SetTexture("vikr_TexNormal", texture, 1);
+      mask |= 0x2;
     }
   }
   if (material->GetTextureCount(aiTextureType_SPECULAR) > 0) {
@@ -209,6 +212,7 @@ Material *ModelLoader::ParseMaterial(
     }
     if (texture) {
       m_material->SetTexture("vikr_TexSpecular", texture, 2);
+      mask |= 0x4;
     }
   }
   if (material->GetTextureCount(aiTextureType_SHININESS) > 0) {
@@ -223,7 +227,8 @@ Material *ModelLoader::ParseMaterial(
         true);
     }
     if (texture) {
-      m_material->SetTexture("vikr_TexRoughness", texture, 3);  
+      m_material->SetTexture("vikr_TexRoughness", texture, 3);
+      mask |= 0x8;  
     }
   }
   if (material->GetTextureCount(aiTextureType_AMBIENT) > 0) {
@@ -239,8 +244,11 @@ Material *ModelLoader::ParseMaterial(
     }
     if (texture) {
       m_material->SetTexture("vikr_TexAmbient", texture, 4);
+      mask |= 0x10;
     }
   }
+
+  m_material->SetInt("vikr_mask", mask);
   return m_material;
 }
 

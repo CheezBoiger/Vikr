@@ -41,6 +41,9 @@ vvoid Material::SetTexture(std::string name, Texture *texture, vuint32 i) {
       default:                    m_uniform_samplers[name].type = vikr_SAMPLER2D;    break;
     }
   }
+
+  m_material_values[name].m_integer = i;
+  m_material_values[name].type = vikr_INT;
 }
 
 

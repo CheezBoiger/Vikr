@@ -8,11 +8,15 @@
 #include <graphics/render_context.hpp>
 #include <graphics/command_buffer.hpp>
 
+#include <shader/shader_config.hpp>
+
 
 namespace vikr {
 
 
 class Framebuffer;
+
+struct TextureSampler;
 
 
 /**
@@ -64,6 +68,8 @@ public:
   vvoid Present() override;
 
 private:
+
+  vvoid ClearTextures();
   /**
     Current topology.
   */
@@ -72,6 +78,7 @@ private:
   PipelineState *pipeline;
 
   vuint32 m_currShaderProgram     = 0;
+  std::vector<TextureSampler> m_currTextures;
 };
 } // vikr
 #endif // __VIKR_GL4_CONTEXT_HPP

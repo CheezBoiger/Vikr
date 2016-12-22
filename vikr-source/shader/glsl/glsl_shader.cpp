@@ -38,6 +38,13 @@ vvoid GLSLShader::Compile(std::string vs, std::string fs, std::string gs) {
     }
   } else {
     VikrLog::DisplayMessage(VIKR_ERROR, "Shaders unsuccessfully compiled!");
+    if (!vert.IsCompiled()) {
+      VikrLog::DisplayMessage(VIKR_ERROR, "In Vertex Shader!");
+    } else if (!frag.IsCompiled()) {
+      VikrLog::DisplayMessage(VIKR_ERROR, "In Fragment Shader!");
+    } else {
+      VikrLog::DisplayMessage(VIKR_ERROR, "In Geometry Shader!!");
+    }
   }
   is_linked = linker.IsLinked();
 }

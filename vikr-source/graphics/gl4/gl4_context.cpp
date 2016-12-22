@@ -276,8 +276,9 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     TODO(): Will need to parse these location values in the future.
   */
   //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
+  
 
-  for(auto variable : *params->uniforms) {
+  for (auto variable : *params->uniforms) {
     std::string s = variable.first;
     switch(variable.second.type) {
     case vikr_BOOL: 
@@ -342,14 +343,28 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     default: break;
     }
   }
+
   // Bind all texture that was given.
   if (params->samplers) {
+    ClearTextures();
+    m_currTextures.reserve(params->samplers->size());
     for(auto sampler : *params->samplers) {
       GLTexture *texture = static_cast<GLTexture *>(sampler.second.texture);
       SetTexture(texture->GetNativeId(), texture->GetNativeTarget(), sampler.second.i);
+      m_currTextures.push_back(std::move(sampler.second));
     }
   }
   VIKR_ASSERT(glGetError() == 0);
+}
+
+
+vvoid GL4RenderContext::ClearTextures() {
+  // clear previous textures.
+  for (vuint32 i = 0; i < m_currTextures.size(); ++i) {
+    GLTexture *tex = static_cast<GLTexture *>(m_currTextures[i].texture);
+    SetTexture(0, tex->GetNativeTarget(), m_currTextures[i].i);
+  }
+  m_currTextures.clear();
 }
 
 
