@@ -259,6 +259,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\spot_light.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_vertexbuffer.hpp" />
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_surface.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_context.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_instance.hpp" />
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_logdevice.hpp" />
@@ -384,6 +385,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\directional_light.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\lighting\spot_light.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_vertexbuffer.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_surface.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_context.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_instance.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_logdevice.cpp"  />
@@ -402,6 +404,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\math\shape\sphere.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\model.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp"  />
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_time.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\manual_commands.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\render_command.cpp"  />
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\mesh_command.cpp"  />

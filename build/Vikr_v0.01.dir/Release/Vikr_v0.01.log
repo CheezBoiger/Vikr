@@ -1,5 +1,12 @@
-﻿  model_loader.cpp
-graphics_command.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-gl4_framebuffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-gl4_buffer.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+﻿  mouse.cpp
+D:\cmgarcia\github\Vikr\vikr-source\input\mouse.cpp(33): warning C4244: 'argument': conversion from 'vikr::vreal64' to 'vikr::vreal32', possible loss of data
+  window.cpp
+  vikr_time.cpp
+  renderer.cpp
+  camera_component.cpp
+  first_person_camera.cpp
+  camera.cpp
+  resource_manager.cpp
+  vikr.cpp
+  Generating Code...
   Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Release\Vikr_v0.01.lib

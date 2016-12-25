@@ -34,6 +34,8 @@
 #include <input/keyboard.hpp>
 #include <util/vikr_assert.hpp>
 
+#include <graphics/vk/vk_device.hpp>
+
 using namespace vikr;
 unsigned int screen_width = 1200;
 unsigned int screen_height = 800;
@@ -72,6 +74,7 @@ int main(int c, char* args[]) {
   // Storing shaders into resources from renderer.
   VikrLog::UnSupress(VIKR_WARNING);
   GL4RenderDevice device;
+  VKDevice vulkan;
   Renderer renderer;
   renderer.Init(&device);
   renderer.SetCamera(&camera);
@@ -152,7 +155,7 @@ int main(int c, char* args[]) {
     CalculateDeltaTime();
     PollEvents();
     Do_Movement();
-    VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPMS()) + " Frames/s");
+    VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPMS()) + " Frames/ms");
     camera.Update();
     lc->light->SetPos(glm::vec3(std::sin(GetTime()) * 50.0f, 5.0f, 5.0f));
     light_c->transform.Position = lc->light->GetPos();

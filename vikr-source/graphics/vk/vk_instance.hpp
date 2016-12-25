@@ -17,7 +17,10 @@ namespace vikr {
 class VKInstance {
 public:
 
-private:
+  static vvoid CreateInstance();
+
+
+  static VkMemoryManager<VkInstance> instance;
 
 };
 } // vikr

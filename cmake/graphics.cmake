@@ -11,6 +11,8 @@ if (vulkan)
     ${VIKR_GLOB}
     ${VIKR_GRAPHICS_VK_DIR}/vk_vertexbuffer.hpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_vertexbuffer.cpp
+    ${VIKR_GRAPHICS_VK_DIR}/vk_surface.hpp
+    ${VIKR_GRAPHICS_VK_DIR}/vk_surface.cpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_context.cpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_context.hpp
     ${VIKR_GRAPHICS_VK_DIR}/vk_instance.hpp

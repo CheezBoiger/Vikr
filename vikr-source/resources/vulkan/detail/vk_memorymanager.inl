@@ -13,7 +13,7 @@ VkMemoryManager<Resource>::VkMemoryManager(VkAllocationCallback deletef)
 {
   deallocator_funct = [=] (Resource obj) { 
     deletef(obj, nullptr); 
-  }
+  };
 }
 
 
@@ -24,7 +24,7 @@ VkMemoryManager<Resource>::VkMemoryManager(
 {
   deallocator_funct = [&instance, deletef] (Resource obj) { 
     deletef(instance, obj, nullptr); 
-  }
+  };
 }
 
 
@@ -35,5 +35,5 @@ VkMemoryManager<Resource>::VkMemoryManager(
 {
   deallocator_funct = [&device, deletef] (Resource obj) {
     deletef(device, obj, nullptr);
-  }
+  };
 }

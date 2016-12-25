@@ -63,10 +63,12 @@ public:
 
 
   VkQueue &GetGraphicsQueue() { return m_queueGraphicsBuffer; }
+  VkQueue &GetPresentationQueue() { return m_queuePresentBuffer; }
 
 private:
 
   VkQueue m_queueGraphicsBuffer;
+  VkQueue m_queuePresentBuffer;
 };
 } // vikr
 #endif // __VIKR_VK_CONTEXT_HPP

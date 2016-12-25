@@ -1,7 +1,11 @@
+//
+// Copyright (c) Mario Garcia, Under MIT License.
+//
 #include <scene/first_person_camera.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <util/vikr_assert.hpp>
+#include <util/vikr_log.hpp>
 
 namespace vikr {
 

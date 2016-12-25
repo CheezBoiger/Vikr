@@ -25,6 +25,9 @@
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_vertexbuffer.cpp">
       <Filter>vikr-source\graphics\vk</Filter>
     </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_surface.cpp">
+      <Filter>vikr-source\graphics\vk</Filter>
+    </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_context.cpp">
       <Filter>vikr-source\graphics\vk</Filter>
     </ClCompile>
@@ -78,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\mesh\mesh.cpp">
       <Filter>vikr-source\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\platform\vikr_time.cpp">
+      <Filter>vikr-source\platform</Filter>
     </ClCompile>
     <ClCompile Include="D:\cmgarcia\github\Vikr\vikr-source\renderer\command\manual_commands.cpp">
       <Filter>vikr-source\renderer\command</Filter>
@@ -226,6 +232,9 @@
       <Filter>vikr-source\lighting</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_vertexbuffer.hpp">
+      <Filter>vikr-source\graphics\vk</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_surface.hpp">
       <Filter>vikr-source\graphics\vk</Filter>
     </ClInclude>
     <ClInclude Include="D:\cmgarcia\github\Vikr\vikr-source\graphics\vk\vk_context.hpp">
@@ -572,26 +581,20 @@
     <Filter Include="vikr-source\scene\components">
       <UniqueIdentifier>{2D390607-500C-45AC-9C4C-A1AB68F70D72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vikr-source\tools\allocator\detail">
+      <UniqueIdentifier>{1ED5C8D5-797A-4D33-80B1-B6334B600C88}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vikr-source\resources\vulkan\detail">
       <UniqueIdentifier>{271DCED6-A448-4A77-A5AB-6D009AD6004D}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\tools\allocator">
       <UniqueIdentifier>{5D6D2E5A-D403-4070-AEBC-6D8CE74E99D5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vikr-source\tools\allocator\detail">
-      <UniqueIdentifier>{1ED5C8D5-797A-4D33-80B1-B6334B600C88}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vikr-source\renderer\command">
       <UniqueIdentifier>{3318C52A-8B88-41DD-962A-06C2DC5928BA}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source">
       <UniqueIdentifier>{F0C511CB-5CB5-4226-9752-916BADB5B8FB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\graphics\vk">
-      <UniqueIdentifier>{5EFDCFDB-2AB8-4989-BA72-164B7E62D152}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vikr-source\graphics\gl4">
-      <UniqueIdentifier>{AE9F005F-A5EB-4C48-A263-1465819979D9}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\glad">
       <UniqueIdentifier>{0A8C6B6F-F0FB-435F-B1B3-74E6D66D3A2D}</UniqueIdentifier>
@@ -631,6 +634,12 @@
     </Filter>
     <Filter Include="vikr-source\tools">
       <UniqueIdentifier>{E10FE65C-0DF8-4034-BF74-DDA91DC17E89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\graphics\vk">
+      <UniqueIdentifier>{5EFDCFDB-2AB8-4989-BA72-164B7E62D152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vikr-source\graphics\gl4">
+      <UniqueIdentifier>{AE9F005F-A5EB-4C48-A263-1465819979D9}</UniqueIdentifier>
     </Filter>
     <Filter Include="vikr-source\math\alg">
       <UniqueIdentifier>{80DF7D83-47F2-4B44-8F5D-EFEE359774EA}</UniqueIdentifier>

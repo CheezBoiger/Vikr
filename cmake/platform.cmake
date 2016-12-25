@@ -20,6 +20,7 @@ set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_PLATFORM_DIR}/platform.hpp
   ${VIKR_PLATFORM_DIR}/vikr_time.hpp
+  ${VIKR_PLATFORM_DIR}/vikr_time.cpp
   ${VIKR_PLATFORM_DIR}/vikr_types.hpp
   ${VIKR_PLATFORM_DIR}/vikr_api.hpp)
 

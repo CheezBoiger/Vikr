@@ -2,16 +2,27 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <graphics/vk/vk_phydevice.hpp>
+#include <graphics/vk/vk_instance.hpp>
+#include <graphics/vk/vk_surface.hpp>
 #include <util/vikr_log.hpp>
 #include <util/vikr_assert.hpp>
+
 #include <map>
+#include <set>
+
 
 namespace vikr {
 
 
 vuint32 VKPhysicalDevice::m_currentCount = 0;
 std::vector<VkPhysicalDevice> VKPhysicalDevice::m_foundDevices;
+
+const std::vector<const vchar *> VKPhysicalDevice::device_ext = {
+  VK_KHR_SWAPCHAIN_EXTENSION_NAME
+};
+
 VkPhysicalDevice VKPhysicalDevice::m_physicalDevice = VK_NULL_HANDLE;
+
 
 
 vvoid VKPhysicalDevice::CheckSuitableDevices(VkInstance &instance) {
@@ -44,9 +55,25 @@ vbool VKPhysicalDevice::IsSuitable(VkPhysicalDevice &device) {
   vkGetPhysicalDeviceFeatures(device, &features);
   vkGetPhysicalDeviceMemoryProperties(device, &memory_properties);
   // Nothing with memory properties for now.
+
+  vbool ext_supported = CheckDeviceExtensionSupport(device);
+  
+
   return  properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && 
-          features.geometryShader && 
-          family.IsComplete();
+          family.IsComplete() && family.IsComplete() && ext_supported;
+}
+
+
+vbool VKPhysicalDevice::CheckDeviceExtensionSupport(VkPhysicalDevice &device) {
+  vuint32 ext_count;
+  vkEnumerateDeviceExtensionProperties(device, nullptr, &ext_count, nullptr);
+  std::vector<VkExtensionProperties> available_ext(ext_count);
+  vkEnumerateDeviceExtensionProperties(device, nullptr, &ext_count, available_ext.data());
+  std::set<std::string> req_ext(device_ext.begin(), device_ext.end());
+  for (const auto &extension : available_ext) {
+    req_ext.erase(extension.extensionName);
+  }
+  return req_ext.empty();
 }
 
 
@@ -92,8 +119,11 @@ VKQueueFamily VKQueueFamily::FindQueueFamilies(VkPhysicalDevice device) {
   vkGetPhysicalDeviceQueueFamilyProperties(device, &queue_family_count, queue_familes.data());
   vint32 i = 0;
   for (const auto &queue_family : queue_familes) {
-    if (queue_family.queueCount > 0 && queue_family.queueFlags && VK_QUEUE_GRAPHICS_BIT) {
+    VkBool32 pSupport = false;
+    vkGetPhysicalDeviceSurfaceSupportKHR(device, i, VKSurface::surface, &pSupport);
+    if (queue_family.queueCount > 0 && queue_family.queueFlags && VK_QUEUE_GRAPHICS_BIT && pSupport) {
       family.gfrFamily = i;
+      family.prstFamily = i;
     }
     if (family.IsComplete()) {
       break;

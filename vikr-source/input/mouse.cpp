@@ -5,7 +5,9 @@
 #include <platform/vikr_time.hpp>
 #include <renderer/renderer.hpp>
 #include <scene/camera.hpp>
+#include <util/vikr_log.hpp>
 
+#include <util/vikr_assert.hpp>
 
 namespace vikr {
 
@@ -28,13 +30,13 @@ vvoid Mouse::DefaultMouseCallback(VikrWindow *window, vreal64 xpos, vreal64 ypos
   if (renderer) {
     ICamera *camera = renderer->GetCamera();
     if (camera) {
-      camera->Look(xoffset, yoffset, GetDeltaTime());
+      camera->Look(xoffset, yoffset, static_cast<vreal32>(GetDeltaTime()));
     }
   }
 }
 
 
-MouseCallback Mouse::callback;
+MouseCallback Mouse::callback = nullptr;
 Mouse::Mode Mouse::mode = Mouse::Mode::MOUSE_CURSOR_NORMAL;
 vreal64 Mouse::lastXPos = 0;
 vreal64 Mouse::lastYPos = 0;
@@ -43,7 +45,7 @@ vbool Mouse::firstMouse = true;
 
 vint32 Mouse::RegisterMouseCallback(MouseCallback callback) {
   Mouse::callback = callback;
-  glfwSetCursorPosCallback(Window::GetMainWindow(), Mouse::callback);
+  GLFWcursorposfun fun = glfwSetCursorPosCallback(Window::GetMainWindow(), callback);
   lastXPos = static_cast<vreal64>(Window::GetWindowWidth());
   lastYPos = static_cast<vreal64>(Window::GetWindowHeight());
   firstMouse = true;

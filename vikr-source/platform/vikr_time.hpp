@@ -8,44 +8,47 @@
 
 
 namespace vikr {
-namespace internals {
 
 
-static vreal32 last_time = static_cast<vreal32>(glfwGetTime());
-static vreal32 last_frame = 0;
-static vreal32 delta_time = 0;
-static vreal32 fpms = 0;
-static vuint32 fps = 0;
-static vuint32 nb_frames = 0;
+/*
+  Time struct.
+*/
+struct VikrTime {
 
-} // internals
+  static vreal64 last_time;
+  static vreal64 last_frame;
+  static vreal64 delta_time;
+  static vreal64 fpms;
+  static vuint64 fps;
+  static vuint64 nb_frames;
+};
 // Takes the offset of the time it takes to render one frame after the other.
 // Delta time is calculated how long it takes to render one frame, and solve the difference
 // between that time and the time it took to render the last frame.
-VIKR_FORCEINLINE vreal32 GetDeltaTime() { return internals::delta_time; }
+VIKR_FORCEINLINE vreal64 GetDeltaTime() { return VikrTime::delta_time; }
 
 // Takes the current time at the exact moment.
 VIKR_FORCEINLINE vreal64 GetTime() { return glfwGetTime(); }
 
 
-VIKR_FORCEINLINE vreal32 GetLastFrameTime() { return internals::last_frame; }
+VIKR_FORCEINLINE vreal64 GetLastFrameTime() { return VikrTime::last_frame; }
 
 // Get Frames Per Millisecond ( this is useful for debugging performance.
-VIKR_FORCEINLINE vreal32 GetFPMS() { return internals::fpms; }
+VIKR_FORCEINLINE vreal64 GetFPMS() { return VikrTime::fpms; }
 // Get the Frames per Second ( This is to check a general view of performance ).
-VIKR_FORCEINLINE vuint32 GetFPS() { return internals::fps; }
+VIKR_FORCEINLINE vuint64 GetFPS() { return VikrTime::fps; }
 
 
 /**
   Calculates FPS.
 */
 VIKR_FORCEINLINE void CalculateFPS() {
-  internals::nb_frames += 1;
-  if(GetTime() - internals::last_time >= 1.0f) {
-    internals::fpms = static_cast<vreal32>(1000.0 / vreal64(internals::nb_frames));
-    internals::fps = internals::nb_frames;
-    internals::nb_frames = 0;
-    internals::last_time += 1.0f;
+  VikrTime::nb_frames += 1;
+  if(GetTime() - VikrTime::last_time >= 1.0f) {
+    VikrTime::fpms = (1000.0 / VikrTime::nb_frames);
+    VikrTime::fps = VikrTime::nb_frames;
+    VikrTime::nb_frames = 0;
+    VikrTime::last_time += 1.0f;
   }
 }
 
@@ -55,9 +58,9 @@ VIKR_FORCEINLINE void CalculateFPS() {
   frame and the time it takes to render the last frame).
 */
 VIKR_FORCEINLINE void CalculateDeltaTime() {
-  vreal32 current_frame = static_cast<vreal32>(vikr::GetTime());
-  internals::delta_time = current_frame - internals::last_frame;
-  internals::last_frame = current_frame;
+  vreal64 current_frame = vikr::GetTime();
+  VikrTime::delta_time = current_frame - VikrTime::last_frame;
+  VikrTime::last_frame = current_frame;
   CalculateFPS();
 }
 } // vikr

@@ -11,6 +11,7 @@
 #include <graphics/vk/vk_context.hpp>
 #include <graphics/vk/vk_phydevice.hpp>
 #include <resources/vulkan/vk_memorymanager.hpp>
+#include <shader/cubemap.hpp>
 
 namespace vikr {
 
@@ -65,21 +66,17 @@ private:
 
   vvoid Setup();
 
-  vvoid CreateInstance();
-
   vvoid DeterminePhysicalDevice();
 
   vvoid CreateLogicalDevices();
-
-  vvoid CreateSurface();
   
-
-  VkPhysicalDevice physical_device      { VK_NULL_HANDLE };
-  VkMemoryManager<VkInstance> instance  { vkDestroyInstance };
   VkMemoryManager<VkDevice> device      { vkDestroyDevice };
-  VkMemoryManager<VkSurfaceKHR> surface { instance, vkDestroySurfaceKHR}; 
 
   VKContext context;
+
+public:
+  static const vchar *kApplicationName;
+  static const vchar *kEngineName;
 };
 } // vikr
 #endif // __VIKR_VK_DEVICE_HPP
