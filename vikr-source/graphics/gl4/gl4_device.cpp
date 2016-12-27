@@ -5,6 +5,8 @@
 #include <graphics/gl4/gl4_rendertarget.hpp>
 #include <graphics/gl4/gl4_framebuffer.hpp>
 #include <graphics/gl4/gl4_vertexbuffer.hpp>
+#include <graphics/gl4/gl4_renderpass.hpp>
+#include <graphics/gl4/gl4_commandbuffer.hpp>
 #include <shader/glsl/gl_cubemap.hpp>
 #include <util/vikr_log.hpp>
 #include <cstddef>
@@ -153,5 +155,15 @@ std::unique_ptr<RenderTexture> GL4RenderDevice::CreateRenderTexture(std::string 
 
 std::unique_ptr<Cubemap> GL4RenderDevice::CreateCubemap() {
   return std::make_unique<GLCubemap>();
+}
+
+
+std::unique_ptr<RenderPass> GL4RenderDevice::CreateRenderPass() {
+  return std::make_unique<GL4RenderPass>();
+}
+
+
+std::unique_ptr<Commandbuffer> GL4RenderDevice::CreateCommandbuffer() {
+  return std::make_unique<GL4Commandbuffer>();
 }
 } // vikr 

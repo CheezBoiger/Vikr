@@ -2,6 +2,9 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <graphics/gl4/gl4_context.hpp>
+#include <graphics/gl4/gl4_commandbuffer.hpp>
+#include <graphics/gl4/gl4_pipeline_state.hpp>
+#include <graphics/gl4/gl4_renderpass.hpp>
 #include <graphics/gl4/gl4_vertexbuffer.hpp>
 #include <graphics/command_buffer.hpp>
 #include <graphics/graphics_command.hpp>
@@ -239,10 +242,11 @@ vvoid GL4RenderContext::ClearWithColor(glm::vec4 color) {
 }
 
 
-vvoid GL4RenderContext::ExecuteCommands(Commandbuffer *commandbuffer) {
+vvoid GL4RenderContext::ExecuteCommands(CommandbufferList *commandbuffer) {
+  
   if (commandbuffer) {
-    for (std::unique_ptr<GraphicsCommand> &command : commandbuffer->GetCommands()) {
-      command->Execute(this);
+    for (Commandbuffer *command : commandbuffer->Raw()) {
+      static_cast<GL4Commandbuffer *>(command)->Execute(this);
     }
   }
 }
@@ -388,5 +392,25 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
 
 vvoid GL4RenderContext::Present() {
   glfwSwapBuffers(Window::GetMainWindow());
+}
+
+
+RenderPass *GL4RenderContext::GetRenderPass() {
+  return static_cast<RenderPass *>(m_currRenderPass);
+}
+
+
+PipelineState *GL4RenderContext::GetPipelineState() {
+  return static_cast<PipelineState *>(m_currPipeline);
+}
+
+
+vvoid GL4RenderContext::BeginRecord(Commandbuffer *buf) {
+  m_recordCommandbuffer = static_cast<GL4Commandbuffer *>(buf);
+}
+
+
+vvoid GL4RenderContext::EndRecord() {
+  m_recordCommandbuffer = nullptr;
 }
 } // vikr

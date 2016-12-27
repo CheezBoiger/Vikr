@@ -116,48 +116,51 @@ protected:
   /**
     Screen filled mesh quad.
   */
-  Mesh *m_quad                                  = nullptr;
+  Mesh *m_quad                                            = nullptr;
 
   /**
     Current RenderPass.
   */
-  std::unique_ptr<RenderPass> m_gBufferPass     = nullptr;
+  std::unique_ptr<RenderPass> m_gBufferPass               = nullptr;
 
   /**
     shadow pass.
   */
-  std::unique_ptr<RenderPass> m_shadowPass      = nullptr;
+  std::unique_ptr<RenderPass> m_shadowPass                = nullptr;
   
   /**
     Gbuffer shader.
   */
-  Shader *gbufferShader                         = nullptr;
+  Shader *gbufferShader                                   = nullptr;
 
   /**
     light shader.
   */
-  Shader *lightShader                           = nullptr;
+  Shader *lightShader                                     = nullptr;
 
   /**
     shadow shader.
   */
-  Shader *shadowshader                          = nullptr;
+  Shader *shadowshader                                    = nullptr;
 
   /**
     depth shader.
   */
-  Shader *depthshader                           = nullptr;
+  Shader *depthshader                                     = nullptr;
 
   /**
     Rendertextures.
   */
   std::vector<std::unique_ptr<RenderTexture> > m_renderTextures;
 
+  CommandbufferList m_commandBuffer;
+  CommandbufferList m_deferredBuffer;
+
 
   /**
     Render device used by this Renderer.
   */
-  RenderDevice *m_renderDevice                  = nullptr;
+  RenderDevice *m_renderDevice                            = nullptr;
 
   glm::vec4 clear_color;
   ICamera *camera;  

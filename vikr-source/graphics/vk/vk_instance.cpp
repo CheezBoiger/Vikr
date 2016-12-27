@@ -31,7 +31,6 @@ vvoid VKInstance::CreateInstance() {
   inst_info.enabledExtensionCount = extension_count;
   inst_info.ppEnabledExtensionNames = extensions;
   inst_info.enabledLayerCount = 0;
-
   if(vkCreateInstance(&inst_info, nullptr, instance.Replace()) != VK_SUCCESS) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Instance failed to create!");
   }

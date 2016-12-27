@@ -15,7 +15,8 @@ namespace vikr {
 
 
 class Framebuffer;
-
+class GL4RenderPass;
+class GL4Commandbuffer;
 struct TextureSampler;
 
 
@@ -56,7 +57,7 @@ public:
   vvoid ChangeViewport(Viewport *port) override;
   vvoid ChangeTopology(Topology topology) override;
 
-  vvoid ExecuteCommands(Commandbuffer *command_buffer) override;
+  vvoid ExecuteCommands(CommandbufferList *command_buffer) override;
   vvoid ConfigurePipelineState(PipelineState *state) override;
 
   vvoid SetShaderUniforms(ShaderUniformParams *params) override;
@@ -64,6 +65,11 @@ public:
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
 
   vvoid SetRenderPass(RenderPass *pass) override;
+  vvoid BeginRecord(Commandbuffer *buf) override; 
+  vvoid EndRecord() override;
+
+  RenderPass *GetRenderPass() override;
+  PipelineState *GetPipelineState() override;
 
   vvoid Present() override;
 
@@ -73,12 +79,14 @@ private:
   /**
     Current topology.
   */
-  Topology m_currTopology         = VIKR_TRIANGLES;
+  Topology m_currTopology                       = VIKR_TRIANGLES;
 
-  PipelineState *pipeline;
+  PipelineState *m_currPipeline                 = nullptr;
 
-  vuint32 m_currShaderProgram     = 0;
+  vuint32 m_currShaderProgram                   = 0;
+  GL4RenderPass *m_currRenderPass                  = nullptr;
   std::vector<TextureSampler> m_currTextures;
+  GL4Commandbuffer *m_recordCommandbuffer          = nullptr;
 };
 } // vikr
 #endif // __VIKR_GL4_CONTEXT_HPP

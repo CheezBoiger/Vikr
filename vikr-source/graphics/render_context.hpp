@@ -24,10 +24,10 @@ class RenderPass;
 class RenderDevice;
 class Shader;
 class Commandbuffer;
+class CommandbufferList;
 class PipelineState;
 class Vertexbuffer;
 class Framebuffer;
-
 
 struct ShaderUniformParams;
 struct Viewport;
@@ -90,6 +90,9 @@ public:
 
   virtual vvoid SetFrontFace(FrontFace face) = 0;
 
+  
+  virtual vvoid BeginRecord(Commandbuffer *buf) = 0;
+  virtual vvoid EndRecord() = 0;
   /**
     Clear the screen.
   */
@@ -113,7 +116,7 @@ public:
   /**
     Digest, or execute commands immediately.
   */
-  virtual vvoid ExecuteCommands(Commandbuffer *command_buffer) = 0;
+  virtual vvoid ExecuteCommands(CommandbufferList *command_buffer) = 0;
 
   /**
     Configures the pipeline state when needed.
@@ -135,6 +138,16 @@ public:
     you plan to draw.
   */
   virtual vvoid QueryVertexbuffer(Vertexbuffer *buffer) = 0;
+
+  /**
+    Get the current RenderPass.
+  */
+  virtual RenderPass *GetRenderPass() = 0;
+
+  /**
+    Grab the current pipeline state
+  */
+  virtual PipelineState *GetPipelineState() = 0;
 
   /**
     Present the Image onto the screen.

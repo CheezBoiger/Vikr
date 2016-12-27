@@ -7,9 +7,13 @@
 
 #include <platform/vikr_api.hpp>
 #include <platform/vikr_types.hpp>
+
+#include <shader/shader_uniform_params.hpp>
+
 #include <graphics/topology.hpp>
 #include <graphics/graphics_command.hpp>
 #include <glm/glm.hpp>
+
 #include <vector>
 #include <memory>
 
@@ -36,35 +40,59 @@ struct Viewport;
   Manual commands must be set here.
 */
 class Commandbuffer {
+  VIKR_DISALLOW_COPY_AND_ASSIGN(Commandbuffer);
 public:
-  Commandbuffer();
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(Commandbuffer);
+  Commandbuffer() { }
+  virtual ~Commandbuffer() { }
 
-  vvoid Clear() { m_commandBuffer.clear(); }
+  virtual vvoid BeginRecord() = 0;
+  virtual vvoid EndRecord() = 0;
+  virtual vvoid SetDraw(vuint32 start, vuint32 vertices) = 0;
+  virtual vvoid SetDrawIndexed(const vvoid *indices, vuint32 vertices) = 0;
+  virtual vvoid SetTopology(Topology topology) = 0;
+  virtual vvoid SetRenderTarget(RenderTarget *target) = 0;
+  virtual vvoid SetRenderPass(RenderPass *pass) = 0;
+  virtual vvoid SetClear() = 0;
+  virtual vvoid SetClearWithColor(glm::vec4 color) = 0;
+  virtual vvoid SetChangeViewport(Viewport *viewport) = 0;
+  virtual vvoid SetShaderProgram(vuint32 program_id) = 0;
+  virtual vvoid SetConfigurePipelineState(PipelineState *pipelinestate) = 0;
+  virtual vvoid SetShaderUniforms(ShaderUniformParams params) = 0;
+  virtual vvoid SetQueryVertexbuffer(Vertexbuffer *buffer) = 0;
 
-  vvoid Pushback(std::unique_ptr<GraphicsCommand> &command);
-  vvoid Pushback(std::vector<std::unique_ptr<GraphicsCommand> > &commands);
-  
-  std::vector<std::unique_ptr<GraphicsCommand> > &GetCommands() { return m_commandBuffer; }
+  virtual vbool IsRecording() = 0;
+};
 
 
-  vvoid SetDraw(vuint32 start, vuint32 vertices);
-  vvoid SetDrawIndexed(const vvoid *indices, vuint32 vertices);
-  vvoid SetTopology(Topology topology);
-  vvoid SetRenderTarget(RenderTarget *target);
-  vvoid SetRenderPass(RenderPass *pass);
-  vvoid SetClear();
-  vvoid SetClearWithColor(glm::vec4 color);
-  vvoid SetChangeViewport(Viewport *viewport);
-  vvoid SetShaderProgram(vuint32 program_id);
-  vvoid SetConfigurePipelineState(PipelineState *pipelinestate);
-  vvoid SetShaderUniforms(ShaderUniformParams *params);
-  vvoid SetQueryVertexbuffer(Vertexbuffer *buffer);
+/**
+  commandbuffer list to allocate to.
+*/
+class CommandbufferList {
+  VIKR_DISALLOW_COPY_AND_ASSIGN(CommandbufferList);
+public:
+  CommandbufferList() { }
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(CommandbufferList);
+  vvoid PushBack(std::unique_ptr<Commandbuffer> &buffer) {
+    if (buffer) {
+      // This is an issue!!
+      m_buffer.emplace_back(std::move(buffer));
+      m_raw.emplace_back(m_buffer.back().get());
+    }
+  }
 
-  vvoid Execute(RenderContext *context);
+  vvoid Clear() {
+    m_raw.clear();
+    m_buffer.clear();
+  }
+
+  std::vector<Commandbuffer *> &Raw() {
+    return m_raw;
+  }
 
 private:
-
-  std::vector<std::unique_ptr<GraphicsCommand> > m_commandBuffer;
+  std::vector<std::unique_ptr<Commandbuffer> > m_buffer;
+  std::vector<Commandbuffer *> m_raw;
 };
 } // vikr
 #endif // __VIKR_COMMAND_BUFFER_HPP

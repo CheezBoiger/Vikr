@@ -49,7 +49,7 @@ public:
 
   vvoid ChangeTopology(Topology topology) override;
 
-  vvoid ExecuteCommands(Commandbuffer *buffer) override;
+  vvoid ExecuteCommands(CommandbufferList *buffer) override;
 
   vvoid ConfigurePipelineState(PipelineState *state) override;
 
@@ -58,6 +58,11 @@ public:
   vvoid ApplyShaderProgram(vuint32 program_id) override;
 
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
+
+  vvoid BeginRecord(Commandbuffer *buf) override;
+  vvoid EndRecord() override;
+  RenderPass *GetRenderPass() override;
+  PipelineState *GetPipelineState() override;
 
   vvoid Present() override;
 

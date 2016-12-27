@@ -9,6 +9,8 @@
 #include <platform/vikr_types.hpp>
 #include <graphics/vertexbuffer.hpp>
 #include <graphics/render_target.hpp>
+#include <graphics/render_pass.hpp>
+#include <graphics/command_buffer.hpp>
 #include <shader/texture.hpp>
 #include <mesh/imesh.hpp>
 #include <string>
@@ -89,6 +91,13 @@ public:
   
   */
   virtual std::unique_ptr<Cubemap> CreateCubemap() = 0;
+
+  /**
+    Generate RenderPass.
+  */
+  virtual std::unique_ptr<RenderPass> CreateRenderPass() = 0;
+
+  virtual std::unique_ptr<Commandbuffer> CreateCommandbuffer() = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_DEVICE_HPP

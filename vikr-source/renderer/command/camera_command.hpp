@@ -44,11 +44,9 @@ public:
         std::make_pair("vikr_CamPosition", position)
       };
       //camera_params["cat"] = { vikr_INT, camera->GetPos() };
-      ShaderUniformParams params {
-        &camera_params,
-        nullptr
-      };
-      buffer->SetShaderUniforms(&params);
+      ShaderUniformParams params;
+      params.uniforms = &camera_params;
+      buffer->SetShaderUniforms(params);
     }
   }
 

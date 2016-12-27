@@ -61,7 +61,9 @@ public:
 
   std::unique_ptr<Cubemap> CreateCubemap() override;
 
+  std::unique_ptr<RenderPass> CreateRenderPass() override;
 
+  std::unique_ptr<Commandbuffer> CreateCommandbuffer() override;
 private:
 
   vvoid Setup();

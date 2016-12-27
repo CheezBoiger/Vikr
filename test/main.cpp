@@ -46,13 +46,13 @@ void Do_Movement()
 {
   // Camera controls
   if(Keyboard::IsPressed(Keyboard::KEY_W) || Keyboard::IsRepeating(Keyboard::KEY_W))
-    camera.Move(FORWARD, GetDeltaTime());
+    camera.Move(FORWARD, static_cast<vreal32>(GetDeltaTime()));
   if(Keyboard::IsPressed(Keyboard::KEY_S) || Keyboard::IsRepeating(Keyboard::KEY_S))
-    camera.Move(BACK, GetDeltaTime());
+    camera.Move(BACK, static_cast<vreal32>(GetDeltaTime()));
   if(Keyboard::IsPressed(Keyboard::KEY_A) || Keyboard::IsRepeating(Keyboard::KEY_A))
-    camera.Move(LEFT, GetDeltaTime());
+    camera.Move(LEFT, static_cast<vreal32>(GetDeltaTime()));
   if(Keyboard::IsPressed(Keyboard::KEY_D) || Keyboard::IsRepeating(Keyboard::KEY_D))
-    camera.Move(RIGHT, GetDeltaTime());
+    camera.Move(RIGHT, static_cast<vreal32>(GetDeltaTime()));
 }
 
 
@@ -74,7 +74,6 @@ int main(int c, char* args[]) {
   // Storing shaders into resources from renderer.
   VikrLog::UnSupress(VIKR_WARNING);
   GL4RenderDevice device;
-  VKDevice vulkan;
   Renderer renderer;
   renderer.Init(&device);
   renderer.SetCamera(&camera);

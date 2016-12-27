@@ -32,14 +32,19 @@ endif()
 # OpenGL Always enabled!
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_GRAPHICS_GL4_DIR}/gl4_renderpass.hpp
+  ${VIKR_GRAPHICS_GL4_DIR}/gl4_renderpass.cpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_vertexbuffer.hpp
 #  ${VIKR_GRAPHICS_GL4_DIR}/gl4_vertexbuffer.cpp
+  ${VIKR_GRAPHICS_GL4_DIR}/gl4_commandbuffer.hpp
+  ${VIKR_GRAPHICS_GL4_DIR}/gl4_commandbuffer.cpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_context.hpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_context.cpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_device.hpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_device.cpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_pipeline_state.hpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_pipeline_state.cpp
+  ${VIKR_GRAPHICS_GL4_DIR}/gl4_graphics_command.hpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_framebuffer.hpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_framebuffer.cpp
   ${VIKR_GRAPHICS_GL4_DIR}/gl4_rendertarget.hpp
@@ -55,10 +60,8 @@ set(VIKR_GLOB
   ${VIKR_GRAPHICS_DIR}/stencildepth.hpp
   ${VIKR_GRAPHICS_DIR}/viewport.hpp
   ${VIKR_GRAPHICS_DIR}/vertexbuffer.hpp
-  ${VIKR_GRAPHICS_DIR}/graphics_command.hpp
   ${VIKR_GRAPHICS_DIR}/pipeline_state.hpp
   ${VIKR_GRAPHICS_DIR}/command_buffer.hpp
-  ${VIKR_GRAPHICS_DIR}/command_buffer.cpp
   ${VIKR_GRAPHICS_DIR}/framebuffer.hpp
   ${VIKR_GRAPHICS_DIR}/render_target.hpp
   ${VIKR_GRAPHICS_DIR}/render_target.cpp

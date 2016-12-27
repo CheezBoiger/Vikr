@@ -79,7 +79,7 @@ vvoid VKContext::ChangeTopology(Topology topology) {
 }
 
 
-vvoid VKContext::ExecuteCommands(Commandbuffer *buffer) {
+vvoid VKContext::ExecuteCommands(CommandbufferList *buffer) {
 }
 
 

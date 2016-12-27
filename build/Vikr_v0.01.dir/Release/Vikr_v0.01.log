@@ -1,11 +1,28 @@
 ﻿  mouse.cpp
-D:\cmgarcia\github\Vikr\vikr-source\input\mouse.cpp(33): warning C4244: 'argument': conversion from 'vikr::vreal64' to 'vikr::vreal32', possible loss of data
   window.cpp
+  vk_context.cpp
+  vk_instance.cpp
+  vk_phydevice.cpp
+  vk_device.cpp
+  gl4_renderpass.cpp
+  gl4_commandbuffer.cpp
+  gl4_context.cpp
+  gl4_device.cpp
+  mesh.cpp
   vikr_time.cpp
+  mesh_command.cpp
   renderer.cpp
+  transform_component.cpp
   camera_component.cpp
+  mesh_component.cpp
+  renderer_component.cpp
   first_person_camera.cpp
+  scene_node.cpp
+  Generating Code...
+  Compiling...
+  scene.cpp
   camera.cpp
+  model_loader.cpp
   resource_manager.cpp
   vikr.cpp
   Generating Code...

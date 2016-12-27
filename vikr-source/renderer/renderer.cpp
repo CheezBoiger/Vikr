@@ -131,31 +131,24 @@ vvoid Renderer::Render() {
   m_renderQueue.Sort();
 
   // Record Commands.
-  Commandbuffer command_buffer; 
-  Commandbuffer deferred_buffer;
   RenderContext *context = m_renderDevice->GetContext();
   std::vector<RenderCommand *> &render_commands = m_renderQueue.GetCommandBuffer();
-  std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
   for (RenderCommand *command : render_commands) {
-    command->Record(&command_buffer);
+    std::unique_ptr<Commandbuffer> buf = m_renderDevice->CreateCommandbuffer();
+    command->Record(buf.get());
+    m_commandBuffer.PushBack(buf);
   }
   std::vector<RenderCommand *> &deferred_commands = m_renderQueue.GetDeferredCommands();
   for(RenderCommand *command : deferred_commands) {
-    command->Record(&deferred_buffer);
+    std::unique_ptr<Commandbuffer> buf = m_renderDevice->CreateCommandbuffer();
+    command->Record(buf.get());
+    m_deferredBuffer.PushBack(buf);
   }
-
-  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-  VikrLog::DisplayMessage(VIKR_NOTIFY, "Buffered time: " +
-    std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + "us");
   
   // Set the Gbuffer pass.
   context->SetRenderPass(m_gBufferPass.get());
   context->ApplyShaderProgram(gbufferShader->GetProgramId());
-  start = std::chrono::steady_clock::now();
-  context->ExecuteCommands(&command_buffer);
-  end = std::chrono::steady_clock::now();
-  VikrLog::DisplayMessage(VIKR_NOTIFY, "gbuffer render time: " +
-    std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + "us");
+  context->ExecuteCommands(&m_commandBuffer);
 
   // Deferred Shading pass.
 
@@ -166,10 +159,13 @@ vvoid Renderer::Render() {
   for (vuint32 i = 0; i < m_gBufferPass->RenderTargets.size(); ++i) {
     context->SetRenderTarget(m_gBufferPass->RenderTargets[i].get(), i);   
   }
-  context->ExecuteCommands(&deferred_buffer);
-  DrawScreenQuad();
+  context->ExecuteCommands(&m_deferredBuffer);
 
   m_renderQueue.Clear();
+  m_commandBuffer.Clear();
+  m_deferredBuffer.Clear();
+
+  DrawScreenQuad();
 }
 
 
@@ -202,7 +198,7 @@ vint32 Renderer::Init(RenderDevice *device) {
             right now there is no telling what the screen size is at the moment. This is
             practically hardcoded.
   */
-  m_gBufferPass = std::make_unique<RenderPass>();
+  m_gBufferPass = m_renderDevice->CreateRenderPass();
   m_gBufferPass->Viewport.win_x = 0;
   m_gBufferPass->Viewport.win_y = 0;
   m_gBufferPass->Viewport.win_width = Window::GetWindowWidth();
@@ -263,20 +259,21 @@ vint32 Renderer::Init(RenderDevice *device) {
   setup.SetInt("gTangent", 5);
   setup.SetInt("gBitangent", 6);
   setup.SetInt("gNorm", 7);
-  ShaderUniformParams param = {setup.GetMaterialValues(), nullptr};
+  ShaderUniformParams param;
+  param.uniforms = setup.GetMaterialValues();
   m_renderDevice->GetContext()->SetShaderUniforms(&param);
-
-  
 
   return 1;
 }
 
 
 vvoid Renderer::DrawScreenQuad() {
-  Commandbuffer buffer;
+  std::unique_ptr<Commandbuffer > buffer = m_renderDevice->CreateCommandbuffer();
   PrimitiveCommand command;
   command.m_mesh = m_quad;
-  command.Record(&buffer);
-  buffer.Execute(m_renderDevice->GetContext());
+  command.Record(buffer.get());
+  m_commandBuffer.PushBack(buffer);
+  m_renderDevice->GetContext()->ExecuteCommands(&m_commandBuffer);
+  m_commandBuffer.Clear();
 }
 } // vikr
