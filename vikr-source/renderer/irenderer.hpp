@@ -40,6 +40,11 @@ public:
     Should render the frame. 
    */
   virtual vvoid Render() = 0;
+
+  /**
+    Present the Frame.
+  */
+  virtual vvoid Present() = 0;
 };
 } // vikr
 #endif // __VIKR_IRENDERER_HPP

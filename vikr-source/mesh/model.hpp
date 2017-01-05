@@ -35,7 +35,7 @@ namespace vikr {
 
   @deprecated
 */
-class Model {
+class [[deprecated("This class is no longer in use.")]] Model {
 public:
   virtual ~Model() { }
 

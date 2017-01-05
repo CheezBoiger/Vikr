@@ -89,14 +89,31 @@ public:
   */
   virtual vvoid ClearDepthStencil() = 0;
 
+
+  /**
+    Clear Color attachments from the Framebuffer.
+  */
   virtual vvoid ClearTexture(vuint32 attachment) = 0;
 
+  
+  /**
+    Bind a Render target to the Framebuffer.
+  */
   virtual vvoid BindTexture(RenderTarget *target, vuint32 attachment) = 0;
 
+  /**
+    Bind a Depth component to the Framebuffer.
+  */
   virtual vvoid BindDepthStencilBuffer(Renderbuffer *rbo) = 0;
 
+  /**
+    Destroy the framebuffer.
+  */
   virtual vvoid DestroyFramebuffer() = 0;
 
+  /**
+    Get the color attachments from the framebuffer.
+  */
   virtual std::vector<Texture *> *GetColorAttachments() = 0;
 
   /**

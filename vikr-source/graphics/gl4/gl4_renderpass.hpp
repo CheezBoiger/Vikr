@@ -11,6 +11,9 @@
 namespace vikr {
 
 
+/**
+  RenderPass for OpenGL.
+*/
 class GL4RenderPass : public RenderPass {
 public:
 

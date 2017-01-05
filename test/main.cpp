@@ -58,7 +58,8 @@ void Do_Movement()
 
 int main(int c, char* args[]) {
   InitVikr(vikr_PIPELINE_OPENGL);
-  Window::CreateVikrWindow(1200, 800, "Vikr");
+  Window win = Window::CreateVikrWindow(1200, 800, "Vikr");
+  Window::SetMainWindow(&win);
   // Options.
   Keyboard::RegisterKeyboardCallback(Keyboard::DefaultKeyCallback);
   Mouse::RegisterMouseCallback(Mouse::DefaultMouseCallback);
@@ -150,13 +151,15 @@ int main(int c, char* args[]) {
   light_object->Update();
 
 
-  while(!Window::IsClosed()) {
+  while(!Window::GetMainWindow()->IsClosed()) {
     CalculateDeltaTime();
     PollEvents();
     Do_Movement();
     VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPMS()) + " Frames/ms");
     camera.Update();
     lc->light->SetPos(glm::vec3(std::sin(GetTime()) * 50.0f, 5.0f, 5.0f));
+    lc->light->SetDiffuse(glm::vec3(0.0f, -std::sin(GetTime()), std::sin(GetTime()))); 
+    lc->light->SetSpecular(lc->light->GetDiffuse());
     light_c->transform.Position = lc->light->GetPos();
     light_c->Update();
     renderer.PushBack(light_object);
@@ -165,7 +168,8 @@ int main(int c, char* args[]) {
     renderer.PushBack(node);
     renderer.PushBack(nano);
     renderer.Render();
-    renderer.GetDevice()->GetContext()->Present();
+
+    renderer.Present();
   }
 
 /*

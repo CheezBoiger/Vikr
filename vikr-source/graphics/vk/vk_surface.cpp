@@ -15,7 +15,7 @@ VkMemoryManager<VkSurfaceKHR> VKSurface::surface = { VKInstance::instance, vkDes
 
 vvoid VKSurface::CreateSurface() {
   if(glfwCreateWindowSurface(VKInstance::instance, 
-    Window::GetMainWindow(), nullptr, surface.Replace()) != VK_SUCCESS) 
+    Window::GetMainWindow()->GetWindow(), nullptr, surface.Replace()) != VK_SUCCESS) 
   {
     VikrLog::DisplayMessage(VIKR_ERROR, "Surface creation error!");
   }

@@ -7,6 +7,7 @@
 
 #include <platform/vikr_api.hpp>
 #include <platform/vikr_types.hpp>
+
 #include <graphics/blendmode.hpp>
 #include <graphics/cullmode.hpp>
 #include <graphics/depthmode.hpp>
@@ -16,6 +17,13 @@
 namespace vikr {
 
 
+class Shader;
+
+
+/**
+  Pipeline state defines the current state of the Renderer API.
+  This is abstract for both Vulkan and OpenGL use.
+*/
 class PipelineState {
 public:
   PipelineState(Shader *shader);
@@ -56,6 +64,7 @@ private:
   /**
     Both the Vertex and Fragment shader. 
     Geometry shader is optional.
+    Compute shader going to be added soo enuff.
   */
   Shader    *m_shader;
 

@@ -92,6 +92,8 @@ public:
   glm::vec3 GetClearColor() { return clear_color; }
   vbool IsRendering() { return rendering; }
 
+  vvoid Present() override;
+
 
   //RenderPass *GetCurrentRenderPass() { return m_renderpass.get(); }
   // testing one renderpass.

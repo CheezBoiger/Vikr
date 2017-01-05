@@ -1,29 +1,22 @@
-﻿  mouse.cpp
-  window.cpp
-  vk_context.cpp
-  vk_instance.cpp
-  vk_phydevice.cpp
+﻿  gl4_context.cpp
   vk_device.cpp
-  gl4_renderpass.cpp
-  gl4_commandbuffer.cpp
-  gl4_context.cpp
-  gl4_device.cpp
-  mesh.cpp
-  vikr_time.cpp
+  vk_surface.cpp
+  keyboard.cpp
+  mouse.cpp
+  window.cpp
   mesh_command.cpp
   renderer.cpp
-  transform_component.cpp
-  camera_component.cpp
-  mesh_component.cpp
-  renderer_component.cpp
-  first_person_camera.cpp
-  scene_node.cpp
-  Generating Code...
-  Compiling...
-  scene.cpp
-  camera.cpp
   model_loader.cpp
+  gl_resource_manager.cpp
   resource_manager.cpp
+  camera_component.cpp
+  renderer_component.cpp
+  scene_node.cpp
+  glsl_linker.cpp
+  glsl_shader.cpp
+  material.cpp
+  shader.cpp
   vikr.cpp
   Generating Code...
+gl4_pipeline_state.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
   Vikr_v0.01.vcxproj -> D:\cmgarcia\github\Vikr\build\Release\Vikr_v0.01.lib

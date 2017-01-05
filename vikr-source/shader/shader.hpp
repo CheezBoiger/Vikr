@@ -11,8 +11,13 @@
 
 namespace vikr {
 
+
+/**
+  Shader type language.
+*/
 enum ShaderType {
   vikr_GLSL,
+  vikr_HLSL,
   vikr_SPIRV
 };
 
@@ -23,8 +28,8 @@ enum ShaderType {
 class Shader {
 public:
   Shader();
-  Shader(Shader&& shader) = default;
-  Shader& operator=(Shader&& shader) = default;
+  Shader(Shader &&shader) = default;
+  Shader &operator=(Shader &&shader) = default;
   virtual ~Shader() { }
 
   virtual vvoid Compile(std::string vs, std::string fs, std::string gs = "") = 0;
@@ -53,6 +58,10 @@ protected:
   vuint32 vert_id                       = 0;
   vuint32 frag_id                       = 0;
   vuint32 geo_id                        = 0;
+
+  // OpenGL 4.3 and up.
+  vuint32 compute_id                    = 0;
+  vuint32 hull_id                       = 0;
   vbool is_linked;
   VIKR_DISALLOW_COPY_AND_ASSIGN(Shader);
 };

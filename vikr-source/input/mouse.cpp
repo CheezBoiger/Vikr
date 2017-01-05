@@ -45,9 +45,9 @@ vbool Mouse::firstMouse = true;
 
 vint32 Mouse::RegisterMouseCallback(MouseCallback callback) {
   Mouse::callback = callback;
-  GLFWcursorposfun fun = glfwSetCursorPosCallback(Window::GetMainWindow(), callback);
-  lastXPos = static_cast<vreal64>(Window::GetWindowWidth());
-  lastYPos = static_cast<vreal64>(Window::GetWindowHeight());
+  GLFWcursorposfun fun = glfwSetCursorPosCallback(Window::GetMainWindow()->GetWindow(), callback);
+  lastXPos = static_cast<vreal64>(Window::GetMainWindow()->GetWidth());
+  lastYPos = static_cast<vreal64>(Window::GetMainWindow()->GetHeight());
   firstMouse = true;
   return 1;
 }
@@ -65,6 +65,6 @@ MouseCallback Mouse::GetMouseCallback() {
 
 vvoid Mouse::SetMouseMode(Mode mode) {
   Mouse::mode = mode;
-  glfwSetInputMode(Window::GetMainWindow(), GLFW_CURSOR, mode);
+  glfwSetInputMode(Window::GetMainWindow()->GetWindow(), GLFW_CURSOR, mode);
 }
 } // vikr

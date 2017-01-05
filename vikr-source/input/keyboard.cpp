@@ -12,7 +12,7 @@ vvoid Keyboard::DefaultKeyCallback(VikrWindow *window, vint32 key,
   vint32 scancode, vint32 action, vint32 mode)
 {
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    Window::Close(Window::GetMainWindow());
+    Window::GetMainWindow()->Close();
 
     if(action == GLFW_PRESS) {
       key_map[(Key )key] = Mode::KEY_PRESS;
@@ -31,7 +31,7 @@ std::unordered_map<Keyboard::Key, Keyboard::Mode> Keyboard::key_map;
 
 vint32 Keyboard::RegisterKeyboardCallback(KeyboardCallback callback) {
   Keyboard::callback = callback;
-  glfwSetKeyCallback(Window::GetMainWindow(), Keyboard::callback);
+  glfwSetKeyCallback(Window::GetMainWindow()->GetWindow(), Keyboard::callback);
   return 1;
 }
 

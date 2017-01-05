@@ -8,33 +8,49 @@
 namespace vikr {
 
 
-std::string Window::application_name = "Vikr";
-vuint32 Window::m_height = 0;
-vuint32 Window::m_width = 0;
-VikrWindow *Window::m_mainWindow = nullptr;
+Window *Window::m_mainWindow = nullptr;
+const std::string Window::kAppName = "Vikr";
 
 
-vvoid Window::CreateVikrWindow(vuint32 width, vuint32 height, std::string app_name) {
-  m_mainWindow = VikrCreateGLFWwindow(width, height, app_name.c_str(), nullptr, nullptr);
-  VikrMakeContextCurrent(m_mainWindow);
-  m_width = width;
-  m_height = height;
-  application_name = app_name;
-  if (!GladLoaded()) {
-    LoadGlad();
-  }
+Window::Window(std::string name, vuint32 width, vuint32 height) 
+  : m_width(width)
+  , m_height(height)
+  , application_name(name)
+  , m_window(nullptr)
+{
+}
+
+
+Window Window::CreateVikrWindow(vuint32 width, vuint32 height, std::string app_name) {
+  Window win;
+  win.m_window = VikrCreateGLFWwindow(width, height, app_name.c_str(), nullptr, nullptr);
+  win.m_width = width;
+  win.m_height = height;
+  win.application_name = app_name;
+  return std::move(win);
 }
 
 
 vbool Window::IsClosed() {
-  if (m_mainWindow) {
-    return glfwWindowShouldClose(m_mainWindow);
+  if (m_window) {
+    return glfwWindowShouldClose(m_window);
   }
   return false;
 }
 
 
-vvoid Window::Close(VikrWindow *window) {
-  glfwSetWindowShouldClose(window, GL_TRUE);
+vvoid Window::Close() {
+  glfwSetWindowShouldClose(m_window, GL_TRUE);
+}
+
+
+vvoid Window::SetMainWindow(Window *newWindow) {
+  if (newWindow) {
+    m_mainWindow = newWindow;
+    VikrMakeContextCurrent(newWindow->m_window);
+  }
+  if(!GladLoaded()) {
+    LoadGlad();
+  }
 }
 } // vikr

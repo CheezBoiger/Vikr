@@ -265,7 +265,8 @@ vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
     ClearWithColor(glm::vec4(pass->ClearColor, 1.0f));
   } else {
     // Set back to default.
-    glViewport(0, 0, Window::GetWindowWidth(), Window::GetWindowHeight());
+    glViewport(0, 0, Window::GetMainWindow()->GetWidth(), 
+      Window::GetMainWindow()->GetHeight());
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     Clear();
   }
@@ -391,7 +392,7 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
 
 
 vvoid GL4RenderContext::Present() {
-  glfwSwapBuffers(Window::GetMainWindow());
+  glfwSwapBuffers(Window::GetMainWindow()->GetWindow());
 }
 
 

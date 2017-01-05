@@ -185,7 +185,7 @@ vint32 Renderer::Init(RenderDevice *device) {
   m_renderDevice->GetContext()->EnableDepthMode(true);
   m_renderDevice->GetContext()->EnableCullMode(true);
 
-
+  Window *window = Window::GetMainWindow();
   // Create the ScreenQuad.
   Quad quad;
   m_quad = m_renderDevice->GetResourceManager()->CreateMesh(quad.GetPositions(), 
@@ -201,34 +201,34 @@ vint32 Renderer::Init(RenderDevice *device) {
   m_gBufferPass = m_renderDevice->CreateRenderPass();
   m_gBufferPass->Viewport.win_x = 0;
   m_gBufferPass->Viewport.win_y = 0;
-  m_gBufferPass->Viewport.win_width = Window::GetWindowWidth();
-  m_gBufferPass->Viewport.win_height = Window::GetWindowHeight();
+  m_gBufferPass->Viewport.win_width = window->GetWidth();
+  m_gBufferPass->Viewport.win_height = window->GetHeight();
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gPosition", 
-      Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
+      window->GetWidth(), window->GetHeight(), false, data_FLOAT));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gNormal", 
-      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+      window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gAlbedo", 
-      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+      window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gSpecular", 
-      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+      window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gAmbient" , 
-      Window::GetWindowWidth(), Window::GetWindowHeight(), true, data_UNSIGNED_BYTE));
+      window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gTangent",
-      Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
+      window->GetWidth(), window->GetHeight(), false, data_FLOAT));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gBitangent",
-      Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
+      window->GetWidth(), window->GetHeight(), false, data_FLOAT));
   m_gBufferPass->RenderTargets
     .push_back(m_renderDevice->CreateRenderTexture("gNorm",
-               Window::GetWindowWidth(), Window::GetWindowHeight(), false, data_FLOAT));
-  m_gBufferPass->Depthbuffer = m_renderDevice->CreateRenderbuffer(Window::GetWindowWidth(), 
-    Window::GetWindowHeight());
+      window->GetWidth(), window->GetHeight(), false, data_FLOAT));
+  m_gBufferPass->Depthbuffer = m_renderDevice->CreateRenderbuffer(window->GetWidth(), 
+    window->GetHeight());
 
   m_gBufferPass->FramebufferObject = m_renderDevice->CreateFramebuffer();
   m_gBufferPass->FramebufferObject->Generate();
@@ -275,5 +275,14 @@ vvoid Renderer::DrawScreenQuad() {
   m_commandBuffer.PushBack(buffer);
   m_renderDevice->GetContext()->ExecuteCommands(&m_commandBuffer);
   m_commandBuffer.Clear();
+}
+
+
+vvoid Renderer::Present() {
+  if (m_renderDevice) {
+    m_renderDevice->GetContext()->Present();
+  } else {
+    VikrLog::DisplayMessage(VIKR_ERROR, "No Render device iniitialized! No frame to present...");
+  }
 }
 } // vikr
