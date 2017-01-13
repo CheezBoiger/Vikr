@@ -18,6 +18,7 @@ namespace vikr {
 
 
 class Shader;
+struct Viewport;
 
 
 /**
@@ -25,61 +26,77 @@ class Shader;
   This is abstract for both Vulkan and OpenGL use.
 */
 class PipelineState {
+  VIKR_DISALLOW_COPY_AND_ASSIGN(PipelineState);
 public:
-  PipelineState(Shader *shader);
-  PipelineState(Shader *shader, std::string name);
-
-  Shader *GetShader() { return m_shader; }
-  vvoid SetShader(Shader * shader) { m_shader = shader; }
-
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(PipelineState);
+  virtual ~PipelineState() { }
 
   /**
-  Set the front face of the material (this kind of
-  determines the culling for the renderer).
+    Set the viewport for the context.
   */
-  vvoid SetFrontFace(FrontFace mode) { m_frontface = mode; }
-  vvoid SetCullFace(CullFace face) { m_cullface = face; }
-  vvoid SetIsBlending(vbool blend) { is_blending = blend; }
-  vvoid SetIsCulling(vbool culling) { is_culling = culling; }
-  vvoid SetBlendDst(BlendFunc funct) { m_blend_dst = funct; }
-  vvoid SetBlendSrc(BlendFunc funct) { m_blend_src = funct; }
-
-
-  vvoid SetDepth(vbool depth) { has_depth = depth; }
-
-  vbool IsBlending() { return is_blending; }
-  vbool IsCulling() { return is_culling; }
-  vbool HasDepth() { return has_depth; }
-
-  CullFace GetCullFace() { return m_cullface; }
-  FrontFace GetFrontFace() { return m_frontface; }
-  DepthFunc GetDepthFunc() { return m_depth_func; }
-
-  BlendFunc GetBlendSrc() { return m_blend_src; }
-  BlendFunc GetBlendDst() { return m_blend_dst; }
+  virtual vvoid SetViewport(Viewport viewport) = 0;
   
-  
-private:
+  /**
+    Set the shader for the pipeline state.
+  */
+  virtual vvoid SetShader(Shader *shader) = 0;
 
   /**
-    Both the Vertex and Fragment shader. 
-    Geometry shader is optional.
-    Compute shader going to be added soo enuff.
+    Set the blending function.
   */
-  Shader    *m_shader;
+  virtual vvoid SetBlendFunc(BlendFunc func) = 0;
 
-  vbool     has_depth;
-  DepthFunc m_depth_func;
+  /**
+    Set the Blend equation.
+  */
+  virtual vvoid SetBlendEq(BlendEq eq) = 0;
+  
+  /**
+    Set the Blend Mode.
+  */
+  virtual vvoid SetBlendMode(vbool enable) = 0;
 
-  vbool     is_culling;
-  FrontFace m_frontface;
-  CullFace  m_cullface;
+  /**
+    Set the Depth mode.
+  */
+  virtual vvoid SetDepthMode(vbool enable) = 0;
+  
+  /**
+    Set the Cull mode.
+  */
+  virtual vvoid SetCullMode(vbool enable) = 0;
 
-  vbool     is_blending;
-  BlendFunc m_blend_src;
-  BlendFunc m_blend_dst;
-  BlendEq   m_blend_equation;
+  /**
+    Set the Cull Face.
+  */
+  virtual vbool SetCullFace(CullFace face) = 0;
 
+  /**
+    Set the Front Face.
+  */
+  virtual vvoid SetFrontFace(FrontFace face) = 0;
+  
+
+  /*
+    Grab a specific pipeline shader stage.
+  */
+  virtual vuint32 GetVertexShader() = 0;
+  virtual vuint32 GetFragmentShader() = 0;
+  virtual vuint32 GetComputeShader() = 0;
+  virtual vuint32 GetGeometryShader() = 0;
+
+  virtual Viewport GetViewport() = 0;
+  virtual Shader *GetShader() = 0;
+
+  /*
+    Update the Pipeline State
+  */
+  virtual vvoid Update() = 0;
+
+  /*
+    Check if the PipelineState needs to be updated.
+  */
+  virtual vbool NeedsUpdate() = 0;
 };
 } // vikr
 #endif // __VIKR_PIPELINE_STATE_HPP

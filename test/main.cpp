@@ -155,7 +155,7 @@ int main(int c, char* args[]) {
     CalculateDeltaTime();
     PollEvents();
     Do_Movement();
-    VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPMS()) + " Frames/ms");
+    VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
     camera.Update();
     lc->light->SetPos(glm::vec3(std::sin(GetTime()) * 50.0f, 5.0f, 5.0f));
     lc->light->SetDiffuse(glm::vec3(0.0f, -std::sin(GetTime()), std::sin(GetTime()))); 

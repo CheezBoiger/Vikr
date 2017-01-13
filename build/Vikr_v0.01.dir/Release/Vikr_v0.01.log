@@ -1,21 +1,18 @@
 ﻿  gl4_context.cpp
+  gl4_pipeline_state.cpp
+  gl4_renderpass.cpp
   vk_device.cpp
+  vk_phydevice.cpp
   vk_surface.cpp
   keyboard.cpp
   mouse.cpp
   window.cpp
-  mesh_command.cpp
+  sphere.cpp
   renderer.cpp
   model_loader.cpp
-  gl_resource_manager.cpp
-  resource_manager.cpp
-  camera_component.cpp
-  renderer_component.cpp
+  first_person_camera.cpp
   scene_node.cpp
-  glsl_linker.cpp
-  glsl_shader.cpp
-  material.cpp
-  shader.cpp
+  texture.cpp
   vikr.cpp
   Generating Code...
 gl4_pipeline_state.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
