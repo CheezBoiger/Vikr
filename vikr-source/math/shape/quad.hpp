@@ -9,6 +9,8 @@
 #include <platform/vikr_api.hpp>
 #include <glm/glm.hpp>
 
+#include <vector>
+
 namespace vikr {
 
 

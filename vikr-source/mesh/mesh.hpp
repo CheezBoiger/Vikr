@@ -9,7 +9,9 @@
 #include <graphics/vertexbuffer.hpp>
 #include <glm/vec3.hpp>
 #include <mesh/imesh.hpp>
+
 #include <string>
+#include <memory>
 
 namespace vikr {
 

@@ -7,6 +7,7 @@
 
 #include <shader/texture.hpp>
 #include <memory>
+#include <vector>
 
 
 namespace vikr {

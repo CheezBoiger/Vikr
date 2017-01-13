@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 
 #include <list>
+#include <vector>
 
 namespace vikr {
 

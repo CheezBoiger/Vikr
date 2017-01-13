@@ -23,6 +23,8 @@ set(VIKR_VERSION "v0.01")
 option(vulkan "Build Vikr with Vulkan extension." OFF)
 option(debug "debug the software." OFF)
 
+add_subdirectory(libs/assimp)
+add_subdirectory(libs/glslang)
 
 include(cmake/configurable.cmake)
 

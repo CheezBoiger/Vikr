@@ -9,6 +9,7 @@
 #include <platform/vikr_api.hpp>
 #include <renderer/command/render_command_types.hpp>
 
+#include <string>
 
 namespace vikr {
 

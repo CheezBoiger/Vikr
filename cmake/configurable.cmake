@@ -1,5 +1,8 @@
 # configurables for the files and their directories.
 
+set(ASSIMP_INCLUDE_DIR libs/assimp/include)
+set(GLSLANG_INCLUDE_DIR libs/glslang/glslang/Include)
+
 if (vulkan)
   message("Vulkan API enabled...")
   add_definitions(-DVIKR_VULKAN_ENABLED)
@@ -38,7 +41,9 @@ set(VIKR_TOOLS_DIR              ${VIKR_SOURCE_DIR}/tools/)
 # Set the directories for the compiler
 include_directories(SYSTEM ${VIKR_SOURCE_DIR})
 # Set Library directories as well
-include_directories(SYSTEM libs/include/)
+include_directories(SYSTEM libs/include)
+include_directories(SYSTEM ${ASSIMP_INCLUDE_DIR})
+include_directories(SYSTEM ${GLSLANG_INCLUDE_DIR})
 
 # Setting up the glob.
 set(VIKR_GLOB)
