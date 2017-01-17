@@ -237,14 +237,18 @@ vint32 Renderer::Init(RenderDevice *device) {
   /*
     Gbuffer shader.
   */
-  m_renderDevice->GetResourceManager()->StoreShader("gbuffer", "shaders/gbuffer.vert", "shaders/gbuffer.frag");
+  m_renderDevice->GetResourceManager()->StoreShader("gbuffer", 
+    "../../libs/shader/GLSL/gbuffer.vert", 
+    "../../libs/shader/GLSL/gbuffer.frag");
   gbufferShader = m_renderDevice->GetResourceManager()->GetShader("gbuffer");
 
   m_renderDevice->GetContext()->ApplyShaderProgram(gbufferShader->GetProgramId());
   /*
     Light shader.
   */
-  m_renderDevice->GetResourceManager()->StoreShader("lightpass", "shaders/lightpass.vert", "shaders/lightpass.frag");
+  m_renderDevice->GetResourceManager()->StoreShader("lightpass", 
+    "../../libs/shader/GLSL/lightpass.vert", 
+    "../../libs/shader/GLSL/lightpass.frag");
   lightShader = m_renderDevice->GetResourceManager()->GetShader("lightpass");
   
 

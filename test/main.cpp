@@ -78,11 +78,20 @@ int main(int c, char* args[]) {
   Renderer renderer;
   renderer.Init(&device);
   renderer.SetCamera(&camera);
-  renderer.GetDevice()->StoreShader("test", "shaders/test.vert", "shaders/test.frag", "../../libs/shader/GLSL");
-  renderer.GetDevice()->StoreShader("light", "shaders/test.vert", "shaders/light.frag");
-  renderer.GetDevice()->StoreShader("screen", "shaders/screen_shader.vert", "shaders/screen_shader.frag");
-  SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), "common/sponza_cry/sponza.obj", "sponza");
-  SceneNode *nano = ModelLoader::ImportModel(renderer.GetDevice(), "nanosuit/nanosuit.obj", "suitboy");
+  renderer.GetDevice()->StoreShader("test", 
+    "../../libs/shader/GLSL/test.vert", 
+    "../..libs/shader/GLSL/test.frag", 
+    "../../libs/shader/GLSL");
+  renderer.GetDevice()->StoreShader("light", 
+    "../../libs/shader/GLSL//test.vert", 
+    "../../libs/shader/GLSL/light.frag");
+  renderer.GetDevice()->StoreShader("screen", 
+    "../../libs/shader/GLSL/screen_shader.vert", 
+    "../../libs/shader/GLSL/screen_shader.frag");
+  SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), 
+    "../../libs/models/sponza_cry/sponza.obj", "sponza");
+  SceneNode *nano = ModelLoader::ImportModel(renderer.GetDevice(), 
+    "../../libs/models/nanosuit/nanosuit.obj", "suitboy");
   Material *default_mat = renderer.GetDevice()->CreateMaterial("default_mat");
   default_mat->SetShader(renderer.GetDevice()->GetShader("test"));
 

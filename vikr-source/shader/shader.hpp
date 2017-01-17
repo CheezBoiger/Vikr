@@ -23,6 +23,18 @@ enum ShaderType {
 
 
 /**
+  Defined Shader stages.
+*/
+enum ShaderStage {
+  VERTEX_SHADER,
+  FRAGMENT_SHADER,
+  GEOMETRY_SHADER,
+  COMPUTE_SHADER,
+  TESSELATION_SHADER
+};
+
+
+/**
   For now it only works with OpenGL, Spir-V not yet implemented!
 */
 class Shader {
@@ -46,7 +58,7 @@ public:
 
   vuint32 GetFragId() { return frag_id; }
   vuint32 GetVertId() { return vert_id; }
-  vuint32 GetGeoId() { return geo_id; }
+  vuint32 GetGeomId() { return geom_id; }
 
 protected:
 
@@ -57,7 +69,7 @@ protected:
   vuint32 shader_id                     = 0;
   vuint32 vert_id                       = 0;
   vuint32 frag_id                       = 0;
-  vuint32 geo_id                        = 0;
+  vuint32 geom_id                        = 0;
 
   // OpenGL 4.3 and up.
   vuint32 compute_id                    = 0;

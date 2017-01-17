@@ -7,6 +7,7 @@
 
 #include <platform/vikr_types.hpp>
 #include <platform/vikr_api.hpp>
+
 #include <string>
 #include <unordered_set>
 

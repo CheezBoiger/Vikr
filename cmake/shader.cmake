@@ -1,14 +1,22 @@
 # shader
 
 set(VIKR_SHADER_GLSL_DIR ${VIKR_SHADER_DIR}/glsl/)
-set(VIKR_SHADER_SPIRV_DIR ${VIKR_SHADER_DIR}/spirv/)
+set(VIKR_SHADER_SPIRV_DIR ${VIKR_SHADER_DIR}/spv/)
 
 
 if(vulkan)
   set(VIKR_GLOB
     ${VIKR_GLOB}
-    ${VIKR_SHADER_SPIRV_DIR}/spirv_compiler.hpp
-    ${VIKR_SHADER_SPIRV_DIR}/spirv_compiler.cpp)
+    ${VIKR_SHADER_SPIRV_DIR}/spv_linker.hpp
+    ${VIKR_SHADER_SPIRV_DIR}/spv_linker.cpp
+    ${VIKR_SHADER_SPIRV_DIR}/spv_shader.hpp
+    ${VIKR_SHADER_SPIRV_DIR}/spv_shader.cpp
+    ${VIKR_SHADER_SPIRV_DIR}/spv_shader_module.hpp
+    ${VIKR_SHADER_SPIRV_DIR}/spv_shader_module.cpp
+    ${VIKR_SHADER_SPIRV_DIR}/spv_validator.hpp
+    ${VIKR_SHADER_SPIRV_DIR}/spv_validator.cpp
+    ${VIKR_SHADER_SPIRV_DIR}/spv_compiler.hpp
+    ${VIKR_SHADER_SPIRV_DIR}/spv_compiler.cpp)
 endif()
 
 # OpenGL always enabled
