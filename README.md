@@ -60,6 +60,12 @@ To build this project, you need the following:
   - a C++ Compiler (Visual Studio for Windows, GCC for Linux, Clang for OSX (not tested), or Intel, whichever really)
   - Graphics Card with Vulkan Ready Driver (if you plan on using Vulkan).
 
+When cloning, be sure to add in the submodules as well!
+```
+git clone https://github.com/Cheezboiger/Vikr.git
+cd Vikr
+git submodule update --init --recursive
+```
 This Project comes with a cmake script, ready to setup the project without too much hassle. The real hassle would be the 
 shader files, which when compiling and running, the program would not know where to look (I still need to work on the 
 filesystem handles for the Renderer). For now, simply copy/paste the shaders from the lib folder into the directory of where the 
@@ -70,10 +76,9 @@ simply create a folder and use the cmake gui to build the project for you. If yo
 just type, within your folder that you plan to build the project in:
 
 ```
-cmake path/to/vikr/project/
+cmake -Dvulkan=ON path/to/vikr/project/
 ```
-  
-Even easier, I added the current build folder with a Windows .sln ready file, so the project should work out of the box, except you still need to worry about the shader files...
+
 
 # Further Note
 This is an engine solely for researching and as a hobby, especially if you are interested in how Renderers work. If you are looking for a well designed Graphics Renderer, I suggest looking into Pixar's RenderMan, Autodesk Maya, 3DSMax, AutoCAD, Blender, and/or other professional software. If you are looking for a stable Game Engine for Game development, I would definitely recommend Unity, Unreal Engine (highly recommend), Crytek Engine, Cocos2D, Torque, BansheeEngine, Pomdog and/or other professional/indie game engines. 
