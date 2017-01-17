@@ -26,27 +26,13 @@ endif()
 set(VIKR_NAME "Vikr")
 
 # Vikr Rendering engine directories
-set(VIKR_SOURCE_DIR             vikr-source/)
-set(VIKR_GLAD_DIR               ${VIKR_SOURCE_DIR}/glad/)
-set(VIKR_PLATFORM_DIR           ${VIKR_SOURCE_DIR}/platform/)
-set(VIKR_RENDERER_DIR           ${VIKR_SOURCE_DIR}/renderer/)
-set(VIKR_PLATFORM_GRAPHICS_DIR  ${VIKR_PLATFORM_DIR}/graphics/)
-set(VIKR_GRAPHICS_DIR           ${VIKR_SOURCE_DIR}/graphics/)
-set(VIKR_SHADER_DIR             ${VIKR_SOURCE_DIR}/shader/)
-set(VIKR_STB_DIR                ${VIKR_SHADER_DIR}/stb/)
-set(VIKR_SCENE_DIR              ${VIKR_SOURCE_DIR}/scene/)
-set(VIKR_UTIL_DIR               ${VIKR_SOURCE_DIR}/util/)
-set(VIKR_INPUT_DIR              ${VIKR_SOURCE_DIR}/input/)
-set(VIKR_MESH_DIR               ${VIKR_SOURCE_DIR}/mesh/)
-set(VIKR_MATH_DIR               ${VIKR_SOURCE_DIR}/math/)
-set(VIKR_ALG_DIR                ${VIKR_MATH_DIR}/alg/)
-set(VIKR_SHAPE_DIR              ${VIKR_MATH_DIR}/shape/)
-set(VIKR_LIGHTING_DIR           ${VIKR_SOURCE_DIR}/lighting/)
-set(VIKR_RESOURCES_DIR          ${VIKR_SOURCE_DIR}/resources/)
-set(VIKR_TOOLS_DIR              ${VIKR_SOURCE_DIR}/tools/)
+set(VIKR_SRC_DIR                     vikr-source/src/)
+set(VIKR_INCLUDE_DIR                 vikr-source/include/vikr/)
+set(VIKR_PUBLIC_DIR                  vikr-source/include/)
+
 
 # Set the directories for the compiler
-include_directories(SYSTEM ${VIKR_SOURCE_DIR})
+include_directories(SYSTEM ${VIKR_PUBLIC_DIR})
 # Set Library directories as well
 include_directories(SYSTEM ${GLFW_INCLUDE_DIR})
 include_directories(SYSTEM ${ASSIMP_INCLUDE_DIR})

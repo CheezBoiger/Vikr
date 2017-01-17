@@ -1,13 +1,18 @@
 # Input for most of the input inside vikr.
 
-set(VIKR_INPUT_PRIVATE_DIR ${VIKR_INPUT_DIR}/private/)
-set(VIKR_INPUT_PUBLIC_DIR ${VIKR_INPUT_DIR}/public/)
+set(VIKR_INPUT_SRC_DIR ${VIKR_SRC_DIR}/input/)
+set(VIKR_INPUT_INCLUDE_DIR ${VIKR_INCLUDE_DIR}/input/)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_INPUT_DIR}/keyboard.hpp
-  ${VIKR_INPUT_DIR}/keyboard.cpp
-  ${VIKR_INPUT_DIR}/mouse.hpp
-  ${VIKR_INPUT_DIR}/mouse.cpp
-  ${VIKR_INPUT_DIR}/window.hpp
-  ${VIKR_INPUT_DIR}/window.cpp)
+  ${VIKR_INPUT_SRC_DIR}/keyboard.cpp
+  ${VIKR_INPUT_SRC_DIR}/mouse.cpp
+  ${VIKR_INPUT_SRC_DIR}/window.cpp
+)
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_INPUT_INCLUDE_DIR}/window.hpp
+  ${VIKR_INPUT_INCLUDE_DIR}/mouse.hpp
+  ${VIKR_INPUT_INCLUDE_DIR}/keyboard.hpp
+)

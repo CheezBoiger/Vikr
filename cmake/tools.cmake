@@ -1,7 +1,12 @@
 # tools
+set(VIKR_TOOLS_SRC_DIR ${VIKR_SRC_DIR}/tools/)
+set(VIKR_TOOLS_INCLUDE_DIR ${VIKR_INCLUDE_DIR}/tools/)
 
-set(VIKR_TOOLS_ALLOCATOR_DIR ${VIKR_TOOLS_DIR}/allocator/)
-set(VIKR_TOOLS_TIME_DIR ${VIKR_TOOLS_DIR}/time/)
+set(VIKR_TOOLS_ALLOCATOR_DIR ${VIKR_TOOLS_INCLUDE_DIR}/allocator/)
+
+set(VIKR_TOOLS_TIME_SRC_DIR ${VIKR_TOOLS_SRC_DIR}/time/)
+set(VIKR_TOOLS_TIME_INCLUDE_DIR ${VIKR_TOOLS_INCLUDE_DIR}/time/)
+
 set(VIKR_TOOLS_ALLOCATOR_DETAIL_DIR ${VIKR_TOOLS_ALLOCATOR_DIR}/detail/)
 
 
@@ -9,17 +14,20 @@ set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_TOOLS_ALLOCATOR_DETAIL_DIR}/pool_allocator.inl
   ${VIKR_TOOLS_ALLOCATOR_DETAIL_DIR}/stack_allocator.inl
-  ${VIKR_TOOLS_ALLOCATOR_DETAIL_DIR}/doublebuffered_allocator.inl)
+  ${VIKR_TOOLS_ALLOCATOR_DETAIL_DIR}/doublebuffered_allocator.inl
+)
 
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_TOOLS_TIME_DIR}/stopwatch.hpp
-  ${VIKR_TOOLS_TIME_DIR}/stopwatch.cpp)
+  ${VIKR_TOOLS_TIME_INCLUDE_DIR}/stopwatch.hpp
+  ${VIKR_TOOLS_TIME_SRC_DIR}/stopwatch.cpp
+)
 
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_TOOLS_ALLOCATOR_DIR}/pool_allocator.hpp
   ${VIKR_TOOLS_ALLOCATOR_DIR}/stack_allocator.hpp
-  ${VIKR_TOOLS_ALLOCATOR_DIR}/doublebuffered_allocator.hpp)
+  ${VIKR_TOOLS_ALLOCATOR_DIR}/doublebuffered_allocator.hpp
+)

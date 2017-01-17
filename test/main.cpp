@@ -3,38 +3,38 @@
   Going to be cleaned up soon...
 */
 #include <iostream>
-#include <shader/shader.hpp>
-#include <vikr.hpp>
-#include <math/shape/cube.hpp>
-#include <util/vikr_log.hpp>
+#include <vikr/shader/shader.hpp>
+#include <vikr/vikr.hpp>
+#include <vikr/math/shape/cube.hpp>
+#include <vikr/util/vikr_log.hpp>
 #include <glm/glm.hpp>
-#include <shader/material.hpp>
-#include <scene/camera.hpp>
-#include <shader/texture.hpp>
-#include <math/shape/quad.hpp>
-#include <lighting/point_light.hpp>
-#include <lighting/directional_light.hpp>
-#include <scene/first_person_camera.hpp>
-#include <resources/resource_manager.hpp>
-#include <resources/model_loader.hpp>
-#include <scene/scene_node.hpp>
-#include <renderer/command/debug_command.hpp>
-#include <renderer/command/mesh_command.hpp>
-#include <scene/components/transform_component.hpp>
-#include <scene/components/renderer_component.hpp>
-#include <scene/components/mesh_component.hpp>
-#include <scene/components/camera_component.hpp>
-#include <scene/components/light_component.hpp>
-#include <graphics/gl4/gl4_device.hpp>
-#include <math/shape/quad.hpp>
+#include <vikr/shader/material.hpp>
+#include <vikr/scene/camera.hpp>
+#include <vikr/shader/texture.hpp>
+#include <vikr/math/shape/quad.hpp>
+#include <vikr/lighting/point_light.hpp>
+#include <vikr/lighting/directional_light.hpp>
+#include <vikr/scene/first_person_camera.hpp>
+#include <vikr/resources/resource_manager.hpp>
+#include <vikr/resources/model_loader.hpp>
+#include <vikr/scene/scene_node.hpp>
+#include <vikr/renderer/command/debug_command.hpp>
+#include <vikr/renderer/command/mesh_command.hpp>
+#include <vikr/scene/components/transform_component.hpp>
+#include <vikr/scene/components/renderer_component.hpp>
+#include <vikr/scene/components/mesh_component.hpp>
+#include <vikr/scene/components/camera_component.hpp>
+#include <vikr/scene/components/light_component.hpp>
+#include <vikr/graphics/gl4/gl4_device.hpp>
+#include <vikr/math/shape/quad.hpp>
 #include <glm/gtx/compatibility.hpp>
-#include <graphics/gl4/gl4_device.hpp>
-#include <input/window.hpp>
-#include <input/mouse.hpp>
-#include <input/keyboard.hpp>
-#include <util/vikr_assert.hpp>
+#include <vikr/graphics/gl4/gl4_device.hpp>
+#include <vikr/input/window.hpp>
+#include <vikr/input/mouse.hpp>
+#include <vikr/input/keyboard.hpp>
+#include <vikr/util/vikr_assert.hpp>
 
-#include <graphics/vk/vk_device.hpp>
+#include <vikr/graphics/vk/vk_device.hpp>
 
 using namespace vikr;
 unsigned int screen_width = 1200;

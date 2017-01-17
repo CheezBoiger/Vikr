@@ -1,10 +1,15 @@
 # GLAD.cmake holds the files and settings for the Glad directory inside vikr.
 
-set(VIKR_GLAD_PRIVATE_DIR ${VIKR_GLAD_DIR}/private/)
-set(VIKR_GLAD_PUBLIC_DIR ${VIKR_GLAD_DIR}/public/)
+set(VIKR_GLAD_SRC_DIR ${VIKR_SRC_DIR}/glad)
+set(VIKR_GLAD_INCLUDE_DIR ${VIKR_INCLUDE_DIR}/glad)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_GLAD_DIR}/glad.c
-  ${VIKR_GLAD_DIR}/glad.h
-  ${VIKR_GLAD_DIR}/khrplatform.h)
+  ${VIKR_GLAD_SRC_DIR}/glad.c
+)
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_GLAD_INCLUDE_DIR}/glad.h
+  ${VIKR_GLAD_INCLUDE_DIR}/khrplatform.h
+)

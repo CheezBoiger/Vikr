@@ -1,21 +1,34 @@
 # math
 
-set(VIKR_GLOB
-  ${VIKR_GLOB}
-  ${VIKR_ALG_DIR}/mat.hpp
-  ${VIKR_ALG_DIR}/mat_alg.hpp
-  ${VIKR_ALG_DIR}/quaternion.hpp
-  ${VIKR_ALG_DIR}/vect.hpp)
+set(VIKR_MATH_SRC_DIR ${VIKR_SRC_DIR}/math/)
+set(VIKR_MATH_INCLUDE_DIR ${VIKR_INCLUDE_DIR}/math/)
+set(VIKR_SHAPE_SRC_DIR ${VIKR_MATH_SRC_DIR}/shape/)
+set(VIKR_SHAPE_INCLUDE_DIR ${VIKR_MATH_INCLUDE_DIR}/shape/)
+set(VIKR_ALG_INCLUDE_DIR ${VIKR_MATH_INCLUDE_DIR}/alg/)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_MATH_DIR}/vikr_math.hpp)
+  ${VIKR_ALG_INCLUDE_DIR}/mat.hpp
+  ${VIKR_ALG_INCLUDE_DIR}/mat_alg.hpp
+  ${VIKR_ALG_INCLUDE_DIR}/quaternion.hpp
+  ${VIKR_ALG_INCLUDE_DIR}/vect.hpp
+)
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_SHAPE_DIR}/cube.hpp
-  ${VIKR_SHAPE_DIR}/cube.cpp
-  ${VIKR_SHAPE_DIR}/quad.hpp
-  ${VIKR_SHAPE_DIR}/quad.cpp
-  ${VIKR_SHAPE_DIR}/sphere.hpp
-  ${VIKR_SHAPE_DIR}/sphere.cpp)
+  ${VIKR_MATH_INCLUDE_DIR}/vikr_math.hpp
+)
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_SHAPE_SRC_DIR}/cube.cpp
+  ${VIKR_SHAPE_SRC_DIR}/quad.cpp
+  ${VIKR_SHAPE_SRC_DIR}/sphere.cpp
+)
+
+set(VIKR_GLOB
+  ${VIKR_GLOB}
+  ${VIKR_SHAPE_INCLUDE_DIR}/sphere.hpp
+  ${VIKR_SHAPE_INCLUDE_DIR}/quad.hpp
+  ${VIKR_SHAPE_INCLUDE_DIR}/cube.hpp
+)

@@ -36,11 +36,8 @@ set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS    OFF)
 add_subdirectory(libs/glfw)
 
-# Build for Assimp
 add_subdirectory(libs/assimp)
 
-# Build for GLSlang
-add_subdirectory(libs/glslang)
 
 # Set the module path for this build
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
