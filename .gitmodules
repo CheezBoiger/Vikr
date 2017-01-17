@@ -4,6 +4,8 @@
 [submodule "libs/assimp"]
 	path = libs/assimp
 	url = https://github.com/assimp/assimp.git
-[submodule "libs/GLFW/glfw"]
-	path = libs/GLFW/glfw
+[submodule "libs/glfw"]
+	
+	path = libs/glfw
+
 	url = https://github.com/glfw/glfw.git
