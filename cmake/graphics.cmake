@@ -24,10 +24,12 @@ if (vulkan)
     ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_phydevice.cpp
     ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_pipeline_state.cpp
     ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_device.cpp
+    ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_renderpass.cpp
   )
 
   set(VIKR_GLOB
     ${VIKR_GLOB}
+    ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_renderpass.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_device.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_pipeline_state.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_phydevice.hpp

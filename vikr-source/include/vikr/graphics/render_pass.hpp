@@ -28,38 +28,33 @@ class Framebuffer;
 class RenderPass {
 public:
   /**
-    The Given viewport for the RenderPass.
-  */
-  Viewport                    Viewport;
-
-  /**
-    Render target textures and/or depthstencil buffers.
-  */
-  std::vector<std::unique_ptr<RenderTarget> > RenderTargets;
-
-  /**
-    
-  */
-  std::unique_ptr<Renderbuffer> Depthbuffer;
-  /**
-    Clear color.
-  */
-  glm::vec3 ClearColor;
-
-  /**
-    FBO
-  */
-  std::unique_ptr<Framebuffer> FramebufferObject;
-
-
-  /**
     Update the RenderTargets
   */
   virtual vvoid UpdateRenderTargets() = 0;
 
+  /**
+    Bind the Renderpass.
+  */
   virtual vvoid Bind() = 0;
   
+  /**
+    Unbind the Renderpass.
+  */
   virtual vvoid Unbind() = 0;
+
+  /**
+    Get the view port of this Renderpass.
+  */
+  virtual Viewport &GetViewport() = 0;
+  virtual vvoid SetViewport(Viewport viewport) = 0;
+  virtual glm::vec3 GetClearColor() = 0;
+  virtual vvoid AddRenderTarget(RenderTarget *target) = 0;
+  virtual vvoid RemoveRenderTarget(vuint32 attachment) = 0;
+  virtual Renderbuffer *GetRenderbuffer() = 0;
+  virtual Framebuffer *GetFramebuffer() = 0;
+  virtual vvoid SetRenderbuffer(Renderbuffer *renderbuffer) = 0;
+  virtual vvoid SetClearColor(glm::vec3 color) = 0;
+  virtual vvoid SetFramebuffer(Framebuffer *framebuffer) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDERPASS_HPP

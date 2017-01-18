@@ -11,43 +11,52 @@ namespace vikr {
 
 
 vvoid GL4RenderPass::UpdateRenderTargets() {
-  if(FramebufferObject) {
-    FramebufferObject->Bind();
+  if(m_framebuffer) {
+    m_framebuffer->Bind();
     // Clear up last RenderPass in Framebuffer.
-    std::vector<Texture *> *targets = FramebufferObject->GetColorAttachments();
+    std::vector<Texture *> *targets = m_framebuffer->GetColorAttachments();
     for(vuint32 i = 0; i < targets->size(); ++i) {
-      FramebufferObject->ClearTexture(i);
+      m_framebuffer->ClearTexture(i);
     }
     targets->clear();
     // Set up the new RenderPass
-    std::vector<std::unique_ptr<RenderTarget> > &render_targets = RenderTargets;
-    for(vuint32 i = 0; i < render_targets.size(); ++i) {
-      if(render_targets[i]->GetRenderType() == RenderTargetType::render_TEXTURE) {
-        FramebufferObject->BindTexture(render_targets[i].get(), i);
+    for(vuint32 i = 0; i < m_rendertargets.size(); ++i) {
+      if(m_rendertargets[i]->GetRenderType() == RenderTargetType::render_TEXTURE) {
+        m_framebuffer->BindTexture(m_rendertargets[i], i);
       }
     }
-    FramebufferObject->Validate();
-    if(Depthbuffer) {
-      FramebufferObject->BindDepthStencilBuffer(Depthbuffer.get());
+    m_framebuffer->Validate();
+    if(m_renderbuffer) {
+      m_framebuffer->BindDepthStencilBuffer(m_renderbuffer);
     }
-    if(!FramebufferObject->IsComplete()) {
+    if(!m_framebuffer->IsComplete()) {
       VikrLog::DisplayMessage(VIKR_ERROR, "Framebuffer is not complete!");
     }
-    FramebufferObject->Unbind();
+    m_framebuffer->Unbind();
   }
 }
 
 
 vvoid GL4RenderPass::Bind() {
-  if(FramebufferObject) {
-    FramebufferObject->Bind();
+  if(m_framebuffer) {
+    m_framebuffer->Bind();
   }
 }
 
 
 vvoid GL4RenderPass::Unbind() {
-  if(FramebufferObject) {
-    FramebufferObject->Unbind();
+  if(m_framebuffer) {
+    m_framebuffer->Unbind();
   }
+}
+
+
+vvoid GL4RenderPass::AddRenderTarget(RenderTarget *target) {
+  m_rendertargets.push_back(target);  
+}
+
+
+vvoid GL4RenderPass::RemoveRenderTarget(vuint32 attachment) {
+  m_rendertargets.erase(m_rendertargets.begin() + attachment);
 }
 } // vikr

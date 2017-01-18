@@ -146,9 +146,7 @@ vvoid Renderer::Render() {
   }
   
   // Set the Gbuffer pass.
-  context->SetRenderPass(m_gBufferPass.get());
-  context->ApplyShaderProgram(gbufferShader->GetProgramId());
-  context->ExecuteCommands(&m_commandBuffer);
+  m_gbuffer.ExecutePass(&m_commandBuffer);
 
   // Deferred Shading pass.
 
@@ -156,8 +154,8 @@ vvoid Renderer::Render() {
   // Set back to the default RenderPass.
   context->SetRenderPass(nullptr);
   context->ApplyShaderProgram(lightShader->GetProgramId());
-  for (vuint32 i = 0; i < m_gBufferPass->RenderTargets.size(); ++i) {
-    context->SetRenderTarget(m_gBufferPass->RenderTargets[i].get(), i);   
+  for (vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
+    context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);   
   }
   context->ExecuteCommands(&m_deferredBuffer);
 
@@ -192,57 +190,7 @@ vint32 Renderer::Init(RenderDevice *device) {
     quad.GetNormals(), quad.GetUVs());
   m_quad->Create(m_renderDevice);
 
-  // gbuffer 
-  /**
-    TODO(): Be sure to set these numbers (1200, 800) into the size of the screen, since
-            right now there is no telling what the screen size is at the moment. This is
-            practically hardcoded.
-  */
-  m_gBufferPass = m_renderDevice->CreateRenderPass();
-  m_gBufferPass->Viewport.win_x = 0;
-  m_gBufferPass->Viewport.win_y = 0;
-  m_gBufferPass->Viewport.win_width = window->GetWidth();
-  m_gBufferPass->Viewport.win_height = window->GetHeight();
-  m_gBufferPass->RenderTargets
-    .push_back(m_renderDevice->CreateRenderTexture("gPosition", 
-      window->GetWidth(), window->GetHeight(), false, data_FLOAT));
-  m_gBufferPass->RenderTargets
-    .push_back(m_renderDevice->CreateRenderTexture("gNormal", 
-      window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE));
-  m_gBufferPass->RenderTargets
-    .push_back(m_renderDevice->CreateRenderTexture("gAlbedo", 
-      window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE));
-  m_gBufferPass->RenderTargets
-    .push_back(m_renderDevice->CreateRenderTexture("gSpecular", 
-      window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE));
-  m_gBufferPass->RenderTargets
-    .push_back(m_renderDevice->CreateRenderTexture("gAmbient" , 
-      window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE));
-  m_gBufferPass->RenderTargets
-    .push_back(m_renderDevice->CreateRenderTexture("gTangent",
-      window->GetWidth(), window->GetHeight(), false, data_FLOAT));
-  m_gBufferPass->RenderTargets
-    .push_back(m_renderDevice->CreateRenderTexture("gBitangent",
-      window->GetWidth(), window->GetHeight(), false, data_FLOAT));
-  m_gBufferPass->RenderTargets
-    .push_back(m_renderDevice->CreateRenderTexture("gNorm",
-      window->GetWidth(), window->GetHeight(), false, data_FLOAT));
-  m_gBufferPass->Depthbuffer = m_renderDevice->CreateRenderbuffer(window->GetWidth(), 
-    window->GetHeight());
-
-  m_gBufferPass->FramebufferObject = m_renderDevice->CreateFramebuffer();
-  m_gBufferPass->FramebufferObject->Generate();
-  m_gBufferPass->UpdateRenderTargets();
-
-  /*
-    Gbuffer shader.
-  */
-  m_renderDevice->GetResourceManager()->StoreShader("gbuffer", 
-    "../../libs/shader/GLSL/gbuffer.vert", 
-    "../../libs/shader/GLSL/gbuffer.frag");
-  gbufferShader = m_renderDevice->GetResourceManager()->GetShader("gbuffer");
-
-  m_renderDevice->GetContext()->ApplyShaderProgram(gbufferShader->GetProgramId());
+  m_gbuffer.Init(m_renderDevice);
   /*
     Light shader.
   */

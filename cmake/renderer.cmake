@@ -31,6 +31,8 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_RENDERER_SRC_DIR}/screen_quad.cpp
+  ${VIKR_RENDERER_SRC_DIR}/gbuffer.cpp
   ${VIKR_RENDERER_SRC_DIR}/shadowmap.cpp
   ${VIKR_RENDERER_SRC_DIR}/renderer.cpp
   ${VIKR_RENDERER_SRC_DIR}/render_queue.cpp
@@ -38,6 +40,8 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_RENDERER_INCLUDE_DIR}/screen_quad.hpp
+  ${VIKR_RENDERER_INCLUDE_DIR}/gbuffer.hpp
   ${VIKR_RENDERER_INCLUDE_DIR}/render_queue.hpp
   ${VIKR_RENDERER_INCLUDE_DIR}/irenderer.hpp
   ${VIKR_RENDERER_INCLUDE_DIR}/renderer.hpp

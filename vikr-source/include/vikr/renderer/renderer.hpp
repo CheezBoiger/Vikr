@@ -13,6 +13,7 @@
 #include <vikr/shader/shader.hpp>
 #include <vikr/shader/cubemap.hpp>
 #include <vikr/mesh/mesh.hpp>
+#include <vikr/renderer/gbuffer.hpp>
 #include <glm/glm.hpp>
 #include <string>
 #include <memory>
@@ -119,21 +120,16 @@ protected:
     Screen filled mesh quad.
   */
   Mesh *m_quad                                            = nullptr;
-
+  
   /**
-    Current RenderPass.
+    Gbuffer pass.
   */
-  std::unique_ptr<RenderPass> m_gBufferPass               = nullptr;
+  GBuffer m_gbuffer;
 
   /**
     shadow pass.
   */
   std::unique_ptr<RenderPass> m_shadowPass                = nullptr;
-  
-  /**
-    Gbuffer shader.
-  */
-  Shader *gbufferShader                                   = nullptr;
 
   /**
     light shader.

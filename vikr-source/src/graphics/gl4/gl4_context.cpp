@@ -258,11 +258,11 @@ vvoid GL4RenderContext::ConfigurePipelineState(PipelineState *state) {
 
 vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
   if (pass) {
-    Viewport *view = &pass->Viewport;
+    Viewport *view = &pass->GetViewport();
     glViewport(view->win_x, view->win_y, view->win_width, view->win_height);
     pass->Bind();
     Clear();
-    ClearWithColor(glm::vec4(pass->ClearColor, 1.0f));
+    ClearWithColor(glm::vec4(pass->GetClearColor(), 1.0f));
   } else {
     // Set back to default.
     glViewport(0, 0, Window::GetMainWindow()->GetWidth(), 
