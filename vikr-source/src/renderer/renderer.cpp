@@ -163,7 +163,8 @@ vvoid Renderer::Render() {
   m_commandBuffer.Clear();
   m_deferredBuffer.Clear();
 
-  DrawScreenQuad();
+  // Draw the Screen Quad.
+  m_screenquad.Execute();
 }
 
 
@@ -185,10 +186,7 @@ vint32 Renderer::Init(RenderDevice *device) {
 
   Window *window = Window::GetMainWindow();
   // Create the ScreenQuad.
-  Quad quad;
-  m_quad = m_renderDevice->GetResourceManager()->CreateMesh(quad.GetPositions(), 
-    quad.GetNormals(), quad.GetUVs());
-  m_quad->Create(m_renderDevice);
+  m_screenquad.Init(m_renderDevice);
 
   m_gbuffer.Init(m_renderDevice);
   /*

@@ -22,7 +22,8 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/light_command.hpp
   ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/material_command.hpp
   ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/transform_command.hpp
-  ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/mesh_command.hpp      ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/render_command.hpp
+  ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/mesh_command.hpp      
+  ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/render_command.hpp
   ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/render_command_types.hpp
   ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/camera_command.hpp
   ${VIKR_RENDERER_COMMAND_INCLUDE_DIR}/manual_commands.hpp

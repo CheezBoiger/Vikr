@@ -14,6 +14,7 @@
 #include <vikr/shader/cubemap.hpp>
 #include <vikr/mesh/mesh.hpp>
 #include <vikr/renderer/gbuffer.hpp>
+#include <vikr/renderer/screen_quad.hpp>
 #include <glm/glm.hpp>
 #include <string>
 #include <memory>
@@ -125,6 +126,9 @@ protected:
     Gbuffer pass.
   */
   GBuffer m_gbuffer;
+
+
+  ScreenQuad m_screenquad;
 
   /**
     shadow pass.
