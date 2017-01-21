@@ -72,7 +72,7 @@ vvoid Camera::SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) {
 
 
 // Everything gets updated!
-vvoid Camera::Update() {
+vvoid Camera::Update(vreal32 dt) {
   front = glm::normalize(look_at - pos);
   if (type == CamType::ORTHOGRAPHIC) {
     projection = glm::ortho(-1.5f * float(aspect), 1.5f * float(aspect), -1.5f, 1.5f, -10.0f, 10.0f);

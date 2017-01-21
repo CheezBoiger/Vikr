@@ -7,6 +7,9 @@
 #include <vikr/util/vikr_assert.hpp>
 #include <vikr/util/vikr_log.hpp>
 
+#include <vikr/math/vikr_math.hpp>
+
+
 namespace vikr {
 
 
@@ -15,29 +18,25 @@ FPSCamera::FPSCamera(vreal32 pitch_deg_max,
   glm::vec3 world_up,
   glm::vec3 up,
   glm::vec3 front)
-  : pitch_max_deg(pitch_deg_max)
+  : max_pitch(glm::radians(pitch_deg_max))
   , pitch(0.0f)
+  , yaw(0.0f)
   , Camera(pos, world_up, up, front)
 {
   
 }
 
 
-vvoid FPSCamera::Look(glm::vec2 mouse_offset, vreal32 delta, vbool constrain_pitch) {
-  Look(mouse_offset.x, mouse_offset.y, delta, constrain_pitch);
+vvoid FPSCamera::Look(glm::vec2 mouse_offset, vbool constrain_pitch) {
+  Look(mouse_offset.x, mouse_offset.y, constrain_pitch);
 }
 
 
-vvoid FPSCamera::Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool constrain_pitch) {
-  xoffset *= sensitivity * delta;
-  yoffset *= sensitivity * delta;
+vvoid FPSCamera::Look(vreal32 xoffset, vreal32 yoffset, vbool constrain_pitch) {
+  xoffset *= sensitivity;
+  yoffset *= sensitivity;
   yaw_rate -= xoffset;
   pitch_rate += yoffset;
-  VIKR_ASSERTION(yaw_rate < 1000.0f);
-  if ((pitch + pitch_rate) > glm::radians(pitch_max_deg) ||
-      (pitch + pitch_rate) < glm::radians(-pitch_max_deg)) {
-    pitch_rate = 0;
-  }
 }
 
 
@@ -48,13 +47,25 @@ vvoid FPSCamera::SetLookAt(glm::vec3 look) {
   vreal32 y = front.y - temp.y;
   vreal32 theta = std::asin(y / glm::length(front));
   pitch = theta;
+  VikrLog::DisplayMessage(VIKR_NORMAL, "pitch at " + std::to_string(pitch));
 }
 
 
-vvoid FPSCamera::Update() {
-  if(type == CamType::ORTHOGRAPHIC) {
+vvoid FPSCamera::Update(vreal32 dt) {
+  yaw_rate = yaw_rate * dt;
+  pitch_rate = pitch_rate * dt;
+  pitch += pitch_rate;
+  yaw += yaw_rate;
+  if (pitch > max_pitch) {
+    pitch_rate = max_pitch - (pitch - pitch_rate);
+    pitch = max_pitch; 
+  } else if (pitch < -max_pitch) {
+    pitch_rate = -max_pitch - (pitch - pitch_rate);
+    pitch = -max_pitch;
+  }
+  if (type == CamType::ORTHOGRAPHIC) {
     projection = glm::ortho(-1.5f * float(aspect), 1.5f * float(aspect), -1.5f, 1.5f, -10.0f, 10.0f);
-  } else if(type == CamType::PERSPECTIVE) {
+  } else if (type == CamType::PERSPECTIVE) {
     projection = glm::perspective(fov, aspect, near_clip, far_clip);
   }
   glm::vec3 axis = glm::cross(front, up);
@@ -65,7 +76,8 @@ vvoid FPSCamera::Update() {
   right = glm::normalize(glm::cross(front, world_up));
   up = glm::normalize(glm::cross(right, front));
   view = glm::lookAt(pos, front + pos, up);
-  pitch += pitch_rate; yaw += yaw_rate;
-  yaw_rate = 0; pitch_rate = 0;
+  yaw_rate = 0; 
+  pitch_rate = 0;
+  VikrLog::DisplayMessage(VIKR_NORMAL, "pitch at " + std::to_string(pitch));
 }
 } // vikr

@@ -10,6 +10,16 @@
 namespace vikr {
 
 
+template<typename Type>
+void Clamp(Type min, Type max, Type &val) {
+  if (val > max) {
+    val = max;
+  } else if (val < min) {
+    val = min;
+  }
+}
+
+
 
 using Vect4 = vikr::math::Vector4<float>;
 using Vect3 = vikr::math::Vector3<float>;

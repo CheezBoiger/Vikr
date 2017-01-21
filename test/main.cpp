@@ -160,12 +160,12 @@ int main(int c, char* args[]) {
   light_object->Update();
 
 
-  while(!Window::GetMainWindow()->IsClosed()) {
+  while (!Window::GetMainWindow()->IsClosed()) {
     CalculateDeltaTime();
     PollEvents();
     Do_Movement();
     VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(GetFPS()) + " Frames/s");
-    camera.Update();
+    camera.Update(static_cast<vreal32>(GetDeltaTime()));
     lc->light->SetPos(glm::vec3(std::sin(GetTime()) * 50.0f, 5.0f, 5.0f));
     lc->light->SetDiffuse(glm::vec3(0.0f, -std::sin(GetTime()), std::sin(GetTime()))); 
     lc->light->SetSpecular(lc->light->GetDiffuse());

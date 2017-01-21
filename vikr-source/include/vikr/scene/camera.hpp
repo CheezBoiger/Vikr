@@ -116,11 +116,11 @@ public:
   /**
     Look around with the given input.
   */
-  virtual vvoid Look(glm::vec2 mouse_offset, vreal32 delta, vbool constrain_pitch = true) override { }
+  virtual vvoid Look(glm::vec2 mouse_offset, vbool constrain_pitch = true) override { }
   /**
     Look arround with the given input.
   */
-  virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vreal32 delta, vbool constrain_pitch = true) override { }
+  virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vbool constrain_pitch = true) override { }
   /**
     Tells our camera to move in the determined direction.
     @param The delta time between the last frame time and the current frame time. (dt)
@@ -140,7 +140,7 @@ public:
   /**
     Update the camera every frame.
   */
-  virtual vvoid Update() override;
+  virtual vvoid Update(vreal32 dt) override;
   
 protected:
   // Up vector in the world.

@@ -30,7 +30,7 @@ vvoid Mouse::DefaultMouseCallback(VikrWindow *window, vreal64 xpos, vreal64 ypos
   if (renderer) {
     ICamera *camera = renderer->GetCamera();
     if (camera) {
-      camera->Look(xoffset, yoffset, static_cast<vreal32>(GetDeltaTime()));
+      camera->Look(xoffset, yoffset);
     }
   }
 }
