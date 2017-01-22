@@ -88,22 +88,22 @@ vvoid Renderer::PushBack(SceneNode *obj) {
         command->Sort();
         glm::vec3 location = glm::vec3(0.0f);
         for (auto c : command->GetCommands()) {
+          if(c.second->GetCommandType() == RenderCommandType::COMMAND_TRANSFORM) {
+            TransformCommand *tc = static_cast<TransformCommand *>(c.second);
+            location = tc->m_transform->Position;
+          }
+          // In order to sort our command buffer, we need to figure out what objects are 
+          // transparent, sort them from shortest to highest distance, and finally
+          // draw them after Opaque objects.
+          if(camera) {
+            c.second->SetDrawOrder(
+              static_cast<vint32>(glm::length(camera->GetPos() - location)));
+          } else {
+            c.second->SetDrawOrder(static_cast<vint32>(glm::length(location)));
+          }
           if (c.second->GetCommandType() == RenderCommandType::COMMAND_LIGHT) {
             m_renderQueue.PushBackDeferred(c.second);
           } else {
-            if (c.second->GetCommandType() == RenderCommandType::COMMAND_TRANSFORM) {
-              TransformCommand *tc = static_cast<TransformCommand *>(c.second);
-              location = tc->m_transform->Position;
-            }
-            // In order to sort our command buffer, we need to figure out what objects are 
-            // transparent, sort them from shortest to highest distance, and finally
-            // draw them after Opaque objects.
-            if (camera) {
-              c.second->SetDrawOrder(
-                static_cast<vint32>(glm::length(camera->GetPos() - location)));
-            } else {
-              c.second->SetDrawOrder(static_cast<vint32>(glm::length(location)));
-            }
             m_renderQueue.PushBack(c.second);
           }
         }

@@ -28,6 +28,7 @@ struct PointLight {
   vec3 ambient;
   vec3 diffuse;
   vec3 specular;
+  bool enabled;
 };
 
 
@@ -39,6 +40,7 @@ struct DirectionalLight {
   vec3 ambient;
   vec3 diffuse;
   vec3 specular;
+  bool enabled;
 };
 
 
@@ -113,12 +115,16 @@ void main() {
   vec4 result = Diffuse * 0.01;
   
   for (int i = 0; i < MAX_DIRECTIONALLIGHTS; ++i) {
-    //result += CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
-    //  TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN);
+    //if ( vikr_directionalLights[i].enabled) {
+    //  result += CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
+    //    TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN);
+    //}
   }
   for (int i = 0; i < MAX_POINTLIGHTS; ++i) {
-    result += CalculatePointLight(vikr_pointLights[i], Normal, TangentFragPos,
-      ViewDir, Diffuse, Specular, Ambient, TBN);
+    if (vikr_pointLights[i].enabled) {
+      result += CalculatePointLight(vikr_pointLights[i], Normal, TangentFragPos,
+        ViewDir, Diffuse, Specular, Ambient, TBN);
+    }
   }
 
   result = vec4(pow(result.rgb, vec3(1.0/2.2)), result.a);

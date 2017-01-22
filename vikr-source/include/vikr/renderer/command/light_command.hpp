@@ -34,6 +34,7 @@ public:
         PointLight *plight = static_cast<PointLight *>(light);
         std::string id = std::to_string(plight->GetLightId());
         MaterialValue pos, ambient, diffuse, specular, constant, linear, quad, blinn;
+        MaterialValue enabled;
         pos.type = vikr_VEC3; pos.m_vec3 = plight->GetPos();
         ambient.type = vikr_VEC3;     ambient.m_vec3 = plight->GetAmbient();
         specular.type = vikr_VEC3;    specular.m_vec3 = plight->GetSpecular();
@@ -41,6 +42,7 @@ public:
         constant.type = vikr_FLOAT;   constant.m_float = plight->GetConstant();
         linear.type = vikr_FLOAT;     linear.m_float = plight->GetLinear();
         quad.type = vikr_FLOAT;       quad.m_float = plight->GetQuadratic();
+        enabled.type = vikr_BOOL;     enabled.m_bool = plight->IsEnabled();
         light_params = {
           std::make_pair("vikr_pointLights[" + id + "].position", pos),
           std::make_pair("vikr_pointLights[" + id + "].ambient", ambient),
@@ -48,7 +50,8 @@ public:
           std::make_pair("vikr_pointLights[" + id + "].specular", specular),
           std::make_pair("vikr_pointLights[" + id + "].constant", constant),
           std::make_pair("vikr_pointLights[" + id + "].linear", linear),
-          std::make_pair("vikr_pointLights[" + id + "].quadratic", quad)
+          std::make_pair("vikr_pointLights[" + id + "].quadratic", quad),
+          std::make_pair("vikr_pointLights[" + id + "].enabled", enabled)
         };
       }
       break;
@@ -61,6 +64,7 @@ public:
         dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].ambient", dlight->GetAmbient());
         dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].diffuse", dlight->GetDiffuse());
         dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].specular", dlight->GetSpecular());
+        dir_mat.SetBool("vikr_directionalLights[" + id + "].enabled", dlight->IsEnabled());
         light_params = std::move(*dir_mat.GetMaterialValues());
       }
       break;

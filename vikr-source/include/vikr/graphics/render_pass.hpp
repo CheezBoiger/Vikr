@@ -28,6 +28,10 @@ class Framebuffer;
 class RenderPass {
 public:
   /**
+    Polymorphic Renderpass destructor.
+  */
+  virtual ~RenderPass() { }
+  /**
     Update the RenderTargets
   */
   virtual vvoid UpdateRenderTargets() = 0;
@@ -45,15 +49,55 @@ public:
   /**
     Get the view port of this Renderpass.
   */
-  virtual Viewport &GetViewport() = 0;
+  virtual const Viewport &GetViewport() const = 0;
+
+  /**
+    Set the viewport for this Renderpass.
+  */
   virtual vvoid SetViewport(Viewport viewport) = 0;
-  virtual glm::vec3 GetClearColor() = 0;
-  virtual vvoid AddRenderTarget(RenderTarget *target) = 0;
-  virtual vvoid RemoveRenderTarget(vuint32 attachment) = 0;
-  virtual Renderbuffer *GetRenderbuffer() = 0;
-  virtual Framebuffer *GetFramebuffer() = 0;
+
+  /**
+    Get the color that the graphics context uses to clear the screen with.
+  */
+  virtual glm::vec3 GetClearColor() const = 0;
+
+  /**
+    Add a render target. Returns true if the render target
+    successfully attaches. Returns false if rendertarget failed to attach.
+  */
+  virtual vbool AddRenderTarget(RenderTarget *target, vuint32 attachment) = 0;
+
+  /**
+    Remove a render target.
+  */
+  virtual vbool RemoveRenderTarget(vuint32 attachment) = 0;
+
+  /**
+    Get the Renderbuffer, which corresponds to the depth buffer, or depth-stencil buffer.
+  */
+  virtual Renderbuffer *GetRenderbuffer() const = 0;
+
+  /**
+    Get the Framebuffer associated with this RenderPass.
+  */
+  virtual Framebuffer *GetFramebuffer() const = 0;
+
+  /**
+    Set the Renderbuffer for this Renderpass. This can be a Depth buffer, or 
+    Depth-Stencil buffer.
+  */
   virtual vvoid SetRenderbuffer(Renderbuffer *renderbuffer) = 0;
+
+  /**
+    Set the Clear Color for this Renderpass, the color which will be used by the
+    graphics context to clear the screen with.
+  */
   virtual vvoid SetClearColor(glm::vec3 color) = 0;
+
+  /**
+    Set the Framebuffer for this Renderpass. This is the Framebuffer used to 
+    Draw into for offscreen rendering.
+  */
   virtual vvoid SetFramebuffer(Framebuffer *framebuffer) = 0;
 };
 } // vikr

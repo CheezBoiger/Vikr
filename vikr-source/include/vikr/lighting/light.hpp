@@ -69,6 +69,13 @@ public:
     Color of the actual light entity.
   */
   vvoid SetColor(glm::vec3 color) { m_color = color; }
+
+  /**
+    Set Whether this light should be enabled or not. True to enable,
+    False to disable.
+  */
+  vvoid Enable(vbool enable) { m_enabled = enable; }
+
   /**
     Get the position of the light.
   */
@@ -80,46 +87,77 @@ public:
   /**
     Get the light diffuse (the color at it's most brightest).
   */
-  glm::vec3 GetDiffuse() { return m_diffuse; }
+  glm::vec3 GetDiffuse() const { return m_diffuse; }
   /**
     Get the light specular (the color highlight).
   */
-  glm::vec3 GetSpecular() { return m_specular; }
+  glm::vec3 GetSpecular() const { return m_specular; }
   /**
     Get the source color, which is to be emitted by a mesh.
   */
-  glm::vec3 GetColor() { return m_color; }
+  glm::vec3 GetColor() const { return m_color; }
   /**
     Get the light's type (spotlight, pointlight, etc).
   */
-  LightType GetLightType() { return type; }
+  LightType GetLightType() const { return type; }
 
-  vuint32 GetLightId() { return m_lightId; }
+  /**
+    Get the Light id. this is a unique id assigned by the 
+    graphics library.
+  */
+  vuint32 GetLightId() const { return m_lightId; }
+
+  /**
+    Check if the light is enabled.
+  */
+  vbool IsEnabled() const { return m_enabled; }
   
 protected:
   /**
     Get the light type.
   */
   LightType type;
+
+  /**
+    Position of the light in world space.
+  */
   glm::vec3 m_position;
+
   /**
     Color when at it's most darkest.
   */
+
   glm::vec3 m_ambient;
   /**
     Color when at it's most brightest.
   */
+
   glm::vec3 m_diffuse;
+  
   /**
     The Light's highlights, when it shines directly.
   */
   glm::vec3 m_specular;
+  
   /**
-    Color to depict for the Mesh object.
+    Color of the light.
   */
   glm::vec3 m_color       = glm::vec3(1.0f, 1.0f, 1.0f);
 
-  vuint32 m_lightId = 0;
+  /**
+    The light unique id.
+  */
+  vuint32 m_lightId       = 0;
+
+  /**
+    Check if the light is enabled.
+  */
+  vbool m_enabled         = true;
+
+  /**
+    The range of the light.
+  */
+  vuint32 range;
 
 
   glm::mat4 m_lightSpaceMatrix;

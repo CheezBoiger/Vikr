@@ -51,12 +51,20 @@ vvoid GL4RenderPass::Unbind() {
 }
 
 
-vvoid GL4RenderPass::AddRenderTarget(RenderTarget *target) {
-  m_rendertargets.push_back(target);  
+vbool GL4RenderPass::AddRenderTarget(RenderTarget *target, vuint32 attachment) {
+  if (m_rendertargets.find(attachment) == m_rendertargets.end()) {
+    m_rendertargets[attachment] = target;
+    return true;
+  }
+  return false;
 }
 
 
-vvoid GL4RenderPass::RemoveRenderTarget(vuint32 attachment) {
-  m_rendertargets.erase(m_rendertargets.begin() + attachment);
+vbool GL4RenderPass::RemoveRenderTarget(vuint32 attachment) {
+  if (m_rendertargets.find(attachment) == m_rendertargets.end()) {
+    m_rendertargets.erase(attachment);
+    return true;
+  }
+  return false;
 }
 } // vikr

@@ -8,6 +8,9 @@
 
 namespace vikr {
 
+
+#define VIKR_VIEWPORT_INIT(x, y, width, height) { x, y, width, height }
+
 /**
   Viewport struct defines the view screen of the camera, and references
   the window's size;

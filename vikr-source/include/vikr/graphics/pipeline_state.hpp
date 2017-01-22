@@ -69,7 +69,7 @@ public:
   /**
     Set the Cull Face.
   */
-  virtual vbool SetCullFace(CullFace face) = 0;
+  virtual vvoid SetCullFace(CullFace face) = 0;
 
   /**
     Set the Front Face.
@@ -80,13 +80,16 @@ public:
   /*
     Grab a specific pipeline shader stage.
   */
-  virtual vuint32 GetVertexShader() = 0;
-  virtual vuint32 GetFragmentShader() = 0;
-  virtual vuint32 GetComputeShader() = 0;
-  virtual vuint32 GetGeometryShader() = 0;
+  virtual vuint32 GetVertexShader() const = 0;
+  virtual vuint32 GetFragmentShader() const = 0;
+  virtual vuint32 GetComputeShader() const = 0;
+  virtual vuint32 GetGeometryShader() const = 0;
 
-  virtual Viewport GetViewport() = 0;
-  virtual Shader *GetShader() = 0;
+  /**
+    Viewport stuff.
+  */
+  virtual Viewport GetViewport() const = 0;
+  virtual Shader *GetShader() const = 0;
 
   /*
     Update the Pipeline State
@@ -96,7 +99,7 @@ public:
   /*
     Check if the PipelineState needs to be updated.
   */
-  virtual vbool NeedsUpdate() = 0;
+  virtual vbool NeedsUpdate() const = 0;
 };
 } // vikr
 #endif // __VIKR_PIPELINE_STATE_HPP

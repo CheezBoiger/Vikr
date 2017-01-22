@@ -258,7 +258,7 @@ vvoid GL4RenderContext::ConfigurePipelineState(PipelineState *state) {
 
 vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
   if (pass) {
-    Viewport *view = &pass->GetViewport();
+    const Viewport *view = &pass->GetViewport();
     glViewport(view->win_x, view->win_y, view->win_width, view->win_height);
     pass->Bind();
     Clear();

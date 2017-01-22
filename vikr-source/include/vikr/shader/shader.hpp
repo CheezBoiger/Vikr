@@ -59,6 +59,8 @@ public:
   vuint32 GetFragId() { return frag_id; }
   vuint32 GetVertId() { return vert_id; }
   vuint32 GetGeomId() { return geom_id; }
+  vuint32 GetCompId() { return comp_id; }
+  vuint32 GetHullId() { return hull_id; }
 
 protected:
 
@@ -69,10 +71,10 @@ protected:
   vuint32 shader_id                     = 0;
   vuint32 vert_id                       = 0;
   vuint32 frag_id                       = 0;
-  vuint32 geom_id                        = 0;
+  vuint32 geom_id                       = 0;
 
   // OpenGL 4.3 and up.
-  vuint32 compute_id                    = 0;
+  vuint32 comp_id                       = 0;
   vuint32 hull_id                       = 0;
   vbool is_linked;
   VIKR_DISALLOW_COPY_AND_ASSIGN(Shader);

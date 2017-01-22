@@ -45,7 +45,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   
   for (vuint32 i = 0; i < m_rendertargets.size(); ++i) {
     if (m_rendertargets[i]) {
-      m_renderpass->AddRenderTarget(m_rendertargets[i].get());
+      m_renderpass->AddRenderTarget(m_rendertargets[i].get(), i);
     }
   }
   
