@@ -46,6 +46,7 @@ public:
     vuint32 width,
     vuint32 height,
     vbool alpha = false,
+    vbool multisample = false,
     RenderTargetType type = render_TEXTURE);
   virtual ~RenderTarget() { }
 
@@ -59,6 +60,9 @@ public:
   vvoid SetHeight(vuint32 height) { m_height = height; }
 
   vbool HasDepthAndStencil() { return m_depthstencil; }
+  vbool IsMultisampled() { return multisampled; }
+
+  vvoid SetMultiSample(vbool enable) { multisampled = enable; }
 
 protected:
 
@@ -66,6 +70,7 @@ protected:
   vuint32 m_height = 0;
   vbool alpha      = false;
   vbool m_depthstencil = false;
+  vbool multisampled = false;
 
   GraphicsPipeline m_pipeline;
   RenderTargetType m_targetType = render_TEXTURE;
@@ -78,7 +83,7 @@ protected:
 class RenderTexture : public RenderTarget {
 public:
   virtual ~RenderTexture() { }
-  RenderTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool alpha);
+  RenderTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool alpha, vbool multisampled);
 
   Texture *GetTexture() { return m_texture.get(); }
 
@@ -95,7 +100,7 @@ protected:
 class Renderbuffer : public RenderTarget {
 public:
   virtual ~Renderbuffer() { }
-  Renderbuffer(GraphicsPipeline pipeline, vuint32 width, vuint32 height);
+  Renderbuffer(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool multisampled);
 
   vuint32 GetRenderbufferId() { return m_rbo; }
   
@@ -107,7 +112,7 @@ protected:
 class RenderDepthTexture : public RenderTarget {
 public:
   virtual ~RenderDepthTexture() { }
-  RenderDepthTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height);
+  RenderDepthTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool multisampled);
   
   vuint32 GetTextureId() { return id; }
 

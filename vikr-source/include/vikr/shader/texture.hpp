@@ -105,6 +105,10 @@ public:
 
   virtual vvoid SetDataTypeFormat(DataTypeFormat format) = 0;
 
+  virtual vbool IsMultisampled() = 0;
+
+  virtual vvoid SetMultisampled(vbool enable) = 0;
+
   /**
     Get the native texture id.
   */
@@ -137,6 +141,7 @@ protected:
   DataTypeFormat    m_datatype                  = data_UNSIGNED_BYTE;
   vbool             m_mipmapping                = true;
   vbool             m_alpha                     = true;
+  vbool             m_multisampled              = false;
   vuint32           m_width                     = 0;
   std::string       m_path                      = "";
   std::string       m_name                      = "noname";

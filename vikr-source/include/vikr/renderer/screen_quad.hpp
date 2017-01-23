@@ -26,6 +26,10 @@ public:
 
   vvoid Execute();
 
+  vvoid AdjustGaussianBlur(vuint32 value);
+  vvoid AdjustGreyScale(vuint32 value);
+  vvoid AdjustSharpen(vuint32 value);
+
 private:
   RenderDevice *m_device = nullptr;
   CommandbufferList list;

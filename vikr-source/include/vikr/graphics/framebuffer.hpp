@@ -115,7 +115,12 @@ public:
   /**
     Get the color attachments from the framebuffer.
   */
-  virtual std::vector<Texture *> *GetColorAttachments() = 0;
+  virtual Texture *GetColorAttachment(vuint32 attachment) = 0;
+
+  /**
+    Clear all attachments.
+  */
+  virtual vvoid ClearAttachments() = 0;
 
   /**
     Validates the Framebuffer, or Revalidates if color attachements have been reassigned.

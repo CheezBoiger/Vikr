@@ -50,6 +50,8 @@ public:
   vreal32 GetQuadratic() { return m_quadratic; }
   vreal32 GetRange() { return m_range; }
 
+  vvoid Update() override;
+
 protected:
 
   vreal32 m_range         = 15.0f;

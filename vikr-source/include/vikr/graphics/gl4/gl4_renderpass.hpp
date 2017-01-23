@@ -63,6 +63,8 @@ public:
     target was bound to.
   */
   vbool RemoveRenderTarget(vuint32 attachment) override;
+
+  RenderTarget *GetRenderTarget(vuint32 attachment) override;
   
   /**
     Get the Renderbuffer of this renderpass. This is most likely the 

@@ -26,4 +26,9 @@ vvoid PointLight::SetLinear(vreal32 linear) {
 vvoid PointLight::SetQuadratic(vreal32 quadratic) {
   m_quadratic = quadratic;
 }
+
+
+vvoid PointLight::Update() {
+  
+}
 } // vikr

@@ -39,6 +39,9 @@ public:
 
   vuint32 GetNumOfRenderTargets() { return m_rendertargets.size(); }
 
+  Framebuffer *GetFramebuffer() { return m_framebuffer.get(); }
+  RenderPass *GetRenderPass() { return m_renderpass.get(); }
+
 private:
   RenderDevice *m_device = nullptr;
   std::unique_ptr<RenderPass> m_renderpass;

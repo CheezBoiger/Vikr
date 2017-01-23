@@ -77,6 +77,9 @@ vvoid GL4Framebuffer::ClearTexture(vuint32 attachment) {
   if (m_fbo) {
     glFramebufferTexture2D(GL_FRAMEBUFFER, 
       GL_COLOR_ATTACHMENT0 + attachment, GL_TEXTURE_2D, 0, 0);
+    if (m_colorAttachments.find(attachment) != m_colorAttachments.end()) {
+      m_colorAttachments.erase(attachment);  
+    }
   }
 }
 
@@ -88,7 +91,7 @@ vvoid GL4Framebuffer::BindTexture(RenderTarget *target, vuint32 attachment) {
         texture->GetTexture()->GetTargetFormat() != vikr_TEXTURE_2D_MULTISAMPLE) {
       VikrLog::DisplayMessage(VIKR_WARNING, "RenderTarget is not of Texture2D format!");
     }
-    m_colorAttachments.push_back(texture->GetTexture());
+    m_colorAttachments[attachment] = texture->GetTexture();
     GLTexture2D *gl = static_cast<GLTexture2D *>(texture->GetTexture());
     glFramebufferTexture2D(GL_FRAMEBUFFER,
       GL_COLOR_ATTACHMENT0 + attachment, gl->GetNativeTarget(), gl->GetNativeId(), 0);
@@ -140,5 +143,24 @@ vvoid GL4Framebuffer::Readbuffer(BufferMode mode) {
 
 vvoid GL4Framebuffer::Writebuffer(BufferMode mode) {
   glDrawBuffer(GL4Framebuffer::GetFramebufferMode(mode));
+}
+
+
+Texture *GL4Framebuffer::GetColorAttachment(vuint32 attachment) {
+  if (m_colorAttachments.find(attachment) != m_colorAttachments.end()) {
+    return m_colorAttachments[attachment];
+  }
+  return nullptr;
+}
+
+
+vvoid GL4Framebuffer::ClearAttachments() {
+  for (auto i = m_colorAttachments.begin();
+       i != m_colorAttachments.end();
+        ++i)
+  {
+    ClearTexture(i->first);
+  }
+  m_colorAttachments.clear();
 }
 } // vikr

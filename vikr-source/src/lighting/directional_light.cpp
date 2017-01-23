@@ -20,4 +20,9 @@ DirectionalLight::DirectionalLight()
 {
   directionlight_count++;
 }
+
+
+vvoid DirectionalLight::Update() {
+  
+}
 } // vikr

@@ -27,21 +27,21 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_renderpass->SetViewport(viewport);
   
   m_rendertargets[0] = device->CreateRenderTexture("gPosition",
-    window->GetWidth(), window->GetHeight(), false, data_FLOAT);
+    window->GetWidth(), window->GetHeight(), false, false, data_FLOAT);
   m_rendertargets[1] = device->CreateRenderTexture("gNormal",
-    window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE);
+    window->GetWidth(), window->GetHeight(), true, false, data_UNSIGNED_BYTE);
   m_rendertargets[2] = device->CreateRenderTexture("gAlbedo",
-    window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE);
+    window->GetWidth(), window->GetHeight(), true, false, data_UNSIGNED_BYTE);
   m_rendertargets[3] = device->CreateRenderTexture("gSpecular",
-   window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE);
+   window->GetWidth(), window->GetHeight(), true, false, data_UNSIGNED_BYTE);
   m_rendertargets[4] = device->CreateRenderTexture("gAmbient",
-   window->GetWidth(), window->GetHeight(), true, data_UNSIGNED_BYTE);
+   window->GetWidth(), window->GetHeight(), true, false, data_UNSIGNED_BYTE);
   m_rendertargets[5] = device->CreateRenderTexture("gTangent",
-   window->GetWidth(), window->GetHeight(), false, data_FLOAT);
+   window->GetWidth(), window->GetHeight(), false, false, data_FLOAT);
   m_rendertargets[6] = device->CreateRenderTexture("gBitangent",
-   window->GetWidth(), window->GetHeight(), false, data_FLOAT);
+   window->GetWidth(), window->GetHeight(), false, false, data_FLOAT);
   m_rendertargets[7] = device->CreateRenderTexture("gNorm",
-   window->GetWidth(), window->GetHeight(), false, data_FLOAT);
+   window->GetWidth(), window->GetHeight(), false, false, data_FLOAT);
   
   for (vuint32 i = 0; i < m_rendertargets.size(); ++i) {
     if (m_rendertargets[i]) {
@@ -51,7 +51,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   
   m_framebuffer = device->CreateFramebuffer();
   m_framebuffer->Generate();
-  m_renderbuffer = device->CreateRenderbuffer(window->GetWidth(), window->GetHeight());
+  m_renderbuffer = device->CreateRenderbuffer(window->GetWidth(), window->GetHeight(), false);
   m_renderpass->SetFramebuffer(m_framebuffer.get());
   m_renderpass->SetRenderbuffer(m_renderbuffer.get());
 

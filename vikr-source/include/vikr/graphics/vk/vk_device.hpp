@@ -56,9 +56,9 @@ public:
   RenderContext *GetContext() override { return &context; }
 
   std::unique_ptr<RenderTexture> CreateRenderTexture(std::string t_name, vuint32 width, vuint32 height,
-    vbool alpha = false, DataTypeFormat precision = data_UNSIGNED_BYTE) override;
+    vbool alpha = false, vbool multisample = false, DataTypeFormat precision = data_UNSIGNED_BYTE) override;
 
-  std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height) override;
+  std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height, vbool multisample = false) override;
 
   std::unique_ptr<Cubemap> CreateCubemap() override;
 

@@ -14,11 +14,7 @@ vvoid GL4RenderPass::UpdateRenderTargets() {
   if(m_framebuffer) {
     m_framebuffer->Bind();
     // Clear up last RenderPass in Framebuffer.
-    std::vector<Texture *> *targets = m_framebuffer->GetColorAttachments();
-    for(vuint32 i = 0; i < targets->size(); ++i) {
-      m_framebuffer->ClearTexture(i);
-    }
-    targets->clear();
+    m_framebuffer->ClearAttachments();
     // Set up the new RenderPass
     for(vuint32 i = 0; i < m_rendertargets.size(); ++i) {
       if(m_rendertargets[i]->GetRenderType() == RenderTargetType::render_TEXTURE) {
@@ -66,5 +62,13 @@ vbool GL4RenderPass::RemoveRenderTarget(vuint32 attachment) {
     return true;
   }
   return false;
+}
+
+
+RenderTarget *GL4RenderPass::GetRenderTarget(vuint32 attachment) {
+  if (m_rendertargets.find(attachment) != m_rendertargets.end()) {
+    return m_rendertargets[attachment];
+  }
+  return nullptr;
 }
 } // vikr

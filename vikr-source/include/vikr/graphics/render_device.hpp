@@ -83,9 +83,9 @@ public:
   virtual RenderContext *GetContext() = 0;
 
   virtual std::unique_ptr<RenderTexture> CreateRenderTexture(std::string t_name, vuint32 width, vuint32 height, 
-    vbool alpha = false, DataTypeFormat precision = data_UNSIGNED_BYTE) = 0;
+    vbool alpha = false, vbool multisample = false, DataTypeFormat precision = data_UNSIGNED_BYTE) = 0;
 
-  virtual std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height) = 0;
+  virtual std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height, vbool multisample = false) = 0;
 
   /**
   

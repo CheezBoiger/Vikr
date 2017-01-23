@@ -28,7 +28,8 @@ const vuint32 SHADOW_HEIGHT = 1024;
 
 
 /**
-  Light Abstract. Contains common variables to emit light.
+  Light Abstract. Contains common variables to emit light. These include,
+  Diffuse, Ambient, and Specular lighting. 
 */
 class Light {
 public:
@@ -77,6 +78,11 @@ public:
   vvoid Enable(vbool enable) { m_enabled = enable; }
 
   /**
+    Enable shadows if desired. True to enable, false to disable.
+  */
+  vvoid EnableShadows(vbool enable) { m_enabled_shadows = enable; }
+
+  /**
     Get the position of the light.
   */
   glm::vec3 GetPos() { return m_position; }
@@ -111,6 +117,16 @@ public:
     Check if the light is enabled.
   */
   vbool IsEnabled() const { return m_enabled; }
+
+  /**
+    Check if shadows are enabled.
+  */
+  vbool ShadowsEnabled() const { return m_enabled_shadows; }
+
+  /**
+    Update the light, depending on what needs to update.
+  */
+  virtual vvoid Update() = 0;
   
 protected:
   /**
@@ -155,13 +171,14 @@ protected:
   vbool m_enabled         = true;
 
   /**
+    Determine if shadows should be enabled.
+  */
+  vbool m_enabled_shadows = false;
+
+  /**
     The range of the light.
   */
   vuint32 range;
-
-
-  glm::mat4 m_lightSpaceMatrix;
-
 };
 }
 #endif // __VIKR_LIGHT_HPP

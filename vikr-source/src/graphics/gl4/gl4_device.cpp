@@ -142,15 +142,15 @@ std::unique_ptr<Framebuffer> GL4RenderDevice::CreateFramebuffer() {
 }
 
 
-std::unique_ptr<Renderbuffer> GL4RenderDevice::CreateRenderbuffer(vuint32 width, vuint32 height) {
-  return std::make_unique<GL4Renderbuffer>(width, height);
+std::unique_ptr<Renderbuffer> GL4RenderDevice::CreateRenderbuffer(vuint32 width, vuint32 height, vbool multisample) {
+  return std::make_unique<GL4Renderbuffer>(width, height, multisample);
 }
 
 
 std::unique_ptr<RenderTexture> GL4RenderDevice::CreateRenderTexture(std::string t_name, 
-  vuint32 width, vuint32 height, vbool alpha, DataTypeFormat precision) 
+  vuint32 width, vuint32 height, vbool alpha, vbool multisample, DataTypeFormat precision) 
 {
-  return std::make_unique<GL4RenderTexture>(t_name, width, height, alpha, precision);
+  return std::make_unique<GL4RenderTexture>(t_name, width, height, alpha, multisample, precision);
 }
 
 

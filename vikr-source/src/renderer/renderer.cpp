@@ -150,9 +150,8 @@ vvoid Renderer::Render() {
 
   // Deferred Shading pass.
 
-  
-  // Set back to the default RenderPass.
   context->SetRenderPass(nullptr);
+  // Set back to the default RenderPass.
   context->ApplyShaderProgram(lightShader);
   for (vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);   

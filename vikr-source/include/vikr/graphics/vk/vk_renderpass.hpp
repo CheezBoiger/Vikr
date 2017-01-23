@@ -41,6 +41,8 @@ public:
 
   vbool RemoveRenderTarget(vuint32 attachment) override;
 
+  RenderTarget *GetRenderTarget(vuint32 attachment) override;
+
 private:
   
   VkMemoryManager<VkRenderPass> m_renderpass;

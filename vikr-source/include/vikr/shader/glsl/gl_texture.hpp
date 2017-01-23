@@ -45,6 +45,9 @@ public:
   vuint32 GetNativeWrapR() { return native_wrap_r; }
   vuint32 GetNativeDataType() { return native_datatype; }
 
+  vvoid SetMultisampled(vbool enable) override { m_multisampled = enable; }
+  vbool IsMultisampled() override { return m_multisampled; }
+
 
 protected:
   vuint32 id                          = 0;

@@ -73,6 +73,11 @@ public:
   virtual vbool RemoveRenderTarget(vuint32 attachment) = 0;
 
   /**
+    Get a render target from this renderpass. null returned if no attachment by that name.
+  */
+  virtual RenderTarget *GetRenderTarget(vuint32 attachment) = 0;
+
+  /**
     Get the Renderbuffer, which corresponds to the depth buffer, or depth-stencil buffer.
   */
   virtual Renderbuffer *GetRenderbuffer() const = 0;

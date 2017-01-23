@@ -78,27 +78,10 @@ int main(int c, char* args[]) {
   Renderer renderer;
   renderer.Init(&device);
   renderer.SetCamera(&camera);
-  renderer.GetDevice()->StoreShader("test", 
-    "../../libs/shader/GLSL/test.vert", 
-    "../..libs/shader/GLSL/test.frag", 
-    "../../libs/shader/GLSL");
-  renderer.GetDevice()->StoreShader("light", 
-    "../../libs/shader/GLSL//test.vert", 
-    "../../libs/shader/GLSL/light.frag");
-  renderer.GetDevice()->StoreShader("screen", 
-    "../../libs/shader/GLSL/screen_shader.vert", 
-    "../../libs/shader/GLSL/screen_shader.frag");
   SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), 
     "../../libs/models/sponza_cry/sponza.obj", "sponza");
   SceneNode *nano = ModelLoader::ImportModel(renderer.GetDevice(), 
     "../../libs/models/nanosuit/nanosuit.obj", "suitboy");
-  Material *default_mat = renderer.GetDevice()->CreateMaterial("default_mat");
-  default_mat->SetShader(renderer.GetDevice()->GetShader("test"));
-
-  Material *light_mat = renderer.GetDevice()->CreateMaterial("light_mat");
-  light_mat->SetShader(renderer.GetDevice()->GetShader("light"));
-  light_mat->SetVector3fv("light_color", glm::vec3(1.0f, 1.0f, 1.0f));
-
   Quad quad;
   Cube cube;
   // suitboy.
