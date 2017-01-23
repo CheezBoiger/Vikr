@@ -12,6 +12,7 @@
 #include <vikr/graphics/cullmode.hpp>
 #include <vikr/graphics/depthmode.hpp>
 #include <vikr/graphics/stencildepth.hpp>
+#include <vikr/graphics/topology.hpp>
 
 
 namespace vikr {
@@ -23,12 +24,13 @@ struct Viewport;
 
 /**
   Pipeline state defines the current state of the Renderer API.
-  This is abstract for both Vulkan and OpenGL use.
+  This is an interface for both Vulkan and OpenGL use.
 */
 class PipelineState {
   VIKR_DISALLOW_COPY_AND_ASSIGN(PipelineState);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(PipelineState);
+  PipelineState() { }
   virtual ~PipelineState() { }
 
   /**
@@ -44,7 +46,7 @@ public:
   /**
     Set the blending function.
   */
-  virtual vvoid SetBlendFunc(BlendFunc func) = 0;
+  virtual vvoid SetBlendFunc(BlendFunc src, BlendFunc dst) = 0;
 
   /**
     Set the Blend equation.
@@ -60,6 +62,11 @@ public:
     Set the Depth mode.
   */
   virtual vvoid SetDepthMode(vbool enable) = 0;
+
+  /**
+    Set the Depth function.
+  */
+  virtual vvoid SetDepthFunc(DepthFunc func) = 0;
   
   /**
     Set the Cull mode.
@@ -75,6 +82,8 @@ public:
     Set the Front Face.
   */
   virtual vvoid SetFrontFace(FrontFace face) = 0;
+
+  virtual vvoid SetTopology(Topology topology) = 0;
   
 
   /*
@@ -100,6 +109,17 @@ public:
     Check if the PipelineState needs to be updated.
   */
   virtual vbool NeedsUpdate() const = 0;
+
+  virtual vbool IsCulling() const = 0;
+  virtual vbool IsBlending() const = 0;
+  virtual vbool HasDepth() const = 0;
+  virtual DepthFunc GetDepthFunc() const = 0;
+  virtual BlendEq GetBlendEquation() const = 0;
+  virtual BlendFunc GetBlendFunctionSrc() const = 0;
+  virtual BlendFunc GetBlendFunctionDst() const = 0;
+  virtual Topology GetTopology() const = 0;
+
+  virtual vuint32 GetShaderProgram() const = 0;
 };
 } // vikr
 #endif // __VIKR_PIPELINE_STATE_HPP

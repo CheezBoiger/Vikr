@@ -56,7 +56,7 @@ public:
   virtual vvoid SetClear() = 0;
   virtual vvoid SetClearWithColor(glm::vec4 color) = 0;
   virtual vvoid SetChangeViewport(Viewport *viewport) = 0;
-  virtual vvoid SetShaderProgram(vuint32 program_id) = 0;
+  virtual vvoid SetShaderProgram(Shader *shader) = 0;
   virtual vvoid SetConfigurePipelineState(PipelineState *pipelinestate) = 0;
   virtual vvoid SetShaderUniforms(ShaderUniformParams params) = 0;
   virtual vvoid SetQueryVertexbuffer(Vertexbuffer *buffer) = 0;

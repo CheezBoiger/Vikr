@@ -33,7 +33,7 @@ public:
     //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
 
     if (shader) {
-      buffer->SetShaderProgram(shader->GetProgramId());
+      buffer->SetShaderProgram(shader);
     }
     params.samplers = m_material->GetUniformSamplers();
     params.uniforms = m_material->GetMaterialValues();

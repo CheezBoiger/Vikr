@@ -85,15 +85,15 @@ private:
 
 class ShaderProgramSetter : public GL4GraphicsCommand {
 public:
-  ShaderProgramSetter(vuint32 id) 
-    : id(id) { }
+  ShaderProgramSetter(Shader *shader) 
+    : shader(shader) { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->ApplyShaderProgram(id);
+    cx->ApplyShaderProgram(shader);
   }
 
 private:
-  vuint32 id;
+  Shader *shader;
 };
 
 
@@ -130,8 +130,8 @@ vvoid GL4Commandbuffer::SetTopology(Topology topology) {
 }
 
 
-vvoid GL4Commandbuffer::SetShaderProgram(vuint32 id) {
-  commands.push_back(std::make_unique<ShaderProgramSetter>(id));
+vvoid GL4Commandbuffer::SetShaderProgram(Shader *shader) {
+  commands.push_back(std::make_unique<ShaderProgramSetter>(shader));
 }
 
 

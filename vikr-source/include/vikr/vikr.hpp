@@ -20,11 +20,17 @@ static vbool glad_loaded = false;
 } // detail;
 
 
+/**
+  Initializes the Vikr library. This should be relatively quick.
+*/
 vint32 InitVikr(GraphicsPipeline graphicsAPI);
 
 
-
+/**
+  Has GLAD loaded the OpenGL library?
+*/
 VIKR_FORCEINLINE vbool GladLoaded() { return detail::glad_loaded; }
+
 /**
 */
 VIKR_FORCEINLINE vint32 LoadGlad() {

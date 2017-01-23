@@ -27,6 +27,12 @@
 
 namespace vikr {
 
+#define CLEAN_PIPELINE() { \
+          if (m_currPipeline.NeedsUpdate()) { \
+            m_currPipeline.Update(); \
+          } \
+        }
+
 
 GLenum GetGLTopology(Topology topology) {
   switch (topology) {
@@ -41,52 +47,6 @@ GLenum GetGLTopology(Topology topology) {
 }
 
 
-GLenum GetGLBlendMode(BlendFunc func) {
-  switch (func) {
-    case BlendFunc::vikr_BLEND_CONSTANT_ALPHA: return GL_CONSTANT_ALPHA;  
-    case BlendFunc::vikr_BLEND_CONSTANT_COLOR: return GL_CONSTANT_COLOR;
-    case BlendFunc::vikr_BLEND_DST_ALPHA: return GL_DST_ALPHA;
-    case BlendFunc::vikr_BLEND_DST_COLOR: return GL_DST_COLOR;
-    case BlendFunc::vikr_BLEND_GL_ONE_MINUS_CONSTANT_ALPHA: return GL_ONE_MINUS_CONSTANT_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE: return GL_ONE;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR: return GL_ONE_MINUS_CONSTANT_COLOR;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_ALPHA: return GL_ONE_MINUS_DST_ALPHA;  
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_COLOR: return GL_ONE_MINUS_DST_COLOR;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA: return GL_ONE_MINUS_SRC_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_COLOR: return GL_ONE_MINUS_SRC_COLOR;
-    case BlendFunc::vikr_BLEND_SRC_ALPHA: return GL_SRC_ALPHA;
-    case BlendFunc::vikr_BLEND_SRC_COLOR: return GL_SRC_COLOR;
-    case BlendFunc::vikr_BLEND_ZERO: return GL_ZERO;
-    default: return GL_ONE_MINUS_CONSTANT_ALPHA;
-  }
-}
-
-
-GLenum GetGLDepthFunc(DepthFunc mode) {
-  switch (mode) {
-    case DepthFunc::vikr_DEPTH_ALWAYS: return GL_ALWAYS;
-    case DepthFunc::vikr_DEPTH_EQUAL: return GL_EQUAL;
-    case DepthFunc::vikr_DEPTH_GEQUAL: return GL_GEQUAL;
-    case DepthFunc::vikr_DEPTH_GREATER: return GL_GREATER;
-    case DepthFunc::vikr_DEPTH_LEQUAL: return GL_LEQUAL;
-    case DepthFunc::vikr_DEPTH_LESS: return GL_LESS;
-    case DepthFunc::vikr_DEPTH_NEVER: return GL_NEVER;
-    case DepthFunc::vikr_DEPTH_NOTEQUAL: return GL_NOTEQUAL;
-    default: return GL_LESS;  
-  }
-}
-
-
-GLenum GetGLBlendEq(BlendEq eq) {
-  switch (eq) {
-    case BlendEq::vikr_BLEND_ADD: return GL_FUNC_ADD;
-    case BlendEq::vikr_BLEND_REVERSE_SUBTRACT: return GL_FUNC_REVERSE_SUBTRACT;
-    case BlendEq::vikr_BLEND_SUBTRACT: return GL_FUNC_SUBTRACT;
-    default: return GL_FUNC_ADD;
-  }
-}
-
-
 GL4RenderContext::GL4RenderContext()
 {
   //glEnable(GL_FRAMEBUFFER_SRGB);
@@ -94,8 +54,10 @@ GL4RenderContext::GL4RenderContext()
 
 
 vvoid GL4RenderContext::Draw(vuint32 start, vuint32 vertices) {
+  CLEAN_PIPELINE();
+
   glDrawArrays(
-    GetGLTopology(m_currTopology), 
+    GetGLTopology(m_currPipeline.GetTopology()), 
     start, 
     vertices);
   VIKR_ASSERT(glGetError() == 0);
@@ -103,8 +65,9 @@ vvoid GL4RenderContext::Draw(vuint32 start, vuint32 vertices) {
 
 
 vvoid GL4RenderContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
+  CLEAN_PIPELINE();
   glDrawElements(
-    GetGLTopology(m_currTopology),
+    GetGLTopology(m_currPipeline.GetTopology()),
     elements,
     GL_UNSIGNED_INT,
     indices);
@@ -113,6 +76,7 @@ vvoid GL4RenderContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
 
 
 vvoid GL4RenderContext::SetTexture(vuint32 texture, vuint32 target, vuint32 index) {  
+  CLEAN_PIPELINE();
   glActiveTexture(GL_TEXTURE0 + index);
   glBindTexture(target, texture);
   VIKR_ASSERT(glGetError() == 0);
@@ -120,6 +84,7 @@ vvoid GL4RenderContext::SetTexture(vuint32 texture, vuint32 target, vuint32 inde
 
 
 vvoid GL4RenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
+  CLEAN_PIPELINE();
   if (target) {
     switch (target->GetRenderType()) {
       case RenderTargetType::render_TEXTURE: {
@@ -141,109 +106,69 @@ vvoid GL4RenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
 
 
 vvoid GL4RenderContext::ChangeTopology(Topology topology) {
-  m_currTopology = topology;
+  m_currPipeline.SetTopology(topology);
 }
 
 
 vvoid GL4RenderContext::ChangeViewport(Viewport  *port) {
-  if (port) {
-    glViewport(
-      port->win_x,
-      port->win_y,
-      port->win_width,
-      port->win_height);
-  }
+  m_currPipeline.SetViewport(*port);
 }
 
 
 vvoid GL4RenderContext::Clear() {
+  CLEAN_PIPELINE();
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 
 vvoid GL4RenderContext::SetCullFace(CullFace face) {
-  GLenum t;
-  switch (face) {
-    case CullFace::vikr_FRONT_FACE:
-      t = GL_FRONT;
-    break;
-    case CullFace::vikr_BACK_FACE:
-      t = GL_BACK;
-    break;
-    default:
-      t = GL_BACK;  
-    break;  
-  }
-  glCullFace(t);
+  m_currPipeline.SetCullFace(face);
 }
 
 
 vvoid GL4RenderContext::SetFrontFace(FrontFace face) {
-  GLenum t;
-  switch (face) {
-    case FrontFace::vikr_CLOCKWISE:
-      t = GL_CW;
-    break;
-    case FrontFace::vikr_COUNTER_CLOCKWISE:
-      t = GL_CCW;
-    break;
-    default:
-      t = GL_CCW;
-    break;
-  }
-  glFrontFace(t);
+  m_currPipeline.SetFrontFace(face);
 }
 
 
 vvoid GL4RenderContext::EnableBlendMode(vbool enable) {
-  if (enable) {
-    glEnable(GL_BLEND);
-  } else {
-    glDisable(GL_BLEND);
-  }
+  m_currPipeline.SetBlendMode(enable);
 }
 
 
 vvoid GL4RenderContext::EnableCullMode(vbool enable) {
-  if (enable) {
-    glEnable(GL_CULL_FACE);
-  } else {
-    glDisable(GL_CULL_FACE);
-  }
+  m_currPipeline.SetCullMode(enable);
 }
 
 
 vvoid GL4RenderContext::EnableDepthMode(vbool enable) {
-  if (enable) {
-    glEnable(GL_DEPTH_TEST);
-  } else {
-    glDisable(GL_DEPTH_TEST);
-  }
+  m_currPipeline.SetDepthMode(enable);
 }
 
 
 vvoid GL4RenderContext::SetBlendEq(BlendEq eq) {
-  glBlendEquation(GetGLBlendEq(eq));
+  m_currPipeline.SetBlendEq(eq);
 }
 
 
 vvoid GL4RenderContext::SetBlendMode(BlendFunc src, BlendFunc dst) {
-  glBlendFunc(GetGLBlendMode(src), GetGLBlendMode(dst));
+  m_currPipeline.SetBlendFunc(src, dst);
 }
 
 
 vvoid GL4RenderContext::SetDepthFunc(DepthFunc func) {
-  glDepthFunc(GetGLDepthFunc(func));
+  m_currPipeline.SetDepthFunc(func);
 }
 
 
 vvoid GL4RenderContext::ClearWithColor(glm::vec4 color) {
+  CLEAN_PIPELINE();
   glClearColor(color.x, color.y, color.z, color.w);
 }
 
 
 vvoid GL4RenderContext::ExecuteCommands(CommandbufferList *commandbuffer) {
-  
+  CLEAN_PIPELINE();
   if (commandbuffer) {
     for (Commandbuffer *command : commandbuffer->Raw()) {
       static_cast<GL4Commandbuffer *>(command)->Execute(this);
@@ -252,21 +177,22 @@ vvoid GL4RenderContext::ExecuteCommands(CommandbufferList *commandbuffer) {
 }
 
 
-vvoid GL4RenderContext::ConfigurePipelineState(PipelineState *state) {
-}
-
-
 vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
+  CLEAN_PIPELINE();
   if (pass) {
     const Viewport *view = &pass->GetViewport();
-    glViewport(view->win_x, view->win_y, view->win_width, view->win_height);
+    m_currPipeline.SetViewport(pass->GetViewport());
     pass->Bind();
     Clear();
     ClearWithColor(glm::vec4(pass->GetClearColor(), 1.0f));
   } else {
     // Set back to default.
-    glViewport(0, 0, Window::GetMainWindow()->GetWidth(), 
-      Window::GetMainWindow()->GetHeight());
+    Viewport default_port = { 
+      0, 0, 
+      Window::GetMainWindow()->GetWidth(), 
+      Window::GetMainWindow()->GetHeight() 
+    };
+    m_currPipeline.SetViewport(default_port);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     Clear();
   }
@@ -274,75 +200,77 @@ vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
 
 
 vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
+  CLEAN_PIPELINE();
   if (!params || !params->uniforms) { 
     return;
   }
+  vuint32 shader_program = 0;
   /*
     TODO(): Will need to parse these location values in the future.
   */
   //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
+  shader_program = m_currPipeline.GetShaderProgram();
   
-
   for (auto variable : *params->uniforms) {
     std::string s = variable.first;
     switch(variable.second.type) {
     case vikr_BOOL: 
-      glProgramUniform1i(m_currShaderProgram, 
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()), 
+      glProgramUniform1i(shader_program, 
+        glGetUniformLocation(shader_program, variable.first.c_str()), 
         (vint32)variable.second.m_bool); 
     break;
     case vikr_INT: 
-      glProgramUniform1i(m_currShaderProgram,
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+      glProgramUniform1i(shader_program,
+        glGetUniformLocation(shader_program, variable.first.c_str()),
         variable.second.m_integer); 
     break;
     case vikr_VEC2: 
-      glProgramUniform2fv(m_currShaderProgram,
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+      glProgramUniform2fv(shader_program,
+        glGetUniformLocation(shader_program, variable.first.c_str()),
         1, 
         glm::value_ptr(variable.second.m_vec2)); 
     break;
     case vikr_VEC3: 
-      glProgramUniform3fv(m_currShaderProgram,
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+      glProgramUniform3fv(shader_program,
+        glGetUniformLocation(shader_program, variable.first.c_str()),
         1, 
         glm::value_ptr(variable.second.m_vec3)); 
     break;
     case vikr_VEC4: 
-      glProgramUniform4fv(m_currShaderProgram,
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+      glProgramUniform4fv(shader_program,
+        glGetUniformLocation(shader_program, variable.first.c_str()),
         1, 
         glm::value_ptr(variable.second.m_vec4));
     break;
     case vikr_MAT2: 
-      glProgramUniformMatrix2fv(m_currShaderProgram,
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+      glProgramUniformMatrix2fv(shader_program,
+        glGetUniformLocation(shader_program, variable.first.c_str()),
         1, 
         GL_FALSE, 
         glm::value_ptr(variable.second.m_mat2));
     break;
     case vikr_MAT3: 
-      glProgramUniformMatrix3fv(m_currShaderProgram,
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+      glProgramUniformMatrix3fv(shader_program,
+        glGetUniformLocation(shader_program, variable.first.c_str()),
         1, 
         GL_FALSE, 
         glm::value_ptr(variable.second.m_mat3)); 
     break;
     case vikr_MAT4: 
-      glProgramUniformMatrix4fv(m_currShaderProgram,
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+      glProgramUniformMatrix4fv(shader_program,
+        glGetUniformLocation(shader_program, variable.first.c_str()),
         1, 
         GL_FALSE, 
         glm::value_ptr(variable.second.m_mat4));
     break;
     case vikr_DOUBLE: 
-      glProgramUniform1d(m_currShaderProgram,
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+      glProgramUniform1d(shader_program,
+        glGetUniformLocation(shader_program, variable.first.c_str()),
         variable.second.m_double);
     break;
     case vikr_FLOAT: 
-      glProgramUniform1f(m_currShaderProgram,
-        glGetUniformLocation(m_currShaderProgram, variable.first.c_str()),
+      glProgramUniform1f(shader_program,
+        glGetUniformLocation(shader_program, variable.first.c_str()),
         variable.second.m_float);
     break;
     default: break;
@@ -373,15 +301,13 @@ vvoid GL4RenderContext::ClearTextures() {
 }
 
 
-vvoid GL4RenderContext::ApplyShaderProgram(vuint32 program_id) {
-  if (program_id) {
-    glUseProgram(program_id);
-    m_currShaderProgram = program_id;
-  }
+vvoid GL4RenderContext::ApplyShaderProgram(Shader *shader) {
+  m_currPipeline.SetShader(shader);
 }
 
 
 vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
+  CLEAN_PIPELINE();
   if (buffer) {
     GL4Vertexbuffer *buf = static_cast<GL4Vertexbuffer *>(buffer);
     glBindVertexArray(buf->GetVertexArrayId());
@@ -402,7 +328,7 @@ RenderPass *GL4RenderContext::GetRenderPass() {
 
 
 PipelineState *GL4RenderContext::GetPipelineState() {
-  return static_cast<PipelineState *>(m_currPipeline);
+  return static_cast<PipelineState *>(&m_currPipeline);
 }
 
 

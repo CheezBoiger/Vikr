@@ -153,7 +153,7 @@ vvoid Renderer::Render() {
   
   // Set back to the default RenderPass.
   context->SetRenderPass(nullptr);
-  context->ApplyShaderProgram(lightShader->GetProgramId());
+  context->ApplyShaderProgram(lightShader);
   for (vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);   
   }
@@ -199,7 +199,7 @@ vint32 Renderer::Init(RenderDevice *device) {
   
 
   // Initialize the light parameters for the light shader.
-  m_renderDevice->GetContext()->ApplyShaderProgram(lightShader->GetProgramId());
+  m_renderDevice->GetContext()->ApplyShaderProgram(lightShader);
   Material setup;
   setup.SetInt("gPosition", 0);
   setup.SetInt("gNormal", 1);

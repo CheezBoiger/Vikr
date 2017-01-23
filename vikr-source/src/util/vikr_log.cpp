@@ -2,6 +2,7 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <vikr/util/vikr_log.hpp>
+#include <vikr/util/vikr_assert.hpp>
 #include <iomanip>
 #include <algorithm>
 
@@ -32,6 +33,10 @@ void VikrLog::DisplayMessage(VikrMessage type, std::string message) {
       PRINT_MESSAGE(UNKNOWN, "Unknown message");
       break;
   };
+  //if ((VikrLog::unsuppressed & VIKR_ERROR) == VIKR_ERROR) {
+  //  VIKR_PRINT("Press any key to continue the program...");
+  //  std::cin.ignore();
+  //}
 }
 
 

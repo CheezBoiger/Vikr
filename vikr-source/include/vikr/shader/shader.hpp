@@ -40,17 +40,41 @@ enum ShaderStage {
 class Shader {
 public:
   Shader();
-  Shader(Shader &&shader) = default;
-  Shader &operator=(Shader &&shader) = default;
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(Shader);
   virtual ~Shader() { }
 
+  /**
+    Compile the Shader for the Program to use.
+  */
   virtual vvoid Compile(std::string vs, std::string fs, std::string gs = "") = 0;
+
+  /**
+    Set the include search path for the file. This is for macro use of the #include.
+  */
   vvoid SetIncludeSearchPath(std::string path) { include_searchpath = path; }
+  
+  /**
+    Use the Shader for the program to use.
+  */
   virtual vvoid Use() = 0;
+
+  /**
+    Clean up the shader.
+  */
   virtual vvoid Cleanup() = 0;
+
+  /**
+    Get the program id associated with this shader.
+  */
   vuint32 GetProgramId() { return shader_id; }
+
+  /**
+    Check if this shader is linked.
+  */
   vbool IsLinked() { return is_linked; }
 
+  /**
+   */
   ShaderType GetShaderType() { return shader_type; }
 
   vvoid SetName(std::string name) { shader_name = name; }

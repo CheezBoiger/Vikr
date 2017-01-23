@@ -55,7 +55,7 @@ public:
   vvoid SetChangeViewport(Viewport *viewport) override;
 
 
-  vvoid SetShaderProgram(vuint32 program_id) override;
+  vvoid SetShaderProgram(Shader *shader) override;
 
 
   vvoid SetConfigurePipelineState(PipelineState *pipelinestate) override;

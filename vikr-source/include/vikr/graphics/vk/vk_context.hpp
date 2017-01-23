@@ -51,11 +51,9 @@ public:
 
   vvoid ExecuteCommands(CommandbufferList *buffer) override;
 
-  vvoid ConfigurePipelineState(PipelineState *state) override;
-
   vvoid SetShaderUniforms(ShaderUniformParams *params) override;
 
-  vvoid ApplyShaderProgram(vuint32 program_id) override;
+  vvoid ApplyShaderProgram(Shader *shader) override;
 
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
 

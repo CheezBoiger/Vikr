@@ -19,19 +19,19 @@ struct Viewport {
   /**
     Starting pixel width.
   */
-  vint32 win_x;
+  vuint32 win_x;
   /**
     Starting pixel height. 
   */
-  vint32 win_y;
+  vuint32 win_y;
   /**
     Max window width. 
   */
-  vint32 win_width;
+  vuint32 win_width;
   /**
     Max window height.
   */
-  vint32 win_height;
+  vuint32 win_height;
 };
 
 } // vikr

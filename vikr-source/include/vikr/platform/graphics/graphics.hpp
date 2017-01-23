@@ -26,7 +26,9 @@ namespace vikr {
 enum GraphicsPipeline {
   vikr_PIPELINE_UNKNOWN,
   vikr_PIPELINE_OPENGL,
-  vikr_PIPELINE_VULKAN
+  vikr_PIPELINE_VULKAN,
+  vikr_PIPELINE_D3D,
+  vikr_PIPELINE_METAL
 };
 
 

@@ -23,6 +23,16 @@ vint32 InitVikr(GraphicsPipeline graphicsAPI) {
       glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     }
     break;
+    case vikr_PIPELINE_D3D:
+    {
+      VikrLog::DisplayMessage(VIKR_ERROR, "Direct X is not implemented yet!");
+    }
+    break;
+    case vikr_PIPELINE_METAL:
+    {
+      VikrLog::DisplayMessage(VIKR_ERROR, "Metal is not implemented yet!");
+    }
+    break;
     case vikr_PIPELINE_UNKNOWN:
     default: success = 0; break;
   }

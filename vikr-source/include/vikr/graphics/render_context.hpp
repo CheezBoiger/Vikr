@@ -119,11 +119,6 @@ public:
   virtual vvoid ExecuteCommands(CommandbufferList *command_buffer) = 0;
 
   /**
-    Configures the pipeline state when needed.
-  */
-  virtual vvoid ConfigurePipelineState(PipelineState *state) = 0;
-
-  /**
     Sets the Shader uniforms when needed.
   */
   virtual vvoid SetShaderUniforms(ShaderUniformParams *params) = 0;
@@ -131,7 +126,7 @@ public:
   /**
     Applies the shader program within the context.
   */
-  virtual vvoid ApplyShaderProgram(vuint32 program_id) = 0;
+  virtual vvoid ApplyShaderProgram(Shader *shader) = 0;
 
   /**
     Query the Vertex buffer, in this case, it must be called everytime

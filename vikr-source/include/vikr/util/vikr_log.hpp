@@ -11,6 +11,7 @@
 
 #define MESSAGE_TYPE(type) #type
 #define PRINT_MESSAGE(type, message) std::cout << #type << ": " << message << std::endl
+#define VIKR_PRINT(stmt, ...) std::printf(stmt, ##__VA_ARGS__) 
 
 namespace vikr {
 

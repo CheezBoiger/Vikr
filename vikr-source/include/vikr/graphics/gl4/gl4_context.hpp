@@ -7,7 +7,7 @@
 
 #include <vikr/graphics/render_context.hpp>
 #include <vikr/graphics/command_buffer.hpp>
-
+#include <vikr/graphics/gl4/gl4_pipeline_state.hpp>
 #include <vikr/shader/shader_config.hpp>
 
 
@@ -17,6 +17,7 @@ namespace vikr {
 class Framebuffer;
 class GL4RenderPass;
 class GL4Commandbuffer;
+class GL4PipelineState;
 struct TextureSampler;
 
 
@@ -58,10 +59,9 @@ public:
   vvoid ChangeTopology(Topology topology) override;
 
   vvoid ExecuteCommands(CommandbufferList *command_buffer) override;
-  vvoid ConfigurePipelineState(PipelineState *state) override;
 
   vvoid SetShaderUniforms(ShaderUniformParams *params) override;
-  vvoid ApplyShaderProgram(vuint32 program_id) override;
+  vvoid ApplyShaderProgram(Shader *shader) override;
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
 
   vvoid SetRenderPass(RenderPass *pass) override;
@@ -76,17 +76,13 @@ public:
 private:
 
   vvoid ClearTextures();
-  /**
-    Current topology.
-  */
-  Topology m_currTopology                       = VIKR_TRIANGLES;
 
-  PipelineState *m_currPipeline                 = nullptr;
+  GL4PipelineState m_currPipeline;
 
-  vuint32 m_currShaderProgram                   = 0;
-  GL4RenderPass *m_currRenderPass                  = nullptr;
+  //vuint32 m_currShaderProgram                     = 0;
+  GL4RenderPass *m_currRenderPass                 = nullptr;
   std::vector<TextureSampler> m_currTextures;
-  GL4Commandbuffer *m_recordCommandbuffer          = nullptr;
+  GL4Commandbuffer *m_recordCommandbuffer         = nullptr;
 };
 } // vikr
 #endif // __VIKR_GL4_CONTEXT_HPP

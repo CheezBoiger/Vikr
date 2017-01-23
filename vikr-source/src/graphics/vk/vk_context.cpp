@@ -83,15 +83,11 @@ vvoid VKContext::ExecuteCommands(CommandbufferList *buffer) {
 }
 
 
-vvoid VKContext::ConfigurePipelineState(PipelineState *state) {
-}
-
-
 vvoid VKContext::SetShaderUniforms(ShaderUniformParams *params) {
 }
 
 
-vvoid VKContext::ApplyShaderProgram(vuint32 program_id) {
+vvoid VKContext::ApplyShaderProgram(Shader *shader) {
 }
 
 
@@ -101,4 +97,6 @@ vvoid VKContext::QueryVertexbuffer(Vertexbuffer *buffer) {
 
 vvoid VKContext::Present() {
 }
+
+
 } // vikr
