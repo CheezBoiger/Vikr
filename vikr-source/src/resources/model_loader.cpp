@@ -160,6 +160,7 @@ Material *ModelLoader::ParseMaterial(
         TextureTarget::vikr_TEXTURE_2D, 
         filepath, 
         true);
+      texture->Finalize();
     }
     if (texture) {
       texture_name = "vikr_TexAlbedo";
@@ -177,6 +178,7 @@ Material *ModelLoader::ParseMaterial(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
+      texture->Finalize();
     }
     if (texture) {
       texture_name = "vikr_TexNormal";
@@ -193,6 +195,7 @@ Material *ModelLoader::ParseMaterial(
         vikr_TEXTURE_2D,
         filepath,
         true);
+      texture->Finalize();
     }
     if (texture) {
       m_material->SetTexture("vikr_TexNormal", texture, 1);
@@ -209,6 +212,7 @@ Material *ModelLoader::ParseMaterial(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
+      texture->Finalize();
     }
     if (texture) {
       m_material->SetTexture("vikr_TexSpecular", texture, 2);
@@ -225,6 +229,7 @@ Material *ModelLoader::ParseMaterial(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
+      texture->Finalize();
     }
     if (texture) {
       m_material->SetTexture("vikr_TexRoughness", texture, 3);
@@ -241,6 +246,7 @@ Material *ModelLoader::ParseMaterial(
         vikr_TEXTURE_2D, 
         filepath, 
         true);
+      texture->Finalize();
     }
     if (texture) {
       m_material->SetTexture("vikr_TexAmbient", texture, 4);

@@ -50,7 +50,7 @@ GLenum GetGLTopology(Topology topology) {
 GL4RenderContext::GL4RenderContext()
 {
   //glEnable(GL_FRAMEBUFFER_SRGB);
-  glEnable(GL_MULTISAMPLE);
+  //glEnable(GL_MULTISAMPLE);
 }
 
 

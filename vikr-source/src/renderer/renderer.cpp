@@ -149,7 +149,6 @@ vvoid Renderer::Render() {
   m_gbuffer.ExecutePass(&m_commandBuffer);
 
   // Deferred Shading pass.
-
   context->SetRenderPass(nullptr);
   // Set back to the default RenderPass.
   context->ApplyShaderProgram(lightShader);
@@ -164,6 +163,7 @@ vvoid Renderer::Render() {
 
   // Draw the Screen Quad.
   m_screenquad.Execute();
+
 }
 
 

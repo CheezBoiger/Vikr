@@ -15,7 +15,7 @@ public:
   GLTexture3D();
   GLTexture3D(vuint32 width, vuint32 height, vuint32 depth);
 
-  vint32 Create(vbyte *bytecode) override;
+  vint32 Finalize() override;
 
   vuint32 GetDepth() { return m_depth; }
 

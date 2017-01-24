@@ -21,13 +21,13 @@ GLTexture3D::GLTexture3D(vuint32 width, vuint32 height, vuint32 depth)
 }
 
 
-vint32 GLTexture3D::Create(vbyte *bytecode) {
+vint32 GLTexture3D::Finalize() {
   m_target = vikr_TEXTURE_3D;
   native_target  = GetNativeTextureTarget(m_target);
   glGenTextures(1, &id);
   Bind();
   glTexImage3D(native_target, 0, native_internal_format, m_width, 
-    m_height, m_depth, 0, native_format, native_datatype, bytecode);
+    m_height, m_depth, 0, native_format, native_datatype, m_bytecode);
 
   glTexParameteri(native_target, GL_TEXTURE_MIN_FILTER, native_filter_min);
   glTexParameteri(native_target, GL_TEXTURE_MAG_FILTER, native_filter_max);

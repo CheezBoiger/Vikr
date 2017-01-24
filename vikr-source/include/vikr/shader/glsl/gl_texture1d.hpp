@@ -16,7 +16,7 @@ public:
   GLTexture1D();
   GLTexture1D(vuint32 width);
 
-  virtual vint32 Create(vbyte *bytecode) override;
+  virtual vint32 Finalize() override;
 
 };
 } // vikr

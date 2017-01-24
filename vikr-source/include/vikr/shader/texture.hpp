@@ -24,7 +24,11 @@ public:
   Texture() { }
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Texture);
 
-  virtual ~Texture() { }
+  virtual ~Texture() {
+    if (m_bytecode) { 
+      stbi_image_free(m_bytecode);
+    }
+  }
   /**
     Generates bytecode for the provided image.
   */
@@ -72,7 +76,7 @@ public:
   /**
     Create the Texture object.
   */
-  virtual vint32 Create(vbyte *bytecode) = 0;
+  virtual vint32 Finalize() = 0;
   /**
     Bind our texture object with the associated attachment point
     ( or, our id).
@@ -128,12 +132,21 @@ public:
 
   vvoid SetName(std::string name) { m_name = name; }
 
+  vvoid SetByteCode(vbyte *bytecode) {
+    if (m_bytecode) {
+      stbi_image_free(m_bytecode);
+    }
+    m_bytecode = bytecode; 
+  }
+  
+  vbyte *GetBytecode() { return m_bytecode; }
+
 protected:
 
   TextureTarget     m_target                    = vikr_TEXTURE_2D;
   TextureFormat     m_format                    = vikr_RGBA;
   TextureFormat     m_internal_format           = vikr_RGBA;
-  TextureFilterMode m_filter_min                = vikr_TEXTURE_LINEAR_MIPMAP_LINEAR;
+  TextureFilterMode m_filter_min                = vikr_TEXTURE_LINEAR;
   TextureFilterMode m_filter_max                = vikr_TEXTURE_LINEAR;
   TextureWrapMode   m_wrap_s                    = vikr_TEXTURE_REPEAT;
   TextureWrapMode   m_wrap_t                    = vikr_TEXTURE_REPEAT;
@@ -145,6 +158,7 @@ protected:
   vuint32           m_width                     = 0;
   std::string       m_path                      = "";
   std::string       m_name                      = "noname";
+  vbyte             *m_bytecode                 = nullptr;
 
 private:
   VIKR_DISALLOW_COPY_AND_ASSIGN(Texture);

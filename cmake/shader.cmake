@@ -63,6 +63,7 @@ set(VIKR_GLOB
   ${VIKR_SHADER_SRC_DIR}/shader.cpp
   ${VIKR_SHADER_SRC_DIR}/material.cpp
   ${VIKR_SHADER_SRC_DIR}/texture.cpp
+  ${VIKR_SHADER_SRC_DIR}/font_printer.cpp
 )
 
 set(VIKR_GLOB
@@ -74,6 +75,7 @@ set(VIKR_GLOB
   ${VIKR_SHADER_INCLUDE_DIR}/shader_uniform_params.hpp
   ${VIKR_SHADER_INCLUDE_DIR}/shader_config.hpp
   ${VIKR_SHADER_INCLUDE_DIR}/shader.hpp
+  ${VIKR_SHADER_INCLUDE_DIR}/font_printer.hpp
 )
 
 set(VIKR_GLOB
@@ -84,6 +86,7 @@ set(VIKR_GLOB
 set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_STB_INCLUDE_DIR}/stb_image.h
+  ${VIKR_STB_INCLUDE_DIR}/stb_truetype.h
 )
 
 

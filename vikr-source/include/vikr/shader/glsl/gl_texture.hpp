@@ -21,7 +21,7 @@ public:
   GLTexture();
 
 
-  virtual vint32 Create(vbyte *bytecode) override = 0;
+  virtual vint32 Finalize() override = 0;
   virtual vvoid Bind(vint32 texture = -1) override;
   virtual vvoid Unbind() override;
 

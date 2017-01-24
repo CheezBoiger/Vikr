@@ -104,12 +104,12 @@ Texture *GLResourceManager::CreateTexture(TextureTarget target, std::string img_
   case vikr_TEXTURE_CUBEMAP: // not implemented yet.
   default: break;
   }
-  if(texture) {
-    texture->Create(bytecode);
+  if (texture) {
+    texture->SetByteCode(bytecode);
+    //texture->Finalize(); // No need to tell the resource manager to finalize for us.
     texture->SetPath(img_path);
     GLResources::textures[img_path] = texture;
   }
-  stbi_image_free(bytecode);
   return texture.get();
 }
 

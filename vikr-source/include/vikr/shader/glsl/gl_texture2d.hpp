@@ -14,7 +14,7 @@ public:
   GLTexture2D(vuint32 width, vuint32 height = 0);
   GLTexture2D();
   
-  virtual vint32 Create(vbyte *bytecode) override;
+  virtual vint32 Finalize() override;
 
   vuint32 GetHeight() { return m_height; }
 

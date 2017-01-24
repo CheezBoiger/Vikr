@@ -26,7 +26,8 @@ GL4RenderTexture::GL4RenderTexture(std::string t_name, vuint32 width,
     m_texture->SetMultisampled(true);
   }
   
-  m_texture->Create(nullptr);
+  m_texture->SetByteCode(nullptr);
+  m_texture->Finalize();
 }
 
 
@@ -37,7 +38,7 @@ GL4Renderbuffer::GL4Renderbuffer(vuint32 width, vuint32 height, vbool multisampl
   glGenRenderbuffers(1, &m_rbo);
   glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
   if (multisampled) {
-    glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH_COMPONENT, width, height);
+    glRenderbufferStorageMultisample(GL_RENDERBUFFER, 0, GL_DEPTH_COMPONENT, width, height);
   } else {
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
   }
