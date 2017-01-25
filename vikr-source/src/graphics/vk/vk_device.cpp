@@ -113,8 +113,7 @@ Material *VKDevice::CreateMaterial(std::string name) {
 }
 
 
-std::unique_ptr<Vertexbuffer> VKDevice::CreateVertexbuffer(std::vector<Vertex> &vertices,
-  std::vector<vuint32> &indices, VertexUsageType type) {
+std::unique_ptr<Vertexbuffer> VKDevice::CreateVertexbuffer(VertexContainer &vertices) {
   return nullptr;
 }
 

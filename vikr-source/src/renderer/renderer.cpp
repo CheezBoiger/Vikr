@@ -122,7 +122,7 @@ vint32 Renderer::CleanupResources() {
 
 vvoid Renderer::Render() {
   CameraCommand cam;
-  if (camera) {
+  if(camera) {
     cam.camera = camera;
     PushBack(&cam);
     PushBackDeferred(&cam);
@@ -133,7 +133,7 @@ vvoid Renderer::Render() {
   // Record Commands.
   RenderContext *context = m_renderDevice->GetContext();
   std::vector<RenderCommand *> &render_commands = m_renderQueue.GetCommandBuffer();
-  for (RenderCommand *command : render_commands) {
+  for(RenderCommand *command : render_commands) {
     std::unique_ptr<Commandbuffer> buf = m_renderDevice->CreateCommandbuffer();
     command->Record(buf.get());
     m_commandBuffer.PushBack(buf);
@@ -144,16 +144,17 @@ vvoid Renderer::Render() {
     command->Record(buf.get());
     m_deferredBuffer.PushBack(buf);
   }
-  
+
   // Set the Gbuffer pass.
   m_gbuffer.ExecutePass(&m_commandBuffer);
 
   // Deferred Shading pass.
   context->SetRenderPass(nullptr);
+  context->Clear();
   // Set back to the default RenderPass.
   context->ApplyShaderProgram(lightShader);
-  for (vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
-    context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);   
+  for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
+    context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);
   }
   context->ExecuteCommands(&m_deferredBuffer);
 
@@ -163,7 +164,6 @@ vvoid Renderer::Render() {
 
   // Draw the Screen Quad.
   m_screenquad.Execute();
-
 }
 
 
@@ -211,6 +211,19 @@ vint32 Renderer::Init(RenderDevice *device) {
   ShaderUniformParams param;
   param.uniforms = setup.GetMaterialValues();
   m_renderDevice->GetContext()->SetShaderUniforms(&param);
+
+  m_renderDevice->GetResourceManager()->StoreShader("fontshader",
+    "../../libs/shader/GLSL/font.vert",
+    "../../libs/shader/GLSL/font.frag"
+  );
+  printer.SetShader(m_renderDevice->GetResourceManager()->GetShader("fontshader"));
+  Viewport viewport;
+  viewport.win_x = 0;
+  viewport.win_y = 0;
+  viewport.win_width = Window::GetMainWindow()->GetWidth();
+  viewport.win_height = Window::GetMainWindow()->GetHeight();
+  printer.SetViewport(viewport);
+  printer.Init(device, "c:/Windows/Fonts/consola.ttf");
 
   return 1;
 }

@@ -16,6 +16,7 @@ namespace vikr {
 
 class RenderDevice;
 class Shader;
+class Mesh;
 
 
 /**
@@ -27,7 +28,8 @@ public:
     Sets font shader.
   */
   FontPrinter(Shader *shader = nullptr,
-              std::string projection_name = "projection");
+              std::string projection_name = "projection",
+              std::string color_n = "textColor");
 
   vvoid Println(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color);
   vvoid Print(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color);
@@ -38,6 +40,10 @@ public:
 
 
   vvoid SetShader(Shader *shader) { m_fontshader = shader; }
+
+  /**
+    Set the projection.
+  */
   vvoid SetProjectionName(std::string name) { proj_name = name; }
   
   /**
@@ -58,8 +64,9 @@ private:
     Texture to render.
   */
   Texture *m_texture = nullptr;
-
+  RenderDevice *m_renderDevice = nullptr;
   glm::mat4 projection;
+  Mesh *m_mesh;
 
   /**
     Viewport reference.
@@ -71,6 +78,7 @@ private:
   */
   Shader *m_fontshader = nullptr;
   std::string proj_name;
+  std::string color_name;
 };
 } // vikr
 #endif // __VIKR_FONT_PRINTER_HPP

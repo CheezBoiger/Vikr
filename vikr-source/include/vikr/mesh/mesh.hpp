@@ -28,11 +28,6 @@ class Mesh : public IMesh {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Mesh);
 public:
   Mesh(GraphicsPipeline pipeline = vikr_PIPELINE_OPENGL);
-  Mesh(GraphicsPipeline pipeline,
-       std::vector<glm::vec3> positions, 
-       std::vector<glm::vec3> normals,
-       std::vector<glm::vec2> uvs,
-       std::vector<vuint32> indices = std::vector<vuint32>());
 
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Mesh);
   /**
@@ -70,37 +65,24 @@ public:
   /**
     Grab the type of Graphics Pipeline that this mesh is associated with.
   */
-  GraphicsPipeline GetRenderType() override { return m_render_type; } 
-  /**
-    Grab our vertices? TODO(Garcia): This is kind of stupid... lulz.
-  */
-  std::vector<Vertex>& GetVertices() { return m_vertices; }
-
-  /**
-  */
-  std::vector<vuint32> &GetIndices() { return m_indices; }
+  GraphicsPipeline GetRenderType() override { return m_render_type; }
+ 
+  VertexContainer &GetVertices() { return m_vertices; }
 
   /**
     Get the name of the Mesh object.
   */
   std::string GetName() { return m_name; }
-  /**
-    Get the usage type.
-  */
-  VertexUsageType GetVertexUsageType() override { return m_usage_type; };
 
   guid_t GetGUID() override { return guid; }
 
-protected:
+private:
 
   std::string m_name;
   GraphicsPipeline m_render_type;
   std::unique_ptr<Vertexbuffer> m_vertexBuffer;
   vbool is_transparent                  = false;
-  VertexUsageType m_usage_type          = vikr_STATIC;
-
-  std::vector<Vertex> m_vertices;
-  std::vector<vuint32> m_indices;
+  VertexContainer m_vertices;
 
   guid_t guid;
 };

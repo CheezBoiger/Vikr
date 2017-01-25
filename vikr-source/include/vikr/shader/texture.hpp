@@ -77,16 +77,20 @@ public:
     Create the Texture object.
   */
   virtual vint32 Finalize() = 0;
+
   /**
     Bind our texture object with the associated attachment point
     ( or, our id).
   */
   virtual vvoid Bind(vint32 id = -1) = 0;
+
   /**
     Unbind the texture from our Renderer.
   */
   virtual vvoid Unbind() = 0;
 
+  /**
+  */
   virtual vvoid SetFormat(TextureFormat format) = 0;
   virtual vvoid SetInternalFormat(TextureFormat format) = 0;
   virtual vvoid SetFilterMin(TextureFilterMode filter) = 0;
@@ -117,6 +121,52 @@ public:
     Get the native texture id.
   */
   virtual vuint32 GetNativeId() = 0;
+
+  /**
+    Get the native Target id. 
+  */
+  virtual vuint32 GetNativeTarget() = 0;
+  
+  /**
+    Get the native format id.
+  */
+  virtual vuint32 GetNativeFormat() = 0;
+    
+  /**
+    Get the native internal format.
+  */
+  virtual vuint32 GetNativeInternalFormat() = 0;
+
+  /**
+    Get then native filter min.
+  */
+  virtual vuint32 GetNativeFilterMin() = 0;
+
+  /**
+    Get the native filter max.
+  */
+  virtual vuint32 GetNativeFilterMax() = 0;
+
+  /**
+    Get native wrap s coord.
+  */
+  virtual vuint32 GetNativeWrapS() = 0;
+
+  /**
+    Get the native wrap t coord.
+  */
+  virtual vuint32 GetNativeWrapT() = 0;
+
+  /**
+    Get the native wrap r coord.
+  */
+  virtual vuint32 GetNativeWrapR() = 0;
+
+  /**
+    Get the native data type id.
+  */
+  virtual vuint32 GetNativeDataType() = 0;
+
   /**
     Set whether this texture needs to generate a mipmap for itself.
   */
@@ -146,7 +196,7 @@ protected:
   TextureTarget     m_target                    = vikr_TEXTURE_2D;
   TextureFormat     m_format                    = vikr_RGBA;
   TextureFormat     m_internal_format           = vikr_RGBA;
-  TextureFilterMode m_filter_min                = vikr_TEXTURE_LINEAR;
+  TextureFilterMode m_filter_min                = vikr_TEXTURE_LINEAR_MIPMAP_LINEAR;
   TextureFilterMode m_filter_max                = vikr_TEXTURE_LINEAR;
   TextureWrapMode   m_wrap_s                    = vikr_TEXTURE_REPEAT;
   TextureWrapMode   m_wrap_t                    = vikr_TEXTURE_REPEAT;

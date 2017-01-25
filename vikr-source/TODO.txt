@@ -44,7 +44,7 @@ Legend:
     - Bump and Parallax Mapping
       - Integrate Tangents and Bitangets into our Vertex object
       - Calculate tangents and bitangents.
-    - Render Target! for Post processing! NEEDS TO REDESIGN IT!!!!!
+    - Render Target! for Post processing!
       - Figure out how to make it easier to use for Targetting specific Meshes
       - Render Queue
         - Use an unordered_map to store key (RenderTarget *) with value (std::vector<RenderCommand>)?
@@ -62,6 +62,9 @@ Legend:
     - Implement the Framebuffer for the rendering pipeline.
     - Work on Scene graph for pushing commands with!
 
+    - Debugging using Text Rendering!
+      - Fix the Font Printer class!!
+      - stb_truetype being used. Not sure what is the problem however. Why it isn't rendering our text... Need more time on it...
 - Vikr Filesystem!  
   - Implement Filesystem handling for Folders/Directories of the Operating system.
     - Windows (WIN32 NAT)

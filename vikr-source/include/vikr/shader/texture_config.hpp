@@ -56,7 +56,9 @@ enum TextureFormat {
   vikr_RGB,
   vikr_RGBA,
   vikr_RGB16F,
-  vikr_DEPTH
+  vikr_DEPTH,
+  vikr_ALPHA,
+  vikr_RED
 };
 
 

@@ -48,8 +48,7 @@ public:
 
   Material *CreateMaterial(std::string name) override;
   
-  std::unique_ptr<Vertexbuffer> CreateVertexbuffer(std::vector<Vertex> &vertices,
-    std::vector<vuint32> &indices, VertexUsageType type) override;
+  std::unique_ptr<Vertexbuffer> CreateVertexbuffer(VertexContainer &vertices) override;
 
   ResourceManager *GetResourceManager() override;
 

@@ -28,10 +28,10 @@
 namespace vikr {
 
 #define CLEAN_PIPELINE() { \
-          if (m_currPipeline.NeedsUpdate()) { \
-            m_currPipeline.Update(); \
-          } \
-        }
+  if (m_currPipeline.NeedsUpdate()) { \
+    m_currPipeline.Update(); \
+  } \
+}
 
 
 GLenum GetGLTopology(Topology topology) {
@@ -56,11 +56,11 @@ GL4RenderContext::GL4RenderContext()
 
 vvoid GL4RenderContext::Draw(vuint32 start, vuint32 vertices) {
   CLEAN_PIPELINE();
-
   glDrawArrays(
     GetGLTopology(m_currPipeline.GetTopology()), 
     start, 
-    vertices);
+    vertices
+  );
   VIKR_ASSERT(glGetError() == 0);
 }
 
@@ -71,7 +71,8 @@ vvoid GL4RenderContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
     GetGLTopology(m_currPipeline.GetTopology()),
     elements,
     GL_UNSIGNED_INT,
-    indices);
+    indices
+  );
   VIKR_ASSERT(glGetError() == 0);
 }
 
@@ -103,6 +104,8 @@ vvoid GL4RenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
       default: break;
     }
   }
+
+  VIKR_ASSERT(glGetError() == 0);
 }
 
 
@@ -197,6 +200,8 @@ vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     Clear();
   }
+
+  VIKR_ASSERT(glGetError() == 0);
 }
 
 
@@ -312,7 +317,6 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
   if (buffer) {
     GL4Vertexbuffer *buf = static_cast<GL4Vertexbuffer *>(buffer);
     glBindVertexArray(buf->GetVertexArrayId());
-    
   }
   VIKR_ASSERT(glGetError() == 0);
 }
@@ -320,6 +324,7 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
 
 vvoid GL4RenderContext::Present() {
   glfwSwapBuffers(Window::GetMainWindow()->GetWindow());
+  VIKR_ASSERT(glGetError() = 0);
 }
 
 

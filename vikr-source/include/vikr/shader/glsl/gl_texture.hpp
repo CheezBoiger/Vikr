@@ -35,15 +35,15 @@ public:
   vvoid SetDataTypeFormat(DataTypeFormat format) override;
   vuint32 GetNativeId() override { return id; }
 
-  vuint32 GetNativeFormat() { return native_format; }
-  vuint32 GetNativeTarget() { return native_target; }
-  vuint32 GetNativeInternalFormat() { return native_internal_format; }
-  vuint32 GetFilterMin() { return native_filter_min; }
-  vuint32 GetFilterMax() { return native_filter_max; }
-  vuint32 GetNativeWrapS() { return native_wrap_s; }
-  vuint32 GetNativeWrapT() { return native_wrap_t; }
-  vuint32 GetNativeWrapR() { return native_wrap_r; }
-  vuint32 GetNativeDataType() { return native_datatype; }
+  vuint32 GetNativeFormat() override { return native_format; }
+  vuint32 GetNativeTarget() override { return native_target; }
+  vuint32 GetNativeInternalFormat() override { return native_internal_format; }
+  vuint32 GetNativeFilterMin() override { return native_filter_min; }
+  vuint32 GetNativeFilterMax() override { return native_filter_max; }
+  vuint32 GetNativeWrapS() override { return native_wrap_s; }
+  vuint32 GetNativeWrapT() override { return native_wrap_t; }
+  vuint32 GetNativeWrapR() override { return native_wrap_r; }
+  vuint32 GetNativeDataType() override { return native_datatype; }
 
   vvoid SetMultisampled(vbool enable) override { m_multisampled = enable; }
   vbool IsMultisampled() override { return m_multisampled; }

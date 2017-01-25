@@ -12,6 +12,7 @@
 #include <vikr/shader/texture_config.hpp>
 #include <vikr/shader/shader.hpp>
 #include <vikr/shader/cubemap.hpp>
+#include <vikr/shader/font_printer.hpp>
 #include <vikr/mesh/mesh.hpp>
 #include <vikr/renderer/gbuffer.hpp>
 #include <vikr/renderer/screen_quad.hpp>
@@ -157,6 +158,8 @@ protected:
 
   CommandbufferList m_commandBuffer;
   CommandbufferList m_deferredBuffer;
+
+  FontPrinter printer;
 
 
   /**

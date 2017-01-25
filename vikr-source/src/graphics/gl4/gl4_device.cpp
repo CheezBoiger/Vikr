@@ -61,16 +61,15 @@ Material *GL4RenderDevice::CreateMaterial(std::string name) {
   Data is interleaved.
 */
 std::unique_ptr<Vertexbuffer> 
-GL4RenderDevice::CreateVertexbuffer(
-  std::vector<Vertex> &vertices, std::vector<vuint32> &indices, VertexUsageType type) 
+GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices) 
 {
   GL4Vertexbuffer gbo;
   vuint32 vbo;
   vuint32 vao;
   vuint32 ibo = -1;
-  if (!vertices.empty()) {
+  if (!vertices.positions.empty()) {
     GLenum gl_type;
-    switch (type) {
+    switch (vertices.usage_type) {
       case vikr_STATIC:
         gl_type = GL_STATIC_DRAW;
       break;
@@ -85,21 +84,23 @@ GL4RenderDevice::CreateVertexbuffer(
       TODO(): Need to optimize?
     */
     std::vector<vreal32> data;
-    for(vuint32 i = 0; i < vertices.size(); ++i) {
-      data.push_back(vertices[i].position.x);
-      data.push_back(vertices[i].position.y);
-      data.push_back(vertices[i].position.z);
-      data.push_back(vertices[i].normal.x);
-      data.push_back(vertices[i].normal.y);
-      data.push_back(vertices[i].normal.z);
-      data.push_back(vertices[i].uv.x);
-      data.push_back(vertices[i].uv.y);
-      data.push_back(vertices[i].tangent.x);
-      data.push_back(vertices[i].tangent.y);
-      data.push_back(vertices[i].tangent.z);
-      data.push_back(vertices[i].bitangent.x);
-      data.push_back(vertices[i].bitangent.y);
-      data.push_back(vertices[i].bitangent.z);
+    vuint32 count = 0;
+    data.resize(vertices.positions.size() + vertices.normals.size() +
+      vertices.uvs.size() + vertices.tangents.size() + vertices.bitangents.size());
+    for (vuint32 i = 0; i < vertices.positions.size(); ++i) {
+      data[count++] = vertices.positions[i];
+    }
+    for (vuint32 i = 0; i < vertices.normals.size(); ++i) {
+      data[count++] = vertices.normals[i];
+    }
+    for (vuint32 i = 0; i < vertices.uvs.size(); ++i) {
+      data[count++] = vertices.uvs[i];
+    }
+    for (vuint32 i = 0; i < vertices.tangents.size(); ++i) {
+      data[count++] = vertices.tangents[i];
+    }
+    for (vuint32 i = 0; i < vertices.bitangents.size(); ++i) {
+      data[count++] = vertices.bitangents[i];
     }
     vuint32 offset = 0;
     glGenVertexArrays(1, &vao);
@@ -107,30 +108,35 @@ GL4RenderDevice::CreateVertexbuffer(
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(vreal32), &data[0], gl_type);
-    if(!indices.empty()) {
+    if (!vertices.indices.empty()) {
       glGenBuffers(1, &ibo);
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(vuint32), &indices[0], gl_type);
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER, 
+        vertices.indices.size() * sizeof(vuint32), 
+        &vertices.indices[0], 
+        gl_type
+      );
     }
     glEnableVertexAttribArray(0); 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (vvoid *)offset);
-    offset += sizeof(vreal32) * 3;
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+    offset += sizeof(vreal32) * vertices.positions.size();
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (vvoid *)offset);
-    offset += sizeof(vreal32) * 3;
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+    offset += sizeof(vreal32) * vertices.normals.size();
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (vvoid *)offset);
-    offset += sizeof(vreal32) * 2;
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+    offset += sizeof(vreal32) * vertices.uvs.size();
     glEnableVertexAttribArray(3);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (vvoid *)offset);
-    offset += sizeof(vreal32) * 3;
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+    offset += sizeof(vreal32) * vertices.tangents.size();
     glEnableVertexAttribArray(4);
-    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (vvoid *)offset);
-    offset += sizeof(vreal32) * 3;
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+    offset += sizeof(vreal32) * vertices.bitangents.size();
     glBindVertexArray(0);
     gbo.StoreVertexArrayId(vao);
     gbo.StoreVertexBufferId(vbo);
     gbo.StoreElementBufferId(ibo);
+    vertices.size = offset;
   }
 
   return std::make_unique<GL4Vertexbuffer>(std::move(gbo));

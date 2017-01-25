@@ -42,7 +42,6 @@ public:
             std::vector<vuint32> indices = std::vector<vuint32>()) = 0;
 
   virtual Vertexbuffer *GetVertexBuffer() = 0;
-  virtual VertexUsageType GetVertexUsageType() = 0;
   virtual GraphicsPipeline GetRenderType() = 0;
 
   virtual guid_t GetGUID() = 0;

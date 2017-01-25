@@ -26,10 +26,10 @@ public:
 
   vvoid Record(Commandbuffer *buffer) override {
     buffer->SetQueryVertexbuffer(m_mesh->GetVertexBuffer());
-    if (m_mesh->GetIndices().empty()) {
-      buffer->SetDraw(0, m_mesh->GetVertices().size());
+    if (m_mesh->GetVertices().indices.empty()) {
+      buffer->SetDraw(0, m_mesh->GetVertices().size);
     } else {
-      buffer->SetDrawIndexed(nullptr, m_mesh->GetIndices().size());
+      buffer->SetDrawIndexed(nullptr, m_mesh->GetVertices().indices.size());
     }
   }
 

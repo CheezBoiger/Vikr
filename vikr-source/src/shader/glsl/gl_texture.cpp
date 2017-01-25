@@ -56,6 +56,8 @@ GLenum GLTexture::GetNativeTextureFormat(TextureFormat format) {
     case vikr_RGBA: return GL_RGBA;
     case vikr_RGB16F: return GL_RGB16F;
     case vikr_DEPTH: return GL_DEPTH_COMPONENT;
+    case vikr_ALPHA: return GL_ALPHA;
+    case vikr_RED: return GL_RED;
     default: return GL_RGBA;
   }  
 }

@@ -69,6 +69,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
 
 vvoid GBuffer::ExecutePass(CommandbufferList *buffer) {
   if (m_device) {
+    m_device->GetContext()->Clear();
     m_device->GetContext()->SetRenderPass(m_renderpass.get());
     m_device->GetContext()->ApplyShaderProgram(m_gbuffershader);
     m_device->GetContext()->ExecuteCommands(buffer);
