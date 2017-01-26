@@ -75,9 +75,16 @@ vvoid GL4Framebuffer::Unbind() {
 
 vvoid GL4Framebuffer::ClearTexture(vuint32 attachment) {
   if (m_fbo) {
-    glFramebufferTexture2D(GL_FRAMEBUFFER, 
-      GL_COLOR_ATTACHMENT0 + attachment, GL_TEXTURE_2D, 0, 0);
-    if (m_colorAttachments.find(attachment) != m_colorAttachments.end()) {
+    std::map<vuint32, Texture *>::iterator it =
+      m_colorAttachments.find(attachment);   
+    if (it != m_colorAttachments.end()) {
+      if (it->second->IsMultisampled()) {
+        glFramebufferTexture2D(GL_FRAMEBUFFER,
+          GL_COLOR_ATTACHMENT0 + attachment, GL_TEXTURE_2D_MULTISAMPLE, 0, 0);
+      } else {
+        glFramebufferTexture2D(GL_FRAMEBUFFER, 
+          GL_COLOR_ATTACHMENT0 + attachment, GL_TEXTURE_2D, 0, 0);
+      }
       m_colorAttachments.erase(attachment);  
     }
   }
@@ -159,7 +166,13 @@ vvoid GL4Framebuffer::ClearAttachments() {
        i != m_colorAttachments.end();
         ++i)
   {
-    ClearTexture(i->first);
+    if (i->second->IsMultisampled()) {
+      glFramebufferTexture2D(GL_FRAMEBUFFER,
+        GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D_MULTISAMPLE, 0, 0);
+    } else {
+      glFramebufferTexture2D(GL_FRAMEBUFFER, 
+        GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D, 0, 0);
+    }
   }
   m_colorAttachments.clear();
 }
