@@ -15,6 +15,8 @@ class VkVertexbuffer : public Vertexbuffer {
 public:
 
 private:
+
+  
 };
 } // vikr
 #endif // __VIKR_VK_VERTEXBUFFER_HPP

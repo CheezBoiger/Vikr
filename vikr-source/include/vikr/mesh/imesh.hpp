@@ -21,13 +21,15 @@ class Vertexbuffer;
 
 
 
-
+/**
+  Mesh Interface. Used for abstracting meshes if new meshes need to be created.
+*/
 class IMesh {
 public:
   IMesh() { }
   virtual ~IMesh() { }
 
-  virtual vvoid Create(RenderDevice *device) = 0;
+  virtual vvoid Build(RenderDevice *device) = 0;
 
   virtual vvoid Buffer(
     std::vector<glm::vec3> positions,
@@ -43,6 +45,8 @@ public:
 
   virtual Vertexbuffer *GetVertexBuffer() = 0;
   virtual GraphicsPipeline GetRenderType() = 0;
+  virtual VertexContainer &GetVertices() = 0;
+  virtual vbool IsDirty() = 0;
 
   virtual guid_t GetGUID() = 0;
 };

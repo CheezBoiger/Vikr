@@ -1,6 +1,19 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
+/**
+  A huge inspiration from Mogemimi's Pomdog Game Engine Architecture for the 
+  Graphics API Abstraction.
+
+  RenderContext is practically the Render API core for our graphics library.
+  It is intended to act as a context for what ever Rendering API you plan to use,
+  be it OpenGL, OpenGL ES, Vulkan, Metal, DirectX10-12, etc...
+
+  We tell our gpu what we want it to do through here, which provides a neat abstraction
+  from the specific details. This is rather useful as we do not need to do super specific 
+  things, unless the programmer wishes to get into a more detailed context, to which this 
+  interface will ultimately allow. 
+*/
 #ifndef __VIKR_RENDER_CONTEXT_HPP
 #define __VIKR_RENDER_CONTEXT_HPP
 

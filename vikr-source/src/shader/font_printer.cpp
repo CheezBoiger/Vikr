@@ -105,7 +105,7 @@ vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
   m_mesh = device->GetResourceManager()->CreateMesh(quad.GetPositions(),
     quad.GetNormals(), quad.GetUVs());
   m_mesh->GetVertices().usage_type = vikr_DYNAMIC;
-  m_mesh->Create(device);
+  m_mesh->Build(device);
 }
 
 

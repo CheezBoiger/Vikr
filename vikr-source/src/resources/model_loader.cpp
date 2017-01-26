@@ -30,7 +30,12 @@ namespace vikr {
 std::vector<Texture *> ModelLoader::loaded_textures;
 
 
-SceneNode *ModelLoader::ImportModel(RenderDevice *device, std::string path, std::string name) {
+SceneNode *ModelLoader::ImportModel(
+  RenderDevice *device, 
+  std::string path, 
+  std::string name, 
+  vbool dynamic) 
+{
   Assimp::Importer importer;
   SceneNode *node = nullptr;
   const aiScene *scene = importer.ReadFile(path, 
@@ -44,26 +49,43 @@ SceneNode *ModelLoader::ImportModel(RenderDevice *device, std::string path, std:
     VikrLog::DisplayMessage(VIKR_ERROR, "Model Can not be loaded!");
   } else {
     std::string dir = path.substr(0, path.find_last_of('/'));
-    node = ProcessNode(device, scene->mRootNode, scene, dir, name);
+    node = ProcessNode(device, scene->mRootNode, scene, dir, name, dynamic);
+    node->Tag = name;
   }
   return node;
 }
 
 
+/*
+       TODO(Garcia): Needs optimization...
+
+                     (R)
+      | empty | empty | empty | empty |       
+          |       |       |       |
+         { }     { }     { }     { }         Nodes are empty first, then contain values?
+
+                 Should be....
+ 
+                    (R)
+   | { }   |    { }  |    { }  |    { } |      data should be immediate.
+      |          |         |         |
+   children   children  children  children
+  
+*/
 SceneNode *ModelLoader::ProcessNode(
   RenderDevice *device, 
   aiNode *node, 
   const aiScene *scene, 
   std::string dir,
-  std::string name) 
+  std::string name,
+  vbool dynamic) 
 {
   SceneNode *scene_node = Scene::CreateSceneNode(device);
   //scene_node->AddComponent<TransformComponent>();
   for (vuint32 i = 0; i < node->mNumMeshes; ++i) {
     aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
     aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-    Mesh *m_mesh = ProcessMesh(device, mesh, scene);
-    m_mesh->SetName(name + std::to_string(i));
+    Mesh *m_mesh = ProcessMesh(device, mesh, scene, dynamic);
     Material *m_material = ParseMaterial(device, material, dir, name + std::to_string(i));
     SceneNode *child = Scene::CreateSceneNode(device);
     MeshComponent *mc = child->AddComponent<MeshComponent>();
@@ -76,20 +98,26 @@ SceneNode *ModelLoader::ProcessNode(
     aiVector3D pos;
     aiQuaterniont<vreal32> rotation;
     node->mTransformation.DecomposeNoScaling(rotation, pos);
+    child->Tag = m_mesh->GetName();
     child->Update();
     scene_node->AddChild(child);
   }
   for (vuint32 i = 0; i < node->mNumChildren; ++i) {
     scene_node->AddChild(
       ProcessNode(device, node->mChildren[i], scene, 
-        dir, name + "_" + std::to_string(i)));
+        dir, name + "_" + std::to_string(i), dynamic));
   }
   //scene_node->Update();
   return scene_node;
 }
 
 
-Mesh *ModelLoader::ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene *scene) {
+Mesh *ModelLoader::ProcessMesh(
+  RenderDevice *device, 
+  aiMesh *mesh, 
+  const aiScene *scene, 
+  vbool dynamic) 
+{
   Mesh *m_mesh = nullptr;
   std::vector<Vertex> vertices;
   std::vector<vuint32> indices;
@@ -133,10 +161,14 @@ Mesh *ModelLoader::ProcessMesh(RenderDevice *device, aiMesh *mesh, const aiScene
       indices.push_back(face->mIndices[j]);
     }
   }
-  // Create our mesh, the mesh is created and buffered, as well as properly stored,
+  // Create our mesh, the mesh is created, buffered, built, as well as properly stored,
   // so no need to do much.
   m_mesh = device->GetResourceManager()->CreateMesh(vertices, indices);
-  m_mesh->Create(device);
+  if (dynamic) {
+    m_mesh->GetVertices().usage_type = vikr_DYNAMIC;
+  }
+  m_mesh->SetName(mesh->mName.C_Str());
+  m_mesh->Build(device);
   return m_mesh;
 }
 

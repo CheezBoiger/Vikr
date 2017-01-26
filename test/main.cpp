@@ -79,9 +79,9 @@ int main(int c, char* args[]) {
   renderer.Init(&device);
   renderer.SetCamera(&camera);
   SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), 
-    "../../libs/models/sponza_cry/sponza.obj", "sponza");
+    "../../libs/models/sponza_cry/sponza.obj", "sponza", false);
   SceneNode *nano = ModelLoader::ImportModel(renderer.GetDevice(), 
-    "../../libs/models/nanosuit/nanosuit.obj", "suitboy");
+    "../../libs/models/nanosuit/nanosuit.obj", "suitboy", true);
   Quad quad;
   Cube cube;
   // suitboy.
@@ -101,15 +101,14 @@ int main(int c, char* args[]) {
   Mesh *light_mesh =
     renderer.GetDevice()->GetResourceManager()->
     CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
-  cube_mesh->Create(renderer.GetDevice());
-  light_mesh->Create(renderer.GetDevice());
+  cube_mesh->Build(renderer.GetDevice());
+  light_mesh->Build(renderer.GetDevice());
 
   SceneNode *cube1 = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
   cube1->AddComponent<MeshComponent>()->mesh = cube_mesh;
   cube1->AddComponent<TransformComponent>();
   //cube1->AddComponent<RendererComponent>()->material = default_mat;
   cube1->Update();
-
   PointLight plight;
   PointLight plight2;
   DirectionalLight dlight1;

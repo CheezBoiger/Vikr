@@ -1,6 +1,34 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
+/**
+  Commandbuffers handle commands that must be sent to the gpu for execution. Think of them
+  as an audio recorder, you say what you want the listener to do, with the exact instructions,
+  and the listener can replay the instuctions over and over if need be, to do what you want them
+  to do.
+
+  To clarify how this works we do this:
+  
+      1. Create Commandbuffer. (Different RenderContext's have different Commandbuffers).
+      2. Begin recording.
+      3. Record your commands.
+      4. End recording.
+      5. Store into a list along with other Commandbuffers.
+      6. Execute the list of Commandbuffers.
+
+
+  Where these command buffers are stored, is called a CommandbufferList. This object
+  holds all commandbuffers that are to be sent to the gpu RenderAPI:
+
+  |--------------------CommandbufferList---------------------|
+  |                                                          |
+  [Commandbuffer][Commandbuffer][Commandbuffer][Commandbuffer]
+
+  What goes on is that the Render Context reads (or replays the commandbuffers). Once 
+  the RenderContext is done, the programmer would be able to reuse the same CommandbufferList 
+  to execute again and again. This can be beneficial if a renderer needs to render a scene 
+  more than once for different renderpasses, skyboxes, reflections, and whatnot.
+*/
 #ifndef __VIKR_COMMAND_BUFFER_HPP
 #define __VIKR_COMMAND_BUFFER_HPP
 
@@ -34,10 +62,11 @@ struct Viewport;
 
 
 /**
-  CommandBuffer to send to RenderContext. This is a raw commandbuffer,
-  so sorting is not needed here.
+  A Commandbuffer is an object that holds the recordings of commands for the RenderContext.
+  It is not sorted, so be sure that whatever you list in the commands, the RenderContext will
+  read and execute it the exact same way (think of it as filling a queue).
 
-  Manual commands must be set here.
+  NOTE: Be sure to use BeginRecord to begin recording your command, otherwise it won't record!
 */
 class Commandbuffer {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Commandbuffer);

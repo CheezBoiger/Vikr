@@ -87,7 +87,7 @@ public:
   virtual std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height, vbool multisample = false) = 0;
 
   /**
-  
+    Create a cubemap object.
   */
   virtual std::unique_ptr<Cubemap> CreateCubemap() = 0;
 
@@ -96,6 +96,9 @@ public:
   */
   virtual std::unique_ptr<RenderPass> CreateRenderPass() = 0;
 
+  /**
+    Create a command buffer to handle recording commands into an organized batch.
+  */
   virtual std::unique_ptr<Commandbuffer> CreateCommandbuffer() = 0;
 };
 } // vikr

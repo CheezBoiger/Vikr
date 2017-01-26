@@ -75,6 +75,7 @@ GLenum GLTexture::GetNativeDataTypeFormat(DataTypeFormat format) {
 
 GLTexture::GLTexture()
 {
+  CleanParams();
 }
 
 
@@ -136,5 +137,17 @@ vvoid GLTexture::Bind(vint32 texture) {
 
 vvoid GLTexture::Unbind() {
   glBindTexture(native_target, 0);
+}
+
+
+vvoid GLTexture::CleanParams() {
+  SetWrapT(m_wrap_r);
+  SetWrapS(m_wrap_s);
+  SetWrapR(m_wrap_r);
+  SetDataTypeFormat(m_datatype);
+  SetFormat(m_format);
+  SetInternalFormat(m_internal_format);
+  SetFilterMin(m_filter_min);
+  SetFilterMax(m_filter_max);
 }
 } // vikr

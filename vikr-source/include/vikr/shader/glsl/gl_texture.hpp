@@ -61,6 +61,11 @@ protected:
   vuint32 native_wrap_s               = GL_REPEAT;
   vuint32 native_wrap_t               = GL_REPEAT;
   vuint32 native_wrap_r               = GL_REPEAT;
+
+  /**
+    Clean the Shader params.
+  */
+  vvoid CleanParams();
 };
 } // vikr
 #endif // __VIKR_GLTEXTURE_HPP

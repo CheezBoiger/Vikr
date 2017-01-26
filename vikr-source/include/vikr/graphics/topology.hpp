@@ -8,6 +8,11 @@
 namespace vikr {
 
 
+/**
+  Topology describes how the gpu should draw a given mesh.
+  This can stem from Points (or dots that will represent vertex points
+  of a mesh), line stips, lines, triangles, and more.
+*/
 enum Topology {
   VIKR_POINTS,
   VIKR_LINE_STRIP,

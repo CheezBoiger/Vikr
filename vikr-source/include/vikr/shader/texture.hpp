@@ -6,7 +6,6 @@
 
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
-#include <vikr/shader/stb/stb_image.h>
 #include <vikr/shader/texture_config.hpp>
 #include <string>
 
@@ -24,11 +23,8 @@ public:
   Texture() { }
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Texture);
 
-  virtual ~Texture() {
-    if (m_bytecode) { 
-      stbi_image_free(m_bytecode);
-    }
-  }
+  virtual ~Texture();
+
   /**
     Generates bytecode for the provided image.
   */
@@ -182,12 +178,7 @@ public:
 
   vvoid SetName(std::string name) { m_name = name; }
 
-  vvoid SetByteCode(vbyte *bytecode) {
-    if (m_bytecode) {
-      stbi_image_free(m_bytecode);
-    }
-    m_bytecode = bytecode; 
-  }
+  vvoid SetByteCode(vbyte *bytecode);
   
   vbyte *GetBytecode() { return m_bytecode; }
 

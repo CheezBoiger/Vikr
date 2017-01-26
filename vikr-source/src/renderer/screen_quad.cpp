@@ -23,7 +23,7 @@ vvoid ScreenQuad::Init(RenderDevice *device) {
   m_device = device;
   m_quad = device->GetResourceManager()->CreateMesh(
     quad.GetPositions(), quad.GetNormals(), quad.GetUVs());
-  m_quad->Create(device);
+  m_quad->Build(device);
 
   std::unique_ptr<Commandbuffer> buffer = device->CreateCommandbuffer();
   command.m_mesh = m_quad;

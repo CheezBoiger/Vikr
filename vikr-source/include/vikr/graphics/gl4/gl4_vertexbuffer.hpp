@@ -6,6 +6,7 @@
 
 
 #include <vikr/graphics/vertexbuffer.hpp>
+#include <vikr/util/vikr_assert.hpp>
 
 
 namespace vikr {
@@ -30,11 +31,12 @@ public:
   vuint32 GetElementBufferId() override { return m_ibo; }
   vvoid StoreElementBufferId(vuint32 ibo) override { m_ibo = ibo; }
 
-  vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) {
+  vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) override {
     // subdata for dynamic stuff.
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
     glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    VIKR_ASSERT(glGetError() == 0);
   }
 
 private:

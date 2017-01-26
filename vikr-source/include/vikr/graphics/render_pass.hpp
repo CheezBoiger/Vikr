@@ -22,8 +22,7 @@ class Framebuffer;
 
 /**
   Controls passes that are sent to the Renderer. These RenderPasses
-  are what render on to the Screen Quad.
-  Note: This can be a struct.
+  are what render within a framebuffer for offscreen rendering.
 */
 class RenderPass {
 public:

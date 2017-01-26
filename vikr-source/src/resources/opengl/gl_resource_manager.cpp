@@ -9,6 +9,8 @@
 #include <vikr/shader/glsl/gl_texture2d.hpp>
 #include <vikr/shader/glsl/gl_texture3d.hpp>
 
+#include <vikr/shader/stb/stb_image.h>
+
 namespace vikr {
 
 

@@ -144,7 +144,7 @@ GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices)
 
 
 std::unique_ptr<Framebuffer> GL4RenderDevice::CreateFramebuffer() {
-  return std::make_unique<GL4Framebuffer>(); // for now.
+  return std::make_unique<GL4Framebuffer>();
 }
 
 

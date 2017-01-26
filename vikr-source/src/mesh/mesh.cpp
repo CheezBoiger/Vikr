@@ -85,7 +85,7 @@ vvoid Mesh::Buffer(std::vector<Vertex> vertices,
 }
 
 
-vvoid Mesh::Create(RenderDevice *device) { 
+vvoid Mesh::Build(RenderDevice *device) { 
   if (device) {
     m_vertexBuffer = device->CreateVertexbuffer(m_vertices);
   }

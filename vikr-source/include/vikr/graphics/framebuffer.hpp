@@ -1,6 +1,10 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
+/**
+  Our Framebuffer is the forefront of our Rendering API, sepcifically for 
+  offscreen rendering. 
+*/
 #ifndef __VIKR_FRAMEBUFFER_HPP
 #define __VIKR_FRAMEBUFFER_HPP
 

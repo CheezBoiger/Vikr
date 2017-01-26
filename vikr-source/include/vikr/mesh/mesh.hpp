@@ -31,9 +31,9 @@ public:
 
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Mesh);
   /**
-    This must be abstracted. Creates the Mesh object based on The type of Renderer.
+    This must be abstracted. Builds the Mesh object based on The type of Renderer.
   */
-  virtual vvoid Create(RenderDevice *device) override;
+  virtual vvoid Build(RenderDevice *device) override;
   /**
     Inputs the vertex data to the Mesh object. 
   */
@@ -67,14 +67,27 @@ public:
   */
   GraphicsPipeline GetRenderType() override { return m_render_type; }
  
-  VertexContainer &GetVertices() { return m_vertices; }
+  /**
+    Grabe the Vertices inside this Mesh. This is a container holding vertices
+    in a data oriented manner.
+  */
+  VertexContainer &GetVertices() override { return m_vertices; }
 
   /**
     Get the name of the Mesh object.
   */
   std::string GetName() { return m_name; }
 
+  /**
+    Unique Identification number for the mesh.
+  */
   guid_t GetGUID() override { return guid; }
+
+  /**
+    For animation purposes. Dirty values are checked in case the mesh needs to
+    update other components.
+  */
+  vbool IsDirty() override { return is_dirty; }
 
 private:
 
@@ -82,6 +95,7 @@ private:
   GraphicsPipeline m_render_type;
   std::unique_ptr<Vertexbuffer> m_vertexBuffer;
   vbool is_transparent                  = false;
+  vbool is_dirty                        = false;
   VertexContainer m_vertices;
 
   guid_t guid;

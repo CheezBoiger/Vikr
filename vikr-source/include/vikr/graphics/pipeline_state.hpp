@@ -1,6 +1,13 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
+/**
+  PipelineState holds all information regarding the current pipeline
+  that has been configured for the Render API. This Object holds all
+  shaders (vertex, fragment/pixel, compute, tesselation, hull, etc shaders),
+  depth mode, cull mode, blending equations, and what not. we keep track of our
+  pipeline state through this object for organizational reasons.
+*/
 #ifndef __VIKR_PIPELINE_STATE_HPP
 #define __VIKR_PIPELINE_STATE_HPP
 
