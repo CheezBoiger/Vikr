@@ -112,11 +112,6 @@ public:
   virtual vvoid BindDepthStencilBuffer(Renderbuffer *rbo) = 0;
 
   /**
-    Destroy the framebuffer.
-  */
-  virtual vvoid DestroyFramebuffer() = 0;
-
-  /**
     Get the color attachments from the framebuffer.
   */
   virtual Texture *GetColorAttachment(vuint32 attachment) = 0;
@@ -139,6 +134,8 @@ public:
 
   virtual vvoid Readbuffer(BufferMode mode) = 0;
   virtual vvoid Writebuffer(BufferMode mode) = 0;
+
+  virtual vvoid Cleanup() = 0;
 };
 } // vikr
 #endif // __VIKR_FRAMEBUFFER_HPP

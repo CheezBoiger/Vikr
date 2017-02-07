@@ -19,13 +19,15 @@ namespace vikr {
 
 
 class Shader;
+class ShaderProgram;
 class Mesh;
 class Material;
 class SceneNode;
 
 
 /**
-  Resource Manager handles Resources for the User to use.
+  Resource Manager handles Resources for the User to use. Create materials, but 
+  handles them for the user.
 
   This includes handling Materials, Textures, Shaders, Meshes, and possibly
   SceneNodes.
@@ -36,8 +38,22 @@ public:
 
   virtual ~ResourceManager() { }
 
-  virtual vint32 StoreShader(std::string name, Shader *shader) = 0;
+  /**
+    Create a shader, and store it into Resources, the id of the shader will 
+    be returned. Resources takes care of this.
+  */
+  virtual Shader *CreateShader(std::string name, ShaderStage stage) = 0;
   virtual Shader *GetShader(std::string name) = 0;
+  virtual vbool DestroyShader(std::string name) = 0;
+
+  virtual PipelineState *CreatePipelineState(std::string name) = 0;
+  virtual PipelineState *GetPipelineState(std::string name) = 0;
+  virtual vbool DestroyPipelineState(std::string name) = 0;
+
+
+  virtual ShaderProgram *CreateShaderProgram() = 0;
+  virtual ShaderProgram *GetShaderProgram(guid_t id) = 0;
+  virtual vbool DestroyShaderProgram(guid_t id) = 0;
   
   /**
     Creates the mesh object that is handled by the ResourceManager.
@@ -55,17 +71,15 @@ public:
   virtual Mesh *CreateMesh(std::vector<Vertex> vertices,
     std::vector<vuint32> indices = std::vector<vuint32>()) = 0;
   virtual Mesh *GetMesh(guid_t guid) = 0;
+  virtual vbool DestroyMesh(guid_t guid) = 0;
 
   virtual Material *CreateMaterial(std::string mat_name) = 0;
+  virtual Material *GetMaterial(std::string mat_name) = 0;
+  virtual vbool DestroyMaterial(std::string name) = 0;
 
   virtual Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) = 0;
   virtual Texture *GetTexture(std::string image_path) = 0;
-
-  virtual vint32 StoreShader(std::string shader_name,
-                             std::string vs,
-                             std::string fs,
-                             std::string include_searchpath = ".",
-                             std::string gs = "") = 0;
+  virtual vbool DestroyTexture(std::string name) = 0;
 
   /**
     Much involves the interface design of ResourceManager, but this is common.
@@ -80,6 +94,9 @@ public:
   */
   vint32 DestroySceneNode(guid_t guid, vbool destroy_subtree);
 
+
+  GraphicsPipeline GetGraphicsPipeline() { return pipeline; }
+
 private:
   /**
     Graphics pipeline of the ResourceManager.
@@ -87,6 +104,8 @@ private:
   GraphicsPipeline pipeline;
 
 };
+
+
 
 
 /**

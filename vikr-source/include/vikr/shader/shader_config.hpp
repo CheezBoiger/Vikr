@@ -19,6 +19,39 @@ class Texture;
 
 
 /**
+Shader format language.
+*/
+enum ShaderLanguage {
+  vikr_NOLANG,
+  vikr_GLSL,
+  vikr_HLSL,
+  vikr_SPIRV
+};
+
+
+/**
+Defined Shader stages.
+*/
+enum ShaderStage {
+  VERTEX_SHADER,
+  // Fragment shader is equivalent to Pixel shaders.
+  FRAGMENT_SHADER,
+  GEOMETRY_SHADER,
+  COMPUTE_SHADER,
+  // Tesselation Control shader is equivalent to Hull shaders.
+  TESS_CONTROL_SHADER,
+  // Tesselation Evaluation shader is equivalent to Domain shaders.
+  TESS_EVALUATION_SHADER,
+  // Pixel Shader is equivalent to Fragment shaders.
+  PIXEL_SHADER = FRAGMENT_SHADER,
+  // Hull shader is equivalent to Control shaders.
+  HULL_SHADER = TESS_CONTROL_SHADER,
+  // Domain shader is equivalent to evaluation shaders.
+  DOMAIN_SHADER = TESS_EVALUATION_SHADER
+};
+
+
+/**
 We determine the uniform type for our Uniform object
 within the shader.
 */

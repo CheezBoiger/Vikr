@@ -107,8 +107,6 @@ public:
   virtual vint32 CleanupResources();
 
 protected:
-
-  vvoid DrawScreenQuad();
   /**
     Checks if the renderer is in the middle of rendering.
   */
@@ -156,8 +154,8 @@ protected:
   */
   std::vector<std::unique_ptr<RenderTexture> > m_renderTextures;
 
-  CommandbufferList m_commandBuffer;
-  CommandbufferList m_deferredBuffer;
+  CommandbufferList m_commandBufferList;
+  CommandbufferList m_deferredBufferList;
 
   FontPrinter printer;
 

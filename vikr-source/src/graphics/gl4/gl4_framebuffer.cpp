@@ -106,11 +106,6 @@ vvoid GL4Framebuffer::BindTexture(RenderTarget *target, vuint32 attachment) {
 }
 
 
-vvoid GL4Framebuffer::DestroyFramebuffer() {
-  glDeleteFramebuffers(1, &m_fbo);
-}
-
-
 vvoid GL4Framebuffer::BindDepthStencilBuffer(Renderbuffer *rbo) {
   if (rbo) {
     GL4Renderbuffer *buffer = static_cast<GL4Renderbuffer *>(rbo);
@@ -175,5 +170,12 @@ vvoid GL4Framebuffer::ClearAttachments() {
     }
   }
   m_colorAttachments.clear();
+}
+
+
+vvoid GL4Framebuffer::Cleanup() {
+  if (m_fbo) {
+    glDeleteFramebuffers(1, &m_fbo);
+  }
 }
 } // vikr

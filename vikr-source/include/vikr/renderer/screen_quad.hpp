@@ -18,10 +18,16 @@
 namespace vikr {
 
 
+/**
+  The screen quad to render onto.
+*/
 class ScreenQuad {
 public:
   ScreenQuad();
 
+  /**
+    Initialize the ScreenQuad.
+  */
   vvoid Init(RenderDevice *device);
 
   vvoid Execute();

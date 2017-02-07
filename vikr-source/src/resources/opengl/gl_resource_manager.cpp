@@ -8,18 +8,21 @@
 #include <vikr/shader/glsl/gl_texture1d.hpp>
 #include <vikr/shader/glsl/gl_texture2d.hpp>
 #include <vikr/shader/glsl/gl_texture3d.hpp>
-
+#include <vikr/shader/glsl/glsl_program.hpp>
 #include <vikr/shader/stb/stb_image.h>
+
+#include <vikr/graphics/gl4/gl4_pipeline_state.hpp>
 
 namespace vikr {
 
 
-std::unordered_map<std::string,
-  std::pair<std::string, std::unique_ptr<GLSLShader> > > GLResources::shaders;
+std::unordered_map<std::string, std::shared_ptr<GLSLShader> > GLResources::shaders;
 
 std::map<guid_t, std::shared_ptr<Mesh> > GLResources::meshes;
 std::map<std::string, std::shared_ptr<Material> > GLResources::materials;
 std::map<std::string, std::shared_ptr<GLTexture> > GLResources::textures;
+std::map<guid_t, std::shared_ptr<GLSLShaderProgram> > GLResources::shader_programs;
+std::map<std::string, std::shared_ptr<GL4PipelineState> > GLResources::pipelinestates;
 
 
 GLResourceManager::GLResourceManager()
@@ -28,21 +31,21 @@ GLResourceManager::GLResourceManager()
 }
 
 
-vint32 GLResourceManager::StoreShader(std::string name, Shader *shader) {
-  vint32 success = 0;
-  if (shader && shader->IsLinked()) {
-    shader->SetName(name);
-    GLResources::shaders[name] = std::make_pair(name, std::make_unique<GLSLShader>(
-                    std::move(*static_cast<GLSLShader *>(shader))));
-    success = true;
+Shader *GLResourceManager::CreateShader(std::string name, ShaderStage stage) {
+  if (GLResources::shaders.find(name) != GLResources::shaders.end()) {
+    return nullptr;
   }
-  return success;
+  std::shared_ptr<GLSLShader> shader = std::make_shared<GLSLShader>(stage);
+  shader->SetName(name);
+
+  GLResources::shaders[name] = shader;
+  return static_cast<Shader *>(shader.get());
 }
 
 
 Shader *GLResourceManager::GetShader(std::string name) {
   if (GLResources::shaders.find(name) != GLResources::shaders.end()) {
-    return static_cast<Shader *>(GLResources::shaders[name].second.get());
+    return static_cast<Shader *>(GLResources::shaders[name].get());
   }
   return nullptr;
 }
@@ -118,22 +121,5 @@ Texture *GLResourceManager::CreateTexture(TextureTarget target, std::string img_
 
 Texture *GLResourceManager::GetTexture(std::string img_path) {
   return GLResources::textures[img_path].get();
-}
-
-
-vint32 GLResourceManager::StoreShader(
-  std::string shader_name,
-  std::string vs,
-  std::string fs,
-  std::string include_path,
-  std::string gs)
-{
-  GLSLShader shader;
-  shader.SetIncludeSearchPath(include_path);
-  shader.Compile(vs, fs, gs);
-  if(shader.IsLinked()) {
-    return StoreShader(shader_name, &shader);
-  }
-  return -1;
 }
 } // vikr

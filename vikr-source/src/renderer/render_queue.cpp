@@ -11,7 +11,7 @@ namespace vikr {
 
 vvoid RenderQueue::PushBack(RenderCommand *command) {
   if (command) {
-    m_commandBuffer.push_back(command);
+    m_commands.push_back(command);
   }
 }
 
@@ -19,13 +19,13 @@ vvoid RenderQueue::PushBack(RenderCommand *command) {
 vvoid RenderQueue::Sort() {
   std::sort(deferred_commands.begin(), deferred_commands.end(), deferred_comparator);
   // Standard sort using custom sorting callback.
-  std::sort(m_commandBuffer.begin(), m_commandBuffer.end(), sorting_comparator);
+  std::sort(m_commands.begin(), m_commands.end(), sorting_comparator);
 }
 
 
 vvoid RenderQueue::Clear() {
   deferred_commands.clear();
-  m_commandBuffer.clear();
+  m_commands.clear();
 }
 
 

@@ -84,28 +84,65 @@ public:
   */
   virtual vvoid SetRenderTarget(RenderTarget *target, vuint32 index) = 0;
 
-
+  /**
+    Set the RenderPass to use in this context.
+  */
   virtual vvoid SetRenderPass(RenderPass *pass) = 0;
 
+  /**
+    Set the Blend equation to use.
+  */
   virtual vvoid SetBlendEq(BlendEq eq) = 0;
 
+  /**
+    Set the blend function for both the context source and destination.
+  */
   virtual vvoid SetBlendMode(BlendFunc src, BlendFunc dst) = 0;
 
+  /**
+    Set the Depth function, this is mainly kept in default.
+  */
   virtual vvoid SetDepthFunc(DepthFunc depth) = 0;
 
+  /**
+    Enable culling mode if necessary.
+  */
   virtual vvoid EnableCullMode(vbool enable) = 0;
 
+  /**
+    Set the blend mode for the current context.
+  */
   virtual vvoid EnableBlendMode(vbool enable) = 0;  
 
+  /**
+    Enable depth mode if needed. This is used for 3D graphics.
+  */
   virtual vvoid EnableDepthMode(vbool enable) = 0;
 
+  /**
+    Set the face that is to be culled away.
+  */
   virtual vvoid SetCullFace(CullFace face) = 0;
 
+  /**
+    Set the Face cycle to be clockwise or counter-clockwise. this is to 
+    tell the vertex assembly the winding order of how vertices describe a 
+    patch and whatnot.
+  */
   virtual vvoid SetFrontFace(FrontFace face) = 0;
 
-  
+  /**
+    Begin recording a command buffer. This tells the Context that 
+    a thread is handling the rendering context.
+  */
   virtual vvoid BeginRecord(Commandbuffer *buf) = 0;
+
+  /**
+    End the recording, this tells Context that a thread has successfully stopped
+    recording.
+  */
   virtual vvoid EndRecord() = 0;
+  
   /**
     Clear the screen.
   */
@@ -137,11 +174,6 @@ public:
   virtual vvoid SetShaderUniforms(ShaderUniformParams *params) = 0;
 
   /**
-    Applies the shader program within the context.
-  */
-  virtual vvoid ApplyShaderProgram(Shader *shader) = 0;
-
-  /**
     Query the Vertex buffer, in this case, it must be called everytime
     you plan to draw.
   */
@@ -156,6 +188,11 @@ public:
     Grab the current pipeline state
   */
   virtual PipelineState *GetPipelineState() = 0;
+
+  /**
+    Set the pipeline state.
+  */
+  virtual vvoid ApplyPipelineState(PipelineState *pipeline) = 0;
 
   /**
     Present the Image onto the screen.

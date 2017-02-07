@@ -132,21 +132,21 @@ vvoid Renderer::Render() {
 
   // Record Commands.
   RenderContext *context = m_renderDevice->GetContext();
-  std::vector<RenderCommand *> &render_commands = m_renderQueue.GetCommandBuffer();
+  std::vector<RenderCommand *> &render_commands = m_renderQueue.GetRenderCommands();
   for(RenderCommand *command : render_commands) {
     std::unique_ptr<Commandbuffer> buf = m_renderDevice->CreateCommandbuffer();
     command->Record(buf.get());
-    m_commandBuffer.PushBack(buf);
+    m_commandBufferList.PushBack(buf);
   }
   std::vector<RenderCommand *> &deferred_commands = m_renderQueue.GetDeferredCommands();
   for(RenderCommand *command : deferred_commands) {
     std::unique_ptr<Commandbuffer> buf = m_renderDevice->CreateCommandbuffer();
     command->Record(buf.get());
-    m_deferredBuffer.PushBack(buf);
+    m_deferredBufferList.PushBack(buf);
   }
 
   // Set the Gbuffer pass.
-  m_gbuffer.ExecutePass(&m_commandBuffer);
+  m_gbuffer.ExecutePass(&m_commandBufferList);
 
   // Deferred Shading pass.
   context->SetRenderPass(nullptr);
@@ -156,11 +156,11 @@ vvoid Renderer::Render() {
   for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);
   }
-  context->ExecuteCommands(&m_deferredBuffer);
+  context->ExecuteCommands(&m_deferredBufferList);
 
   m_renderQueue.Clear();
-  m_commandBuffer.Clear();
-  m_deferredBuffer.Clear();
+  m_commandBufferList.Clear();
+  m_deferredBufferList.Clear();
 
   // Draw the Screen Quad.
   m_screenquad.Execute();
@@ -226,17 +226,6 @@ vint32 Renderer::Init(RenderDevice *device) {
   printer.Init(device, "c:/Windows/Fonts/consola.ttf");
 
   return 1;
-}
-
-
-vvoid Renderer::DrawScreenQuad() {
-  std::unique_ptr<Commandbuffer > buffer = m_renderDevice->CreateCommandbuffer();
-  PrimitiveCommand command;
-  command.m_mesh = m_quad;
-  command.Record(buffer.get());
-  m_commandBuffer.PushBack(buffer);
-  m_renderDevice->GetContext()->ExecuteCommands(&m_commandBuffer);
-  m_commandBuffer.Clear();
 }
 
 

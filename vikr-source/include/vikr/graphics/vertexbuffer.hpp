@@ -68,6 +68,8 @@ public:
   */
   virtual vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) = 0;
 
+  virtual vvoid Cleanup() = 0;
+
 };
 } // vikr
 #endif // __VIKR_VERTEX_BUFFER_HPP

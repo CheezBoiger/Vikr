@@ -14,11 +14,10 @@ namespace vikr {
 */
 class GLSLShader : public Shader {
 public:
-  GLSLShader();
+  GLSLShader(ShaderStage stage);
 
-  vvoid Compile(std::string vs, std::string fs, std::string gs = "") override;
-  vvoid Use() override { UseProgram(shader_id); }
-  vvoid Cleanup() override { glDeleteProgram(shader_id); }
+  vvoid Compile(std::string path) override;
+  vvoid Cleanup() override { glDeleteShader(shader_id); }
 
 };
 } // vikr

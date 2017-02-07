@@ -4,6 +4,7 @@
 #ifndef __VIKR_GLSL_COMPILER_H
 #define __VIKR_GLSL_COMPILER_H
 
+#include <vikr/shader/shader.hpp>
 #include <vikr/shader/glsl/glsl_preprocessor.hpp>
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
@@ -12,29 +13,17 @@
 
 namespace vikr {
 
-
-/**
-  Determines the pipeline stage of the GLSL shader.
-*/
-enum VikrGLPipelineStage {
-  vikr_VERTEX_SHADER = GL_VERTEX_SHADER,
-  vikr_FRAGMENT_SHADER = GL_FRAGMENT_SHADER,
-  vikr_GEOMETRY_SHADER = GL_GEOMETRY_SHADER
-};
-
-
 /**
   GLSL Shader object for OpenGL. Try not to design it as a Template!
 */
 class GLSLCompiler {
 public:
-  GLSLCompiler(VikrGLPipelineStage stage = vikr_VERTEX_SHADER, std::string filepath = "");
+  GLSLCompiler(ShaderStage stage, std::string filepath = "");
   /**
     Compile the shader and it's filepath.
   */
   vvoid Compile();
-  vvoid Cleanup() { DeleteShader(shader_id); }
-  VikrGLPipelineStage GetPipelineStage() { return pipeline_stage; }
+  vvoid Cleanup() { DeleteShader(shader_id); shader_id = -1; }
   vuint32 GetShaderId() { return shader_id; }
   vbool IsCompiled() { return compiled; }
 
@@ -43,10 +32,12 @@ public:
   std::string GetFilePath() { return filepath; }
   vvoid SetFilePath(std::string path) { filepath = path; }
 
+  ShaderStage GetShaderStage() { return shader_stage; }
+
 private:
   vvoid LoadShaderFile();
   std::string filepath;
-  VikrGLPipelineStage pipeline_stage;
+  ShaderStage shader_stage;
   
   vuint32 shader_id;
   vbool compiled;

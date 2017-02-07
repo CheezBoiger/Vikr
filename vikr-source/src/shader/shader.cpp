@@ -7,10 +7,9 @@
 namespace vikr {
 
 
-Shader::Shader()
+Shader::Shader(ShaderStage stage, ShaderLanguage lang)
   : shader_id(0)
-  , is_linked(false)
-  , shader_type(vikr_GLSL)
+  , shader_lang(lang)
 {
 }
 } // vikr

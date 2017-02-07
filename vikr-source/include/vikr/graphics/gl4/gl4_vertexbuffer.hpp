@@ -39,6 +39,19 @@ public:
     VIKR_ASSERT(glGetError() == 0);
   }
 
+  vvoid Cleanup() override {
+    if (m_vbo) {
+      glDeleteBuffers(1, &m_vbo);
+    }
+    if (m_ibo) {
+      glDeleteBuffers(1, &m_ibo);
+    }
+
+    if (m_vao) {
+      glDeleteVertexArrays(1, &m_vao);
+    }
+  }
+
 private:
 
   vuint32 m_vbo   = 0;

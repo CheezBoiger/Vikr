@@ -21,6 +21,7 @@ namespace vikr {
 
 
 const vuint32 GBUFFER_SIZE = 8;
+class PipelineState;
 
 /**
   Standard G buffer object. Still needs to be fixed.
@@ -47,7 +48,7 @@ private:
   std::unique_ptr<RenderPass> m_renderpass;
   std::unique_ptr<Framebuffer> m_framebuffer;
   std::unique_ptr<Renderbuffer> m_renderbuffer;
-  Shader *m_gbuffershader = nullptr;
+  PipelineState *renderstate = nullptr;
   
   std::array<std::unique_ptr<RenderTarget>, GBUFFER_SIZE> m_rendertargets;
 };

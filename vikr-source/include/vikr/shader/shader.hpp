@@ -6,6 +6,9 @@
 
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
+
+#include <vikr/shader/shader_config.hpp>
+
 #include <glm/glm.hpp>
 #include <string>
 
@@ -13,50 +16,28 @@ namespace vikr {
 
 
 /**
-  Shader type language.
-*/
-enum ShaderType {
-  vikr_GLSL,
-  vikr_HLSL,
-  vikr_SPIRV
-};
-
-
-/**
-  Defined Shader stages.
-*/
-enum ShaderStage {
-  VERTEX_SHADER,
-  FRAGMENT_SHADER,
-  GEOMETRY_SHADER,
-  COMPUTE_SHADER,
-  TESSELATION_SHADER
-};
-
-
-/**
   For now it only works with OpenGL, Spir-V not yet implemented!
 */
 class Shader {
+protected:
+  /**
+    Must not be instantiated by the user.
+  */
+  Shader(ShaderStage stage = VERTEX_SHADER, ShaderLanguage lang = vikr_NOLANG);
+
 public:
-  Shader();
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Shader);
   virtual ~Shader() { }
 
   /**
     Compile the Shader for the Program to use.
   */
-  virtual vvoid Compile(std::string vs, std::string fs, std::string gs = "") = 0;
+  virtual vvoid Compile(std::string path) = 0;
 
   /**
     Set the include search path for the file. This is for macro use of the #include.
   */
-  vvoid SetIncludeSearchPath(std::string path) { include_searchpath = path; }
-  
-  /**
-    Use the Shader for the program to use.
-  */
-  virtual vvoid Use() = 0;
+  vvoid IncludeSearchPath(std::string path) { include_searchpath = path; }
 
   /**
     Clean up the shader.
@@ -66,41 +47,56 @@ public:
   /**
     Get the program id associated with this shader.
   */
-  vuint32 GetProgramId() { return shader_id; }
+  vuint32 GetNativeId() { return shader_id; }
 
   /**
-    Check if this shader is linked.
-  */
-  vbool IsLinked() { return is_linked; }
-
-  /**
+    Get the Shader language.
    */
-  ShaderType GetShaderType() { return shader_type; }
+  ShaderLanguage GetShaderLanguage() { return shader_lang; }
 
+  ShaderStage GetShaderStage() { return shader_stage; }
+  /**
+    Sets the name of the shader.
+  */
   vvoid SetName(std::string name) { shader_name = name; }
+
+  /**
+    Grab the name of the shader.
+  */
   std::string GetName() { return shader_name; }
 
-  vuint32 GetFragId() { return frag_id; }
-  vuint32 GetVertId() { return vert_id; }
-  vuint32 GetGeomId() { return geom_id; }
-  vuint32 GetCompId() { return comp_id; }
-  vuint32 GetHullId() { return hull_id; }
+  /**
+    Check if the shader is compiled.
+  */
+  vbool IsCompiled() { return is_compiled; }
 
 protected:
+  /**
+    Shader stage of this shader object.
+  */
+  ShaderStage shader_stage              = VERTEX_SHADER;
 
-  ShaderType shader_type                = vikr_GLSL;
+  /**
+    Shader Language.
+  */
+  ShaderLanguage shader_lang            = vikr_NOLANG;
+
+  /**
+    The search path to use for including.
+  */
   std::string include_searchpath        = ".";
+
+  /**
+    The shader name.
+  */
   std::string shader_name               = "noname";
 
+  /**
+    Native Shader id.
+  */
   vuint32 shader_id                     = 0;
-  vuint32 vert_id                       = 0;
-  vuint32 frag_id                       = 0;
-  vuint32 geom_id                       = 0;
 
-  // OpenGL 4.3 and up.
-  vuint32 comp_id                       = 0;
-  vuint32 hull_id                       = 0;
-  vbool is_linked;
+  vbool is_compiled                     = false;
   VIKR_DISALLOW_COPY_AND_ASSIGN(Shader);
 };
 } // vikr

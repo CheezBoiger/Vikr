@@ -61,7 +61,6 @@ public:
   vvoid ExecuteCommands(CommandbufferList *command_buffer) override;
 
   vvoid SetShaderUniforms(ShaderUniformParams *params) override;
-  vvoid ApplyShaderProgram(Shader *shader) override;
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
 
   vvoid SetRenderPass(RenderPass *pass) override;
@@ -70,6 +69,7 @@ public:
 
   RenderPass *GetRenderPass() override;
   PipelineState *GetPipelineState() override;
+  vvoid ApplyPipelineState(PipelineState *pipelinestate) override;
 
   vvoid Present() override;
 
@@ -77,7 +77,7 @@ private:
 
   vvoid ClearTextures();
 
-  GL4PipelineState m_currPipeline;
+  GL4PipelineState *m_currPipeline                = nullptr;
 
   //vuint32 m_currShaderProgram                     = 0;
   GL4RenderPass *m_currRenderPass                 = nullptr;

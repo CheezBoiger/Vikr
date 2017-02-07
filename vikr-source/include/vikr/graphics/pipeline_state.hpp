@@ -21,6 +21,9 @@
 #include <vikr/graphics/stencildepth.hpp>
 #include <vikr/graphics/topology.hpp>
 
+#include <vikr/shader/shader.hpp>
+#include <vikr/shader/shader_program.hpp>
+
 
 namespace vikr {
 
@@ -44,11 +47,6 @@ public:
     Set the viewport for the context.
   */
   virtual vvoid SetViewport(Viewport viewport) = 0;
-  
-  /**
-    Set the shader for the pipeline state.
-  */
-  virtual vvoid SetShader(Shader *shader) = 0;
 
   /**
     Set the blending function.
@@ -91,21 +89,11 @@ public:
   virtual vvoid SetFrontFace(FrontFace face) = 0;
 
   virtual vvoid SetTopology(Topology topology) = 0;
-  
-
-  /*
-    Grab a specific pipeline shader stage.
-  */
-  virtual vuint32 GetVertexShader() const = 0;
-  virtual vuint32 GetFragmentShader() const = 0;
-  virtual vuint32 GetComputeShader() const = 0;
-  virtual vuint32 GetGeometryShader() const = 0;
 
   /**
     Viewport stuff.
   */
   virtual Viewport GetViewport() const = 0;
-  virtual Shader *GetShader() const = 0;
 
   /*
     Update the Pipeline State
@@ -126,7 +114,7 @@ public:
   virtual BlendFunc GetBlendFunctionDst() const = 0;
   virtual Topology GetTopology() const = 0;
 
-  virtual vuint32 GetShaderProgram() const = 0;
+  virtual ShaderProgram *GetShaderProgram() const = 0;
 };
 } // vikr
 #endif // __VIKR_PIPELINE_STATE_HPP

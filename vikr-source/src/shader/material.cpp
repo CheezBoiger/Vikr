@@ -4,6 +4,7 @@
 #include <vikr/shader/material.hpp>
 #include <vikr/shader/texture.hpp>
 #include <vikr/shader/shader.hpp>
+#include <vikr/shader/shader_program.hpp>
 #include <vikr/util/vikr_log.hpp>
 
 namespace vikr {
@@ -11,15 +12,15 @@ namespace vikr {
 const std::string Material::kDefaultName = "default";
 
 
-Material::Material(Shader *shader, std::string name)
+Material::Material(ShaderProgram *program, std::string name)
   : m_name(name)
-  , m_shader(shader)
+  , m_program(program)
 {
 }
 
-Material::Material(Shader *shader)
+Material::Material(ShaderProgram *program)
   : m_name(kDefaultName)
-  , m_shader(shader)
+  , m_program(program)
 {
 }
 

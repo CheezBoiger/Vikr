@@ -10,6 +10,10 @@
 #include <vikr/graphics/topology.hpp>
 
 #include <vikr/shader/shader.hpp>
+#include <vikr/shader/shader_config.hpp>
+
+
+#include <map>
 
 
 namespace vikr {
@@ -25,11 +29,6 @@ public:
   vvoid SetViewport(Viewport viewport) override { 
     SetDirty();
     m_viewport = viewport; 
-  }
-  
-  vvoid SetShader(Shader *shader) override {
-    SetDirty(); 
-    m_shader = shader; 
   }
 
   vvoid SetBlendFunc(BlendFunc src, BlendFunc dst) override { 
@@ -68,34 +67,6 @@ public:
     m_depth = enable; 
   }
 
-  vuint32 GetVertexShader() const override {
-    if (m_shader) {
-      return m_shader->GetVertId();
-    }
-    return -1;
-  }
-
-  vuint32 GetFragmentShader() const override {
-    if (m_shader) {
-      return m_shader->GetFragId();
-    }
-    return -1;
-  }
-
-  vuint32 GetComputeShader() const override {
-    if (m_shader) {
-      return m_shader->GetCompId();
-    }
-    return -1;
-  }
-
-  vuint32 GetGeometryShader() const override {
-    if (m_shader) {
-      return m_shader->GetGeomId();
-    }
-    return -1;
-  }
-
   vvoid SetDepthFunc(DepthFunc func) override {
     SetDirty();
     m_depthfunc = func;
@@ -113,10 +84,7 @@ public:
   BlendFunc GetBlendFunctionDst() const override { return m_blenddst; }
 
   vuint32 GetShaderProgram() const override { 
-    if (m_shader) {
-      return m_shader->GetProgramId();
-    }
-    return -1;
+    return program_id;
   }
 
   vvoid SetTopology(Topology topology) override {
@@ -126,7 +94,11 @@ public:
 
   Topology GetTopology() const override { return m_topology; }
 
-  Shader *GetShader() const override { return m_shader; }
+  Shader *GetShader(ShaderStage stage) const override { }
+
+  vbool LoadShader(Shader *shader) override;
+
+  
 
   Viewport GetViewport() const override { return m_viewport; }
   
@@ -135,8 +107,6 @@ private:
 
   vvoid SetDirty() { m_dirty = true; }
   vvoid SetClean() { m_dirty = false; }
-
-  Shader *m_shader = nullptr;
 
   vbool m_blend             = false;
   BlendEq m_blendeq         = BlendEq::vikr_BLEND_ADD;
@@ -158,6 +128,13 @@ private:
   Viewport m_viewport;
 
   Topology m_topology       = Topology::VIKR_TRIANGLES;
+
+  /**
+    Shaders linked in the pipeline.
+  */
+  std::map<ShaderStage, Shader *> shaders;
+
+  vuint32 program_id;
 };
 } // vikr
 #endif // __VIKR_GL4_PIPELINE_STATE_HPP

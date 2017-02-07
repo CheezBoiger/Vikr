@@ -25,32 +25,33 @@ Camera::Camera(glm::vec3 pos, glm::vec3 world_up, glm::vec3 up, glm::vec3 front)
   , yaw_rate(Camera::YAW)
   , roll_rate(Camera::ROLL) 
   , sensitivity(Camera::SENSITIVITY)
-  , speed(1.0f)
+  , velocity(1.0f)
   , type(CamType::PERSPECTIVE)
 { 
 }
 
 
 vvoid Camera::Move(CamDirection dir, vreal32 delta) {
-  vreal32 velocity = speed * delta;
+  // (distance traveled from a to b) = v * dt
+  vreal32 dist = velocity * delta;
   switch (dir) {
   case CamDirection::FORWARD:
-    pos += front * velocity;
+    pos += front * dist;
     break;
   case CamDirection::BACK:
-    pos -= front * velocity;
+    pos -= front * dist;
     break;
   case CamDirection::LEFT:
-    pos -= right * velocity;
+    pos -= right * dist;
     break;
   case CamDirection::RIGHT:
-    pos += right * velocity;
+    pos += right * dist;
     break;
   case CamDirection::UP:
-    pos += up * velocity;
+    pos += up * dist;
     break;
   case CamDirection::DOWN:
-    pos -= up * velocity;
+    pos -= up * dist;
     break;
   }
 }
@@ -84,6 +85,7 @@ vvoid Camera::Update(vreal32 dt) {
   glm::quat yaw_quatern = glm::angleAxis(yaw_rate, up);
   glm::quat q = glm::normalize(glm::cross(pitch_quatern, yaw_quatern));
   front = glm::rotate(q, front);
+  // Gram-shmidt process for our angles.
   right = glm::normalize(glm::cross(front, world_up));
   up = glm::normalize(glm::cross(right, front));
   view = glm::lookAt(pos, front + pos, up); // is as simple as getting the view...

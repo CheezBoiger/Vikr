@@ -13,10 +13,10 @@
 namespace vikr {
 
 
-GLSLCompiler::GLSLCompiler(VikrGLPipelineStage stage, std::string filepath) 
-  : pipeline_stage(stage)
-  , compiled(false) 
+GLSLCompiler::GLSLCompiler(ShaderStage stage, std::string filepath) 
+  : compiled(false) 
   , filepath(filepath)
+  , shader_stage(stage)
 {
 }
 
@@ -25,7 +25,17 @@ vvoid GLSLCompiler::LoadShaderFile() {
   // This needs to go into filesystem insteam.
   std::string shader_code = preprocessor.Preprocess(filepath);
   const GLchar* shader_code_c = shader_code.c_str();
-  shader_id = CreateShader(pipeline_stage);
+  GLenum s = GL_VERTEX_SHADER;
+  switch (shader_stage) {
+    case VERTEX_SHADER: s = GL_VERTEX_SHADER; break;
+    case FRAGMENT_SHADER: s = GL_FRAGMENT_SHADER; break;
+    case GEOMETRY_SHADER: s = GL_GEOMETRY_SHADER; break;
+    case COMPUTE_SHADER: s = GL_COMPUTE_SHADER; break;
+    case TESS_CONTROL_SHADER: s = GL_TESS_CONTROL_SHADER; break;
+    case TESS_EVALUATION_SHADER: s = GL_TESS_EVALUATION_SHADER; break;
+    default: s = GL_VERTEX_SHADER; break;
+  }
+  shader_id = CreateShader(s);
   ShaderSource(shader_id, 1, &shader_code_c, NULL);
 }
 
@@ -40,6 +50,8 @@ vvoid GLSLCompiler::Compile() {
     if(!success) {
       GetShaderInfoLog(shader_id, log.size(), NULL, log.data());
       VikrLog::DisplayMessage(VIKR_ERROR, std::string(log.data()));
+      Cleanup();
+      compiled = false;
     } else {
       compiled = true;
     }

@@ -83,7 +83,7 @@ public:
   /**
     Get the speed of the camera.
   */
-  vreal32 GetSpeed() { return speed; }
+  vreal32 GetSpeed() { return velocity; }
   /**
     Set methods.
   */
@@ -112,7 +112,7 @@ public:
   /**
     Set the speed of the camera's movement.
   */
-  vvoid SetSpeed(vreal32 s) { speed = s; }
+  vvoid SetSpeed(vreal32 s) { velocity = s; }
   /**
     Look around with the given input.
   */
@@ -165,7 +165,7 @@ protected:
   vreal32 pitch_rate;
   vreal32 yaw_rate;
   vreal32 roll_rate;
-  vreal32 speed;
+  vreal32 velocity;
 
   vreal32 aspect;
   vreal32 fov;

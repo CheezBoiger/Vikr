@@ -28,8 +28,8 @@
 namespace vikr {
 
 #define CLEAN_PIPELINE() { \
-  if (m_currPipeline.NeedsUpdate()) { \
-    m_currPipeline.Update(); \
+  if (m_currPipeline->NeedsUpdate()) { \
+    m_currPipeline->Update(); \
   } \
 }
 
@@ -57,7 +57,7 @@ GL4RenderContext::GL4RenderContext()
 vvoid GL4RenderContext::Draw(vuint32 start, vuint32 vertices) {
   CLEAN_PIPELINE();
   glDrawArrays(
-    GetGLTopology(m_currPipeline.GetTopology()), 
+    GetGLTopology(m_currPipeline->GetTopology()), 
     start, 
     vertices
   );
@@ -68,7 +68,7 @@ vvoid GL4RenderContext::Draw(vuint32 start, vuint32 vertices) {
 vvoid GL4RenderContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
   CLEAN_PIPELINE();
   glDrawElements(
-    GetGLTopology(m_currPipeline.GetTopology()),
+    GetGLTopology(m_currPipeline->GetTopology()),
     elements,
     GL_UNSIGNED_INT,
     indices
@@ -110,12 +110,12 @@ vvoid GL4RenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
 
 
 vvoid GL4RenderContext::ChangeTopology(Topology topology) {
-  m_currPipeline.SetTopology(topology);
+  m_currPipeline->SetTopology(topology);
 }
 
 
 vvoid GL4RenderContext::ChangeViewport(Viewport  *port) {
-  m_currPipeline.SetViewport(*port);
+  m_currPipeline->SetViewport(*port);
 }
 
 
@@ -126,42 +126,42 @@ vvoid GL4RenderContext::Clear() {
 
 
 vvoid GL4RenderContext::SetCullFace(CullFace face) {
-  m_currPipeline.SetCullFace(face);
+  m_currPipeline->SetCullFace(face);
 }
 
 
 vvoid GL4RenderContext::SetFrontFace(FrontFace face) {
-  m_currPipeline.SetFrontFace(face);
+  m_currPipeline->SetFrontFace(face);
 }
 
 
 vvoid GL4RenderContext::EnableBlendMode(vbool enable) {
-  m_currPipeline.SetBlendMode(enable);
+  m_currPipeline->SetBlendMode(enable);
 }
 
 
 vvoid GL4RenderContext::EnableCullMode(vbool enable) {
-  m_currPipeline.SetCullMode(enable);
+  m_currPipeline->SetCullMode(enable);
 }
 
 
 vvoid GL4RenderContext::EnableDepthMode(vbool enable) {
-  m_currPipeline.SetDepthMode(enable);
+  m_currPipeline->SetDepthMode(enable);
 }
 
 
 vvoid GL4RenderContext::SetBlendEq(BlendEq eq) {
-  m_currPipeline.SetBlendEq(eq);
+  m_currPipeline->SetBlendEq(eq);
 }
 
 
 vvoid GL4RenderContext::SetBlendMode(BlendFunc src, BlendFunc dst) {
-  m_currPipeline.SetBlendFunc(src, dst);
+  m_currPipeline->SetBlendFunc(src, dst);
 }
 
 
 vvoid GL4RenderContext::SetDepthFunc(DepthFunc func) {
-  m_currPipeline.SetDepthFunc(func);
+  m_currPipeline->SetDepthFunc(func);
 }
 
 
@@ -185,7 +185,7 @@ vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
   CLEAN_PIPELINE();
   if (pass) {
     const Viewport *view = &pass->GetViewport();
-    m_currPipeline.SetViewport(pass->GetViewport());
+    m_currPipeline->SetViewport(pass->GetViewport());
     pass->Bind();
     Clear();
     ClearWithColor(glm::vec4(pass->GetClearColor(), 1.0f));
@@ -196,7 +196,7 @@ vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
       Window::GetMainWindow()->GetWidth(), 
       Window::GetMainWindow()->GetHeight() 
     };
-    m_currPipeline.SetViewport(default_port);
+    m_currPipeline->SetViewport(default_port);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     Clear();
   }
@@ -215,7 +215,7 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     TODO(): Will need to parse these location values in the future.
   */
   //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
-  shader_program = m_currPipeline.GetShaderProgram();
+  shader_program = m_currPipeline->GetShaderProgram();
   
   for (auto variable : *params->uniforms) {
     std::string s = variable.first;
@@ -307,11 +307,6 @@ vvoid GL4RenderContext::ClearTextures() {
 }
 
 
-vvoid GL4RenderContext::ApplyShaderProgram(Shader *shader) {
-  m_currPipeline.SetShader(shader);
-}
-
-
 vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
   CLEAN_PIPELINE();
   if (buffer) {
@@ -334,7 +329,7 @@ RenderPass *GL4RenderContext::GetRenderPass() {
 
 
 PipelineState *GL4RenderContext::GetPipelineState() {
-  return static_cast<PipelineState *>(&m_currPipeline);
+  return static_cast<PipelineState *>(m_currPipeline);
 }
 
 
@@ -345,5 +340,12 @@ vvoid GL4RenderContext::BeginRecord(Commandbuffer *buf) {
 
 vvoid GL4RenderContext::EndRecord() {
   m_recordCommandbuffer = nullptr;
+}
+
+vvoid GL4RenderContext::ApplyPipelineState(PipelineState *pipelinestate) {
+  if (pipelinestate == m_currPipeline) {
+    return;
+  }
+  m_currPipeline = static_cast<GL4PipelineState *>(pipelinestate);
 }
 } // vikr

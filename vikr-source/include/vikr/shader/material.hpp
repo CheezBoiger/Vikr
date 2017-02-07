@@ -18,7 +18,7 @@
 namespace vikr {
 
 
-class Shader;
+class ShaderProgram;
 struct Uniform;
 struct VertexAttrib;
 class Texture;
@@ -32,10 +32,10 @@ class Material {
   static const std::string kDefaultName;
 public:
   Material();
-  Material(Shader *shader, std::string name);
-  Material(Shader *shader);
-  Shader *GetShader() { return m_shader; }
-  vvoid SetShader(Shader * shader) { m_shader = shader; }
+  Material(ShaderProgram *program, std::string name);
+  Material(ShaderProgram *program);
+  ShaderProgram *GetShaderProgram() { return m_program; }
+  vvoid SetShaderProgram(ShaderProgram *program) { m_program = program; }
 
   std::string GetName() { return m_name; }
   vvoid SetName(std::string name) { m_name = name; }
@@ -66,7 +66,7 @@ public:
 protected:
 
   std::string m_name;
-  Shader *m_shader; // weak ref
+  ShaderProgram *m_program; // weak ref
   /**
     Current Render Pipeline. 
   */

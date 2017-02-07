@@ -26,11 +26,6 @@ public:
   
   std::unique_ptr<Framebuffer> CreateFramebuffer() override;
 
-  Shader *GetShader(std::string name) override;
-
-  vvoid StoreShader(std::string name,
-    std::string vs, std::string fs, std::string include = ".", std::string gs = "") override;
-
   Material *CreateMaterial(std::string name) override;
 
   std::unique_ptr<Vertexbuffer> CreateVertexbuffer(VertexContainer &vertices) override;

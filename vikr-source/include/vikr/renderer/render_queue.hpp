@@ -39,12 +39,16 @@ public:
     Objects that are transparent, require sorting in a certain order after opaque objects.
   */
   vvoid Sort();
+
   /**
     Clean up the Render Queue.
   */
   vvoid Clear();
 
-  std::vector<RenderCommand *> &GetCommandBuffer() { return m_commandBuffer; }
+  /**
+    Grab the Render Commands from this sorted Queue.
+  */
+  std::vector<RenderCommand *> &GetRenderCommands() { return m_commands; }
   /**
     Registers a custom comparator for the render queue.
   */
@@ -69,7 +73,7 @@ protected:
   /**
     These commands are to be executed immediately.
   */
-  std::vector<RenderCommand *> m_commandBuffer;
+  std::vector<RenderCommand *> m_commands;
 };
 } // vikr
 #endif // __VIKR_RENDER_QUEUE_HPP

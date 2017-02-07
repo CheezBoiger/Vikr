@@ -121,9 +121,6 @@ vvoid GL4PipelineState::Update() {
     glDisable(GL_CULL_FACE);
   }
 
-  if (m_shader) {
-    glUseProgram(m_shader->GetProgramId());
-  }
 
   /**
     Everything looks clean.

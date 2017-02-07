@@ -46,8 +46,18 @@ public:
   RenderDevice() { }
   virtual ~RenderDevice() { }
 
+  /**
+    Get the Shader language used by this Render Device.
+  */
   virtual std::string GetShaderLanguage() = 0;
 
+  /**
+    Generate a Texture from this RenderDevice.
+
+    @param path The file path to the texture file.
+    @param target The texture target, such as if it's 1D, 2D, 3D, etc.
+    @param alpha If the texture contains an alpha component, this is transparency.
+  */
   virtual Texture *GenerateTexture(std::string path, 
     TextureTarget target, vbool alpha) = 0;
 
@@ -55,18 +65,6 @@ public:
     Generate a framebuffer.
   */
   virtual std::unique_ptr<Framebuffer> CreateFramebuffer() = 0;
-
-  virtual Shader *GetShader(std::string name) = 0;
-
-  /**
-    Store a shader into resources.
-  */
-  virtual vvoid StoreShader(
-    std::string name, 
-    std::string vs, 
-    std::string fs,
-    std::string include = ".",
-    std::string gs = "") = 0;
   
   /**
     Create material, which is handled by resources.
@@ -78,12 +76,25 @@ public:
   */
   virtual std::unique_ptr<Vertexbuffer> CreateVertexbuffer(VertexContainer &vertices) = 0;
 
+  /**
+    Get the Resource manager from this Rendering Device.
+  */
   virtual ResourceManager *GetResourceManager() = 0;
+
+  /**
+    Get the contet of this Rendering Device.
+  */
   virtual RenderContext *GetContext() = 0;
 
+  /**
+    Create a Render Texture from this Device, this is mainly used for RenderTargetting.
+  */
   virtual std::unique_ptr<RenderTexture> CreateRenderTexture(std::string t_name, vuint32 width, vuint32 height, 
     vbool alpha = false, vbool multisample = false, DataTypeFormat precision = data_UNSIGNED_BYTE) = 0;
 
+  /**
+    Create the Renderbuffer for this Rendering Device.
+  */
   virtual std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height, vbool multisample = false) = 0;
 
   /**

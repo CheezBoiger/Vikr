@@ -5,7 +5,7 @@
 #include <vikr/input/window.hpp>
 #include <vikr/resources/resource_manager.hpp>
 #include <vikr/graphics/render_context.hpp>
-
+#include <vikr/graphics/pipeline_state.hpp>
 
 namespace vikr {
 
@@ -58,9 +58,14 @@ vvoid GBuffer::Init(RenderDevice *device) {
   /*
     Gbuffer shader. This needs to NOT be a fixed length.
   */
-  device->GetResourceManager()->StoreShader("gbuffer", 
-    "../../libs/shader/GLSL/gbuffer.vert", 
-    "../../libs/shader/GLSL/gbuffer.frag");
+  Shader *vert = device->GetResourceManager()->CreateShader("vert_gbuffer", VERTEX_SHADER);
+  vert->Compile("../../libs/shader/GLSL/gbuffer.vert");
+  Shader *frag = device->GetResourceManager()->CreateShader("frag_gbuffer", FRAGMENT_SHADER);
+  frag->Compile("../../libs/shader/GLSL/gbuffer.frag");
+  renderstate = device->GetResourceManager()->CreatePipelineState("gbuffer");
+  renderstate->LoadShader(vert);
+  renderstate->LoadShader(frag);
+  
   m_gbuffershader = device->GetResourceManager()->GetShader("gbuffer");
 
   m_renderpass->UpdateRenderTargets(); 

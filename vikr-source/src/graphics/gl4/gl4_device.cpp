@@ -36,22 +36,6 @@ Texture *GL4RenderDevice::GenerateTexture(
 }
 
 
-Shader *GL4RenderDevice::GetShader(std::string name) {
-  return manager.GetShader(name);
-}
-
-
-vvoid GL4RenderDevice::StoreShader(
-  std::string name, std::string vs, 
-  std::string fs, std::string include, std::string gs) 
-{
-  vint32 success =  manager.StoreShader(name, vs, fs, include);
-  if (!success) {
-    VikrLog::DisplayMessage(VIKR_ERROR, "Error storing shader!");
-  }
-}
-
-
 Material *GL4RenderDevice::CreateMaterial(std::string name) {
   return manager.CreateMaterial(name);
 }

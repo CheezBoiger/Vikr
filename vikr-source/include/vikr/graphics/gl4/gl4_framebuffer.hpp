@@ -46,7 +46,6 @@ public:
   vvoid ClearTexture(vuint32 attachment) override;
   vvoid BindTexture(RenderTarget *target, vuint32 attachment) override;
   vvoid BindDepthStencilBuffer(Renderbuffer *rbo) override;
-  vvoid DestroyFramebuffer() override;
 
   vint32 HasDepthStencil() override { return m_depthStencil; }
   vint32 IsMultisampled() override { return m_multisampled; }
@@ -60,6 +59,7 @@ public:
   vvoid Readbuffer(BufferMode mode) override;
   vvoid Writebuffer(BufferMode mode) override;
   
+  vvoid Cleanup() override;
 
 private:
 
