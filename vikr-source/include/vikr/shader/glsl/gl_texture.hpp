@@ -48,6 +48,10 @@ public:
   vvoid SetMultisampled(vbool enable) override { m_multisampled = enable; }
   vbool IsMultisampled() override { return m_multisampled; }
 
+  /**
+    Cleanup the Texture value if needed.
+  */
+  vvoid Cleanup() override { glDeleteTextures(1, &id); }
 
 protected:
   vuint32 id                          = 0;

@@ -182,6 +182,8 @@ public:
   
   vbyte *GetBytecode() { return m_bytecode; }
 
+  virtual vvoid Cleanup() = 0;
+
 protected:
 
   TextureTarget     m_target                    = vikr_TEXTURE_2D;
