@@ -33,6 +33,7 @@ class DirectionalLight;
 class SpotLight;
 class Material;
 class Texture;
+class ShaderProgram;
 class Framebuffer;
 
 
@@ -126,7 +127,9 @@ protected:
   */
   GBuffer m_gbuffer;
 
-
+  /**
+    Le Screen quad.
+  */
   ScreenQuad m_screenquad;
 
   /**
@@ -137,17 +140,7 @@ protected:
   /**
     light shader.
   */
-  Shader *lightShader                                     = nullptr;
-
-  /**
-    shadow shader.
-  */
-  Shader *shadowshader                                    = nullptr;
-
-  /**
-    depth shader.
-  */
-  Shader *depthshader                                     = nullptr;
+  ShaderProgram *lightShader                                     = nullptr;
 
   /**
     Rendertextures.

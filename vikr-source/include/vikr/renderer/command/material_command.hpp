@@ -12,6 +12,8 @@
 #include <vikr/shader/shader.hpp>
 #include <vikr/shader/texture.hpp>
 #include <vikr/shader/shader_uniform_params.hpp>
+#include <vikr/shader/shader_program.hpp>
+#include <vikr/graphics/pipeline_state.hpp>
 #include <vikr/util/vikr_log.hpp>
 
 namespace vikr {
@@ -29,11 +31,11 @@ public:
 
   vvoid Record(Commandbuffer *buffer) override {
     ShaderUniformParams params;
-    Shader *shader = m_material->GetShader();
+    ShaderProgram *prgm = m_material->GetShaderProgram();
     //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
 
-    if (shader) {
-      buffer->SetShaderProgram(shader);
+    if (prgm) {
+      buffer->SetShaderProgram(prgm);
     }
     params.samplers = m_material->GetUniformSamplers();
     params.uniforms = m_material->GetMaterialValues();

@@ -51,13 +51,9 @@ public:
   Mesh *GetMesh(guid_t guid) override;
   vbool DestroyMesh(guid_t guid) override;
 
-  Material *CreateMaterial(std::string mat_name) override;
-  Material *GetMaterial(std::string name) override;
-  vbool DestroyMaterial(std::string name) override;
-
   Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;
   Texture *GetTexture(std::string image_path) override;
-  vbool DestroyTexture(std::string name) override;
+  vbool DestroyTexture(std::string image_path) override;
 
   ShaderProgram *CreateShaderProgram() override;
   ShaderProgram *GetShaderProgram(guid_t id) override;
@@ -79,7 +75,6 @@ class GLResources : public Resources {
   /**
   Contains material data.
   */
-  static std::map<std::string, std::shared_ptr<Material> > materials;
   static std::map<std::string, std::shared_ptr<GLTexture> > textures;
 
   static std::map<guid_t, std::shared_ptr<GLSLShaderProgram> > shader_programs;

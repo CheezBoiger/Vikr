@@ -26,6 +26,8 @@ public:
   vbool Build() override;
   vbool IsLinked() override { return islinked; }
 
+  vvoid Cleanup() override { glDeleteProgram(program_id); }
+
 private:
 
   vuint32 program_id;

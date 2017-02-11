@@ -10,10 +10,11 @@
 #include <vikr/resources/resource_manager.hpp>
 #include <vikr/shader/material.hpp>
 #include <vikr/mesh/mesh.hpp>
-
+#include <vikr/graphics/pipeline_state.hpp>
 #include <vikr/math/shape/quad.hpp>
 
 #include <vikr/shader/stb/stb_truetype.h>
+#include <vikr/shader/shader_program.hpp>
 #include <string>
 
 
@@ -25,7 +26,7 @@ unsigned char temp_bitmap[512*512];
 stbtt_bakedchar cdata[96]; // ASCII 32..126 is 95 glyphs.
 
 
-FontPrinter::FontPrinter(Shader *shader, std::string projection_name,
+FontPrinter::FontPrinter(ShaderProgram *shader, std::string projection_name,
   std::string color_n)
   : m_fontshader(shader)
   , proj_name(projection_name)
@@ -41,7 +42,7 @@ vvoid FontPrinter::Println(std::string text, vreal32 x, vreal32 y, vreal32 scale
     return;
   }
   RenderContext *ctx = m_renderDevice->GetContext();
-  ctx->ApplyShaderProgram(m_fontshader);
+  ctx->GetPipelineState()->SetShaderProgram(m_fontshader);
   Material mtl;
   ShaderUniformParams params;
   mtl.SetMat4(proj_name, projection);

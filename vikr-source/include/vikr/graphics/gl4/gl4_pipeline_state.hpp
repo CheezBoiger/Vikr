@@ -11,12 +11,14 @@
 
 #include <vikr/shader/shader.hpp>
 #include <vikr/shader/shader_config.hpp>
-
+#include <vikr/shader/glsl/glsl_program.hpp>
 
 #include <map>
+#include <string>
 
 
 namespace vikr {
+
 
 
 /**
@@ -83,8 +85,15 @@ public:
   BlendFunc GetBlendFunctionSrc() const override { return m_blendsrc; }
   BlendFunc GetBlendFunctionDst() const override { return m_blenddst; }
 
-  vuint32 GetShaderProgram() const override { 
-    return program_id;
+  ShaderProgram *GetShaderProgram() const override { 
+    return static_cast<ShaderProgram *>(program);
+  }
+
+  vvoid SetShaderProgram(ShaderProgram *prgm) override {
+    if (program != prgm) {
+      SetDirty();
+      program = static_cast<GLSLShaderProgram *>(prgm);
+    }
   }
 
   vvoid SetTopology(Topology topology) override {
@@ -94,14 +103,10 @@ public:
 
   Topology GetTopology() const override { return m_topology; }
 
-  Shader *GetShader(ShaderStage stage) const override { }
-
-  vbool LoadShader(Shader *shader) override;
-
-  
-
   Viewport GetViewport() const override { return m_viewport; }
   
+  std::string GetName() const override { return name; }
+  vvoid SetName(std::string name) override { this->name = name; }
   
 private:
 
@@ -134,7 +139,8 @@ private:
   */
   std::map<ShaderStage, Shader *> shaders;
 
-  vuint32 program_id;
+  GLSLShaderProgram *program;
+  std::string name;
 };
 } // vikr
 #endif // __VIKR_GL4_PIPELINE_STATE_HPP

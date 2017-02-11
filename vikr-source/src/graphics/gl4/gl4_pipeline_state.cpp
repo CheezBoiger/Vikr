@@ -121,6 +121,9 @@ vvoid GL4PipelineState::Update() {
     glDisable(GL_CULL_FACE);
   }
 
+  if (program) {
+    glUseProgram(program->GetNativeId());
+  }
 
   /**
     Everything looks clean.

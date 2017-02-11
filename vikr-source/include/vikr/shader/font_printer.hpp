@@ -14,6 +14,7 @@
 namespace vikr {
 
 
+class ShaderProgram;
 class RenderDevice;
 class Shader;
 class Mesh;
@@ -27,7 +28,7 @@ public:
   /**
     Sets font shader.
   */
-  FontPrinter(Shader *shader = nullptr,
+  FontPrinter(ShaderProgram *prgm = nullptr,
               std::string projection_name = "projection",
               std::string color_n = "textColor");
 
@@ -39,7 +40,7 @@ public:
   vvoid Reset(RenderDevice *device, std::string font);
 
 
-  vvoid SetShader(Shader *shader) { m_fontshader = shader; }
+  vvoid SetShader(ShaderProgram *prgm) { m_fontshader = prgm; }
 
   /**
     Set the projection.
@@ -76,7 +77,7 @@ private:
   /**
     Font shader.
   */
-  Shader *m_fontshader = nullptr;
+  ShaderProgram *m_fontshader = nullptr;
   std::string proj_name;
   std::string color_name;
 };

@@ -7,4 +7,6 @@
 namespace vikr {
 
 
+guid_t ShaderProgram::uid_current = 0;
+
 } // vikr

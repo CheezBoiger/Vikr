@@ -8,6 +8,7 @@
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/scene/guid_generator.hpp>
 #include <vikr/scene/components/scene_component.hpp>
+#include <vikr/shader/shader_config.hpp>
 #include <vikr/shader/texture.hpp>
 #include <vikr/mesh/imesh.hpp>
 #include <glm/glm.hpp>
@@ -21,6 +22,7 @@ namespace vikr {
 class Shader;
 class ShaderProgram;
 class Mesh;
+class PipelineState;
 class Material;
 class SceneNode;
 
@@ -73,13 +75,9 @@ public:
   virtual Mesh *GetMesh(guid_t guid) = 0;
   virtual vbool DestroyMesh(guid_t guid) = 0;
 
-  virtual Material *CreateMaterial(std::string mat_name) = 0;
-  virtual Material *GetMaterial(std::string mat_name) = 0;
-  virtual vbool DestroyMaterial(std::string name) = 0;
-
   virtual Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) = 0;
   virtual Texture *GetTexture(std::string image_path) = 0;
-  virtual vbool DestroyTexture(std::string name) = 0;
+  virtual vbool DestroyTexture(std::string image_path) = 0;
 
   /**
     Much involves the interface design of ResourceManager, but this is common.
@@ -93,6 +91,10 @@ public:
     destroy the entire subtree heirarchy.
   */
   vint32 DestroySceneNode(guid_t guid, vbool destroy_subtree);
+
+  Material *CreateMaterial(std::string mat_name);
+  Material *GetMaterial(std::string name);
+  vbool DestroyMaterial(std::string name);
 
 
   GraphicsPipeline GetGraphicsPipeline() { return pipeline; }
@@ -118,6 +120,7 @@ protected:
     The resources of scenenode and scenecomponents.
   */
   static std::unordered_map<guid_t, std::shared_ptr<SceneNode> > scene_nodes;
+  static std::map<std::string, std::shared_ptr<Material> > materials;
 
   friend class ResourceManager;
 };

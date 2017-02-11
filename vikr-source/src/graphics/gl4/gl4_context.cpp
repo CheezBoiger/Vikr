@@ -215,7 +215,7 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     TODO(): Will need to parse these location values in the future.
   */
   //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
-  shader_program = m_currPipeline->GetShaderProgram();
+  shader_program = m_currPipeline->GetShaderProgram()->GetNativeId();
   
   for (auto variable : *params->uniforms) {
     std::string s = variable.first;
@@ -347,5 +347,6 @@ vvoid GL4RenderContext::ApplyPipelineState(PipelineState *pipelinestate) {
     return;
   }
   m_currPipeline = static_cast<GL4PipelineState *>(pipelinestate);
+  m_currPipeline->Update();
 }
 } // vikr

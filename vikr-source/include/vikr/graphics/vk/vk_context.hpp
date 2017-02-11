@@ -53,14 +53,13 @@ public:
 
   vvoid SetShaderUniforms(ShaderUniformParams *params) override;
 
-  vvoid ApplyShaderProgram(Shader *shader) override;
-
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
 
   vvoid BeginRecord(Commandbuffer *buf) override;
   vvoid EndRecord() override;
   RenderPass *GetRenderPass() override;
   PipelineState *GetPipelineState() override;
+  vvoid ApplyPipelineState(PipelineState *pipeline) override;
 
   vvoid Present() override;
 

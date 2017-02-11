@@ -9,6 +9,7 @@
 
 #include <vikr/shader/shader_config.hpp>
 #include <vikr/shader/shader.hpp>
+#include <vikr/scene/guid_generator.hpp>
 
 
 namespace vikr {
@@ -19,10 +20,11 @@ namespace vikr {
 */
 class ShaderProgram {
   VIKR_DISALLOW_COPY_AND_ASSIGN(ShaderProgram);
+  static guid_t uid_current;
 public:
 
   VIKR_DEFAULT_MOVE_AND_ASSIGN(ShaderProgram);
-  ShaderProgram() { }
+  ShaderProgram() : uid(uid_current++) { }
 
   virtual ~ShaderProgram() { }
 
@@ -44,6 +46,14 @@ public:
   virtual vbool Build() = 0;
 
   virtual vbool IsLinked() = 0;
+
+  guid_t GetGUID() const { return uid; }
+
+  virtual vvoid Cleanup() = 0;
+
+private:
+  
+  guid_t uid;
 };
 } // vikr
 #endif // __VIKR_SHADER_PROGRAM_HPP

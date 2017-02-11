@@ -25,7 +25,7 @@ vvoid GLSLShader::Compile(std::string path) {
     shader_id = compiler.GetShaderId();
     is_compiled = true;
   } else {
-    VikrLog::DisplayMessage(VIKR_ERROR, "Shaders unsuccessfully compiled!");
+    VikrLog::DisplayMessage(VIKR_ERROR, "Shader => " + shader_name + " unsuccessfully compiled!");
   }
 }
 } // vikr

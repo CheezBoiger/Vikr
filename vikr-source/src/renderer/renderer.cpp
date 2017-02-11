@@ -31,6 +31,9 @@
 #include <vikr/graphics/graphics_command.hpp>
 #include <vikr/graphics/blendmode.hpp>
 #include <vikr/graphics/framebuffer.hpp>
+
+#include <vikr/shader/shader_program.hpp>
+#include <vikr/graphics/pipeline_state.hpp>
 #include <vikr/resources/resource_manager.hpp>
 
 #include <vikr/input/window.hpp>
@@ -152,7 +155,7 @@ vvoid Renderer::Render() {
   context->SetRenderPass(nullptr);
   context->Clear();
   // Set back to the default RenderPass.
-  context->ApplyShaderProgram(lightShader);
+  context->GetPipelineState()->SetShaderProgram(lightShader);
   for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);
   }
@@ -170,6 +173,9 @@ vvoid Renderer::Render() {
 vint32 Renderer::Init(RenderDevice *device) {
   Renderer::SetRenderer(this);
   m_renderDevice = device;
+  PipelineState *pipeline = 
+    device->GetResourceManager()->CreatePipelineState("renderer_pipeline");
+  m_renderDevice->GetContext()->ApplyPipelineState(pipeline);
   m_renderQueue.RegisterBatchComparator([&] (RenderCommand *a, RenderCommand *b) -> vint32 {
     vint32 greater = false;
     //if (a->GetDrawOrder() > b->GetDrawOrder()) {
@@ -191,14 +197,20 @@ vint32 Renderer::Init(RenderDevice *device) {
   /*
     Light shader.
   */
-  m_renderDevice->GetResourceManager()->StoreShader("lightpass", 
-    "../../libs/shader/GLSL/lightpass.vert", 
-    "../../libs/shader/GLSL/lightpass.frag");
-  lightShader = m_renderDevice->GetResourceManager()->GetShader("lightpass");
+  ResourceManager *mgr = m_renderDevice->GetResourceManager();
+  Shader *v_lightpass = mgr->CreateShader("lightpass_v", VERTEX_SHADER);
+  Shader *f_lightpass = mgr->CreateShader("lightpass_f", FRAGMENT_SHADER);
+  v_lightpass->Compile("../../libs/shader/GLSL/lightpass.vert");
+  f_lightpass->Compile("../../libs/shader/GLSL/lightpass.frag");
+  lightShader = mgr->CreateShaderProgram();
+  lightShader->LoadShader(v_lightpass);
+  lightShader->LoadShader(f_lightpass);
+  lightShader->Build();
   
 
   // Initialize the light parameters for the light shader.
-  m_renderDevice->GetContext()->ApplyShaderProgram(lightShader);
+  m_renderDevice->GetContext()->GetPipelineState()->SetShaderProgram(lightShader);
+  m_renderDevice->GetContext()->GetPipelineState()->Update();
   Material setup;
   setup.SetInt("gPosition", 0);
   setup.SetInt("gNormal", 1);
@@ -211,19 +223,6 @@ vint32 Renderer::Init(RenderDevice *device) {
   ShaderUniformParams param;
   param.uniforms = setup.GetMaterialValues();
   m_renderDevice->GetContext()->SetShaderUniforms(&param);
-
-  m_renderDevice->GetResourceManager()->StoreShader("fontshader",
-    "../../libs/shader/GLSL/font.vert",
-    "../../libs/shader/GLSL/font.frag"
-  );
-  printer.SetShader(m_renderDevice->GetResourceManager()->GetShader("fontshader"));
-  Viewport viewport;
-  viewport.win_x = 0;
-  viewport.win_y = 0;
-  viewport.win_width = Window::GetMainWindow()->GetWidth();
-  viewport.win_height = Window::GetMainWindow()->GetHeight();
-  printer.SetViewport(viewport);
-  printer.Init(device, "c:/Windows/Fonts/consola.ttf");
 
   return 1;
 }

@@ -5,6 +5,7 @@
 #include <vikr/input/window.hpp>
 #include <vikr/resources/resource_manager.hpp>
 #include <vikr/graphics/render_context.hpp>
+#include <vikr/shader/shader_program.hpp>
 #include <vikr/graphics/pipeline_state.hpp>
 
 namespace vikr {
@@ -58,15 +59,15 @@ vvoid GBuffer::Init(RenderDevice *device) {
   /*
     Gbuffer shader. This needs to NOT be a fixed length.
   */
-  Shader *vert = device->GetResourceManager()->CreateShader("vert_gbuffer", VERTEX_SHADER);
+  ResourceManager *manager = device->GetResourceManager();
+  Shader *vert = manager->CreateShader("vert_gbuffer", VERTEX_SHADER);
   vert->Compile("../../libs/shader/GLSL/gbuffer.vert");
-  Shader *frag = device->GetResourceManager()->CreateShader("frag_gbuffer", FRAGMENT_SHADER);
+  Shader *frag = manager->CreateShader("frag_gbuffer", FRAGMENT_SHADER);
   frag->Compile("../../libs/shader/GLSL/gbuffer.frag");
-  renderstate = device->GetResourceManager()->CreatePipelineState("gbuffer");
-  renderstate->LoadShader(vert);
-  renderstate->LoadShader(frag);
-  
-  m_gbuffershader = device->GetResourceManager()->GetShader("gbuffer");
+  m_prgm = manager->CreateShaderProgram();
+  m_prgm->LoadShader(vert);
+  m_prgm->LoadShader(frag);
+  m_prgm->Build();
 
   m_renderpass->UpdateRenderTargets(); 
 }
@@ -76,7 +77,7 @@ vvoid GBuffer::ExecutePass(CommandbufferList *buffer) {
   if (m_device) {
     m_device->GetContext()->Clear();
     m_device->GetContext()->SetRenderPass(m_renderpass.get());
-    m_device->GetContext()->ApplyShaderProgram(m_gbuffershader);
+    m_device->GetContext()->GetPipelineState()->SetShaderProgram(m_prgm);
     m_device->GetContext()->ExecuteCommands(buffer);
   }
 }

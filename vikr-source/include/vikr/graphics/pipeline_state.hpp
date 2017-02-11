@@ -114,7 +114,12 @@ public:
   virtual BlendFunc GetBlendFunctionDst() const = 0;
   virtual Topology GetTopology() const = 0;
 
+  virtual vvoid SetShaderProgram(ShaderProgram *prgm) = 0;
+
   virtual ShaderProgram *GetShaderProgram() const = 0;
+
+  virtual std::string GetName() const = 0;
+  virtual vvoid SetName(std::string name) = 0;
 };
 } // vikr
 #endif // __VIKR_PIPELINE_STATE_HPP

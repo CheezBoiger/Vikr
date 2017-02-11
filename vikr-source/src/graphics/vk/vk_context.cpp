@@ -87,10 +87,6 @@ vvoid VKContext::SetShaderUniforms(ShaderUniformParams *params) {
 }
 
 
-vvoid VKContext::ApplyShaderProgram(Shader *shader) {
-}
-
-
 vvoid VKContext::QueryVertexbuffer(Vertexbuffer *buffer) {
 }
 

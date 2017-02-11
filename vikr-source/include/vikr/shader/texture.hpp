@@ -31,24 +31,32 @@ public:
   static vbyte *CreateImageByteCode(std::string tex_path, 
             vint32 *width, vint32 *height, vint32 *channels, vbool alpha);
 
+  /**
+    Target format, intends to be the type of format that the texture is going to be.
+    This can be a 1D, 2D, 3D, or cubemap.
+  */
   TextureTarget GetTargetFormat() { return m_target; }
   TextureFormat GetFormat() { return m_format; }
   TextureFormat GetInternalFormat() { return m_internal_format; }
   TextureFilterMode GetFilterMin() { return m_filter_min; }
   TextureFilterMode GetFilterMax() {  return m_filter_max; }
   DataTypeFormat GetDataTypeFormat() { return m_datatype; }
+
   /**
     Texture coordinate wrapping for coord S. 
   */
   TextureWrapMode GetWrapS() { return m_wrap_s; }
+
   /**
     Texture coordinate wrapping for coord t.
   */
   TextureWrapMode GetWrapT() { return m_wrap_t; }
+
   /**
     Texture coordinate wrapping for coord r.
   */
   TextureWrapMode GetWrapR() { return m_wrap_r; }
+
   /**
     Determines if the Texture is mipmapped.
   */
@@ -86,21 +94,36 @@ public:
   virtual vvoid Unbind() = 0;
 
   /**
+    Format represents the storage type of the texture. This can be RGB, RGBA, Depth, or
+    ALPHA, etc.
   */
   virtual vvoid SetFormat(TextureFormat format) = 0;
+
+  /**
+    
+  */
   virtual vvoid SetInternalFormat(TextureFormat format) = 0;
+
+  /**
+  */
   virtual vvoid SetFilterMin(TextureFilterMode filter) = 0;
+
+  /**
+  */
   virtual vvoid SetFilterMax(TextureFilterMode filter) = 0;
+
   /**
     Texture clamp modes. Tells our Rendering API how to clamp the texture onto 
     a Mesh or Quad. This is specified for coord S.
   */
   virtual vvoid SetWrapS(TextureWrapMode mode) = 0;
+
   /**
     Texture clamp modes. Tells our Rendering API how to clamp the texture onto
     a Mesh or Quad. This is specified for coord T.
   */
   virtual vvoid SetWrapT(TextureWrapMode mode) = 0;
+
   /**
     Texture clamp modes. Tells our Rendering API how to clamp the texture onto
     a Mesh or Quad. This is specified for coord R.

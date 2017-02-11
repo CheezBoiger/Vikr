@@ -4,6 +4,7 @@
 #include <vikr/graphics/gl4/gl4_commandbuffer.hpp>
 #include <vikr/graphics/gl4/gl4_context.hpp>
 #include <vikr/shader/shader_uniform_params.hpp>
+#include <vikr/shader/glsl/glsl_program.hpp>
 
 
 namespace vikr {
@@ -85,15 +86,15 @@ private:
 
 class ShaderProgramSetter : public GL4GraphicsCommand {
 public:
-  ShaderProgramSetter(Shader *shader) 
-    : shader(shader) { }
+  ShaderProgramSetter(ShaderProgram *pgrm) 
+    : program(pgrm) { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->ApplyShaderProgram(shader);
+    cx->GetPipelineState()->SetShaderProgram(program);
   }
 
 private:
-  Shader *shader;
+  ShaderProgram *program;
 };
 
 
@@ -130,8 +131,8 @@ vvoid GL4Commandbuffer::SetTopology(Topology topology) {
 }
 
 
-vvoid GL4Commandbuffer::SetShaderProgram(Shader *shader) {
-  commands.push_back(std::make_unique<ShaderProgramSetter>(shader));
+vvoid GL4Commandbuffer::SetShaderProgram(ShaderProgram *prgm) {
+  commands.push_back(std::make_unique<ShaderProgramSetter>(prgm));
 }
 
 

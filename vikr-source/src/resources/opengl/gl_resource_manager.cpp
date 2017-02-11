@@ -1,5 +1,5 @@
 //
-//
+// Copyright (c) Mario Garcia, Under the MIT License.
 //
 #include <vikr/resources/opengl/gl_resource_manager.hpp>
 #include <vikr/shader/glsl/glsl_shader.hpp>
@@ -12,6 +12,9 @@
 #include <vikr/shader/stb/stb_image.h>
 
 #include <vikr/graphics/gl4/gl4_pipeline_state.hpp>
+#include <vikr/shader/glsl/glsl_program.hpp>
+#include <vikr/util/vikr_log.hpp>
+
 
 namespace vikr {
 
@@ -19,7 +22,6 @@ namespace vikr {
 std::unordered_map<std::string, std::shared_ptr<GLSLShader> > GLResources::shaders;
 
 std::map<guid_t, std::shared_ptr<Mesh> > GLResources::meshes;
-std::map<std::string, std::shared_ptr<Material> > GLResources::materials;
 std::map<std::string, std::shared_ptr<GLTexture> > GLResources::textures;
 std::map<guid_t, std::shared_ptr<GLSLShaderProgram> > GLResources::shader_programs;
 std::map<std::string, std::shared_ptr<GL4PipelineState> > GLResources::pipelinestates;
@@ -48,6 +50,20 @@ Shader *GLResourceManager::GetShader(std::string name) {
     return static_cast<Shader *>(GLResources::shaders[name].get());
   }
   return nullptr;
+}
+
+
+vbool GLResourceManager::DestroyShader(std::string name) {
+  vbool success = false;
+  auto it = GLResources::shaders.find(name);
+  if (it != GLResources::shaders.end()) {
+    // cleanup first. Make sure the shader is not leaked.
+    it->second->Cleanup();
+    GLResources::shaders.erase(it);
+    VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, "Shader => " + name + " removed.");
+    success = true;
+  } 
+  return success;
 }
 
 
@@ -84,14 +100,16 @@ Mesh *GLResourceManager::GetMesh(guid_t guid) {
 }
 
 
-/**
-  For now.
-*/
-Material *GLResourceManager::CreateMaterial(std::string name) {
-  std::shared_ptr<Material> material = std::make_shared<Material>();
-  material->SetName(name);
-  GLResources::materials[material->GetName()] = material;
-  return material.get();
+vbool GLResourceManager::DestroyMesh(guid_t guid) {
+  vbool success = false;
+  auto it = GLResources::meshes.find(guid);
+  if (it != GLResources::meshes.end()) {
+    // Cleanup the mesh vertex buffer.  
+    it->second->GetVertexBuffer()->Cleanup();
+    GLResources::meshes.erase(it);
+    success = true;
+  }
+  return success;
 }
 
 
@@ -121,5 +139,81 @@ Texture *GLResourceManager::CreateTexture(TextureTarget target, std::string img_
 
 Texture *GLResourceManager::GetTexture(std::string img_path) {
   return GLResources::textures[img_path].get();
+}
+
+
+vbool GLResourceManager::DestroyTexture(std::string img_path) {
+  auto it = GLResources::textures.find(img_path);
+  vbool success = false;
+  if (it != GLResources::textures.end()) {
+    // Cleanup first.
+    it->second->Cleanup();
+    GLResources::textures.erase(it);
+    success = true;
+  }
+  return success;
+}
+
+
+PipelineState *GLResourceManager::CreatePipelineState(std::string name) {
+  auto it = GLResources::pipelinestates.find(name);
+  PipelineState *pipeline = nullptr;
+  if (it == GLResources::pipelinestates.end()) {
+    std::shared_ptr<GL4PipelineState> gl_pipeline = 
+      std::make_unique<GL4PipelineState>();
+    gl_pipeline->SetName(name);
+    GLResources::pipelinestates[name] = gl_pipeline;
+    return static_cast<PipelineState *>(gl_pipeline.get());
+  }
+  return pipeline;
+}
+
+
+PipelineState *GLResourceManager::GetPipelineState(std::string name) {
+  auto it = GLResources::pipelinestates.find(name);
+  if (it != GLResources::pipelinestates.end()) {
+    return GLResources::pipelinestates[name].get();
+  }
+  return nullptr;
+}
+
+
+vbool GLResourceManager::DestroyPipelineState(std::string name) {
+  vbool success = false;
+  auto it = GLResources::pipelinestates.find(name);
+  if (it != GLResources::pipelinestates.end()) {
+    GLResources::pipelinestates.erase(it);
+    success = true;
+  }
+  return success;
+}
+
+
+ShaderProgram *GLResourceManager::CreateShaderProgram() {
+  std::shared_ptr<GLSLShaderProgram> prgm =
+    std::make_shared<GLSLShaderProgram>();
+  GLResources::shader_programs[prgm->GetGUID()] = prgm;
+  return prgm.get();
+}
+
+
+ShaderProgram *GLResourceManager::GetShaderProgram(guid_t uid) {
+  auto it = GLResources::shader_programs.find(uid);
+  if (it != GLResources::shader_programs.end()) {
+    return GLResources::shader_programs[uid].get();
+  }
+  return nullptr;
+}
+
+
+vbool GLResourceManager::DestroyShaderProgram(guid_t id) {
+  vbool success = false;
+  auto it = GLResources::shader_programs.find(id);
+  if (it != GLResources::shader_programs.end()) {
+    it->second->Cleanup();
+    GLResources::shader_programs.erase(it);
+    success = true;
+  }
+  return success;
 }
 } // vikr

@@ -93,21 +93,6 @@ std::unique_ptr<Framebuffer> VKDevice::CreateFramebuffer() {
 }
 
 
-Shader *VKDevice::GetShader(std::string name) {
-  return nullptr;
-}
-
-
-vvoid VKDevice::StoreShader(std::string name,
-  std::string vs,
-  std::string fs,
-  std::string include,
-  std::string gs)
-{
-  
-}
-
-
 Material *VKDevice::CreateMaterial(std::string name) {
   return nullptr;
 }
