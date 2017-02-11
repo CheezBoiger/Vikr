@@ -22,6 +22,7 @@ struct Vertex {
   glm::vec2 uv;
   glm::vec3 tangent;
   glm::vec3 bitangent;
+  glm::vec3 color;
 };
 
 
@@ -43,6 +44,7 @@ struct VertexContainer {
   std::vector<vreal32>  uvs;
   std::vector<vreal32>  tangents;
   std::vector<vreal32>  bitangents;
+  std::vector<vreal32>  colors;
   std::vector<vuint32>  indices;
   VertexUsageType       usage_type;
   vuint32 size = 0;

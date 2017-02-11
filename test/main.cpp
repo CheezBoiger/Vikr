@@ -111,6 +111,7 @@ int main(int c, char* args[]) {
   cube1->Update();
   PointLight plight;
   PointLight plight2;
+
   DirectionalLight dlight1;
   SceneNode *light_object = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
   MeshComponent *mc = light_object->AddComponent<MeshComponent>();

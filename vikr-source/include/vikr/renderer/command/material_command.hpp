@@ -30,6 +30,9 @@ public:
     , m_material(material) { }
 
   vvoid Record(Commandbuffer *buffer) override {
+    if (!m_material) {
+      return;
+    }
     ShaderUniformParams params;
     ShaderProgram *prgm = m_material->GetShaderProgram();
     //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));

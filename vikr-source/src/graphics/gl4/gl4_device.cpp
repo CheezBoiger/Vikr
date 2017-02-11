@@ -70,7 +70,8 @@ GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices)
     std::vector<vreal32> data;
     vuint32 count = 0;
     data.resize(vertices.positions.size() + vertices.normals.size() +
-      vertices.uvs.size() + vertices.tangents.size() + vertices.bitangents.size());
+      vertices.uvs.size() + vertices.tangents.size() + 
+      vertices.bitangents.size() + vertices.colors.size());
     for (vuint32 i = 0; i < vertices.positions.size(); ++i) {
       data[count++] = vertices.positions[i];
     }
@@ -85,6 +86,9 @@ GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices)
     }
     for (vuint32 i = 0; i < vertices.bitangents.size(); ++i) {
       data[count++] = vertices.bitangents[i];
+    }
+    for (vuint32 i = 0; i < vertices.colors.size(); ++i) {
+      data[count++] = vertices.colors[i];
     }
     vuint32 offset = 0;
     glGenVertexArrays(1, &vao);
@@ -116,6 +120,9 @@ GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices)
     glEnableVertexAttribArray(4);
     glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
     offset += sizeof(vreal32) * vertices.bitangents.size();
+    glEnableVertexAttribArray(5);
+    glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+    offset += sizeof(vreal32) * vertices.colors.size();
     glBindVertexArray(0);
     gbo.StoreVertexArrayId(vao);
     gbo.StoreVertexBufferId(vbo);

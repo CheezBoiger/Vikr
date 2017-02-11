@@ -62,7 +62,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   ResourceManager *manager = device->GetResourceManager();
   Shader *vert = manager->CreateShader("vert_gbuffer", VERTEX_SHADER);
   vert->Compile("../../libs/shader/GLSL/gbuffer.vert");
-  Shader *frag = manager->CreateShader("frag_gbuffer", FRAGMENT_SHADER);
+  Shader *frag = manager->CreateShader("frag_gbuffer", PIXEL_SHADER);
   frag->Compile("../../libs/shader/GLSL/gbuffer.frag");
   m_prgm = manager->CreateShaderProgram();
   m_prgm->LoadShader(vert);

@@ -14,13 +14,13 @@ out VS_OUT {
   vec2 UVs;
 } vs_out;
 
-uniform mat4 modelview;
-uniform mat4 normalInterp;
-uniform mat4 projection;
+uniform mat4 vikr_Model;
+uniform mat4 vikr_View;
+uniform mat4 vikr_Projection;
 
 void main() {
-  gl_Position = projection * modelview * vec4(position, 1.0f);
+  gl_Position = vikr_Projection * vikr_View * vikr_Model * vec4(position, 1.0f);
   vs_out.Position = vec3(model * vec4(position, 1.0f));
-  vs_out.Normal = vec3(normalInterp);
+  vs_out.Normal = normal;
   vs_out.UVs = uvs;
 }

@@ -66,7 +66,7 @@ public:
 protected:
 
   std::string m_name;
-  ShaderProgram *m_program; // weak ref
+  ShaderProgram *m_program = nullptr; // weak ref
   /**
     Current Render Pipeline. 
   */

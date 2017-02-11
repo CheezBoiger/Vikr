@@ -14,6 +14,7 @@ out VERT_OUT {
   vec3 Normal;
   vec3 Tangent;
   vec3 Bitangent;
+  vec3 Color;
 } vs_out;
 
 uniform mat4 vikr_Model;

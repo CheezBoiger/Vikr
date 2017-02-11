@@ -27,7 +27,8 @@ vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
   std::vector<glm::vec2> uvs,
   std::vector<vuint32> indices,
   std::vector<glm::vec3> tangents,
-  std::vector<glm::vec3> bitangents)
+  std::vector<glm::vec3> bitangents,
+  std::vector<glm::vec3> colors)
 {
   for (vuint32 i = 0; i < positions.size(); ++i) {
     m_vertices.positions.push_back(positions[i].x);
@@ -52,6 +53,11 @@ vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
     m_vertices.bitangents.push_back(bitangents[i].x);
     m_vertices.bitangents.push_back(bitangents[i].y);
     m_vertices.bitangents.push_back(bitangents[i].z);
+  }
+  for (vuint32 i = 0; i < colors.size(); ++i) {
+    m_vertices.colors.push_back(colors[i].x);
+    m_vertices.colors.push_back(colors[i].y);
+    m_vertices.colors.push_back(colors[i].z);
   }
   for (vuint32 i = 0; i < indices.size(); ++i) {
     m_vertices.indices.push_back(indices[i]);
@@ -78,6 +84,9 @@ vvoid Mesh::Buffer(std::vector<Vertex> vertices,
     m_vertices.bitangents.push_back(vertex.bitangent.x);
     m_vertices.bitangents.push_back(vertex.bitangent.y);
     m_vertices.bitangents.push_back(vertex.bitangent.z);
+    m_vertices.colors.push_back(vertex.color.x);
+    m_vertices.colors.push_back(vertex.color.y);
+    m_vertices.colors.push_back(vertex.color.z);
   }
   for (vuint32 i = 0; i < indices.size(); ++i) {
     m_vertices.indices.push_back(indices[i]);
