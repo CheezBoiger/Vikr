@@ -51,10 +51,10 @@ public:
     Initialize Column-Major format.
   */
   Matrix4(
-    _Value a00, _Value a01, _Value a02, _Value a03,
-    _Value a10, _Value a11, _Value a12, _Value a13,
-    _Value a20, _Value a21, _Value a22, _Value a23,
-    _Value a30, _Value a31, _Value a32, _Value a33) 
+    _Value a00, _Value a10, _Value a20, _Value a30,
+    _Value a01, _Value a11, _Value a21, _Value a31,
+    _Value a02, _Value a12, _Value a22, _Value a32,
+    _Value a03, _Value a13, _Value a23, _Value a33) 
   {
     mat[0][0] = a00; mat[1][0] = a10; mat[2][0] = a20; mat[3][0] = a30;
     mat[0][1] = a01; mat[1][1] = a11; mat[2][1] = a21; mat[3][1] = a31;
