@@ -23,13 +23,13 @@ Mesh::Mesh(GraphicsPipeline pipeline)
 }
 
 
-vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
-  std::vector<glm::vec3> normals,
-  std::vector<glm::vec2> uvs,
-  std::vector<vuint32> indices,
-  std::vector<glm::vec3> tangents,
-  std::vector<glm::vec3> bitangents,
-  std::vector<glm::vec3> colors)
+vvoid Mesh::Buffer(std::vector<glm::vec3> &positions,
+  std::vector<glm::vec3> &normals,
+  std::vector<glm::vec2> &uvs,
+  std::vector<vuint32> &indices,
+  std::vector<glm::vec3> &tangents,
+  std::vector<glm::vec3> &bitangents,
+  std::vector<glm::vec3> &colors)
 {
   std::thread pos([&] () -> vvoid {
     for(vuint32 i = 0; i < positions.size(); ++i) {
@@ -88,8 +88,8 @@ vvoid Mesh::Buffer(std::vector<glm::vec3> positions,
 }
 
 
-vvoid Mesh::Buffer(std::vector<Vertex> vertices, 
-  std::vector<vuint32> indices) 
+vvoid Mesh::Buffer(std::vector<Vertex> &vertices, 
+  std::vector<vuint32> &indices) 
 {
   std::thread handle([&] () -> vvoid {
     for(vuint32 i = 0; i < vertices.size(); ++i) {

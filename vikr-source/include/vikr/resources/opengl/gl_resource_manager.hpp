@@ -38,16 +38,16 @@ public:
   PipelineState *GetPipelineState(std::string name) override;
   vbool DestroyPipelineState(std::string name) override;
 
-  Mesh *CreateMesh(std::vector<glm::vec3> positions,
-    std::vector<glm::vec3> normals,
-    std::vector<glm::vec2> uvs,
-    std::vector<vuint32> indices = std::vector<vuint32>(),
-    std::vector<glm::vec3> tangents = std::vector<glm::vec3>(),
-    std::vector<glm::vec3> bitangents = std::vector<glm::vec3>(),
-    std::vector<glm::vec3> colors = std::vector<glm::vec3>()) override;
+  Mesh *CreateMesh(std::vector<glm::vec3> &positions,
+    std::vector<glm::vec3> &normals,
+    std::vector<glm::vec2> &uvs,
+    std::vector<vuint32> &indices = std::vector<vuint32>(),
+    std::vector<glm::vec3> &tangents = std::vector<glm::vec3>(),
+    std::vector<glm::vec3> &bitangents = std::vector<glm::vec3>(),
+    std::vector<glm::vec3> &colors = std::vector<glm::vec3>()) override;
 
-  Mesh *CreateMesh(std::vector<Vertex> vertices,
-    std::vector<vuint32> indices = std::vector<vuint32>()) override;
+  Mesh *CreateMesh(std::vector<Vertex> &vertices,
+    std::vector<vuint32> &indices = std::vector<vuint32>()) override;
 
   Mesh *GetMesh(guid_t guid) override;
   vbool DestroyMesh(guid_t guid) override;
