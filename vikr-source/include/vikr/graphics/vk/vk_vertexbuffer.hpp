@@ -6,7 +6,7 @@
 
 
 #include <vikr/graphics/vertexbuffer.hpp>
-
+#include <vikr/resources/vulkan/vk_memorymanager.hpp>
 
 namespace vikr {
 
@@ -14,9 +14,45 @@ namespace vikr {
 class VkVertexbuffer : public Vertexbuffer {
 public:
 
-private:
+  vuint32 GetVertexBufferId() override {
+    return id;
+  }
+
+  vvoid StoreVertexBufferId(vuint32 vbo) override { id = vbo; }
+
+  vuint32 GetElementBufferId() override;
+  vvoid StoreElementBufferId(vuint32 ibo) override;
+
+  vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) override;
+
+  vvoid Cleanup() override {
+    m_vbo.Replace();
+    id = -1;
+  }
+
+  vvoid StoreVkBuffer(VkBuffer &buf);
 
   
+  /**
+    Get the Binding Description.
+  */
+  static VkVertexInputBindingDescription GetBindingDescription() {
+    VkVertexInputBindingDescription binding_description;
+    binding_description.binding = 0;
+    // Set No stride, as our vertices will be packed as a batch. 
+    binding_description.stride = 0; 
+    binding_description.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+  }
+
+private:
+
+  vuint64 id;
+
+  /**
+    vbo buffer.
+  */ 
+  VkMemoryManager<VkBuffer> m_vbo;
+ 
 };
 } // vikr
 #endif // __VIKR_VK_VERTEXBUFFER_HPP

@@ -12,6 +12,7 @@
 #include <vikr/graphics/vk/vk_phydevice.hpp>
 #include <vikr/graphics/pipeline_state.hpp>
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
+#include <vikr/resources/vulkan/vk_resource_manager.hpp>
 #include <vikr/shader/cubemap.hpp>
 
 namespace vikr {
@@ -68,6 +69,8 @@ private:
   VkMemoryManager<VkDevice> device      { vkDestroyDevice };
 
   VKContext context;
+
+  //VkResourceManager manager;
 
 public:
   static const vchar *kApplicationName;
