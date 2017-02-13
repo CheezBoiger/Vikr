@@ -5,6 +5,8 @@
 #define __VIKR_VECT_H
 
 
+#include <vikr/platform/vikr_api.hpp>
+
 namespace vikr {
 namespace math {
 
@@ -44,6 +46,7 @@ public:
 
 template<typename _Value = float>
 class Vector4 {
+  VIKR_DISALLOW_COPY_AND_ASSIGN(Vector4<_Value>);
 public:
   // Vector4 contruction.
   Vector4(_Value x = 1.0f, 
@@ -51,6 +54,12 @@ public:
           _Value z = 1.0f , 
           _Value w = 1.0f)
   : x(x), y(y), z(z), w(w) { }
+
+
+  Vector4 operator+(Vector4 &vec) {
+    Vector4<_Value> vec;
+    return vec;
+  }
 
 
   union {

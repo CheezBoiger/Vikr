@@ -33,6 +33,7 @@
 #include <vikr/input/mouse.hpp>
 #include <vikr/input/keyboard.hpp>
 #include <vikr/util/vikr_assert.hpp>
+#include <vikr/math/vikr_math.hpp>
 
 #include <vikr/graphics/vk/vk_device.hpp>
 

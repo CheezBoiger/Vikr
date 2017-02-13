@@ -21,9 +21,9 @@ void Clamp(Type min, Type max, Type &val) {
 
 
 
-using Vect4 = vikr::math::Vector4<float>;
-using Vect3 = vikr::math::Vector3<float>;
-using Vect2 = vikr::math::Vector2<float>;
+using Vec4 = vikr::math::Vector4<float>;
+using Vec3 = vikr::math::Vector3<float>;
+using Vec2 = vikr::math::Vector2<float>;
 using Mat4 = vikr::math::Matrix4<float>;
 using Mat3 = vikr::math::Matrix3<float>;
 using Mat2 = vikr::math::Matrix2<float>;
