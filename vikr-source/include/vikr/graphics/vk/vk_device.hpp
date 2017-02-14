@@ -57,6 +57,7 @@ public:
 
   std::unique_ptr<Commandbuffer> CreateCommandbuffer() override;
 
+  VkDevice GetVkDevice() { return device.Get(); }
 
 private:
 
@@ -70,7 +71,7 @@ private:
 
   VKContext context;
 
-  //VkResourceManager manager;
+  VKResourceManager manager;
 
 public:
   static const vchar *kApplicationName;

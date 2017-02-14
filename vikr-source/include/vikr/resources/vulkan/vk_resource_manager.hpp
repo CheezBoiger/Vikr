@@ -14,9 +14,9 @@ namespace vikr {
 /**
   Vulkan Resource Manager object. Handles resources within the VkResources.
 */
-class VkResourceManager : public ResourceManager {
+class VKResourceManager : public ResourceManager {
 public:
-  VkResourceManager();
+  VKResourceManager();
 
   Shader *CreateShader(std::string name, ShaderStage stage) override;
   Shader *GetShader(std::string name) override;
@@ -40,7 +40,12 @@ public:
 
   Mesh *CreateMesh(std::vector<Vertex> &vertices,
     std::vector<vuint32> &indices = std::vector<vuint32>()) override;
-
+  Mesh *GetMesh(guid_t guid) override;
+  vbool DestroyMesh(guid_t guid) override;
+  
+  Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;
+  Texture *GetTexture(std::string image_path) override;
+  vbool DestroyTexture(std::string image_path) override;
 
 };
 
@@ -48,7 +53,7 @@ public:
 /**
   Vulkan Resources held within this singleton object.
 */
-class VkResources : public Resources {
+class VKResources : public Resources {
 
 
 };

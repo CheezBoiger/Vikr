@@ -47,7 +47,7 @@ public:
   /**
     Get the program id associated with this shader.
   */
-  vuint32 GetNativeId() { return shader_id; }
+  virtual vuint64 GetNativeId() = 0;
 
   /**
     Get the Shader language.
@@ -90,11 +90,6 @@ protected:
     The shader name.
   */
   std::string shader_name               = "noname";
-
-  /**
-    Native Shader id.
-  */
-  vuint32 shader_id                     = 0;
 
   vbool is_compiled                     = false;
   VIKR_DISALLOW_COPY_AND_ASSIGN(Shader);

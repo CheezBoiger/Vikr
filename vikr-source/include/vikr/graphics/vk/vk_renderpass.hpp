@@ -53,6 +53,16 @@ private:
   Viewport m_viewport;
 
   /**
+    Native Viewport for Vulkan.
+  */
+  VkViewport m_native_viewport;
+
+  /**
+    Scissor Rect.
+  */
+  VkRect2D scissor;
+
+  /**
     clear color.
   */
   glm::vec3 m_clearcolor;

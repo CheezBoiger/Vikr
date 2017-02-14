@@ -11,6 +11,9 @@
 namespace vikr {
 
 
+class VKPipelineState;
+
+
 class VKContext : public RenderContext {
 public:
   VKContext();
@@ -68,6 +71,11 @@ public:
   VkQueue &GetPresentationQueue() { return m_queuePresentBuffer; }
 
 private:
+  
+  /**
+    Current Pipeline State to use.
+  */
+  VKPipelineState *m_currPipelineState = nullptr;
 
   VkQueue m_queueGraphicsBuffer;
   VkQueue m_queuePresentBuffer;

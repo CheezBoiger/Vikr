@@ -60,7 +60,7 @@ vint32 GLSLLinker::Link() {
       program_id = -1;
       return -1;
     }
-    AttachShader(program_id, it->second->GetNativeId());
+    AttachShader(program_id, static_cast<vuint32>(it->second->GetNativeId()));
   }
   // link the program to the attach shaders.
   LinkProgram(program_id);

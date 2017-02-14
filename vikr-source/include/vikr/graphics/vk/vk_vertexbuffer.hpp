@@ -14,14 +14,21 @@ namespace vikr {
 class VkVertexbuffer : public Vertexbuffer {
 public:
 
-  vuint32 GetVertexBufferId() override {
+  vuint64 GetVertexBufferId() override {
     return id;
   }
 
-  vvoid StoreVertexBufferId(vuint32 vbo) override { id = vbo; }
+  /**
+    Store the VkBuffer id into this VertexBuffer object. 
+    WARNING (test) : Simply testing if this will work as VkBuffer is just a uint64_t id.
+  */
+  vvoid StoreVertexBufferId(vuint64 vbo) override {
+    m_vbo.Replace(); 
+    m_vbo = vbo;
+  }
 
-  vuint32 GetElementBufferId() override;
-  vvoid StoreElementBufferId(vuint32 ibo) override;
+  vuint64 GetElementBufferId() override;
+  vvoid StoreElementBufferId(vuint64 ibo) override;
 
   vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) override;
 
@@ -46,6 +53,9 @@ public:
 
 private:
 
+  /**
+    Essentually a VkBuffer id.
+  */
   vuint64 id;
 
   /**
