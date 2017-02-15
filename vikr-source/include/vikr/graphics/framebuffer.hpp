@@ -109,16 +109,46 @@ public:
   virtual vbool HasDepthStencil() = 0;
   virtual vbool IsMultisampled() = 0;
 
+  /**
+    Readbuffer.
+  */
   virtual vvoid Readbuffer(BufferMode mode) = 0;
+  
+  /**
+    Writebuffer.
+  */
   virtual vvoid Writebuffer(BufferMode mode) = 0;
 
+  /**
+    Cleanup the framebuffer, this will destroy the framebuffer.
+  */
   virtual vvoid Cleanup() = 0;
 
+  /**
+    Set the RenderPass for this Framebuffer. BE SURE TO CALL UPDATE 
+    IN ORDER TO UPLOAD THE NEW RENDERTARGETS FROM THIS RENDERPASS.
+  */
   virtual vvoid SetRenderPass(RenderPass *pass) = 0;
+  
+  /**
+    Get the RenderPass.
+  */
   virtual RenderPass *GetRenderPass() = 0;
 
+  /**
+    Get the Viewport of this Framebuffer.
+  */
   virtual Viewport GetViewport() = 0;
+  
+  /**
+    Set the Viewport of this Framebuffer.
+  */
   virtual vvoid SetViewport(Viewport &viewport) = 0;
+
+  /**
+    Blits this Framebuffer to the specified destination framebuffer.
+  */
+  virtual vvoid BlitTo(Framebuffer *framebuffer) = 0;
 };
 } // vikr
 #endif // __VIKR_FRAMEBUFFER_HPP

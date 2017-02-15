@@ -183,4 +183,10 @@ vbool GL4Framebuffer::IsMultisampled() {
   }
   return false;
 }
+
+
+vvoid GL4Framebuffer::BlitTo(Framebuffer *framebuffer) {
+  // nothing yet
+  // will consider using glBlitFramebuffer
+}
 } // vikr

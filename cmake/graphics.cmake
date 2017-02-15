@@ -25,6 +25,7 @@ if (vulkan)
     ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_pipeline_state.cpp
     ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_device.cpp
     ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_renderpass.cpp
+    ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_framebuffer.cpp
   )
 
   set(VIKR_GLOB
@@ -38,6 +39,7 @@ if (vulkan)
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_instance.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_surface.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_vertexbuffer.hpp
+    ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_framebuffer.hpp
   )
 endif()
 

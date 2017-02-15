@@ -64,6 +64,8 @@ public:
   vbool HasDepthStencil() override;
   vbool IsMultisampled() override;
 
+  vvoid BlitTo(Framebuffer *framebuffer) override;
+
 private:
 
   /**
