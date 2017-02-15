@@ -76,7 +76,7 @@ public:
   /**
     Get the Framebuffer id.
   */
-  virtual vuint32 GetFramebufferId() = 0;
+  virtual vuint64 GetFramebufferId() = 0;
 
   /**
     Check if this framebuffer is completely structure for use.

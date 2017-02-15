@@ -188,5 +188,21 @@ vbool GL4Framebuffer::IsMultisampled() {
 vvoid GL4Framebuffer::BlitTo(Framebuffer *framebuffer) {
   // nothing yet
   // will consider using glBlitFramebuffer
+  GL4Framebuffer *glFb = static_cast<GL4Framebuffer *>(framebuffer);
+  Viewport target = glFb->GetViewport();
+  glBindFramebuffer(GL_READ_FRAMEBUFFER, m_fbo);
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, glFb->GetFramebufferId());
+  glBlitFramebuffer(
+    target.win_x, 
+    target.win_y,
+    m_viewport.win_x,
+    m_viewport.win_y,
+    target.win_width,
+    target.win_height,
+    m_viewport.win_width,
+    m_viewport.win_height,
+    GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT,
+    GL_NEAREST
+  );
 }
 } // vikr
