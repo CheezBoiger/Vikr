@@ -12,8 +12,4 @@ namespace vikr {
 VKRenderPass::VKRenderPass()
 {
 }
-
-
-vvoid VKRenderPass::UpdateRenderTargets() {
-}
 } // vikr

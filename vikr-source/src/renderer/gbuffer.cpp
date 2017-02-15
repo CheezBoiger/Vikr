@@ -25,7 +25,6 @@ vvoid GBuffer::Init(RenderDevice *device) {
   viewport.win_y = 0;
   viewport.win_width = Window::GetMainWindow()->GetWidth();
   viewport.win_height = Window::GetMainWindow()->GetHeight();
-  m_renderpass->SetViewport(viewport);
   
   m_rendertargets[0] = device->CreateRenderTexture("gPosition",
     window->GetWidth(), window->GetHeight(), false, false, data_FLOAT);
@@ -53,7 +52,6 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_framebuffer = device->CreateFramebuffer();
   m_framebuffer->Generate();
   m_renderbuffer = device->CreateRenderbuffer(window->GetWidth(), window->GetHeight(), false);
-  m_renderpass->SetFramebuffer(m_framebuffer.get());
   m_renderpass->SetRenderbuffer(m_renderbuffer.get());
 
   /*
@@ -69,14 +67,19 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_prgm->LoadShader(frag);
   m_prgm->Build();
 
-  m_renderpass->UpdateRenderTargets(); 
+  /**
+    Set the RenderPass.
+  */
+  m_framebuffer->SetRenderPass(m_renderpass.get());
+  m_framebuffer->SetViewport(viewport);
+  m_framebuffer->Update();
 }
 
 
 vvoid GBuffer::ExecutePass(CommandbufferList *buffer) {
   if (m_device) {
     m_device->GetContext()->Clear();
-    m_device->GetContext()->SetRenderPass(m_renderpass.get());
+    m_device->GetContext()->SetFramebuffer(m_framebuffer.get());
     m_device->GetContext()->GetPipelineState()->SetShaderProgram(m_prgm);
     m_device->GetContext()->ExecuteCommands(buffer);
   }

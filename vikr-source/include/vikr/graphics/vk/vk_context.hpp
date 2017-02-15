@@ -26,7 +26,7 @@ public:
 
   vvoid SetRenderTarget(RenderTarget *target, vuint32 index) override;
 
-  vvoid SetRenderPass(RenderPass *pass) override;
+  vvoid SetFramebuffer(Framebuffer *framebuffer) override;
 
   vvoid SetBlendEq(BlendEq eq) override;
 
@@ -60,7 +60,7 @@ public:
 
   vvoid BeginRecord(Commandbuffer *buf) override;
   vvoid EndRecord() override;
-  RenderPass *GetRenderPass() override;
+  Framebuffer *GetFramebuffer() override;
   PipelineState *GetPipelineState() override;
   vvoid ApplyPipelineState(PipelineState *pipeline) override;
 

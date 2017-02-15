@@ -23,20 +23,6 @@ class VKRenderPass : public RenderPass {
 public:
   VKRenderPass();
 
-  vvoid UpdateRenderTargets() override;
-
-  vvoid Bind() override;
-
-  vvoid Unbind() override;
-
-  const Viewport &GetViewport() const override { return m_viewport; }
-
-  vvoid SetViewport(Viewport viewport) override { 
-    m_viewport = viewport;
-  }
-
-  glm::vec3 GetClearColor() const override { return m_clearcolor; }
-
   vbool AddRenderTarget(RenderTarget *target, vuint32 attachment) override;
 
   vbool RemoveRenderTarget(vuint32 attachment) override;
@@ -46,27 +32,6 @@ public:
 private:
   
   VkMemoryManager<VkRenderPass> m_renderpass;
-
-  /**
-    The viewport of this render pass.
-  */
-  Viewport m_viewport;
-
-  /**
-    Native Viewport for Vulkan.
-  */
-  VkViewport m_native_viewport;
-
-  /**
-    Scissor Rect.
-  */
-  VkRect2D scissor;
-
-  /**
-    clear color.
-  */
-  glm::vec3 m_clearcolor;
-
 
   std::map<vuint32, RenderTarget *> m_rendertargets;
 };
