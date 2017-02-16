@@ -143,7 +143,7 @@ public:
   /**
     Set the Viewport of this Framebuffer.
   */
-  virtual vvoid SetViewport(Viewport &viewport) = 0;
+  virtual vvoid SetViewport(const Viewport &viewport) = 0;
 
   /**
     Blits this Framebuffer to the specified destination framebuffer.

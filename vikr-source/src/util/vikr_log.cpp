@@ -60,7 +60,8 @@ void VikrLog::Store(VikrMessage type, std::string message) {
 
 
 void VikrLog::Dump() {
-  std::for_each(history_log.begin(), history_log.end(), [] (std::pair<VikrMessage, std::string>& log) -> void {
+  std::for_each(history_log.begin(), history_log.end(), 
+  [] (std::pair<VikrMessage, std::string>& log) -> void {
     VikrLog::DisplayMessage(log.first, log.second);
   });
 }

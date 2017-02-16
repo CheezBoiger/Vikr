@@ -59,7 +59,7 @@ public:
   vvoid SetRenderPass(RenderPass *pass) override;
 
   Viewport GetViewport() override { return m_viewport; }
-  vvoid SetViewport(Viewport &viewport) override;
+  vvoid SetViewport(const Viewport &viewport) override;
 
   vbool HasDepthStencil() override;
   vbool IsMultisampled() override;

@@ -160,7 +160,7 @@ vvoid GL4Framebuffer::SetRenderPass(RenderPass *pass) {
 }
 
 
-vvoid GL4Framebuffer::SetViewport(Viewport &viewport) {
+vvoid GL4Framebuffer::SetViewport(const Viewport &viewport) {
   m_viewport.win_x = viewport.win_x;
   m_viewport.win_y = viewport.win_y;
   m_viewport.win_width = viewport.win_width;
