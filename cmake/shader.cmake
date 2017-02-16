@@ -21,6 +21,7 @@ if(vulkan)
     ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_validator.cpp
     ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_compiler.cpp
     ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_program.cpp
+    ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_texture.cpp
   )
 
   set(VIKR_GLOB
@@ -31,6 +32,7 @@ if(vulkan)
     ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_shader.hpp
     ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_linker.hpp
     ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_program.hpp
+    ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_texture.hpp
   )
 endif()
 

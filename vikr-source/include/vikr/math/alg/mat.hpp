@@ -14,12 +14,25 @@ namespace math {
 template<typename _Value = float>
 class Matrix2 {
 public:
+  Matrix2(
+    Vector2<_Value> &row1,
+    Vector2<_Value> &row2)
+  {
+  }
+
+  Matrix2(
+    _Value a00, _Value a01,
+    _Value a10, _Value a11)
+  {
+  }
+
+  
 private:
   _Value mat[2][2];
 };
 
 
-template<typename _Value = float >
+template<typename _Value = float>
 class Matrix3 {
 public:
   Matrix3(

@@ -69,6 +69,11 @@ private:
   VkMemoryManager<VkFramebuffer> m_fbo;
 
   VKRenderPass *m_renderPass            = nullptr;
+
+  Viewport m_viewport;
+
+  VkViewport m_native_viewport;
+  VkRect2D m_native_scissor;
 };
 } // vikr
 #endif // __VIKR_VK_FRAMEBUFFER_HPP

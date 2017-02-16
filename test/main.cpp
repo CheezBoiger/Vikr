@@ -58,16 +58,6 @@ void Do_Movement()
 
 
 int main(int c, char* args[]) {
-  Mat4 matr(1, 0, 0, 0,
-            0, 1, 0, 5.0,
-            0, 0, 1, 0,
-            0, 0, 0, 1);
-  Mat4 s(1, 0, 0, 0,
-          0, 1, 0, 0,
-          0, 0, 1, 0,
-          0, 0, 0, 1);
-  VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(matr[1][3]));
-  Mat4 j = s + matr;
   InitVikr(vikr_PIPELINE_OPENGL);
   Window win = Window::CreateVikrWindow(1200, 800, "Vikr");
   Window::SetMainWindow(&win);

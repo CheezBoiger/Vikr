@@ -5,12 +5,16 @@
 #define __VIKR_VK_PIPELINE_STATE_HPP
 
 #include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/viewport.hpp>
+#include <vikr/resources/vulkan/vk_memorymanager.hpp>
 
 
 namespace vikr {
 
 
 class Shader;
+class SpvShader;
+class SpvShaderProgram;
 
 
 /**
@@ -18,7 +22,6 @@ class Shader;
 */
 class VKPipelineState : public PipelineState {
 public:
-
   VKPipelineState();
 
   vvoid SetViewport(Viewport viewport) override;
@@ -53,6 +56,25 @@ public:
   vvoid SetName(std::string name) override;
 
 private:
+
+
+  FrontFace m_frontface       = FrontFace::vikr_COUNTER_CLOCKWISE;
+  CullFace m_cullface         = CullFace::vikr_BACK_FACE;
+  Topology m_topology         = Topology::VIKR_TRIANGLES;
+  Viewport m_viewport;
+
+  vbool m_blend                 = false;
+  BlendFunc m_blendsrc          = BlendFunc::vikr_BLEND_ONE;
+  BlendFunc m_blenddst          = BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA;
+  BlendEq m_blendeq             = BlendEq::vikr_BLEND_ADD;
+
+  vbool m_depth                 = true;
+  DepthFunc m_depthfunc         = DepthFunc::vikr_DEPTH_LESS;
+  
+  SpvShaderProgram *m_currProgram  = nullptr;
+
+  VkMemoryManager<VkPipeline> m_pipeline;
+  VkMemoryManager<VkPipelineLayout> m_pipelinelayout;
 
 }; 
 } // vikr
