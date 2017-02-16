@@ -8,8 +8,7 @@ namespace vikr {
 
 
 Shader::Shader(ShaderStage stage, ShaderLanguage lang)
-  : shader_id(0)
-  , shader_lang(lang)
+  : shader_lang(lang)
   , shader_stage(stage)
 {
 }

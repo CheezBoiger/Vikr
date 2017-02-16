@@ -30,23 +30,41 @@ public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(GLResourceManager);
   GLResourceManager();
 
+  /**
+    Create a Shader object, provided a name and a shader stage.
+  */
   Shader *CreateShader(std::string name, ShaderStage stage) override;
+  
+  /**
+    Get the Shader object already stored in Resources, provided it's name given.
+    @return the reference to the shader object. Nullptr if no shader was found by that
+            name. 
+  */
   Shader *GetShader(std::string name) override;
+  
+  /**
+    Destroy a Shader given its name.
+    @return True if the shader was destroyed, false if no shader by the name provided, was 
+    found.
+  */
   vbool DestroyShader(std::string name) override;
 
+  /**
+  */
   PipelineState *CreatePipelineState(std::string name) override;
   PipelineState *GetPipelineState(std::string name) override;
   vbool DestroyPipelineState(std::string name) override;
 
-  Mesh *CreateMesh(std::vector<glm::vec3> positions,
-    std::vector<glm::vec3> normals,
-    std::vector<glm::vec2> uvs,
-    std::vector<vuint32> indices = std::vector<vuint32>(),
-    std::vector<glm::vec3> tangents = std::vector<glm::vec3>(),
-    std::vector<glm::vec3> bitangents = std::vector<glm::vec3>()) override;
+  Mesh *CreateMesh(std::vector<glm::vec3> &positions,
+    std::vector<glm::vec3> &normals,
+    std::vector<glm::vec2> &uvs,
+    std::vector<vuint32> &indices = std::vector<vuint32>(),
+    std::vector<glm::vec3> &tangents = std::vector<glm::vec3>(),
+    std::vector<glm::vec3> &bitangents = std::vector<glm::vec3>(),
+    std::vector<glm::vec3> &colors = std::vector<glm::vec3>()) override;
 
-  Mesh *CreateMesh(std::vector<Vertex> vertices,
-    std::vector<vuint32> indices = std::vector<vuint32>()) override;
+  Mesh *CreateMesh(std::vector<Vertex> &vertices,
+    std::vector<vuint32> &indices = std::vector<vuint32>()) override;
 
   Mesh *GetMesh(guid_t guid) override;
   vbool DestroyMesh(guid_t guid) override;

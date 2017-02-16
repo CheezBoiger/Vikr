@@ -11,6 +11,9 @@
 namespace vikr {
 
 
+class VKPipelineState;
+
+
 class VKContext : public RenderContext {
 public:
   VKContext();
@@ -23,7 +26,7 @@ public:
 
   vvoid SetRenderTarget(RenderTarget *target, vuint32 index) override;
 
-  vvoid SetRenderPass(RenderPass *pass) override;
+  vvoid SetFramebuffer(Framebuffer *framebuffer) override;
 
   vvoid SetBlendEq(BlendEq eq) override;
 
@@ -57,7 +60,7 @@ public:
 
   vvoid BeginRecord(Commandbuffer *buf) override;
   vvoid EndRecord() override;
-  RenderPass *GetRenderPass() override;
+  Framebuffer *GetFramebuffer() override;
   PipelineState *GetPipelineState() override;
   vvoid ApplyPipelineState(PipelineState *pipeline) override;
 
@@ -68,6 +71,11 @@ public:
   VkQueue &GetPresentationQueue() { return m_queuePresentBuffer; }
 
 private:
+  
+  /**
+    Current Pipeline State to use.
+  */
+  VKPipelineState *m_currPipelineState = nullptr;
 
   VkQueue m_queueGraphicsBuffer;
   VkQueue m_queuePresentBuffer;

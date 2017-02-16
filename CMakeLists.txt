@@ -34,13 +34,19 @@ option(debug "debug the software." OFF)
 # Build For GLFW
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS    OFF)
-add_subdirectory(libs/glfw)
-
-add_subdirectory(libs/assimp)
-
 
 # Set the module path for this build
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+
+add_subdirectory(libs/glfw)
+
+
+if (Vulkan_FOUND)
+  set(VULKAN_FOUND ON)
+endif()
+
+add_subdirectory(libs/assimp)
+
 
 # Configurations.
 include(cmake/configurable.cmake)
@@ -79,7 +85,7 @@ target_link_libraries(${VIKR_NAME} glfw)
 if (vulkan AND VULKAN_FOUND)
   target_link_libraries(${VIKR_NAME} ${Vulkan_LIBRARY})
 else()
- message("No vulkan libraries were linked?")
+ message("No vulkan libraries were linked.")
 endif()
 
 target_link_libraries(${VIKR_NAME} assimp)

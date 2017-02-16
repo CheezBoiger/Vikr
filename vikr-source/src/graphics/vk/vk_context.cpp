@@ -27,10 +27,6 @@ vvoid VKContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
 }
 
 
-vvoid VKContext::SetRenderPass(RenderPass *pass) {
-}
-
-
 vvoid VKContext::SetBlendEq(BlendEq eq) {
 }
 

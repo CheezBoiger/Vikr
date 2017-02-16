@@ -36,7 +36,7 @@ vvoid GLSLCompiler::LoadShaderFile() {
     default: s = GL_VERTEX_SHADER; break;
   }
   shader_id = CreateShader(s);
-  ShaderSource(shader_id, 1, &shader_code_c, NULL);
+  ShaderSource(static_cast<vuint32>(shader_id), 1, &shader_code_c, NULL);
 }
 
 
@@ -45,10 +45,10 @@ vvoid GLSLCompiler::Compile() {
   vint32 success = false;
   std::array<GLchar, 1024> log;
   if (!filepath.empty()) {
-    CompileShader(shader_id);
-    GetShaderiv(shader_id, GL_COMPILE_STATUS, &success);
+    CompileShader(static_cast<vuint32>(shader_id));
+    GetShaderiv(static_cast<vuint32>(shader_id), GL_COMPILE_STATUS, &success);
     if(!success) {
-      GetShaderInfoLog(shader_id, log.size(), NULL, log.data());
+      GetShaderInfoLog(static_cast<vuint32>(shader_id), log.size(), NULL, log.data());
       VikrLog::DisplayMessage(VIKR_ERROR, std::string(log.data()));
       Cleanup();
       compiled = false;

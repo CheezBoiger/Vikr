@@ -152,7 +152,7 @@ vvoid Renderer::Render() {
   m_gbuffer.ExecutePass(&m_commandBufferList);
 
   // Deferred Shading pass.
-  context->SetRenderPass(nullptr);
+  context->SetFramebuffer(nullptr);
   context->Clear();
   // Set back to the default RenderPass.
   context->GetPipelineState()->SetShaderProgram(lightShader);

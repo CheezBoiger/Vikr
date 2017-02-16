@@ -6,6 +6,7 @@
 #include <vikr/graphics/gl4/gl4_pipeline_state.hpp>
 #include <vikr/graphics/gl4/gl4_renderpass.hpp>
 #include <vikr/graphics/gl4/gl4_vertexbuffer.hpp>
+#include <vikr/graphics/gl4/gl4_framebuffer.hpp>
 #include <vikr/graphics/command_buffer.hpp>
 #include <vikr/graphics/graphics_command.hpp>
 #include <vikr/graphics/render_pass.hpp>
@@ -181,14 +182,12 @@ vvoid GL4RenderContext::ExecuteCommands(CommandbufferList *commandbuffer) {
 }
 
 
-vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
+vvoid GL4RenderContext::SetFramebuffer(Framebuffer *framebuffer) {
   CLEAN_PIPELINE();
-  if (pass) {
-    const Viewport *view = &pass->GetViewport();
-    m_currPipeline->SetViewport(pass->GetViewport());
-    pass->Bind();
+  if (framebuffer) {
+    GL4Framebuffer *glFb = static_cast<GL4Framebuffer *>(framebuffer);
+    glFb->Bind();
     Clear();
-    ClearWithColor(glm::vec4(pass->GetClearColor(), 1.0f));
   } else {
     // Set back to default.
     Viewport default_port = { 
@@ -311,7 +310,7 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
   CLEAN_PIPELINE();
   if (buffer) {
     GL4Vertexbuffer *buf = static_cast<GL4Vertexbuffer *>(buffer);
-    glBindVertexArray(buf->GetVertexArrayId());
+    glBindVertexArray(static_cast<vuint32>(buf->GetVertexArrayId()));
   }
   VIKR_ASSERT(glGetError() == 0);
 }
@@ -320,11 +319,6 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
 vvoid GL4RenderContext::Present() {
   glfwSwapBuffers(Window::GetMainWindow()->GetWindow());
   VIKR_ASSERT(glGetError() = 0);
-}
-
-
-RenderPass *GL4RenderContext::GetRenderPass() {
-  return static_cast<RenderPass *>(m_currRenderPass);
 }
 
 
@@ -348,5 +342,10 @@ vvoid GL4RenderContext::ApplyPipelineState(PipelineState *pipelinestate) {
   }
   m_currPipeline = static_cast<GL4PipelineState *>(pipelinestate);
   m_currPipeline->Update();
+}
+
+
+Framebuffer *GL4RenderContext::GetFramebuffer() {
+  return static_cast<Framebuffer *>(m_currFramebuffer);
 }
 } // vikr

@@ -85,9 +85,9 @@ public:
   virtual vvoid SetRenderTarget(RenderTarget *target, vuint32 index) = 0;
 
   /**
-    Set the RenderPass to use in this context.
+    Set the Framebuffer to use in this context. Passing nullptr will set to default framebuffer.
   */
-  virtual vvoid SetRenderPass(RenderPass *pass) = 0;
+  virtual vvoid SetFramebuffer(Framebuffer *framebuffer) = 0;
 
   /**
     Set the Blend equation to use.
@@ -180,11 +180,6 @@ public:
   virtual vvoid QueryVertexbuffer(Vertexbuffer *buffer) = 0;
 
   /**
-    Get the current RenderPass.
-  */
-  virtual RenderPass *GetRenderPass() = 0;
-
-  /**
     Grab the current pipeline state
   */
   virtual PipelineState *GetPipelineState() = 0;
@@ -198,6 +193,9 @@ public:
     Present the Image onto the screen.
   */
   virtual vvoid Present() = 0;
+
+
+  virtual Framebuffer *GetFramebuffer() = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP

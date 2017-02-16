@@ -22,14 +22,14 @@ public:
     : Vertexbuffer()
   { }
 
-  vuint32 GetVertexBufferId() override { return m_vbo; }
-  vvoid StoreVertexBufferId(vuint32 vbo) override { m_vbo = vbo; }
+  vuint64 GetVertexBufferId() override { return static_cast<vuint64>(m_vbo); }
+  vvoid StoreVertexBufferId(vuint64 vbo) override { m_vbo = static_cast<vuint32>(vbo); }
   
-  vvoid StoreVertexArrayId(vuint32 vao) { m_vao = vao; }
-  vuint32 GetVertexArrayId() { return m_vao; }
+  vvoid StoreVertexArrayId(vuint64 vao) { m_vao = static_cast<vuint32>(vao); }
+  vuint64 GetVertexArrayId() { return m_vao; }
 
-  vuint32 GetElementBufferId() override { return m_ibo; }
-  vvoid StoreElementBufferId(vuint32 ibo) override { m_ibo = ibo; }
+  vuint64 GetElementBufferId() override { return static_cast<vuint64>(m_ibo); }
+  vvoid StoreElementBufferId(vuint64 ibo) override { m_ibo = static_cast<vuint32>(ibo); }
 
   vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) override {
     // subdata for dynamic stuff.
