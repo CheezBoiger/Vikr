@@ -69,10 +69,10 @@ public:
     Initialize Column-Major format.
   */
   Matrix4(
-    _Value a00, _Value a01, _Value a02, _Value a03,
-    _Value a10, _Value a11, _Value a12, _Value a13,
-    _Value a20, _Value a21, _Value a22, _Value a23,
-    _Value a30, _Value a31, _Value a32, _Value a33) 
+    _Value a00 = 1, _Value a01 = 0, _Value a02 = 0, _Value a03 = 0,
+    _Value a10 = 0, _Value a11 = 1, _Value a12 = 0, _Value a13 = 0,
+    _Value a20 = 0, _Value a21 = 0, _Value a22 = 1, _Value a23 = 0,
+    _Value a30 = 0, _Value a31 = 0, _Value a32 = 0, _Value a33 = 1) 
   {
     mat[0][0] = a00; mat[0][1] = a01; mat[0][2] = a02; mat[0][3] = a03;
     mat[1][0] = a10; mat[1][1] = a11; mat[1][2] = a12; mat[1][3] = a13;
@@ -82,27 +82,11 @@ public:
   
   Matrix4 operator+(Matrix4 &mat1) {
     // Matrix Addition without the need of loop sequence.
-    Matrix4 mat_sol;
-    mat_sol[0][0] = mat[0][0] + mat1[0][0];
-    mat_sol[0][1] = mat[0][1] + mat1[0][1];
-    mat_sol[0][2] = mat[0][2] + mat1[0][2];
-    mat_sol[0][3] = mat[0][3] + mat1[0][3];
-    
-    mat_sol[1][0] = mat[1][0] + mat1[1][0];
-    mat_sol[1][1] = mat[1][1] + mat1[1][1];
-    mat_sol[1][2] = mat[1][2] + mat1[1][2];
-    mat_sol[1][3] = mat[1][3] + mat1[1][3];
-    
-    mat_sol[2][0] = mat[2][0] + mat1[2][0];
-    mat_sol[2][1] = mat[2][1] + mat1[2][1];
-    mat_sol[2][2] = mat[2][2] + mat1[2][2];
-    mat_sol[2][3] = mat[2][3] + mat1[2][3];
-    
-    mat_sol[3][0] = mat[3][0] + mat1[3][0];
-    mat_sol[3][1] = mat[3][1] + mat1[3][1];
-    mat_sol[3][2] = mat[3][2] + mat1[3][2];
-    mat_sol[3][3] = mat[3][3] + mat1[3][3];
-    return mat_sol;
+    return Matrix4(
+      mat[0][0] + mat1.mat[0][0], mat[0][1] + mat1.mat[0][1], mat[0][2] + mat1.mat[0][2], mat[0][3] + mat1.mat[0][3],
+      mat[1][0] + mat1.mat[1][0], mat[1][1] + mat1.mat[1][1], mat[1][2] + mat1.mat[1][2], mat[1][3] + mat1.mat[1][3],
+      mat[2][0] + mat1.mat[2][0], mat[2][1] + mat1.mat[2][1], mat[2][2] + mat1.mat[2][2], mat[2][3] + mat1.mat[2][3],
+      mat[3][0] + mat1.mat[3][0], mat[3][1] + mat1.mat[3][1], mat[3][2] + mat1.mat[3][2], mat[3][3] + mat1.mat[3][3]);
   }
 
 
