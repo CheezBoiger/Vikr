@@ -48,17 +48,26 @@ template<typename _Value = float>
 class Vector4 {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Vector4<_Value>);
 public:
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(Vector4<_Value>);
   // Vector4 contruction.
-  Vector4(_Value x = 1.0f, 
-          _Value y = 1.0f, 
-          _Value z = 1.0f , 
+  Vector4(_Value x = 0.0f, 
+          _Value y = 0.0f, 
+          _Value z = 0.0f , 
           _Value w = 1.0f)
   : x(x), y(y), z(z), w(w) { }
 
 
   Vector4 operator+(Vector4 &vec) {
-    Vector4<_Value> vec;
-    return vec;
+    Vector4 sol;
+    sol.x = x + vec.x;
+    sol.y = y + vec.y;
+    sol.z = z + vec.z;
+    sol.w = w + vec.w;
+    return sol;
+  }
+
+  Vector4 Copy() {
+    return Vector4(x, y, z, w);
   }
 
 

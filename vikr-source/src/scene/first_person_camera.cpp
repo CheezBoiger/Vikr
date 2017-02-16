@@ -7,8 +7,6 @@
 #include <vikr/util/vikr_assert.hpp>
 #include <vikr/util/vikr_log.hpp>
 
-#include <vikr/math/vikr_math.hpp>
-
 
 namespace vikr {
 
