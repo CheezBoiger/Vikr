@@ -23,7 +23,7 @@ class Uniformbuffer {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Uniformbuffer);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Uniformbuffer);
-  Uniformbuffer();
+  Uniformbuffer() { }
 
   virtual ~Uniformbuffer() { }
 
@@ -32,6 +32,9 @@ public:
   */
   virtual vvoid Generate(vuint32 bytes) = 0;
 
+  /**
+    Get the Uniform Id.
+  */
   virtual vuint64 GetUniformId() = 0;
   
   virtual vvoid Bind() = 0;
@@ -40,11 +43,19 @@ public:
   virtual ShaderProgram *GetShaderProgram() = 0;
   virtual vvoid SetShaderProgram(ShaderProgram *program) = 0;
 
+  /**
+    Update the the Uniform buffer.
+  */
   virtual vvoid Update() = 0;
 
-  virtual vvoid SetBlockBinding(vuint32 point) = 0;
+  virtual vvoid SetBlockBinding(vuint32 point, std::string identifier) = 0;
 
-  virtual vvoid StoreData(vvoid *data, vuint32 bytes) = 0;
+  /**
+    Store data into the uniform buffer.
+    @param bytes Size of data in bytes.
+    @param data Raw data.
+  */
+  virtual vvoid StoreData(vuint32 bytes, vbyte *data) = 0;
 };
 } // vikr
 #endif // __VIKR_UNIFORMBUFFER_HPP

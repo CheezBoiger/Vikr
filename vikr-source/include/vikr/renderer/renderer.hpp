@@ -16,6 +16,7 @@
 #include <vikr/mesh/mesh.hpp>
 #include <vikr/renderer/gbuffer.hpp>
 #include <vikr/renderer/screen_quad.hpp>
+#include <vikr/renderer/skybox.hpp>
 #include <glm/glm.hpp>
 #include <string>
 #include <memory>
@@ -152,6 +153,7 @@ protected:
 
   FontPrinter printer;
 
+  Skybox skybox;
 
   /**
     Render device used by this Renderer.

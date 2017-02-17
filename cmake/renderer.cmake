@@ -12,6 +12,7 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_COMMAND_SRC_DIR}/render_command.cpp
   ${VIKR_RENDERER_COMMAND_SRC_DIR}/mesh_command.cpp
   ${VIKR_RENDERER_COMMAND_SRC_DIR}/group_command.cpp
+  ${VIKR_RENDERER_COMMAND_SRC_DIR}/camera_command.cpp
 )
 
 set(VIKR_GLOB
@@ -37,6 +38,7 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_SRC_DIR}/shadowmap.cpp
   ${VIKR_RENDERER_SRC_DIR}/renderer.cpp
   ${VIKR_RENDERER_SRC_DIR}/render_queue.cpp
+  ${VIKR_RENDERER_SRC_DIR}/skybox.cpp
 )
 
 set(VIKR_GLOB
@@ -47,5 +49,6 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_INCLUDE_DIR}/irenderer.hpp
   ${VIKR_RENDERER_INCLUDE_DIR}/renderer.hpp
   ${VIKR_RENDERER_INCLUDE_DIR}/shadowmap.hpp
+  ${VIKR_RENDERER_INCLUDE_DIR}/skybox.hpp
 )
 

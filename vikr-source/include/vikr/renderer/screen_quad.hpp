@@ -8,6 +8,8 @@
 #include <vikr/graphics/render_target.hpp>
 #include <vikr/mesh/mesh.hpp>
 #include <vikr/math/shape/quad.hpp>
+#include <vikr/shader/shader_program.hpp>
+#include <vikr/shader/shader.hpp>
 
 #include <vikr/graphics/render_device.hpp>
 
@@ -32,15 +34,17 @@ public:
 
   vvoid Execute();
 
-  vvoid AdjustGaussianBlur(vuint32 value);
-  vvoid AdjustGreyScale(vuint32 value);
-  vvoid AdjustSharpen(vuint32 value);
+  vvoid AdjustGaussianBlur(vuint32 value) { }
+  vvoid AdjustGreyScale(vuint32 value) { }
+  vvoid AdjustSharpen(vuint32 value) { }
 
 private:
   RenderDevice *m_device = nullptr;
   CommandbufferList list;
   PrimitiveCommand command;
   Mesh *m_quad = nullptr;
+
+  
 };
 } // vikr
 #endif // __VIKR_SCREEN_QUAD_HPP

@@ -77,8 +77,8 @@ int main(int c, char* args[]) {
   VikrLog::UnSupress(VIKR_WARNING);
   GL4RenderDevice device;
   Renderer renderer;
-  renderer.Init(&device);
   renderer.SetCamera(&camera);
+  renderer.Init(&device);
   SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), 
     "../../libs/models/sponza_cry/sponza.obj", "sponza", false);
   SceneNode *nano = ModelLoader::ImportModel(renderer.GetDevice(), 

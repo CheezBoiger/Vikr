@@ -123,7 +123,9 @@ vint32 Renderer::CleanupResources() {
 }
 
 
-vvoid Renderer::Render() {
+vvoid Renderer::Render() { 
+  m_renderDevice->GetContext()->ClearWithColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
+  m_renderDevice->GetContext()->Clear();
   CameraCommand cam;
   if(camera) {
     cam.camera = camera;
@@ -153,7 +155,9 @@ vvoid Renderer::Render() {
 
   // Deferred Shading pass.
   context->SetFramebuffer(nullptr);
-  context->Clear();
+
+  //skybox.Draw();
+  
   // Set back to the default RenderPass.
   context->GetPipelineState()->SetShaderProgram(lightShader);
   for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
@@ -223,6 +227,8 @@ vint32 Renderer::Init(RenderDevice *device) {
   ShaderUniformParams param;
   param.uniforms = setup.GetMaterialValues();
   m_renderDevice->GetContext()->SetShaderUniforms(&param);
+
+  skybox.Init(m_renderDevice);
 
   return 1;
 }

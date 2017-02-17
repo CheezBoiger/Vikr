@@ -21,6 +21,8 @@ public:
   virtual ~ShaderStoragebuffer() { }
 
 
+  virtual vvoid DispatchCompute(vuint32 x, vuint32 y, vuint32 z) = 0;
+  virtual vvoid DispathComputeIndirect() = 0;
   
 };
 } // vikr

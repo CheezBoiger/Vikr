@@ -5,6 +5,11 @@
 #include <vikr/graphics/render_context.hpp>
 #include <vikr/resources/resource_manager.hpp>
 #include <vikr/util/vikr_log.hpp>
+#include <vikr/shader/cubemap.hpp>
+#include <vikr/scene/icamera.hpp>
+#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/math/shape/cube.hpp>
+
 
 namespace vikr {
 
@@ -35,5 +40,6 @@ vvoid ScreenQuad::Init(RenderDevice *device) {
 vvoid ScreenQuad::Execute()
 {
   m_device->GetContext()->ExecuteCommands(&list);
+    
 }
 } // vikr

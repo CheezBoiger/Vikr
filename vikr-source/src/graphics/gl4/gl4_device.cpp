@@ -128,6 +128,8 @@ GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices)
     gbo.StoreVertexBufferId(vbo);
     gbo.StoreElementBufferId(ibo);
     vertices.size = offset;
+
+    VIKR_ASSERT(glGetError() == 0);
   }
 
   return std::make_unique<GL4Vertexbuffer>(std::move(gbo));
@@ -152,7 +154,7 @@ std::unique_ptr<RenderTexture> GL4RenderDevice::CreateRenderTexture(std::string 
 
 
 std::unique_ptr<Cubemap> GL4RenderDevice::CreateCubemap() {
-  return std::make_unique<GLCubemap>();
+  return std::make_unique<GL4Cubemap>();
 }
 
 

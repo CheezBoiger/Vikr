@@ -112,6 +112,8 @@ public:
   */
   virtual vvoid SetFilterMax(TextureFilterMode filter) = 0;
 
+  virtual vvoid SetTarget(TextureTarget target) = 0;
+
   /**
     Texture clamp modes. Tells our Rendering API how to clamp the texture onto 
     a Mesh or Quad. This is specified for coord S.

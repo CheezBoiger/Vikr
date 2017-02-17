@@ -206,7 +206,7 @@ vvoid GL4RenderContext::SetFramebuffer(Framebuffer *framebuffer) {
 
 vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
   CLEAN_PIPELINE();
-  if (!params || !params->uniforms) { 
+  if (!params) { 
     return;
   }
   vuint32 shader_program = 0;
@@ -215,70 +215,71 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
   */
   //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
   shader_program = m_currPipeline->GetShaderProgram()->GetNativeId();
-  
-  for (auto variable : *params->uniforms) {
-    std::string s = variable.first;
-    switch(variable.second.type) {
-    case vikr_BOOL: 
-      glProgramUniform1i(shader_program, 
-        glGetUniformLocation(shader_program, variable.first.c_str()), 
-        (vint32)variable.second.m_bool); 
-    break;
-    case vikr_INT: 
-      glProgramUniform1i(shader_program,
-        glGetUniformLocation(shader_program, variable.first.c_str()),
-        variable.second.m_integer); 
-    break;
-    case vikr_VEC2: 
-      glProgramUniform2fv(shader_program,
-        glGetUniformLocation(shader_program, variable.first.c_str()),
-        1, 
-        glm::value_ptr(variable.second.m_vec2)); 
-    break;
-    case vikr_VEC3: 
-      glProgramUniform3fv(shader_program,
-        glGetUniformLocation(shader_program, variable.first.c_str()),
-        1, 
-        glm::value_ptr(variable.second.m_vec3)); 
-    break;
-    case vikr_VEC4: 
-      glProgramUniform4fv(shader_program,
-        glGetUniformLocation(shader_program, variable.first.c_str()),
-        1, 
-        glm::value_ptr(variable.second.m_vec4));
-    break;
-    case vikr_MAT2: 
-      glProgramUniformMatrix2fv(shader_program,
-        glGetUniformLocation(shader_program, variable.first.c_str()),
-        1, 
-        GL_FALSE, 
-        glm::value_ptr(variable.second.m_mat2));
-    break;
-    case vikr_MAT3: 
-      glProgramUniformMatrix3fv(shader_program,
-        glGetUniformLocation(shader_program, variable.first.c_str()),
-        1, 
-        GL_FALSE, 
-        glm::value_ptr(variable.second.m_mat3)); 
-    break;
-    case vikr_MAT4: 
-      glProgramUniformMatrix4fv(shader_program,
-        glGetUniformLocation(shader_program, variable.first.c_str()),
-        1, 
-        GL_FALSE, 
-        glm::value_ptr(variable.second.m_mat4));
-    break;
-    case vikr_DOUBLE: 
-      glProgramUniform1d(shader_program,
-        glGetUniformLocation(shader_program, variable.first.c_str()),
-        variable.second.m_double);
-    break;
-    case vikr_FLOAT: 
-      glProgramUniform1f(shader_program,
-        glGetUniformLocation(shader_program, variable.first.c_str()),
-        variable.second.m_float);
-    break;
-    default: break;
+  if (params->uniforms) {
+    for (auto variable : *params->uniforms) {
+      std::string s = variable.first;
+      switch(variable.second.type) {
+      case vikr_BOOL: 
+        glProgramUniform1i(shader_program, 
+          glGetUniformLocation(shader_program, variable.first.c_str()), 
+          (vint32)variable.second.m_bool); 
+      break;
+      case vikr_INT: 
+        glProgramUniform1i(shader_program,
+          glGetUniformLocation(shader_program, variable.first.c_str()),
+          variable.second.m_integer); 
+      break;
+      case vikr_VEC2: 
+        glProgramUniform2fv(shader_program,
+          glGetUniformLocation(shader_program, variable.first.c_str()),
+          1, 
+          glm::value_ptr(variable.second.m_vec2)); 
+      break;
+      case vikr_VEC3: 
+        glProgramUniform3fv(shader_program,
+          glGetUniformLocation(shader_program, variable.first.c_str()),
+          1, 
+          glm::value_ptr(variable.second.m_vec3)); 
+      break;
+      case vikr_VEC4: 
+        glProgramUniform4fv(shader_program,
+          glGetUniformLocation(shader_program, variable.first.c_str()),
+          1, 
+          glm::value_ptr(variable.second.m_vec4));
+      break;
+      case vikr_MAT2: 
+        glProgramUniformMatrix2fv(shader_program,
+          glGetUniformLocation(shader_program, variable.first.c_str()),
+          1, 
+          GL_FALSE, 
+          glm::value_ptr(variable.second.m_mat2));
+      break;
+      case vikr_MAT3: 
+        glProgramUniformMatrix3fv(shader_program,
+          glGetUniformLocation(shader_program, variable.first.c_str()),
+          1, 
+          GL_FALSE, 
+          glm::value_ptr(variable.second.m_mat3)); 
+      break;
+      case vikr_MAT4: 
+        glProgramUniformMatrix4fv(shader_program,
+          glGetUniformLocation(shader_program, variable.first.c_str()),
+          1, 
+          GL_FALSE, 
+          glm::value_ptr(variable.second.m_mat4));
+      break;
+      case vikr_DOUBLE: 
+        glProgramUniform1d(shader_program,
+          glGetUniformLocation(shader_program, variable.first.c_str()),
+          variable.second.m_double);
+      break;
+      case vikr_FLOAT: 
+        glProgramUniform1f(shader_program,
+          glGetUniformLocation(shader_program, variable.first.c_str()),
+          variable.second.m_float);
+      break;
+      default: break;
+      }
     }
   }
 
@@ -318,7 +319,7 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
 
 vvoid GL4RenderContext::Present() {
   glfwSwapBuffers(Window::GetMainWindow()->GetWindow());
-  VIKR_ASSERT(glGetError() = 0);
+  VIKR_ASSERT(glGetError() == 0);
 }
 
 

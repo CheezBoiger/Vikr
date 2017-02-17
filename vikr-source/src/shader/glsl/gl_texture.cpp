@@ -150,4 +150,9 @@ vvoid GLTexture::CleanParams() {
   SetFilterMin(m_filter_min);
   SetFilterMax(m_filter_max);
 }
+
+
+vvoid GLTexture::SetTarget(TextureTarget target) {
+  // should not be able to change the texture target.
+}
 } // vikr

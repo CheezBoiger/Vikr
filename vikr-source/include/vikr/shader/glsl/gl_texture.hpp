@@ -11,13 +11,13 @@ namespace vikr {
 
 
 class GLTexture : public Texture {
-protected:
+public:
   static GLenum GetNativeWrapMode(TextureWrapMode mode);
   static GLenum GetNativeFilterMode(TextureFilterMode mode);
   static GLenum GetNativeTextureTarget(TextureTarget target);
   static GLenum GetNativeTextureFormat(TextureFormat format);
   static GLenum GetNativeDataTypeFormat(DataTypeFormat format);
-public:
+
   GLTexture();
 
 
@@ -33,6 +33,7 @@ public:
   vvoid SetWrapT(TextureWrapMode mode) override;
   vvoid SetWrapR(TextureWrapMode mode) override;
   vvoid SetDataTypeFormat(DataTypeFormat format) override;
+  vvoid SetTarget(TextureTarget target) override;
   vuint32 GetNativeId() override { return id; }
 
   vuint32 GetNativeFormat() override { return native_format; }
