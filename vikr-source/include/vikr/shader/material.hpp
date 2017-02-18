@@ -22,7 +22,7 @@ class ShaderProgram;
 struct Uniform;
 struct VertexAttrib;
 class Texture;
-
+class Cubemap;
 
 
 /**
@@ -46,6 +46,7 @@ public:
     Sets the texture for a sampler in the shader.
   */
   vvoid SetTexture(std::string name, Texture *texture, vuint32 i);
+  vvoid SetCubemap(std::string name, Cubemap *cubemap, vuint32 i);
   /**
     Primitive uniform defines.
   */

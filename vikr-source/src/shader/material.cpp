@@ -38,9 +38,20 @@ vvoid Material::SetTexture(std::string name, Texture *texture, vuint32 i) {
     switch (texture->GetTargetFormat()) {
       case vikr_TEXTURE_2D:       m_uniform_samplers[name].type = vikr_SAMPLER2D;    break;
       case vikr_TEXTURE_3D:       m_uniform_samplers[name].type = vikr_SAMPLER3D;    break;
-      case vikr_TEXTURE_CUBEMAP:  m_uniform_samplers[name].type = vikr_SAMPLERCUBE;  break;
       default:                    m_uniform_samplers[name].type = vikr_SAMPLER2D;    break;
     }
+  }
+
+  m_material_values[name].m_integer = i;
+  m_material_values[name].type = vikr_INT;
+}
+
+
+vvoid Material::SetCubemap(std::string name, Cubemap *cubemap, vuint32 i) {
+  if (cubemap) {
+    m_uniform_samplers[name].cubemap = cubemap;
+    m_uniform_samplers[name].i = i;
+    m_uniform_samplers[name].type = vikr_SAMPLERCUBE;
   }
 
   m_material_values[name].m_integer = i;

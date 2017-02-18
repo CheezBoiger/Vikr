@@ -50,40 +50,32 @@ vvoid Skybox::Init(RenderDevice *device) {
   skybox->Build(device);
   sky_cmd.m_mesh = skybox;
 
-  ICamera *cam = Renderer::GetRenderer()->GetCamera();
-  cam_cmd.camera = cam;
-  std::unique_ptr<Commandbuffer> buf_cam = m_device->CreateCommandbuffer();
-  cam_cmd.Record(buf_cam.get());
-  list.PushBack(buf_cam);
-
-  std::unique_ptr<Commandbuffer> buf = device->CreateCommandbuffer();
-  sky_cmd.Record(buf.get());
-  list.PushBack(buf);
-
 }
 
-#include <vikr/graphics/gl4/gl4_vertexbuffer.hpp>
 
-
-vvoid Skybox::Draw() {
+vvoid Skybox::Execute() {
+  // Grab camera perspective and view.
+  // Don't forget the pipelinestate!
+  ICamera *cam = Renderer::GetRenderer()->GetCamera();
+  PipelineState *pipeline = m_device->GetContext()->GetPipelineState();
+  std::unique_ptr<Commandbuffer> buf = m_device->CreateCommandbuffer();
+  sky_cmd.Record(buf.get());
+  list.PushBack(buf);
   m_device->GetContext()->GetPipelineState()->SetShaderProgram(program);
+  pipeline->SetDepthFunc(DepthFunc::vikr_DEPTH_LEQUAL);
+  pipeline->SetCullMode(false);
   m_device->GetContext()->GetPipelineState()->Update();
   Material mat;
-  mat.SetInt("skybox", 0);
+  mat.SetMat4("vikr_View", glm::mat4(glm::mat3(cam->GetView())));
+  mat.SetMat4("vikr_Projection", cam->GetProjection());
+  mat.SetCubemap("skybox", cubemap.get(), 0);
   ShaderUniformParams params;
-  /**
-    TODO(): Problem with cubemap not seen. Could this be because of the shaders?
-            Mesh isn't being seen either?
-  */
   params.samplers = mat.GetUniformSamplers();
   params.uniforms = mat.GetMaterialValues();
   m_device->GetContext()->SetShaderUniforms(&params);
-  glDisable(GL_CULL_FACE);
-  glActiveTexture(GL_TEXTURE0);
-  glBindTexture(GL_TEXTURE_CUBE_MAP, cubemap->GetNativeId());
   m_device->GetContext()->ExecuteCommands(&list);
-  glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-  glEnable(GL_CULL_FACE);
-  VIKR_ASSERT(glGetError() == 0);
+  pipeline->SetCullMode(true);
+  pipeline->SetDepthFunc(DepthFunc::vikr_DEPTH_LESS);
+  list.Clear();
 }
 } // vikr

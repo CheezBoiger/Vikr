@@ -6,6 +6,8 @@
 #include <vikr/graphics/gl4/gl4_renderpass.hpp>
 #include <vikr/shader/glsl/gl_texture2d.hpp>
 #include <vikr/util/vikr_log.hpp>
+#include <vikr/util/vikr_assert.hpp>
+#include <vikr/input/window.hpp>
 
 #include <array>
 
@@ -189,20 +191,31 @@ vvoid GL4Framebuffer::BlitTo(Framebuffer *framebuffer) {
   // nothing yet
   // will consider using glBlitFramebuffer
   GL4Framebuffer *glFb = static_cast<GL4Framebuffer *>(framebuffer);
-  Viewport target = glFb->GetViewport();
   glBindFramebuffer(GL_READ_FRAMEBUFFER, m_fbo);
-  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, glFb->GetFramebufferId());
-  glBlitFramebuffer(
-    target.win_x, 
-    target.win_y,
-    m_viewport.win_x,
-    m_viewport.win_y,
-    target.win_width,
-    target.win_height,
-    m_viewport.win_width,
-    m_viewport.win_height,
-    GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT,
-    GL_NEAREST
-  );
+  if (framebuffer) {
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, glFb->GetFramebufferId());
+    Viewport target = glFb->GetViewport();
+    glBlitFramebuffer(
+      m_viewport.win_x, 
+      m_viewport.win_y,
+      m_viewport.win_width,
+      m_viewport.win_height,
+      target.win_x,
+      target.win_y,
+      target.win_width,
+      target.win_height,
+      GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT,
+      GL_NEAREST
+    );
+    VIKR_ASSERT(glGetError() == 0);
+  } else {
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    glBlitFramebuffer(
+      m_viewport.win_x, m_viewport.win_y, m_viewport.win_width, m_viewport.win_height,
+      0, 0, Window::GetMainWindow()->GetWidth(), Window::GetMainWindow()->GetHeight(),
+      GL_DEPTH_BUFFER_BIT, GL_NEAREST
+    );
+    VIKR_ASSERT(glGetError() == 0);
+  }
 }
 } // vikr

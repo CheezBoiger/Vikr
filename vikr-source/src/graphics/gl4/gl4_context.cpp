@@ -7,6 +7,7 @@
 #include <vikr/graphics/gl4/gl4_renderpass.hpp>
 #include <vikr/graphics/gl4/gl4_vertexbuffer.hpp>
 #include <vikr/graphics/gl4/gl4_framebuffer.hpp>
+#include <vikr/shader/glsl/gl_cubemap.hpp>
 #include <vikr/graphics/command_buffer.hpp>
 #include <vikr/graphics/graphics_command.hpp>
 #include <vikr/graphics/render_pass.hpp>
@@ -288,9 +289,14 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     ClearTextures();
     m_currTextures.reserve(params->samplers->size());
     for(auto sampler : *params->samplers) {
-      GLTexture *texture = static_cast<GLTexture *>(sampler.second.texture);
-      SetTexture(texture->GetNativeId(), texture->GetNativeTarget(), sampler.second.i);
-      m_currTextures.push_back(std::move(sampler.second));
+      if (sampler.second.type != vikr_SAMPLERCUBE) {
+        GLTexture *texture = static_cast<GLTexture *>(sampler.second.texture);
+        SetTexture(texture->GetNativeId(), texture->GetNativeTarget(), sampler.second.i);
+        m_currTextures.push_back(std::move(sampler.second));
+      } else {
+        GL4Cubemap *cubemap = static_cast<GL4Cubemap *>(sampler.second.cubemap);
+        SetTexture(cubemap->GetNativeId(), cubemap->GetNativeTarget(), sampler.second.i);
+      }
     }
   }
   VIKR_ASSERT(glGetError() == 0);

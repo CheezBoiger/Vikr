@@ -26,7 +26,7 @@ public:
 
   vvoid Init(RenderDevice *device);
 
-  vvoid Draw();
+  vvoid Execute();
 
 private:
   RenderDevice *m_device;

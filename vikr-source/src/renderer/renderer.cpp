@@ -155,8 +155,6 @@ vvoid Renderer::Render() {
 
   // Deferred Shading pass.
   context->SetFramebuffer(nullptr);
-
-  //skybox.Draw();
   
   // Set back to the default RenderPass.
   context->GetPipelineState()->SetShaderProgram(lightShader);
@@ -164,6 +162,7 @@ vvoid Renderer::Render() {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);
   }
   context->ExecuteCommands(&m_deferredBufferList);
+  
 
   m_renderQueue.Clear();
   m_commandBufferList.Clear();
@@ -171,6 +170,10 @@ vvoid Renderer::Render() {
 
   // Draw the Screen Quad.
   m_screenquad.Execute();
+
+  m_gbuffer.GetFramebuffer()->BlitTo(nullptr);
+
+  skybox.Execute();
 }
 
 

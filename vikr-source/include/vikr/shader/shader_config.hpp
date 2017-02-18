@@ -16,6 +16,7 @@ namespace vikr {
 
 
 class Texture;
+class Cubemap;
 
 
 /**
@@ -100,9 +101,12 @@ struct VertexAttrib {
 Sets the Texture samplers into the Material
 */
 struct TextureSampler {
-  ShaderUniformType type;
-  Texture           *texture;
-  vuint32           i;
+  ShaderUniformType   type;
+  union { 
+    Texture           *texture;
+    Cubemap           *cubemap;
+  };
+  vuint32             i;
 };
 
 
