@@ -6,59 +6,19 @@
 
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/math/alg/vect.hpp>
+#include <vikr/math/alg/quaternion.hpp>
 
 
 namespace vikr {
 namespace math {
 
-template<typename _Value = float>
-class Matrix2 {
-public:
-  Matrix2(
-    Vector2<_Value> &row1,
-    Vector2<_Value> &row2)
-  {
-  }
-
-  Matrix2(
-    _Value a00, _Value a01,
-    _Value a10, _Value a11)
-  {
-  }
-
-  
-private:
-  _Value mat[2][2];
-};
 
 
-template<typename _Value = float>
-class Matrix3 {
-public:
-  Matrix3(
-    Vector3<_Value> &row1,
-    Vector3<_Value> &row2,
-    Vector3<_Value> &row3)
-  {
-    mat[0][0] = row1.x; mat[0][1] = row1.y; mat[0][2] = row1.z;
-    mat[1][0] = row2.x; mat[1][1] = row2.y; mat[1][2] = row2.z;
-    mat[2][0] = row3.x; mat[2][1] = row3.y; mat[2][2] = row3.z;
-  }
+template<typename _Type> class Matrix3;
+template<typename _Type> class Matrix2;
 
-  Matrix3(
-    _Value a00, _Value a01, _Value a02,
-    _Value a10, _Value a11, _Value a12,
-    _Value a20, _Value a21, _Value a22)
-  {
-    mat[0][0] = a00; mat[0][1] = a01; mat[0][2] = a02;
-    mat[1][0] = a10; mat[1][1] = a11; mat[1][2] = a12;
-    mat[2][0] = a20; mat[2][1] = a21; mat[2][2] = a22;
-  }
-private:
-  _Value mat[3][3];
-};
-
-
+/**
+*/
 template<typename _Value = float>
 class Matrix4 {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Matrix4<_Value>);
@@ -92,6 +52,17 @@ public:
     mat[2][0] = a20; mat[2][1] = a21; mat[2][2] = a22; mat[2][3] = a23;
     mat[3][0] = a30; mat[3][1] = a31; mat[3][2] = a32; mat[3][3] = a33;
   }
+
+  Matrix4(Matrix3<_Value> &mat1) {
+    mat[0][0] = mat1[0][0]; mat[0][1] = mat1[0][1]; mat[0][2] = mat1[0][2]; mat[0][3] = 0;
+    mat[1][0] = mat1[1][0]; mat[1][1] = mat1[1][1]; mat[1][2] = mat1[1][2]; mat[1][3] = 0;
+    mat[2][0] = mat1[2][0]; mat[2][1] = mat1[2][1]; mat[2][2] = mat1[2][2]; mat[2][3] = 0;
+    mat[3][0] = 0;          mat[3][1] = 0;          mat[3][2] = 0;          mat[3][3] = 0;
+  }
+
+  static Matrix4 Identity() {
+    return Matrix4();
+  }
   
   Matrix4 operator+(Matrix4 &mat1) {
     // Matrix Addition without the need of loop sequence.
@@ -99,38 +70,43 @@ public:
       mat[0][0] + mat1.mat[0][0], mat[0][1] + mat1.mat[0][1], mat[0][2] + mat1.mat[0][2], mat[0][3] + mat1.mat[0][3],
       mat[1][0] + mat1.mat[1][0], mat[1][1] + mat1.mat[1][1], mat[1][2] + mat1.mat[1][2], mat[1][3] + mat1.mat[1][3],
       mat[2][0] + mat1.mat[2][0], mat[2][1] + mat1.mat[2][1], mat[2][2] + mat1.mat[2][2], mat[2][3] + mat1.mat[2][3],
-      mat[3][0] + mat1.mat[3][0], mat[3][1] + mat1.mat[3][1], mat[3][2] + mat1.mat[3][2], mat[3][3] + mat1.mat[3][3]);
+      mat[3][0] + mat1.mat[3][0], mat[3][1] + mat1.mat[3][1], mat[3][2] + mat1.mat[3][2], mat[3][3] + mat1.mat[3][3]
+    );
   }
 
 
   Matrix4 operator-(Matrix4 &mat1) {
-    Matrix4 mat_ans;
-    mat_ans[0][0] = mat[0][0] - mat1[0][0];
-    mat_ans[0][1] = mat[0][1] - mat1[0][1];
-    mat_ans[0][2] = mat[0][2] - mat1[0][2];
-    mat_ans[0][3] = mat[0][3] - mat1[0][3];
-
-    mat_ans[1][0] = mat[1][0] - mat1[1][0];
-    mat_ans[1][1] = mat[1][1] - mat1[1][1];
-    mat_ans[1][2] = mat[1][2] - mat1[1][2];
-    mat_ans[1][3] = mat[1][3] - mat1[1][3];
-
-    mat_ans[2][0] = mat[2][0] - mat1[2][0];
-    mat_ans[2][1] = mat[2][1] - mat1[2][1];
-    mat_ans[2][2] = mat[2][2] - mat1[2][2];
-    mat_ans[2][3] = mat[2][3] - mat1[2][3];
-
-    mat_ans[3][0] = mat[3][0] - mat1[3][0];
-    mat_ans[3][1] = mat[3][1] - mat1[3][1];
-    mat_ans[3][2] = mat[3][1] - mat1[3][2];
-    mat_ans[3][3] = mat[3][1] - mat1[3][3];
-    return mat_ans;
+    return Matrix4(
+      mat[0][0] - mat1.mat[0][0], mat[0][1] - mat1.mat[0][1], mat[0][2] - mat1.mat[0][2], mat[0][3] - mat1.mat[0][3],
+      mat[1][0] - mat1.mat[1][0], mat[1][1] - mat1.mat[1][1], mat[1][2] - mat1.mat[1][2], mat[1][3] - mat1.mat[1][3],
+      mat[2][0] - mat1.mat[2][0], mat[2][1] - mat1.mat[2][1], mat[2][2] - mat1.mat[2][2], mat[2][3] - mat1.mat[2][3],
+      mat[3][0] - mat1.mat[3][0], mat[3][1] - mat1.mat[3][1], mat[3][2] - mat1.mat[3][2], mat[3][3] - mat1.mat[3][3]
+    );
   }
 
 
-  Matrix4& operator*(Matrix4& matrix) {
-    Matrix4 sol;
-    return sol;
+  Matrix4 operator*(Matrix4 &mat1) {
+    return Matrix4(
+      mat[0][0] * mat1.mat[0][0] + mat[0][1] * mat1.mat[1][0] + mat[0][2] * mat1.mat[2][0] + mat[0][3] * mat1.mat[3][0],
+      mat[0][0] * mat1.mat[0][1] + mat[0][1] * mat1.mat[1][1] + mat[0][2] * mat1.mat[2][1] + mat[0][3] * mat1.mat[3][1],
+      mat[0][0] * mat1.mat[0][2] + mat[0][1] * mat1.mat[1][2] + mat[0][2] * mat1.mat[2][2] + mat[0][3] * mat1.mat[3][2],
+      mat[0][0] * mat1.mat[0][3] + mat[0][1] * mat1.mat[1][3] + mat[0][2] * mat1.mat[2][3] + mat[0][3] * mat1.mat[3][3],
+
+      mat[1][0] * mat1.mat[0][0] + mat[1][1] * mat1.mat[1][0] + mat[1][2] * mat1.mat[2][0] + mat[1][3] * mat1.mat[3][0],
+      mat[1][0] * mat1.mat[0][1] + mat[1][1] * mat1.mat[1][1] + mat[1][2] * mat1.mat[2][1] + mat[1][3] * mat1.mat[3][1],
+      mat[1][0] * mat1.mat[0][2] + mat[1][1] * mat1.mat[1][2] + mat[1][2] * mat1.mat[2][2] + mat[1][3] * mat1.mat[3][2],
+      mat[1][0] * mat1.mat[0][3] + mat[1][1] * mat1.mat[1][3] + mat[1][2] * mat1.mat[2][3] + mat[1][3] * mat1.mat[3][3],
+
+      mat[2][0] * mat1.mat[0][0] + mat[2][1] * mat1.mat[1][0] + mat[2][2] * mat1.mat[2][0] + mat[2][3] * mat1.mat[3][0],
+      mat[2][0] * mat1.mat[0][1] + mat[2][1] * mat1.mat[1][1] + mat[2][2] * mat1.mat[2][1] + mat[2][3] * mat1.mat[3][1],
+      mat[2][0] * mat1.mat[0][2] + mat[2][1] * mat1.mat[1][2] + mat[2][2] * mat1.mat[2][2] + mat[2][3] * mat1.mat[3][2],
+      mat[2][0] * mat1.mat[0][3] + mat[2][1] * mat1.mat[1][3] + mat[2][2] * mat1.mat[2][3] + mat[2][3] * mat1.mat[3][3],
+
+      mat[3][0] * mat1.mat[0][0] + mat[3][1] * mat1.mat[1][0] + mat[3][2] * mat1.mat[2][0] + mat[3][3] * mat1.mat[3][0],
+      mat[3][0] * mat1.mat[0][1] + mat[3][1] * mat1.mat[1][1] + mat[3][2] * mat1.mat[2][1] + mat[3][3] * mat1.mat[3][1],
+      mat[3][0] * mat1.mat[0][2] + mat[3][1] * mat1.mat[1][2] + mat[3][2] * mat1.mat[2][2] + mat[3][3] * mat1.mat[3][2],
+      mat[3][0] * mat1.mat[0][3] + mat[3][1] * mat1.mat[1][3] + mat[3][2] * mat1.mat[2][3] + mat[3][3] * mat1.mat[3][3]
+    );
   }
 
   _Value *operator[](unsigned int index) {
@@ -145,9 +121,34 @@ public:
     return mat[0];
   }
 
+  bool operator!=(Matrix4 &mat1) {
+    return ( 
+      mat[0][0] != mat1.mat[0][0] || mat[0][1] != mat1.mat[0][1] || mat[0][2] != mat1.mat[0][2] || mat[0][3] != mat1.mat[0][3] ||
+      mat[1][0] != mat1.mat[1][0] || mat[1][1] != mat1.mat[1][1] || mat[1][2] != mat1.mat[1][2] || mat[1][3] != mat1.mat[1][3] ||
+      mat[2][0] != mat1.mat[2][0] || mat[2][1] != mat1.mat[2][1] || mat[2][2] != mat1.mat[2][2] || mat[2][3] != mat1.mat[2][3] ||
+      mat[3][0] != mat1.mat[3][0] || mat[3][1] != mat1.mat[3][1] || mat[3][2] != mat1.mat[3][2] || mat[3][3] != mat1.mat[3][3]
+    );
+  }
+
+  bool operator==(Matrix4 &mat1) {
+    return ( 
+      mat[0][0] == mat1.mat[0][0] || mat[0][1] == mat1.mat[0][1] || mat[0][2] == mat1.mat[0][2] || mat[0][3] == mat1.mat[0][3] ||
+      mat[1][0] == mat1.mat[1][0] || mat[1][1] == mat1.mat[1][1] || mat[1][2] == mat1.mat[1][2] || mat[1][3] == mat1.mat[1][3] ||
+      mat[2][0] == mat1.mat[2][0] || mat[2][1] == mat1.mat[2][1] || mat[2][2] == mat1.mat[2][2] || mat[2][3] == mat1.mat[2][3] ||
+      mat[3][0] == mat1.mat[3][0] || mat[3][1] == mat1.mat[3][1] || mat[3][2] == mat1.mat[3][2] || mat[3][3] == mat1.mat[3][3]
+    );
+  }
+
+  /**
+    A^T transpose of this matrix.
+  */
   Matrix4 Transpose() {
-    Matrix4 sol;
-    return sol;
+    return Matrix4(
+      mat[0][0], mat[1][0], mat[2][0], mat[3][0],
+      mat[0][1], mat[1][1], mat[2][1], mat[3][1],
+      mat[0][2], mat[1][2], mat[2][2], mat[3][2],
+      mat[0][3], mat[1][3], mat[2][3], mat[3][3]
+    );
   }
 
   Matrix4 Determinant() {
@@ -156,7 +157,7 @@ public:
   }
 
   Matrix4 Inverse() {
-    Matrix sol;
+    Matrix4 sol;
     return sol;
   }
 
@@ -173,6 +174,60 @@ private:
   //  3  | 4   8  12  16 |     mat[3][0] = 4    mat[3][1] = 8    mat[3][2] = 12   mat[3][3] = 16
   _Value mat[4][4];
 };
+
+
+template<typename _Value = float>
+class Matrix3 {
+public:
+  Matrix3(
+    Vector3<_Value> &row1,
+    Vector3<_Value> &row2,
+    Vector3<_Value> &row3)
+  {
+    mat[0][0] = row1.x; mat[0][1] = row1.y; mat[0][2] = row1.z;
+    mat[1][0] = row2.x; mat[1][1] = row2.y; mat[1][2] = row2.z;
+    mat[2][0] = row3.x; mat[2][1] = row3.y; mat[2][2] = row3.z;
+  }
+
+  Matrix3(
+    _Value a00, _Value a01, _Value a02,
+    _Value a10, _Value a11, _Value a12,
+    _Value a20, _Value a21, _Value a22)
+  {
+    mat[0][0] = a00; mat[0][1] = a01; mat[0][2] = a02;
+    mat[1][0] = a10; mat[1][1] = a11; mat[1][2] = a12;
+    mat[2][0] = a20; mat[2][1] = a21; mat[2][2] = a22;
+  }
+
+
+  _Value *operator[](unsigned int i) {
+    return mat[i];
+  }
+private:
+  _Value mat[3][3];
+};
+
+
+template<typename _Value = float>
+class Matrix2 {
+public:
+  Matrix2(
+    Vector2<_Value> &row1,
+    Vector2<_Value> &row2)
+  {
+  }
+
+  Matrix2(
+    _Value a00, _Value a01,
+    _Value a10, _Value a11)
+  {
+  }
+
+
+private:
+  _Value mat[2][2];
+};
+
 } // math
 } // vikr
 #endif // __VIKR_MATRIX_H

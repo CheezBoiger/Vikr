@@ -58,6 +58,27 @@ void Do_Movement()
 
 
 int main(int c, char* args[]) {
+  math::Matrix4<> A(
+    1,  2,  3,  4,
+    5,  6,  7,  8,
+    9,  10, 11, 12,
+    13, 14, 15, 16
+  );
+  math::Matrix4<> B(
+    16, 15, 14, 13,
+    12, 11, 10, 9,
+    8,  7,  6,  5,
+    4,  3,  2,  1
+  );
+
+  math::Matrix4<> Ans = A * B;
+  for (vuint32 i = 0; i < 4; ++i) {
+    for (vuint32 j = 0; j < 4; ++j) {
+      std::cout << Ans[i][j] << " ";
+    } 
+    std::cout << "\n";
+  }
+  
   InitVikr(vikr_PIPELINE_OPENGL);
   Window win = Window::CreateVikrWindow(1200, 800, "Vikr");
   Window::SetMainWindow(&win);
