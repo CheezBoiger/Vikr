@@ -7,6 +7,7 @@
 
 #include <vikr/shader/texture.hpp>
 #include <vikr/graphics/render_device.hpp>
+#include <vikr/shader/texture_config.hpp>
 #include <memory>
 #include <vector>
 
@@ -22,10 +23,30 @@ public:
   Cubemap() { }
   virtual ~Cubemap() { }
 
-  virtual vvoid Load(std::vector<const vchar *> &faces_path) = 0;
+  /**
+    Path to faces is optional.
+  */
+  virtual vvoid Load(std::vector<const vchar *> *face_paths) = 0;
 
   virtual vuint32 GetNativeId() = 0;
 
+  virtual vvoid SetMagFilter(TextureFilterMode mode) = 0;
+
+  virtual vvoid SetMinFilter(TextureFilterMode mode) = 0;
+
+  virtual vvoid SetWrapS(TextureWrapMode mode) = 0;
+
+  virtual vvoid SetWrapT(TextureWrapMode mode) = 0;
+
+  virtual vvoid SetWrapR(TextureWrapMode mode) = 0;
+
+  virtual vvoid OverrideFaceWidth(vuint32 val) = 0;
+  
+  virtual vvoid OverrideFaceHeight(vuint32 val) = 0;
+
+  virtual vvoid ClearSizeOverride() = 0;
+  
+  virtual vvoid Cleanup() = 0;
 };
 } // vikr
 #endif // __VIKR_CUBEMAP_HPP

@@ -5,6 +5,8 @@
 #include <vikr/graphics/render_device.hpp>
 #include <vikr/shader/material.hpp>
 #include <vikr/util/vikr_log.hpp>
+
+#include <vikr/resources/threading/vikr_thread.hpp>
 #include <memory>
 #include <thread>
 
@@ -31,60 +33,61 @@ vvoid Mesh::Buffer(std::vector<glm::vec3> &positions,
   std::vector<glm::vec3> &bitangents,
   std::vector<glm::vec3> &colors)
 {
-  std::thread pos([&] () -> vvoid {
+  VikrThread pos([&] () -> vvoid {
     for(vuint32 i = 0; i < positions.size(); ++i) {
       m_vertices.positions.push_back(positions[i].x);
       m_vertices.positions.push_back(positions[i].y);
       m_vertices.positions.push_back(positions[i].z);
     }
   });
-  std::thread norms([&] () -> vvoid { 
+
+  VikrThread norms([&] () -> vvoid { 
     for(vuint32 i = 0; i < normals.size(); ++i) {
       m_vertices.normals.push_back(normals[i].x);
       m_vertices.normals.push_back(normals[i].y);
       m_vertices.normals.push_back(normals[i].z);
     }
   });
-  std::thread uv([&] () -> vvoid {
+  VikrThread uv([&] () -> vvoid {
     for(vuint32 i = 0; i < uvs.size(); ++i) {
       m_vertices.uvs.push_back(uvs[i].x);
       m_vertices.uvs.push_back(uvs[i].y);
     }
   });
-  std::thread tang([&] () -> vvoid {
+  VikrThread tang([&] () -> vvoid {
     for(vuint32 i = 0; i < tangents.size(); ++i) {
       m_vertices.tangents.push_back(tangents[i].x);
       m_vertices.tangents.push_back(tangents[i].y);
       m_vertices.tangents.push_back(tangents[i].z);
     }
   });
-  std::thread bitang([&] () -> vvoid {
+  VikrThread bitang([&] () -> vvoid {
     for(vuint32 i = 0; i < bitangents.size(); ++i) {
       m_vertices.bitangents.push_back(bitangents[i].x);
       m_vertices.bitangents.push_back(bitangents[i].y);
       m_vertices.bitangents.push_back(bitangents[i].z);
     }
   });
-  std::thread color([&] () -> vvoid {
+  VikrThread color([&] () -> vvoid {
     for(vuint32 i = 0; i < colors.size(); ++i) {
       m_vertices.colors.push_back(colors[i].x);
       m_vertices.colors.push_back(colors[i].y);
       m_vertices.colors.push_back(colors[i].z);
     }
   });
-  std::thread ind([&] () -> vvoid {
+  VikrThread ind([&] () -> vvoid {
     for(vuint32 i = 0; i < indices.size(); ++i) {
       m_vertices.indices.push_back(indices[i]);
     }
   });
   
-  pos.join();
-  norms.join();
-  uv.join();
-  tang.join();
-  bitang.join();
-  color.join();
-  ind.join();
+  pos.Join();
+  norms.Join();
+  uv.Join();
+  tang.Join();
+  bitang.Join();
+  color.Join();
+  ind.Join();
 }
 
 

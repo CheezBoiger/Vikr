@@ -41,6 +41,9 @@ public:
 
   vvoid Join() { thr.join(); }
 
+  /**
+    
+  */
   vbool IsJoinable() { thr.joinable(); } 
 
   /**

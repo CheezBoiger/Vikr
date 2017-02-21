@@ -136,7 +136,7 @@ int main(int c, char* args[]) {
   SceneNode *dlight_node1 = renderer.GetDevice()->GetResourceManager()->CreateSceneNode();
   LightComponent *dc1 = dlight_node1->AddComponent<LightComponent>();
   dc1->light = &dlight1;
-  dlight1.SetDirection(glm::vec3(0.0f, -1.0f, -1.0f));
+  dlight1.SetDirection(glm::vec3(1.0f, -1.0f, 1.0f));
   dlight1.SetDiffuse(glm::vec3(1.0f, 1.0f, 1.0f));
   dc1->Update();
 

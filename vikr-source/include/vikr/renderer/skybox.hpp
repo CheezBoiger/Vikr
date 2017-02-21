@@ -37,6 +37,7 @@ private:
 
   Mesh *skybox;  
   std::unique_ptr<Cubemap> cubemap;
+  std::vector <const vchar *> skybox_input;
 };
 } // vikr
 #endif // __VIKR_SKYBOX_HPP

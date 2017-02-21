@@ -46,6 +46,7 @@ namespace vikr {
 
 
 Renderer *Renderer::renderer = nullptr;
+CameraCommand cam;
 
 
 Renderer::Renderer()
@@ -126,7 +127,6 @@ vint32 Renderer::CleanupResources() {
 vvoid Renderer::Render() { 
   m_renderDevice->GetContext()->ClearWithColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
   m_renderDevice->GetContext()->Clear();
-  CameraCommand cam;
   if(camera) {
     cam.camera = camera;
     PushBack(&cam);
@@ -136,6 +136,10 @@ vvoid Renderer::Render() {
   m_renderQueue.Sort();
 
   // Record Commands.
+  /*
+    TODO(): Need to figure a faster way, Constantly allocating memory on the heap with
+            default new! Allocator data structures underway!
+  */
   RenderContext *context = m_renderDevice->GetContext();
   std::vector<RenderCommand *> &render_commands = m_renderQueue.GetRenderCommands();
   for(RenderCommand *command : render_commands) {
@@ -154,7 +158,7 @@ vvoid Renderer::Render() {
   m_gbuffer.ExecutePass(&m_commandBufferList);
 
   // Deferred Shading pass.
-  context->SetFramebuffer(nullptr);
+  context->SetFramebuffer(DEFAULT_FRAMEBUFFER);
   
   // Set back to the default RenderPass.
   context->GetPipelineState()->SetShaderProgram(lightShader);
@@ -171,7 +175,7 @@ vvoid Renderer::Render() {
   // Draw the Screen Quad.
   m_screenquad.Execute();
 
-  m_gbuffer.GetFramebuffer()->BlitTo(nullptr);
+  m_gbuffer.GetFramebuffer()->BlitTo(DEFAULT_FRAMEBUFFER);
 
   skybox.Execute();
 }

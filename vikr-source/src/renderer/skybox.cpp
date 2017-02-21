@@ -23,7 +23,7 @@ vvoid Skybox::Init(RenderDevice *device) {
   m_device = device;
 
   cubemap = device->CreateCubemap();
-  std::vector<const vchar *> input = {
+  skybox_input = {
     "../../libs/models/skybox/right.jpg",
     "../../libs/models/skybox/left.jpg",
     "../../libs/models/skybox/top.jpg",
@@ -31,7 +31,7 @@ vvoid Skybox::Init(RenderDevice *device) {
     "../../libs/models/skybox/back.jpg",
     "../../libs/models/skybox/front.jpg",
   };
-  cubemap->Load(input);
+  cubemap->Load(&skybox_input);
 
   ResourceManager *mgr = device->GetResourceManager();
   Shader *vert_skybox = mgr->CreateShader("vert_skybox", VERTEX_SHADER);
@@ -50,6 +50,8 @@ vvoid Skybox::Init(RenderDevice *device) {
   skybox->Build(device);
   sky_cmd.m_mesh = skybox;
 
+  mgr->DestroyShader("vert_skybox");
+  mgr->DestroyShader("frag_skybox");
 }
 
 
@@ -61,10 +63,10 @@ vvoid Skybox::Execute() {
   std::unique_ptr<Commandbuffer> buf = m_device->CreateCommandbuffer();
   sky_cmd.Record(buf.get());
   list.PushBack(buf);
-  m_device->GetContext()->GetPipelineState()->SetShaderProgram(program);
+  pipeline->SetShaderProgram(program);
   pipeline->SetDepthFunc(DepthFunc::vikr_DEPTH_LEQUAL);
   pipeline->SetCullMode(false);
-  m_device->GetContext()->GetPipelineState()->Update();
+  pipeline->Update();
   Material mat;
   mat.SetMat4("vikr_View", glm::mat4(glm::mat3(cam->GetView())));
   mat.SetMat4("vikr_Projection", cam->GetProjection());

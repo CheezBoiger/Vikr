@@ -193,7 +193,8 @@ vvoid GL4Framebuffer::BlitTo(Framebuffer *framebuffer) {
   GL4Framebuffer *glFb = static_cast<GL4Framebuffer *>(framebuffer);
   glBindFramebuffer(GL_READ_FRAMEBUFFER, m_fbo);
   if (framebuffer) {
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, glFb->GetFramebufferId());
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 
+      static_cast<vuint32>(glFb->GetFramebufferId()));
     Viewport target = glFb->GetViewport();
     glBlitFramebuffer(
       m_viewport.win_x, 

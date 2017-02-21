@@ -115,10 +115,10 @@ void main() {
   vec4 result = Diffuse * 0.01;
   
   for (int i = 0; i < MAX_DIRECTIONALLIGHTS; ++i) {
-    //if ( vikr_directionalLights[i].enabled) {
-    //  result += CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
-    //    TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN);
-    //}
+    if ( vikr_directionalLights[i].enabled) {
+      result += CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
+        TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN);
+    }
   }
   for (int i = 0; i < MAX_POINTLIGHTS; ++i) {
     if (vikr_pointLights[i].enabled) {

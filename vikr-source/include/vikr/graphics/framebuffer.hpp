@@ -15,6 +15,10 @@
 #include <list>
 #include <vector>
 
+
+#define DEFAULT_FRAMEBUFFER nullptr
+
+
 namespace vikr {
 
 
@@ -56,7 +60,7 @@ public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(vikr::Framebuffer);
   virtual ~Framebuffer() { }
   Framebuffer() { }
-  
+
   /** 
     Generate the Framebuffer with this function call.
   */
@@ -149,6 +153,7 @@ public:
     Blits this Framebuffer to the specified destination framebuffer.
   */
   virtual vvoid BlitTo(Framebuffer *framebuffer) = 0;
+
 };
 } // vikr
 #endif // __VIKR_FRAMEBUFFER_HPP
