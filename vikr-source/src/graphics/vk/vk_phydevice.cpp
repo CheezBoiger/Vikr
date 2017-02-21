@@ -14,14 +14,12 @@
 namespace vikr {
 
 
-vuint32 VKPhysicalDevice::m_currentCount = 0;
-std::vector<VkPhysicalDevice> VKPhysicalDevice::m_foundDevices;
-
-const std::vector<const vchar *> VKPhysicalDevice::device_ext = {
-  VK_KHR_SWAPCHAIN_EXTENSION_NAME
-};
-
-VkPhysicalDevice VKPhysicalDevice::m_physicalDevice = VK_NULL_HANDLE;
+VKPhysicalDevice::VKPhysicalDevice()
+  : m_physicalDevice(VK_NULL_HANDLE)
+  , m_currentCount(0)
+  , device_ext({ VK_KHR_SWAPCHAIN_EXTENSION_NAME })
+{
+}
 
 
 

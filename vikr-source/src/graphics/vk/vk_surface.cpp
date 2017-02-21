@@ -14,7 +14,9 @@ VkMemoryManager<VkSurfaceKHR> VKSurface::surface = { VKInstance::instance, vkDes
 
 
 vvoid VKSurface::CreateSurface() {
-  if(glfwCreateWindowSurface(VKInstance::instance, 
+  // Surface is handled by glfw for simplicity.
+  // PS: We are soon going to remove Library support in order to reduce dependency!
+  if (glfwCreateWindowSurface(VKInstance::instance, 
     Window::GetMainWindow()->GetWindow(), nullptr, surface.Replace()) != VK_SUCCESS) 
   {
     VikrLog::DisplayMessage(VIKR_ERROR, "Surface creation error!");

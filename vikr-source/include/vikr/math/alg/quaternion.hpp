@@ -24,6 +24,15 @@ public:
   
   Quaternion Inverse();
   Quaternion Conjugate();
+
+
+  Quaternion operator+(Quaternion &quat);
+  Quaternion operator-(Quaternion &quat);
+  Quaternion operator*(Quaternion &quat);
+  
+
+  bool operator!=(Quaternion &quat);
+  bool operator==(Quaternion &quat);
   
   
 
@@ -38,6 +47,19 @@ public:
   };
   
 };
+
+
+template<typename _Type>
+Quaternion<_Type> AngleAxis(unsigned int angle, Vector3<_Type> &axis);
+
+template<typename _Type>
+Quaternion<_Type> Normalize(Quaternion<_Type> &a, Quaternion<_Type> &b);
+
+template<typename _Type>
+Quaternion<_Type> Cross(Quaternion<_Type> &a, Quaternion<_Type> &b);
+
+template<typename _Type>
+Quaternion<_Type> Dot(Quaternion<_Type> &a, Quaternion<_Type> &b);
 } // math
 } // vikr
 #endif // __VIKR_QUATERNION_HPP

@@ -55,13 +55,24 @@ public:
   std::string GetName() const override;
   vvoid SetName(std::string name) override;
 
+  vvoid Setup();
+
 private:
 
+  vvoid UpdateNativeViewport();
+  vvoid UpdateNativeScissors();
 
   FrontFace m_frontface       = FrontFace::vikr_COUNTER_CLOCKWISE;
   CullFace m_cullface         = CullFace::vikr_BACK_FACE;
   Topology m_topology         = Topology::VIKR_TRIANGLES;
+
+  /**
+    Current Viewport State.
+  */
   Viewport m_viewport;
+
+  VkViewport m_native_viewport;
+  VkRect2D m_native_scissor;
 
   vbool m_blend                 = false;
   BlendFunc m_blendsrc          = BlendFunc::vikr_BLEND_ONE;

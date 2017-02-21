@@ -22,35 +22,36 @@ namespace vikr {
 */
 class VKPhysicalDevice {
 public:
+  VKPhysicalDevice();
   /**
     Check for suitable devices with Vulkan.
   */  
-  static vvoid CheckSuitableDevices(VkInstance &instance);
+  vvoid CheckSuitableDevices(VkInstance &instance);
   /**
     Select the best physical device to use.
   */
-  static vvoid SelectPhysicalDevice();
+  vvoid SelectPhysicalDevice();
 
   /**
     Get the current physical device being used.
   */
-  static VkPhysicalDevice GetCurrentDevice() { return m_physicalDevice; }
+  VkPhysicalDevice GetCurrentDevice() { return m_physicalDevice; }
 private:
   /**
     Rate our found devices.
   */
-  static vint32 RateDeviceCompatibility(VkPhysicalDevice &device);
-  static vbool IsSuitable(VkPhysicalDevice &device);
+  vint32 RateDeviceCompatibility(VkPhysicalDevice &device);
+  vbool IsSuitable(VkPhysicalDevice &device);
 
-  static vuint32 m_currentCount;
-  static std::vector<VkPhysicalDevice> m_foundDevices;
-  static vbool CheckDeviceExtensionSupport(VkPhysicalDevice &device); 
+  vuint32 m_currentCount;
+  std::vector<VkPhysicalDevice> m_foundDevices;
+  vbool CheckDeviceExtensionSupport(VkPhysicalDevice &device); 
   /**
     Current Physical Device we are using.
   */
-  static VkPhysicalDevice m_physicalDevice;
+  VkPhysicalDevice m_physicalDevice;
 
-  static const std::vector<const vchar *> device_ext;
+  std::vector<const vchar *> device_ext;
 
 };
 

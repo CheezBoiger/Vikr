@@ -76,11 +76,11 @@ vvoid Camera::SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) {
 vvoid Camera::Update(vreal32 dt) {
   front = glm::normalize(look_at - pos);
   if (type == CamType::ORTHOGRAPHIC) {
-    projection = glm::ortho(-1.5f * float(aspect), 1.5f * float(aspect), -1.5f, 1.5f, -10.0f, 10.0f);
+    projection = glm::ortho(-1.5f * float(aspect), 1.5f * float(aspect), -1.5f, 1.5f, near_clip, far_clip);
   } else if (type == CamType::PERSPECTIVE) {
     projection = glm::perspective(fov, aspect, near_clip, far_clip);
   }
-  glm::vec3 axis = glm::cross(front, up);
+  glm::vec3 axis = glm::cross(front, up); axis.length();
   glm::quat pitch_quatern = glm::angleAxis(pitch_rate, axis);
   glm::quat yaw_quatern = glm::angleAxis(yaw_rate, up);
   glm::quat q = glm::normalize(glm::cross(pitch_quatern, yaw_quatern));

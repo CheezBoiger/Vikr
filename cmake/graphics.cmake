@@ -28,6 +28,7 @@ if (vulkan)
     ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_framebuffer.cpp
     ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_uniformbuffer.cpp
     ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_storagebuffer.cpp
+    ${VIKR_GRAPHICS_VK_SRC_DIR}/vk_swapchain.cpp
   )
 
   set(VIKR_GLOB
@@ -44,6 +45,7 @@ if (vulkan)
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_framebuffer.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_uniformbuffer.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_storagebuffer.hpp
+    ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_swapchain.hpp
   )
 endif()
 

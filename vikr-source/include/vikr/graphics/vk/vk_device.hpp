@@ -57,7 +57,7 @@ public:
 
   std::unique_ptr<Commandbuffer> CreateCommandbuffer() override;
 
-  VkDevice GetVkDevice() { return device.Get(); }
+  VkDevice GetVkDevice() { return m_logicDevice.Get(); }
 
 private:
 
@@ -67,8 +67,16 @@ private:
 
   vvoid CreateLogicalDevices();
   
-  VkMemoryManager<VkDevice> device      { vkDestroyDevice };
+  /**
+    Vulkan Logic Device.
+  */
+  VkMemoryManager<VkDevice> m_logicDevice;
+  
+  VKPhysicalDevice m_physicalDevice;
 
+  /**
+    Vulkan Context.
+  */
   VKContext context;
 
   VKResourceManager manager;

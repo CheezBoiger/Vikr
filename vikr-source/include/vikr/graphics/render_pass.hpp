@@ -50,12 +50,17 @@ public:
   /**
     Get the Renderbuffer, which corresponds to the depth buffer, or depth-stencil buffer.
   */
+
+  // TODO(): Remove Renderbuffer (RenderTextures should be much better, as they will make more 
+  // sense. Renderbuffers are not in the context of Vulkan...
   virtual Renderbuffer *GetRenderbuffer() const = 0;
 
   /**
     Set the Renderbuffer for this Renderpass. This can be a Depth buffer, or 
     Depth-Stencil buffer.
   */
+  // TODO(): Remove Renderbuffer (RenderTextures should be much better, as they will make more 
+  // sense. Renderbuffers are not in the context of Vulkan...
   virtual vvoid SetRenderbuffer(Renderbuffer *renderbuffer) = 0;
 
   /**
