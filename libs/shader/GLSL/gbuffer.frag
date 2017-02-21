@@ -32,6 +32,7 @@ in VERT_OUT {
 
 
 void main() {
+
   gPosition = vs_in.FragPos;
   gNormal =  texture(vikr_TexNormal, vs_in.TexCoords);
   gAlbedo = texture(vikr_TexAlbedo, vs_in.TexCoords);

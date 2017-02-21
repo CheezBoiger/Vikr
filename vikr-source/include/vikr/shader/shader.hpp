@@ -26,6 +26,7 @@ protected:
   Shader(ShaderStage stage = VERTEX_SHADER, ShaderLanguage lang = vikr_NOLANG);
 
 public:
+  static const vuint32 kNoShaderId;
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Shader);
   virtual ~Shader() { }
 

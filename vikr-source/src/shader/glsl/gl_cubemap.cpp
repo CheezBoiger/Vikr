@@ -38,7 +38,9 @@ vvoid GL4Cubemap::Load(std::vector<const vchar *> *face_path) {
 vint32 GL4Cubemap::Finalize() {
   m_target = vikr_TEXTURE_CUBEMAP;
   native_target = GLTexture::GetNativeTextureTarget(m_target);
-  glGenTextures(1, &id);
+  if (id == Texture::kNoTextureId) {
+    glGenTextures(1, &id);
+  }
   glActiveTexture(GL_TEXTURE0);
   vint32 width, height, channels;
   vbyte *image;

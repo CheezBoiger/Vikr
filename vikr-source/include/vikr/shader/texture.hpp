@@ -20,6 +20,7 @@ class Texture {
 protected:
   static const std::string kDefaultName;
 public:
+  static const vuint32 kNoTextureId;
   Texture() { }
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Texture);
 

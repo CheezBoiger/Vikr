@@ -37,6 +37,9 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_SRC_DIR}/gbuffer.cpp
   ${VIKR_RENDERER_SRC_DIR}/shadowmap.cpp
   ${VIKR_RENDERER_SRC_DIR}/renderer.cpp
+  ${VIKR_RENDERER_SRC_DIR}/deferred_renderer.cpp
+  ${VIKR_RENDERER_SRC_DIR}/forward_renderer.cpp
+  ${VIKR_RENDERER_SRC_DIR}/forwardp_renderer.cpp
   ${VIKR_RENDERER_SRC_DIR}/render_queue.cpp
   ${VIKR_RENDERER_SRC_DIR}/skybox.cpp
 )
@@ -48,6 +51,9 @@ set(VIKR_GLOB
   ${VIKR_RENDERER_INCLUDE_DIR}/render_queue.hpp
   ${VIKR_RENDERER_INCLUDE_DIR}/irenderer.hpp
   ${VIKR_RENDERER_INCLUDE_DIR}/renderer.hpp
+  ${VIKR_RENDERER_INCLUDE_DIR}/deferred_renderer.hpp
+  ${VIKR_RENDERER_INCLUDE_DIR}/forward_renderer.hpp
+  ${VIKR_RENDERER_INCLUDE_DIR}/forwardp_renderer.hpp
   ${VIKR_RENDERER_INCLUDE_DIR}/shadowmap.hpp
   ${VIKR_RENDERER_INCLUDE_DIR}/skybox.hpp
 )

@@ -22,6 +22,7 @@ class ShaderProgram {
   VIKR_DISALLOW_COPY_AND_ASSIGN(ShaderProgram);
   static guid_t uid_current;
 public:
+  static const vuint32 kNoShaderProgramId;
 
   VIKR_DEFAULT_MOVE_AND_ASSIGN(ShaderProgram);
   ShaderProgram() : uid(uid_current++) { }

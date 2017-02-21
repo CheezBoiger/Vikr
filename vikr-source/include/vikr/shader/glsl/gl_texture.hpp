@@ -52,7 +52,7 @@ public:
   /**
     Cleanup the Texture value if needed.
   */
-  vvoid Cleanup() override { glDeleteTextures(1, &id); }
+  vvoid Cleanup() override { glDeleteTextures(1, &id); id = Texture::kNoTextureId; }
 
 protected:
   vuint32 id                          = 0;

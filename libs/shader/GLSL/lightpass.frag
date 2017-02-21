@@ -129,5 +129,6 @@ void main() {
 
   result = vec4(pow(result.rgb, vec3(1.0/2.2)), result.a);
   FragColor = vec4(result);
+  
   //FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }
