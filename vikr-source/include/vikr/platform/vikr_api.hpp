@@ -11,13 +11,16 @@
 #if defined(VIKR_WINDOWS)
  #if defined(_MSC_VER)
   #define VIKR_FORCEINLINE __forceinline
+  #define VIKR_ALIGN(x) __declspec(align(x))
  #endif
 #elif defined(VIKR_LINUX)
  #if defined(__GNUC__) || defined(__GNUG__)
   #define VIKR_FORCEINLINE __inline __attribute__((always_inline))
+  #define VIKR_ALIGN(x) __attribute__((aligned(x)))
  #endif 
 #else
  #define VIKR_FORCEINLINE
+ #define VIKR_ALIGN(x)
 #endif // VIKR_WINDOWS
 
 

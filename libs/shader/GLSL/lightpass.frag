@@ -116,14 +116,14 @@ void main() {
   
   for (int i = 0; i < MAX_DIRECTIONALLIGHTS; ++i) {
     if ( vikr_directionalLights[i].enabled) {
-      result += CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
-        TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN);
+      result += vec4(CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
+        TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN), 1.0f);
     }
   }
   for (int i = 0; i < MAX_POINTLIGHTS; ++i) {
     if (vikr_pointLights[i].enabled) {
-      result += CalculatePointLight(vikr_pointLights[i], Normal, TangentFragPos,
-        ViewDir, Diffuse, Specular, Ambient, TBN);
+      result += vec4(CalculatePointLight(vikr_pointLights[i], Normal, TangentFragPos,
+        ViewDir, Diffuse, Specular, Ambient, TBN), 1.0f);
     }
   }
 

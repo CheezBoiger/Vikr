@@ -78,7 +78,6 @@ int main(int c, char* args[]) {
     } 
     std::cout << "\n";
   }
-  
   InitVikr(vikr_PIPELINE_OPENGL);
   Window win = Window::CreateVikrWindow(1200, 800, "Vikr");
   Window::SetMainWindow(&win);
@@ -86,6 +85,8 @@ int main(int c, char* args[]) {
   Keyboard::RegisterKeyboardCallback(Keyboard::DefaultKeyCallback);
   Mouse::RegisterMouseCallback(Mouse::DefaultMouseCallback);
   Mouse::SetMouseMode(Mouse::Mode::MOUSE_CURSOR_DISABLED);
+  const GLubyte *vendor = glGetString(GL_RENDERER);
+  std::cout << vendor << std::endl;
 
   camera.SetViewport(0, 0, screen_width, screen_height);
   camera.SetClip(0.1, 10000);

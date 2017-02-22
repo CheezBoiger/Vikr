@@ -46,7 +46,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[1]->SetHeight(window->GetHeight());
   m_rendertargets[1]->SetMipmapping(false);
   m_rendertargets[1]->SetMultisampled(false);
-  m_rendertargets[1]->SetDataTypeFormat(data_UNSIGNED_BYTE);
+  m_rendertargets[1]->SetDataTypeFormat(data_FLOAT);
   m_rendertargets[1]->SetInternalFormat(vikr_RGB16F);
   m_rendertargets[1]->SetFormat(vikr_RGB);
   m_rendertargets[1]->SetFilterMin(vikr_TEXTURE_NEAREST);
@@ -59,7 +59,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[2]->SetHeight(window->GetHeight());
   m_rendertargets[2]->SetMipmapping(false);
   m_rendertargets[2]->SetMultisampled(false);
-  m_rendertargets[2]->SetDataTypeFormat(data_UNSIGNED_BYTE);
+  m_rendertargets[2]->SetDataTypeFormat(data_FLOAT);
   m_rendertargets[2]->SetInternalFormat(vikr_RGB16F);
   m_rendertargets[2]->SetFormat(vikr_RGB);
   m_rendertargets[2]->SetFilterMin(vikr_TEXTURE_NEAREST);
@@ -72,7 +72,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[3]->SetHeight(window->GetHeight());
   m_rendertargets[3]->SetMipmapping(false);
   m_rendertargets[3]->SetMultisampled(false);
-  m_rendertargets[3]->SetDataTypeFormat(data_UNSIGNED_BYTE);
+  m_rendertargets[3]->SetDataTypeFormat(data_FLOAT);
   m_rendertargets[3]->SetInternalFormat(vikr_RGB16F);
   m_rendertargets[3]->SetFormat(vikr_RGB);
   m_rendertargets[3]->SetFilterMin(vikr_TEXTURE_NEAREST);
@@ -85,7 +85,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[4]->SetHeight(window->GetHeight());
   m_rendertargets[4]->SetMipmapping(false);
   m_rendertargets[4]->SetMultisampled(false);
-  m_rendertargets[4]->SetDataTypeFormat(data_UNSIGNED_BYTE);
+  m_rendertargets[4]->SetDataTypeFormat(data_FLOAT);
   m_rendertargets[4]->SetInternalFormat(vikr_RGB16F);
   m_rendertargets[4]->SetFormat(vikr_RGB);
   m_rendertargets[4]->SetFilterMin(vikr_TEXTURE_NEAREST);
