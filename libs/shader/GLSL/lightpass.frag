@@ -117,13 +117,13 @@ void main() {
   for (int i = 0; i < MAX_DIRECTIONALLIGHTS; ++i) {
     if ( vikr_directionalLights[i].enabled) {
       result += vec4(CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
-        TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN), 1.0f);
+        TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN), 0.0f);
     }
   }
   for (int i = 0; i < MAX_POINTLIGHTS; ++i) {
     if (vikr_pointLights[i].enabled) {
       result += vec4(CalculatePointLight(vikr_pointLights[i], Normal, TangentFragPos,
-        ViewDir, Diffuse, Specular, Ambient, TBN), 1.0f);
+        ViewDir, Diffuse, Specular, Ambient, TBN), 0.0f);
     }
   }
 

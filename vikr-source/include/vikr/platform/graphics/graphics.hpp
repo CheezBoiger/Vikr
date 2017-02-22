@@ -32,6 +32,15 @@ enum GraphicsPipeline {
 };
 
 
+struct GraphicsInfo {
+  const char *vendor;
+  const char *renderer;
+  const char *extensions;
+  const char *version;
+  const char *shader_language;
+};
+
+
 VIKR_FORCEINLINE int VikrInit() { return glfwInit(); }
 VIKR_FORCEINLINE void VikrWindowHint(int hint, int value) { glfwWindowHint(hint, value); }
 VIKR_FORCEINLINE void VikrMakeContextCurrent(GLFWwindow *window) { glfwMakeContextCurrent(window); }

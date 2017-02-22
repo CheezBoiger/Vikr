@@ -149,6 +149,11 @@ public:
   */
   virtual vvoid Update();
 
+
+  GroupCommand &GetGroupCommand() { return m_commandList; }
+
+  std::unordered_map<guid_t, SceneNode *> &GetChildrenMap() { return children; }
+
   /**
     SceneNode's tag (or name).
   */
@@ -189,11 +194,8 @@ private:
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(SceneNode);
   /**
-    Our renderer has access to this mesh command. 
-    It's pretty much your friendly neighborhood Renderer.
     Comes complete with Scene and SceneComponent!
   */
-  friend class Renderer;
   friend class SceneComponent;
   friend class Scene;
 };
