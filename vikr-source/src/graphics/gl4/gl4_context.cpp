@@ -91,16 +91,10 @@ vvoid GL4RenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
   CLEAN_PIPELINE();
   if (target) {
     switch (target->GetRenderType()) {
+      case RenderTargetType::render_TEXTURE_MULTISAMPLE:
       case RenderTargetType::render_TEXTURE: {
-        RenderTexture *texture = static_cast<RenderTexture *>(target);
-        GLTexture *tex = static_cast<GLTexture *>(texture->GetTexture());
-        SetTexture(texture->GetTexture()->GetNativeId(), tex->GetNativeTarget(), index);
-      }
-      break;
-      case RenderTargetType::render_DEPTH_TEXTURE: {
-        RenderDepthTexture *depth_texture = 
-          static_cast<RenderDepthTexture *>(target);
-        
+        GLTexture *tex = static_cast<GLTexture *>(target->GetTexture());
+        SetTexture(tex->GetNativeId(), tex->GetNativeTarget(), index);
       }
       break;
       default: break;
@@ -281,6 +275,7 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
       break;
       default: break;
       }
+      VIKR_ASSERT(glGetError() == 0);
     }
   }
 

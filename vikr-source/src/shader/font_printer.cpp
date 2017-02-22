@@ -92,6 +92,7 @@ vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
   fread(ttf_buffer, 1, 1<<20, f);
   stbtt_BakeFontBitmap(ttf_buffer, 0, 32.0, temp_bitmap, 512, 512, 32, 96, cdata);
   m_texture = device->GetResourceManager()->CreateTexture(
+    "glyph",
     TextureTarget::vikr_TEXTURE_2D,
     //"../../libs/models/nanosuit/glass_dif.png", 
     std::string((vchar *)temp_bitmap), 

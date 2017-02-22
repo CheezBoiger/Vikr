@@ -25,34 +25,136 @@ vvoid GBuffer::Init(RenderDevice *device) {
   viewport.win_y = 0;
   viewport.win_width = Window::GetMainWindow()->GetWidth();
   viewport.win_height = Window::GetMainWindow()->GetHeight();
+ 
+  ResourceManager *mgr = device->GetResourceManager();
   
-  m_rendertargets[0] = device->CreateRenderTexture("gPosition",
-    window->GetWidth(), window->GetHeight(), false, false, data_FLOAT);
-  m_rendertargets[1] = device->CreateRenderTexture("gNormal",
-    window->GetWidth(), window->GetHeight(), true, false, data_UNSIGNED_BYTE);
-  m_rendertargets[2] = device->CreateRenderTexture("gAlbedo",
-    window->GetWidth(), window->GetHeight(), true, false, data_UNSIGNED_BYTE);
-  m_rendertargets[3] = device->CreateRenderTexture("gSpecular",
-   window->GetWidth(), window->GetHeight(), true, false, data_UNSIGNED_BYTE);
-  m_rendertargets[4] = device->CreateRenderTexture("gAmbient",
-   window->GetWidth(), window->GetHeight(), true, false, data_UNSIGNED_BYTE);
-  m_rendertargets[5] = device->CreateRenderTexture("gTangent",
-   window->GetWidth(), window->GetHeight(), false, false, data_FLOAT);
-  m_rendertargets[6] = device->CreateRenderTexture("gBitangent",
-   window->GetWidth(), window->GetHeight(), false, false, data_FLOAT);
-  m_rendertargets[7] = device->CreateRenderTexture("gNorm",
-   window->GetWidth(), window->GetHeight(), false, false, data_FLOAT);
+  m_rendertargets[0] = mgr->CreateTexture("gPosition", vikr_TEXTURE_2D, "", false);
+  m_rendertargets[0]->SetWidth(window->GetWidth());
+  m_rendertargets[0]->SetHeight(window->GetHeight());
+  m_rendertargets[0]->SetMipmapping(false);
+  m_rendertargets[0]->SetMultisampled(false);
+  m_rendertargets[0]->SetDataTypeFormat(data_FLOAT);
+  m_rendertargets[0]->SetInternalFormat(vikr_RGB16F);
+  m_rendertargets[0]->SetFormat(vikr_RGB);
+  m_rendertargets[0]->SetFilterMin(vikr_TEXTURE_NEAREST);
+  m_rendertargets[0]->SetFilterMax(vikr_TEXTURE_NEAREST);
+  m_rendertargets[0]->SetByteCode(nullptr);
+  m_rendertargets[0]->Finalize();
+
+  m_rendertargets[1] = mgr->CreateTexture("gNormal", vikr_TEXTURE_2D, "", false);
+  m_rendertargets[1]->SetWidth(window->GetWidth());
+  m_rendertargets[1]->SetHeight(window->GetHeight());
+  m_rendertargets[1]->SetMipmapping(false);
+  m_rendertargets[1]->SetMultisampled(false);
+  m_rendertargets[1]->SetDataTypeFormat(data_UNSIGNED_BYTE);
+  m_rendertargets[1]->SetInternalFormat(vikr_RGB16F);
+  m_rendertargets[1]->SetFormat(vikr_RGB);
+  m_rendertargets[1]->SetFilterMin(vikr_TEXTURE_NEAREST);
+  m_rendertargets[1]->SetFilterMax(vikr_TEXTURE_NEAREST);
+  m_rendertargets[1]->SetByteCode(nullptr);
+  m_rendertargets[1]->Finalize();
+
+  m_rendertargets[2] = mgr->CreateTexture("gAlbedo", vikr_TEXTURE_2D, "", false);
+  m_rendertargets[2]->SetWidth(window->GetWidth());
+  m_rendertargets[2]->SetHeight(window->GetHeight());
+  m_rendertargets[2]->SetMipmapping(false);
+  m_rendertargets[2]->SetMultisampled(false);
+  m_rendertargets[2]->SetDataTypeFormat(data_UNSIGNED_BYTE);
+  m_rendertargets[2]->SetInternalFormat(vikr_RGB16F);
+  m_rendertargets[2]->SetFormat(vikr_RGB);
+  m_rendertargets[2]->SetFilterMin(vikr_TEXTURE_NEAREST);
+  m_rendertargets[2]->SetFilterMax(vikr_TEXTURE_NEAREST);
+  m_rendertargets[2]->SetByteCode(nullptr);
+  m_rendertargets[2]->Finalize();
+
+  m_rendertargets[3] = mgr->CreateTexture("gSpecular", vikr_TEXTURE_2D, "", false);
+  m_rendertargets[3]->SetWidth(window->GetWidth());
+  m_rendertargets[3]->SetHeight(window->GetHeight());
+  m_rendertargets[3]->SetMipmapping(false);
+  m_rendertargets[3]->SetMultisampled(false);
+  m_rendertargets[3]->SetDataTypeFormat(data_UNSIGNED_BYTE);
+  m_rendertargets[3]->SetInternalFormat(vikr_RGB16F);
+  m_rendertargets[3]->SetFormat(vikr_RGB);
+  m_rendertargets[3]->SetFilterMin(vikr_TEXTURE_NEAREST);
+  m_rendertargets[3]->SetFilterMax(vikr_TEXTURE_NEAREST);
+  m_rendertargets[3]->SetByteCode(nullptr);
+  m_rendertargets[3]->Finalize();
+
+  m_rendertargets[4] = mgr->CreateTexture("gAmbient", vikr_TEXTURE_2D, "", false);
+  m_rendertargets[4]->SetWidth(window->GetWidth());
+  m_rendertargets[4]->SetHeight(window->GetHeight());
+  m_rendertargets[4]->SetMipmapping(false);
+  m_rendertargets[4]->SetMultisampled(false);
+  m_rendertargets[4]->SetDataTypeFormat(data_UNSIGNED_BYTE);
+  m_rendertargets[4]->SetInternalFormat(vikr_RGB16F);
+  m_rendertargets[4]->SetFormat(vikr_RGB);
+  m_rendertargets[4]->SetFilterMin(vikr_TEXTURE_NEAREST);
+  m_rendertargets[4]->SetFilterMax(vikr_TEXTURE_NEAREST);
+  m_rendertargets[4]->SetByteCode(nullptr);
+  m_rendertargets[4]->Finalize();
+
+  m_rendertargets[5] = mgr->CreateTexture("gTangent", vikr_TEXTURE_2D, "", false);
+  m_rendertargets[5]->SetWidth(window->GetWidth());
+  m_rendertargets[5]->SetHeight(window->GetHeight());
+  m_rendertargets[5]->SetMipmapping(false);
+  m_rendertargets[5]->SetMultisampled(false);
+  m_rendertargets[5]->SetDataTypeFormat(data_FLOAT);
+  m_rendertargets[5]->SetInternalFormat(vikr_RGB16F);
+  m_rendertargets[5]->SetFormat(vikr_RGB);
+  m_rendertargets[5]->SetFilterMin(vikr_TEXTURE_NEAREST);
+  m_rendertargets[5]->SetFilterMax(vikr_TEXTURE_NEAREST);
+  m_rendertargets[5]->SetByteCode(nullptr);
+  m_rendertargets[5]->Finalize();
+
+  m_rendertargets[6] = mgr->CreateTexture("gBitangent", vikr_TEXTURE_2D, "", false);
+  m_rendertargets[6]->SetWidth(window->GetWidth());
+  m_rendertargets[6]->SetHeight(window->GetHeight());
+  m_rendertargets[6]->SetMipmapping(false);
+  m_rendertargets[6]->SetMultisampled(false);
+  m_rendertargets[6]->SetDataTypeFormat(data_FLOAT);
+  m_rendertargets[6]->SetInternalFormat(vikr_RGB16F);
+  m_rendertargets[6]->SetFormat(vikr_RGB);
+  m_rendertargets[6]->SetFilterMin(vikr_TEXTURE_NEAREST);
+  m_rendertargets[6]->SetFilterMax(vikr_TEXTURE_NEAREST);
+  m_rendertargets[6]->SetByteCode(nullptr);
+  m_rendertargets[6]->Finalize();
+
+  m_rendertargets[7] = mgr->CreateTexture("gNorm", vikr_TEXTURE_2D, "", false);
+  m_rendertargets[7]->SetWidth(window->GetWidth());
+  m_rendertargets[7]->SetHeight(window->GetHeight());
+  m_rendertargets[7]->SetMipmapping(false);
+  m_rendertargets[7]->SetMultisampled(false);
+  m_rendertargets[7]->SetDataTypeFormat(data_FLOAT);
+  m_rendertargets[7]->SetInternalFormat(vikr_RGB16F);
+  m_rendertargets[7]->SetFormat(vikr_RGB);
+  m_rendertargets[7]->SetFilterMin(vikr_TEXTURE_NEAREST);
+  m_rendertargets[7]->SetFilterMax(vikr_TEXTURE_NEAREST);
+  m_rendertargets[7]->SetByteCode(nullptr);
+  m_rendertargets[7]->Finalize();
+
+  m_rendertargets[8] = mgr->CreateTexture("gDepth", vikr_TEXTURE_2D, "", false);
+  m_rendertargets[8]->SetWidth(window->GetWidth());
+  m_rendertargets[8]->SetHeight(window->GetHeight());
+  m_rendertargets[8]->SetMipmapping(false);
+  m_rendertargets[8]->SetMultisampled(false);
+  m_rendertargets[8]->SetDataTypeFormat(data_FLOAT);
+  m_rendertargets[8]->SetInternalFormat(vikr_DEPTH);
+  m_rendertargets[8]->SetFormat(vikr_DEPTH);
+  m_rendertargets[8]->SetFilterMin(vikr_TEXTURE_NEAREST);
+  m_rendertargets[8]->SetFilterMax(vikr_TEXTURE_NEAREST);
+  m_rendertargets[8]->SetWrapS(vikr_TEXTURE_REPEAT);
+  m_rendertargets[8]->SetWrapT(vikr_TEXTURE_REPEAT);
+  m_rendertargets[8]->Finalize();
+
   
   for (vuint32 i = 0; i < m_rendertargets.size(); ++i) {
     if (m_rendertargets[i]) {
-      m_renderpass->AddRenderTarget(m_rendertargets[i].get(), i);
+      m_renderpass->AddRenderTarget(RenderTarget(m_rendertargets[i]), i);
     }
   }
   
   m_framebuffer = device->CreateFramebuffer();
   m_framebuffer->Generate();
-  m_renderbuffer = device->CreateRenderbuffer(window->GetWidth(), window->GetHeight(), false);
-  m_renderpass->SetRenderbuffer(m_renderbuffer.get());
 
   /*
     Gbuffer shader. This needs to NOT be a fixed length.

@@ -49,6 +49,18 @@ public:
   vvoid ClearSizeOverride() override
     { overriding = false; }
 
+  vvoid SetHeight(vint32 height) override
+    { OverrideFaceHeight(static_cast<vint32>(height)); }
+
+  vvoid SetDepth(vint32 depth) override 
+    { image_channels = depth; }
+
+  vint32 GetHeight() override 
+    { return image_height; }
+
+  vint32 GetDepth() override
+    { return image_channels; }
+
 private:
   std::vector<const vchar *> *m_faces = nullptr;
   

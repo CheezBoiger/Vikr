@@ -69,9 +69,10 @@ public:
   Mesh *GetMesh(guid_t guid) override;
   vbool DestroyMesh(guid_t guid) override;
 
-  Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) override;
-  Texture *GetTexture(std::string image_path) override;
-  vbool DestroyTexture(std::string image_path) override;
+  Texture *CreateTexture(std::string name, TextureTarget target, 
+    std::string image_path, vbool alpha) override;
+  Texture *GetTexture(std::string filepath) override;
+  vbool DestroyTexture(std::string filepath) override;
 
   ShaderProgram *CreateShaderProgram() override;
   ShaderProgram *GetShaderProgram(guid_t id) override;

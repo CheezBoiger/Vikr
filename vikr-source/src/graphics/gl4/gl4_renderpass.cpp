@@ -10,9 +10,9 @@
 namespace vikr {
 
 
-vbool GL4RenderPass::AddRenderTarget(RenderTarget *target, vuint32 attachment) {
+vbool GL4RenderPass::AddRenderTarget(RenderTarget target, vuint32 attachment) {
   if (m_rendertargets.find(attachment) == m_rendertargets.end()) {
-    m_rendertargets[attachment] = target;
+    m_rendertargets[attachment] = std::move(target);
     return true;
   }
   return false;
@@ -30,7 +30,7 @@ vbool GL4RenderPass::RemoveRenderTarget(vuint32 attachment) {
 
 RenderTarget *GL4RenderPass::GetRenderTarget(vuint32 attachment) {
   if (m_rendertargets.find(attachment) != m_rendertargets.end()) {
-    return m_rendertargets[attachment];
+    return &m_rendertargets[attachment];
   }
   return nullptr;
 }

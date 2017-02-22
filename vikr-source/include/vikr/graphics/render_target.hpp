@@ -23,102 +23,58 @@ namespace vikr {
 enum RenderTargetType {
   render_RENDERBUFFER,
   render_TEXTURE,
-  render_DEPTH_TEXTURE
+  render_TEXTURE_MULTISAMPLE,
 };
 
 
 /**
-  Render Target for post processing. This is an abstract class
-  designed as a plugin for rendering APIs. 
-
-  OpenGL: Associates this object with GLRenderTarget.
-  Vulkan: Associates this obejct with VKRenderTarget.
+  Render Target for post processing. This is a container for Textures to
+  Be added into RenderPasses. 
 */
 class RenderTarget {
-  VIKR_DISALLOW_COPY_AND_ASSIGN(RenderTarget);
+  //VIKR_DISALLOW_COPY_AND_ASSIGN(RenderTarget);
   /*
     TODO(Garcia): Redesign RenderTargets to NOT bind to 
     a Frame buffer object until we reach our RenderPasses.
   */
 public:
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(RenderTarget);
-  RenderTarget(GraphicsPipeline pipeline, 
-    vuint32 width,
-    vuint32 height,
-    vbool alpha = false,
-    vbool multisample = false,
-    RenderTargetType type = render_TEXTURE);
-  virtual ~RenderTarget() { }
+  //VIKR_DEFAULT_MOVE_AND_ASSIGN(RenderTarget);
+  RenderTarget(Texture *texture = nullptr)
+    : m_texture(texture) 
+  {
+    DetermineRenderType();
+  }
 
-  GraphicsPipeline GetPipeline() { return m_pipeline; }
-  RenderTargetType GetRenderType() { return m_targetType; }
+  ~RenderTarget() { }
 
-  vuint32 GetWidth() { return m_width; }
-  vuint32 GetHeight() { return m_height; }
+  Texture *GetTexture() 
+    { return m_texture; }
 
-  vvoid SetWidth(vuint32 width) { m_width = width; }
-  vvoid SetHeight(vuint32 height) { m_height = height; }
+  vvoid SetTexture(Texture *texture)
+    { m_texture = texture; DetermineRenderType(); }
 
-  vbool HasDepthAndStencil() { return m_depthstencil; }
-  vbool IsMultisampled() { return multisampled; }
+  RenderTargetType GetRenderType()
+    { return m_renderType; }
 
-  vvoid SetMultiSample(vbool enable) { multisampled = enable; }
+private:
 
-protected:
-
-  vuint32 m_width = 0;
-  vuint32 m_height = 0;
-  vbool alpha      = false;
-  vbool m_depthstencil = false;
-  vbool multisampled = false;
-
-  GraphicsPipeline m_pipeline;
-  RenderTargetType m_targetType = render_TEXTURE;
-};
-
-
-/**
-  RenderTexture.
-*/
-class RenderTexture : public RenderTarget {
-public:
-  virtual ~RenderTexture() { }
-  RenderTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool alpha, vbool multisampled);
-
-  Texture *GetTexture() { return m_texture.get(); }
-
-protected:
-
-  std::unique_ptr<Texture> m_texture = nullptr;
-
-};
-
-
-/**
-  RenderBuffer.
-*/
-class Renderbuffer : public RenderTarget {
-public:
-  virtual ~Renderbuffer() { }
-  Renderbuffer(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool multisampled);
-
-  vuint32 GetRenderbufferId() { return m_rbo; }
+  vvoid DetermineRenderType() {
+    if (m_texture) {
+      switch (m_texture->GetTargetFormat()) {
+        case vikr_TEXTURE_3D:
+        case vikr_TEXTURE_2D:
+        case vikr_TEXTURE_1D: 
+          m_renderType = render_TEXTURE; break;
+        case vikr_TEXTURE_2D_MULTISAMPLE: 
+          m_renderType = render_TEXTURE_MULTISAMPLE; break;
+        default: 
+          m_renderType = render_TEXTURE; break;
+      }
+    } 
+  }
   
-protected:
-  vuint32 m_rbo       = 0;
-};
-
-
-class RenderDepthTexture : public RenderTarget {
-public:
-  virtual ~RenderDepthTexture() { }
-  RenderDepthTexture(GraphicsPipeline pipeline, vuint32 width, vuint32 height, vbool multisampled);
-  
-  vuint32 GetTextureId() { return id; }
-
-protected:
-
-  vuint32 id = -1;
+  Texture *m_texture = nullptr;
+  RenderTargetType m_renderType;
 };
 } // vikr
 #endif // __VIKR_RENDER_TARGET_HPP

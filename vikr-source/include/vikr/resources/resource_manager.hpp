@@ -76,9 +76,10 @@ public:
   virtual Mesh *GetMesh(guid_t guid) = 0;
   virtual vbool DestroyMesh(guid_t guid) = 0;
 
-  virtual Texture *CreateTexture(TextureTarget target, std::string image_path, vbool alpha) = 0;
-  virtual Texture *GetTexture(std::string image_path) = 0;
-  virtual vbool DestroyTexture(std::string image_path) = 0;
+  virtual Texture *CreateTexture(std::string name, TextureTarget target, 
+    std::string image_path, vbool alpha) = 0;
+  virtual Texture *GetTexture(std::string filepath) = 0;
+  virtual vbool DestroyTexture(std::string filepath) = 0;
 
   /**
     Much involves the interface design of ResourceManager, but this is common.

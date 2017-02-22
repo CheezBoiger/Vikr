@@ -143,11 +143,6 @@ protected:
   */
   ShaderProgram *lightShader                                     = nullptr;
 
-  /**
-    Rendertextures.
-  */
-  std::vector<std::unique_ptr<RenderTexture> > m_renderTextures;
-
   CommandbufferList m_commandBufferList;
   CommandbufferList m_deferredBufferList;
 

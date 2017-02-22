@@ -33,7 +33,7 @@ std::string GL4RenderDevice::GetShaderLanguage() {
 Texture *GL4RenderDevice::GenerateTexture(
   std::string path, TextureTarget target, vbool alpha) 
 {
-  return manager.CreateTexture(target, path, alpha);
+  return manager.CreateTexture("", target, path, alpha);
 }
 
 
@@ -139,18 +139,6 @@ GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices)
 
 std::unique_ptr<Framebuffer> GL4RenderDevice::CreateFramebuffer() {
   return std::make_unique<GL4Framebuffer>();
-}
-
-
-std::unique_ptr<Renderbuffer> GL4RenderDevice::CreateRenderbuffer(vuint32 width, vuint32 height, vbool multisample) {
-  return std::make_unique<GL4Renderbuffer>(width, height, multisample);
-}
-
-
-std::unique_ptr<RenderTexture> GL4RenderDevice::CreateRenderTexture(std::string t_name, 
-  vuint32 width, vuint32 height, vbool alpha, vbool multisample, DataTypeFormat precision) 
-{
-  return std::make_unique<GL4RenderTexture>(t_name, width, height, alpha, multisample, precision);
 }
 
 

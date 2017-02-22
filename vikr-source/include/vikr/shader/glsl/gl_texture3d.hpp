@@ -17,11 +17,12 @@ public:
 
   vint32 Finalize() override;
 
-  vuint32 GetDepth() { return m_depth; }
+  vint32 GetDepth() override { return m_depth; }
+  vvoid SetDepth(vint32 depth) override { m_depth = depth; }
 
 private:
 
-  vuint32 m_depth;
+  vint32 m_depth;
 };
 } // vikr
 #endif // __VIKR_GL_TEXTURE3D_HPP

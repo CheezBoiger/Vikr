@@ -108,17 +108,6 @@ ResourceManager *VKDevice::GetResourceManager() {
 }
 
 
-std::unique_ptr<RenderTexture> VKDevice::CreateRenderTexture(std::string t_name,
-  vuint32 width, vuint32 height, vbool alpha, vbool multisample, DataTypeFormat precision) {
-  return nullptr;
-}
-
-
-std::unique_ptr<Renderbuffer> VKDevice::CreateRenderbuffer(vuint32 width, vuint32 height, vbool multisample) {
-  return nullptr;
-}
-
-
 std::unique_ptr<Cubemap> VKDevice::CreateCubemap() {
   return nullptr;
 }

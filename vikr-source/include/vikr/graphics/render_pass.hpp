@@ -35,7 +35,7 @@ public:
     Add a render target. Returns true if the render target
     successfully attaches. Returns false if rendertarget failed to attach.
   */
-  virtual vbool AddRenderTarget(RenderTarget *target, vuint32 attachment) = 0;
+  virtual vbool AddRenderTarget(RenderTarget target, vuint32 attachment) = 0;
 
   /**
     Remove a render target.
@@ -46,22 +46,6 @@ public:
     Get a render target from this renderpass. null returned if no attachment by that name.
   */
   virtual RenderTarget *GetRenderTarget(vuint32 attachment) = 0;
-
-  /**
-    Get the Renderbuffer, which corresponds to the depth buffer, or depth-stencil buffer.
-  */
-
-  // TODO(): Remove Renderbuffer (RenderTextures should be much better, as they will make more 
-  // sense. Renderbuffers are not in the context of Vulkan...
-  virtual Renderbuffer *GetRenderbuffer() const = 0;
-
-  /**
-    Set the Renderbuffer for this Renderpass. This can be a Depth buffer, or 
-    Depth-Stencil buffer.
-  */
-  // TODO(): Remove Renderbuffer (RenderTextures should be much better, as they will make more 
-  // sense. Renderbuffers are not in the context of Vulkan...
-  virtual vvoid SetRenderbuffer(Renderbuffer *renderbuffer) = 0;
 
   /**
     Number of rendertargets in this RenderPass.

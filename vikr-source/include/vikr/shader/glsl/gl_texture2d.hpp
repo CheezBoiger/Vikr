@@ -16,11 +16,15 @@ public:
   
   virtual vint32 Finalize() override;
 
-  vuint32 GetHeight() { return m_height; }
+  vint32 GetHeight() override { return m_height; }
+  vvoid SetHeight(vint32 height) override { m_height = height; }
+
+  virtual vint32 GetDepth() override { return -1; }
+  virtual vvoid SetDepth(vint32 depth) override { }
 
 protected:
 
-  vuint32 m_height = 0;
+  vint32 m_height = 0;
 
 };
 } // vikr

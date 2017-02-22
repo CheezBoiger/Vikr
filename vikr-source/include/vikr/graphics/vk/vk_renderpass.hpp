@@ -23,7 +23,7 @@ class VKRenderPass : public RenderPass {
 public:
   VKRenderPass();
 
-  vbool AddRenderTarget(RenderTarget *target, vuint32 attachment) override;
+  vbool AddRenderTarget(RenderTarget target, vuint32 attachment) override;
 
   vbool RemoveRenderTarget(vuint32 attachment) override;
 
@@ -33,7 +33,7 @@ private:
   
   VkMemoryManager<VkRenderPass> m_renderpass;
 
-  std::map<vuint32, RenderTarget *> m_rendertargets;
+  std::map<vuint32, RenderTarget> m_rendertargets;
 };
 } // vikr
 #endif // __VIKR_VK_RENDERPASS_HPP

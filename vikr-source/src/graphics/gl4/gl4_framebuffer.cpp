@@ -86,36 +86,34 @@ vvoid GL4Framebuffer::Update() {
   glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
   // Renderbuffer binding.
   ClearAttachments();
-  if (m_renderPass->GetRenderbuffer()) {
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER,
-      GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, 
-      m_renderPass->GetRenderbuffer()->GetRenderbufferId()
-    );
-  }
 
   // Set up the Rendertargets.
-  for (auto val : m_renderPass->GetRenderTargets()) {
-    GL4RenderTexture *texture = static_cast<GL4RenderTexture *>(val.second);
-    if(texture->GetTexture()->GetTargetFormat() != vikr_TEXTURE_2D &&
-       texture->GetTexture()->GetTargetFormat() != vikr_TEXTURE_2D_MULTISAMPLE) {
-      VikrLog::DisplayMessage(VIKR_WARNING, "RenderTarget is not of Texture2D format!");
-    }
-    GLTexture *gl = static_cast<GLTexture2D *>(texture->GetTexture());
-    glFramebufferTexture2D(GL_FRAMEBUFFER,
-      GL_COLOR_ATTACHMENT0 + val.first, gl->GetNativeTarget(), gl->GetNativeId(), 0);
-  }
-
   // Get the count on the number of RenderTargets.
   GLenum attachments[GL_MAX_COLOR_ATTACHMENTS];
   vuint32 count = 0;
-  while (count < m_renderPass->GetNumOfRenderTargets()) {
-    attachments[count] = GL_COLOR_ATTACHMENT0 + count;
-    count++;
+  for (auto &val : m_renderPass->GetRenderTargets()) {
+    GLTexture *texture = static_cast<GLTexture *>(val.second.GetTexture());
+    if(texture->GetTargetFormat() != vikr_TEXTURE_2D &&
+       texture->GetTargetFormat() != vikr_TEXTURE_2D_MULTISAMPLE) {
+      VikrLog::DisplayMessage(VIKR_WARNING, "RenderTarget is not of Texture2D format!");
+    }
+    if (texture->GetFormat() != vikr_DEPTH) {
+      glFramebufferTexture2D(GL_FRAMEBUFFER,
+        GL_COLOR_ATTACHMENT0 + val.first, texture->GetNativeTarget(), texture->GetNativeId(), 0);
+      attachments[count] = GL_COLOR_ATTACHMENT0 + count;
+      count++;
+    } else {
+      glFramebufferTexture2D(GL_FRAMEBUFFER,
+        GL_DEPTH_ATTACHMENT, texture->GetNativeTarget(), texture->GetNativeId(), 0);
+    }
+    VIKR_ASSERT(glGetError() == 0);
   }
   glDrawBuffers(count, attachments);
+
+  VIKR_ASSERT(glGetError() == 0);
+
   IsComplete();
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);}
 
 
 vvoid GL4Framebuffer::Readbuffer(BufferMode mode) {
@@ -134,13 +132,18 @@ vvoid GL4Framebuffer::ClearAttachments() {
        i != structure.end();
         ++i)
   {
-    if (i->second->IsMultisampled()) {
-      glFramebufferTexture2D(GL_FRAMEBUFFER,
-        GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D_MULTISAMPLE, 0, 0);
+    if (i->second.GetTexture()->GetFormat() == vikr_DEPTH) {
+      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
     } else {
-      glFramebufferTexture2D(GL_FRAMEBUFFER, 
-        GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D, 0, 0);
+      if (i->second.GetTexture()->IsMultisampled()) {
+        glFramebufferTexture2D(GL_FRAMEBUFFER,
+          GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D_MULTISAMPLE, 0, 0);
+      } else {
+        glFramebufferTexture2D(GL_FRAMEBUFFER, 
+          GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D, 0, 0);
+      }
     }
+    VIKR_ASSERT(glGetError() == 0);
   }
 }
 
@@ -171,17 +174,20 @@ vvoid GL4Framebuffer::SetViewport(const Viewport &viewport) {
 
 
 vbool GL4Framebuffer::HasDepthStencil() {
-  if (m_renderPass && m_renderPass->GetRenderbuffer()) {
-    return true;
+  for (auto &i : m_renderPass->GetRenderTargets()) {
+    if (i.second.GetTexture()->GetInternalFormat() == vikr_DEPTH) {
+      return true;
+    }
   }
   return false;
 }
 
 
 vbool GL4Framebuffer::IsMultisampled() {
-  if (m_renderPass && m_renderPass->GetRenderbuffer() 
-    && m_renderPass->GetRenderbuffer()->IsMultisampled()) {
-    return true;
+  for (auto &i : m_renderPass->GetRenderTargets()) {
+    if (i.second.GetTexture()->IsMultisampled()) {
+      return true;
+    }
   }
   return false;
 }

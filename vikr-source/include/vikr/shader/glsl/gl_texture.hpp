@@ -49,6 +49,11 @@ public:
   vvoid SetMultisampled(vbool enable) override { m_multisampled = enable; }
   vbool IsMultisampled() override { return m_multisampled; }
 
+  virtual vvoid SetHeight(vint32 height) override = 0;
+  virtual vvoid SetDepth(vint32 depth) override = 0;
+  virtual vint32 GetHeight() override = 0;
+  virtual vint32 GetDepth() override = 0;
+
   /**
     Cleanup the Texture value if needed.
   */

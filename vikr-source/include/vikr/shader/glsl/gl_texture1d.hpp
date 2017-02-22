@@ -16,6 +16,11 @@ public:
   GLTexture1D();
   GLTexture1D(vuint32 width);
 
+  virtual vint32 GetHeight() override { return -1; }
+  virtual vint32 GetDepth() override { return -1; }
+  virtual vvoid SetHeight(vint32 height) override { }
+  virtual vvoid SetDepth(vint32 depth) override { }
+
   virtual vint32 Finalize() override;
 
 };

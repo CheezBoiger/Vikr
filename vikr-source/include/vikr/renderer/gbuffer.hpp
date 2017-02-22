@@ -9,6 +9,7 @@
 #include <vikr/graphics/framebuffer.hpp>
 #include <vikr/graphics/render_target.hpp>
 #include <vikr/graphics/render_device.hpp>
+#include <vikr/shader/texture.hpp>
 #include <vikr/shader/shader.hpp>
 
 #include <vikr/graphics/command_buffer.hpp>
@@ -20,7 +21,7 @@
 namespace vikr {
 
 
-const vuint32 GBUFFER_SIZE = 8;
+const vuint32 GBUFFER_SIZE = 9;
 class ShaderProgram;
 
 /**
@@ -35,7 +36,7 @@ public:
   vvoid ExecutePass(CommandbufferList *buffer);
 
   RenderTarget *GetRenderTarget(vuint32 index) {
-    return m_rendertargets[index].get();
+    return m_renderpass->GetRenderTarget(index);
   }
 
   vuint32 GetNumOfRenderTargets() { return m_rendertargets.size(); }
@@ -47,10 +48,9 @@ private:
   RenderDevice *m_device = nullptr;
   std::unique_ptr<RenderPass> m_renderpass;
   std::unique_ptr<Framebuffer> m_framebuffer;
-  std::unique_ptr<Renderbuffer> m_renderbuffer;
   ShaderProgram *m_prgm;
   
-  std::array<std::unique_ptr<RenderTarget>, GBUFFER_SIZE> m_rendertargets;
+  std::array<Texture *, GBUFFER_SIZE> m_rendertargets;
 };
 } // vikr
 #endif // __VIKR_GBUFFER_HPP

@@ -114,7 +114,7 @@ vbool GLResourceManager::DestroyMesh(guid_t guid) {
 }
 
 
-Texture *GLResourceManager::CreateTexture(TextureTarget target, std::string img_path, vbool alpha) {
+Texture *GLResourceManager::CreateTexture(std::string name, TextureTarget target, std::string img_path, vbool alpha) {
   std::shared_ptr<GLTexture> texture = nullptr;
   vint32 width = 0;
   vint32 height = 0;
@@ -132,19 +132,24 @@ Texture *GLResourceManager::CreateTexture(TextureTarget target, std::string img_
     texture->SetByteCode(bytecode);
     //texture->Finalize(); // No need to tell the resource manager to finalize for us.
     texture->SetPath(img_path);
-    GLResources::textures[img_path] = texture;
+    texture->SetName(name);
+    if (!img_path.empty()) {
+      GLResources::textures[img_path] = texture;
+    } else {
+      GLResources::textures[name] = texture;
+    }
   }
   return texture.get();
 }
 
 
-Texture *GLResourceManager::GetTexture(std::string img_path) {
-  return GLResources::textures[img_path].get();
+Texture *GLResourceManager::GetTexture(std::string filepath) {
+  return GLResources::textures[filepath].get();
 }
 
 
-vbool GLResourceManager::DestroyTexture(std::string img_path) {
-  auto it = GLResources::textures.find(img_path);
+vbool GLResourceManager::DestroyTexture(std::string filepath) {
+  auto it = GLResources::textures.find(filepath);
   vbool success = false;
   if (it != GLResources::textures.end()) {
     // Cleanup first.

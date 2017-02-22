@@ -26,7 +26,7 @@ public:
   /**
     Add a rendertarget, this is most likely going to be a render texture.
   */
-  vbool AddRenderTarget(RenderTarget *target, vuint32 attachment) override;
+  vbool AddRenderTarget(RenderTarget target, vuint32 attachment) override;
   
   /**
     Remove the render target at the attachment point. This is the index that the render
@@ -35,20 +35,6 @@ public:
   vbool RemoveRenderTarget(vuint32 attachment) override;
 
   RenderTarget *GetRenderTarget(vuint32 attachment) override;
-  
-  /**
-    Get the Renderbuffer of this renderpass. This is most likely the 
-    depth buffer that was set by the user, you will receive back.
-  */
-  Renderbuffer *GetRenderbuffer() const override 
-    { return static_cast<Renderbuffer *>(m_renderbuffer); }
-  
-  /**
-    Set the Renderbuffer for this renderpass.
-  */
-  vvoid SetRenderbuffer(Renderbuffer *renderbuffer) override { 
-    m_renderbuffer = static_cast<GL4Renderbuffer *>(renderbuffer); 
-  } 
 
   /**
   */
@@ -58,20 +44,15 @@ public:
   /**
     Get the RenderTargets
   */
-  std::map<vuint32, RenderTarget *> &GetRenderTargets() 
+  std::map<vuint32, RenderTarget> &GetRenderTargets() 
     { return m_rendertargets; }
 
 private:
 
   /**
-    The weak ref render buffer, most likely the depth buffer of this renderpass.
-  */
-  GL4Renderbuffer *m_renderbuffer = nullptr;
-
-  /**
     The rendertargets that are weakly referenced.
   */
-  std::map<vuint32, RenderTarget *> m_rendertargets;
+  std::map<vuint32, RenderTarget> m_rendertargets;
 };
 } // vikr
 #endif // __VIKR_GL4_RENDERPASS_HPP

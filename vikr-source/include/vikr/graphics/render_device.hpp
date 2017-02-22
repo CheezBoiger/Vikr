@@ -87,17 +87,6 @@ public:
   virtual RenderContext *GetContext() = 0;
 
   /**
-    Create a Render Texture from this Device, this is mainly used for RenderTargetting.
-  */
-  virtual std::unique_ptr<RenderTexture> CreateRenderTexture(std::string t_name, vuint32 width, vuint32 height, 
-    vbool alpha = false, vbool multisample = false, DataTypeFormat precision = data_UNSIGNED_BYTE) = 0;
-
-  /**
-    Create the Renderbuffer for this Rendering Device.
-  */
-  virtual std::unique_ptr<Renderbuffer> CreateRenderbuffer(vuint32 width, vuint32 height, vbool multisample = false) = 0;
-
-  /**
     Create a cubemap object.
   */
   virtual std::unique_ptr<Cubemap> CreateCubemap() = 0;

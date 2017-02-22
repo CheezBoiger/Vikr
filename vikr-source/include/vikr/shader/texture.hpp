@@ -7,6 +7,7 @@
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/shader/texture_config.hpp>
+#include <vikr/scene/guid_generator.hpp>
 #include <string>
 
 namespace vikr {
@@ -19,9 +20,10 @@ namespace vikr {
 class Texture {
 protected:
   static const std::string kDefaultName;
+  static guid_t count;
 public:
   static const vuint32 kNoTextureId;
-  Texture() { }
+  Texture() : m_id(++count) { }
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Texture);
 
   virtual ~Texture();
@@ -67,6 +69,9 @@ public:
     Get the width of the texture image.
   */
   vint32 GetWidth() { return m_width; }
+
+  virtual vint32 GetHeight() = 0;
+  virtual vint32 GetDepth() = 0;
 
   /**
     Get the path to the source image file of this texture.
@@ -202,6 +207,9 @@ public:
   */
   vvoid SetWidth(vint32 width) { m_width = width; }
 
+  virtual vvoid SetHeight(vint32 height) = 0;
+  virtual vvoid SetDepth(vint32 depth) = 0;
+
   vvoid SetName(std::string name) { m_name = name; }
 
   vvoid SetByteCode(vbyte *bytecode);
@@ -209,6 +217,8 @@ public:
   vbyte *GetBytecode() { return m_bytecode; }
 
   virtual vvoid Cleanup() = 0;
+
+  vuint64 GetId() { return m_id; }
 
 protected:
 
@@ -224,7 +234,8 @@ protected:
   vbool             m_mipmapping                = true;
   vbool             m_alpha                     = true;
   vbool             m_multisampled              = false;
-  vuint32           m_width                     = 0;
+  vint32            m_width                     = 0;
+  const guid_t      m_id                        = 0;
   std::string       m_path                      = "";
   std::string       m_name                      = "noname";
   vbyte             *m_bytecode                 = nullptr;
