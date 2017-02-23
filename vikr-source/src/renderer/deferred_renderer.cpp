@@ -12,7 +12,7 @@
 #include <vikr/scene/scene_node.hpp>
 
 #include <vikr/mesh/mesh.hpp>
-
+#include <vikr/platform/vikr_time.hpp>
 #include <vikr/shader/material.hpp>
 
 #include <vikr/lighting/point_light.hpp>
@@ -31,6 +31,7 @@
 #include <vikr/graphics/framebuffer.hpp>
 
 #include <vikr/shader/shader_program.hpp>
+#include <vikr/shader/cubemap.hpp>
 #include <vikr/graphics/pipeline_state.hpp>
 #include <vikr/resources/resource_manager.hpp>
 
@@ -174,6 +175,12 @@ vvoid DeferredRenderer::Render() {
   m_gbuffer.GetFramebuffer()->BlitTo(DEFAULT_FRAMEBUFFER);
 
   skybox.Execute();
+
+  printer.Println("Vikr v0.5", 25.0, 25.0, 2.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+  printer.Println("FPS: " + std::to_string(GetFPMS()) + " F/ms", 
+    25.0f, 700.0f, 1.5, glm::vec3(1.0, 1.0, 1.0));
+  printer.Println("Shader Lang: " + m_renderDevice->GetShaderLanguage(), 
+    25.0f, 750.0f, 1.5f, glm::vec3(1.0f, 1.0f, 1.0f));
 }
 
 
@@ -209,8 +216,8 @@ vint32 DeferredRenderer::Init(RenderDevice *device) {
   ResourceManager *mgr = m_renderDevice->GetResourceManager();
   Shader *v_lightpass = mgr->CreateShader("lightpass_v", VERTEX_SHADER);
   Shader *f_lightpass = mgr->CreateShader("lightpass_f", FRAGMENT_SHADER);
-  v_lightpass->Compile("../../libs/shader/GLSL/lightpass.vert");
-  f_lightpass->Compile("../../libs/shader/GLSL/lightpass.frag");
+  v_lightpass->Compile("../../libs/shader/GLSL/deferred/lightpass.vert");
+  f_lightpass->Compile("../../libs/shader/GLSL/deferred/lightpass.frag");
   lightShader = mgr->CreateShaderProgram();
   lightShader->LoadShader(v_lightpass);
   lightShader->LoadShader(f_lightpass);
@@ -233,7 +240,16 @@ vint32 DeferredRenderer::Init(RenderDevice *device) {
   param.uniforms = setup.GetMaterialValues();
   m_renderDevice->GetContext()->SetShaderUniforms(&param);
 
+  Viewport port;
+  port.win_x = 0;
+  port.win_y = 0;
+  port.win_width = window->GetWidth();
+  port.win_height = window->GetHeight();
+  printer.SetViewport(port);
+  printer.Init(m_renderDevice, "c:/windows/fonts/arial.ttf");
+
   skybox.Init(m_renderDevice);
+  
 
   return 1;
 }

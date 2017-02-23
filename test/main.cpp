@@ -5,9 +5,7 @@
 #include <iostream>
 #include <vikr/vikr.hpp>
 #include <vikr/math/shape/cube.hpp>
-#include <vikr/shader/material.hpp>
 #include <vikr/scene/camera.hpp>
-#include <vikr/math/shape/quad.hpp>
 #include <vikr/lighting/point_light.hpp>
 #include <vikr/lighting/directional_light.hpp>
 #include <vikr/scene/first_person_camera.hpp>
@@ -18,9 +16,7 @@
 #include <vikr/scene/components/transform_component.hpp>
 #include <vikr/scene/components/renderer_component.hpp>
 #include <vikr/scene/components/mesh_component.hpp>
-#include <vikr/scene/components/camera_component.hpp>
 #include <vikr/scene/components/light_component.hpp>
-#include <vikr/math/shape/quad.hpp>
 #include <vikr/input/window.hpp>
 #include <vikr/input/mouse.hpp>
 #include <vikr/input/keyboard.hpp>
@@ -49,7 +45,7 @@ void Do_Movement()
 
 int main(int c, char* args[]) {
   InitVikr(vikr_PIPELINE_OPENGL);
-  Window win = Window::CreateVikrWindow(1200, 800, "Vikr");
+  Window win = Window::CreateVikrWindow(screen_width, screen_height, "Vikr");
   Window::SetMainWindow(&win);
   // Options.
   Keyboard::RegisterKeyboardCallback(Keyboard::DefaultKeyCallback);

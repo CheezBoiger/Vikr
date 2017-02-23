@@ -212,7 +212,7 @@ public:
 
   vvoid SetName(std::string name) { m_name = name; }
 
-  vvoid SetByteCode(vbyte *bytecode);
+  vvoid SetByteCode(vbyte *bytecode, vbool is_stbi = true);
   
   vbyte *GetBytecode() { return m_bytecode; }
 

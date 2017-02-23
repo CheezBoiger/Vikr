@@ -161,9 +161,9 @@ vvoid GBuffer::Init(RenderDevice *device) {
   */
   ResourceManager *manager = device->GetResourceManager();
   Shader *vert = manager->CreateShader("vert_gbuffer", VERTEX_SHADER);
-  vert->Compile("../../libs/shader/GLSL/gbuffer.vert");
+  vert->Compile("../../libs/shader/GLSL/deferred/gbuffer.vert");
   Shader *frag = manager->CreateShader("frag_gbuffer", PIXEL_SHADER);
-  frag->Compile("../../libs/shader/GLSL/gbuffer.frag");
+  frag->Compile("../../libs/shader/GLSL/deferred/gbuffer.frag");
   m_prgm = manager->CreateShaderProgram();
   m_prgm->LoadShader(vert);
   m_prgm->LoadShader(frag);

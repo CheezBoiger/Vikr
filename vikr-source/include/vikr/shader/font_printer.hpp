@@ -61,10 +61,6 @@ public:
 
 private:
   
-  /**
-    Texture to render.
-  */
-  Texture *m_texture = nullptr;
   RenderDevice *m_renderDevice = nullptr;
   glm::mat4 projection;
   Mesh *m_mesh;

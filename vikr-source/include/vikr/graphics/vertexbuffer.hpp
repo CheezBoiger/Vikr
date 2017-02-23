@@ -64,7 +64,7 @@ public:
   virtual vvoid StoreElementBufferId(vuint64 ibo) = 0;
 
   /**
-    For meshes that require animation.
+    For meshes that require text.
   */
   virtual vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) = 0;
 

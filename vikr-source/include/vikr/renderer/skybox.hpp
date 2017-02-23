@@ -26,6 +26,8 @@ public:
 
   vvoid Init(RenderDevice *device);
 
+  Cubemap *GetCubemap() { return cubemap.get(); }
+
   vvoid Execute();
 
 private:

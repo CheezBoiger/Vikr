@@ -18,9 +18,6 @@ guid_t Texture::count = 0;
 
 Texture::~Texture()
 {
-  if (m_bytecode) { 
-    stbi_image_free(m_bytecode);
-  }
 }
 
 
@@ -34,8 +31,8 @@ vbyte *Texture::CreateImageByteCode(std::string tex_path, vint32 *width, vint32 
 }
 
 
-vvoid Texture::SetByteCode(vbyte *bytecode) {
-  if (m_bytecode) {
+vvoid Texture::SetByteCode(vbyte *bytecode, vbool is_stbi) {
+  if (m_bytecode && is_stbi) {
     stbi_image_free(m_bytecode);
   }
   m_bytecode = bytecode; 

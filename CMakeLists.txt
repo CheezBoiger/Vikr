@@ -69,6 +69,7 @@ set(VIKR_NAME "${VIKR_NAME}_${VIKR_VERSION}")
 link_directories(
                  ${CMAKE_CURRENT_SOURCE_DIR}/libs/glfw/ 
                  ${CMAKE_CURRENT_SOURCE_DIR}/libs/assimp/
+                 ${CMAKE_CURRENT_SOURCE_DIR}/libs/freetype/lib/
 )
 
 # This will have to be changed up a bit though...
@@ -90,5 +91,6 @@ endif()
 
 target_link_libraries(${VIKR_NAME} assimp)
 target_link_libraries(${VIKR_NAME} opengl32)
+target_link_libraries(${VIKR_NAME} freetype)
 
 add_subdirectory(test/)

@@ -34,7 +34,7 @@ public:
   vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) override {
     // subdata for dynamic stuff.
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+    glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     VIKR_ASSERT(glGetError() == 0);
   }

@@ -3,6 +3,8 @@
 set(ASSIMP_INCLUDE_DIR libs/assimp/include)
 set(GLSLANG_INCLUDE_DIR libs/glslang)
 set(GLFW_INCLUDE_DIR libs/glfw/include/GLFW)
+set(FREETYPE_INCLUDE_DIR libs/freetype/include)
+set(FREETYPE_SECONDARY_DIR libs/freetype/include/freetype2)
 
 find_package(Vulkan)
 if (vulkan AND VULKAN_FOUND)
@@ -34,7 +36,11 @@ set(VIKR_PUBLIC_DIR                  vikr-source/include/)
 include_directories(SYSTEM ${VIKR_PUBLIC_DIR})
 # Set Library directories as well
 include_directories(SYSTEM ${GLFW_INCLUDE_DIR})
-include_directories(SYSTEM ${ASSIMP_INCLUDE_DIR})
+include_directories(SYSTEM 
+  ${ASSIMP_INCLUDE_DIR}
+  ${FREETYPE_INCLUDE_DIR}
+  ${FREETYPE_SECONDARY_DIR}
+)
 include_directories(SYSTEM libs/include/)
 
 # Setting up the glob.

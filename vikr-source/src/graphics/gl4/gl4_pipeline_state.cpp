@@ -79,6 +79,12 @@ vvoid GL4PipelineState::Update() {
     m_viewport.win_width,
     m_viewport.win_height
   );
+
+  if (m_blend) {
+    glEnable(GL_BLEND);
+  } else {
+    glDisable(GL_BLEND);
+  }
   
   glBlendEquation(GetGLBlendEq(m_blendeq));
   glBlendFunc(GetGLBlendMode(m_blendsrc), GetGLBlendMode(m_blenddst));

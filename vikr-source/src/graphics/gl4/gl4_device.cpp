@@ -109,26 +109,40 @@ GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices)
     glEnableVertexAttribArray(0); 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
     offset += sizeof(vreal32) * vertices.positions.size();
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
-    offset += sizeof(vreal32) * vertices.normals.size();
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
-    offset += sizeof(vreal32) * vertices.uvs.size();
-    glEnableVertexAttribArray(3);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
-    offset += sizeof(vreal32) * vertices.tangents.size();
-    glEnableVertexAttribArray(4);
-    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
-    offset += sizeof(vreal32) * vertices.bitangents.size();
-    glEnableVertexAttribArray(5);
-    glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
-    offset += sizeof(vreal32) * vertices.colors.size();
+    if (!vertices.normals.empty()) {
+      glEnableVertexAttribArray(1);
+      glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+      offset += sizeof(vreal32) * vertices.normals.size();
+    }
+
+    if (!vertices.uvs.empty()) {
+      glEnableVertexAttribArray(2);
+      glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+      offset += sizeof(vreal32) * vertices.uvs.size();
+    }
+
+    if (!vertices.tangents.empty()) {
+      glEnableVertexAttribArray(3);
+      glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+      offset += sizeof(vreal32) * vertices.tangents.size();
+    }
+
+    if (!vertices.bitangents.empty()) {
+      glEnableVertexAttribArray(4);
+      glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+      offset += sizeof(vreal32) * vertices.bitangents.size();
+    }
+
+    if (!vertices.colors.empty()) {
+      glEnableVertexAttribArray(5);
+      glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, 0, (vvoid *)offset);
+      offset += sizeof(vreal32) * vertices.colors.size();
+    }
     glBindVertexArray(0);
     gbo.StoreVertexArrayId(vao);
     gbo.StoreVertexBufferId(vbo);
     gbo.StoreElementBufferId(ibo);
-    vertices.size = offset;
+    vertices.size = data.size();
 
     VIKR_ASSERT(glGetError() == 0);
   }

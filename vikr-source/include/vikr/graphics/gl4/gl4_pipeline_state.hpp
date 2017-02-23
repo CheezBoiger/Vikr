@@ -115,7 +115,7 @@ private:
 
   vbool m_blend             = false;
   BlendEq m_blendeq         = BlendEq::vikr_BLEND_ADD;
-  BlendFunc m_blendsrc     = BlendFunc::vikr_BLEND_ONE;
+  BlendFunc m_blendsrc     = BlendFunc::vikr_BLEND_SRC_ALPHA;
   BlendFunc m_blenddst      = BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA;  
 
   vbool m_depth             = true;
