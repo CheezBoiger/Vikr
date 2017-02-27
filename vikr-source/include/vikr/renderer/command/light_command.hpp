@@ -26,7 +26,7 @@ public:
   { }
 
 
-  vvoid Record(Commandbuffer *buffer) override {
+  vvoid Record(Commandbuffer &buffer) override {
     ShaderUniformParams params;
     switch (light->GetLightType()) {
       case vikr_POINTLIGHT: 
@@ -77,7 +77,7 @@ public:
       break;
     }
     params.uniforms = &light_params;
-    buffer->SetShaderUniforms(params);
+    buffer.SetShaderUniforms(params);
   }
 
 

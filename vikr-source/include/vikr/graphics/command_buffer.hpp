@@ -40,9 +40,11 @@
 
 #include <vikr/graphics/topology.hpp>
 #include <vikr/graphics/graphics_command.hpp>
+#include <vikr/scene/guid_generator.hpp>
 #include <glm/glm.hpp>
 
 #include <vector>
+#include <list>
 #include <memory>
 
 
@@ -70,9 +72,7 @@ struct Viewport;
   NOTE: Be sure to use BeginRecord to begin recording your command, otherwise it won't record!
 */
 class Commandbuffer {
-  VIKR_DISALLOW_COPY_AND_ASSIGN(Commandbuffer);
 public:
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(Commandbuffer);
   Commandbuffer() { }
   virtual ~Commandbuffer() { }
 
@@ -98,31 +98,15 @@ public:
 /**
   commandbuffer list to allocate to.
 */
-class CommandbufferList {
+class CommandbufferList : public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(CommandbufferList);
 public:
   CommandbufferList() { }
   VIKR_DEFAULT_MOVE_AND_ASSIGN(CommandbufferList);
-  vvoid PushBack(std::unique_ptr<Commandbuffer> &buffer) {
-    if (buffer) {
-      // This is an issue!!
-      m_buffer.emplace_back(std::move(buffer));
-      m_raw.emplace_back(m_buffer.back().get());
-    }
-  }
+  virtual vvoid PushBack(Commandbuffer &buffer) = 0;
 
-  vvoid Clear() {
-    m_raw.clear();
-    m_buffer.clear();
-  }
-
-  std::vector<Commandbuffer *> &Raw() {
-    return m_raw;
-  }
-
-private:
-  std::vector<std::unique_ptr<Commandbuffer> > m_buffer;
-  std::vector<Commandbuffer *> m_raw;
+  virtual vvoid Clear() = 0;
+  virtual std::list<Commandbuffer *> &Raw() = 0;
 };
 } // vikr
 #endif // __VIKR_COMMAND_BUFFER_HPP

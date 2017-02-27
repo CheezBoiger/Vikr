@@ -13,8 +13,9 @@
 #include <vikr/graphics/command_buffer.hpp>
 #include <vikr/shader/texture.hpp>
 #include <vikr/mesh/imesh.hpp>
+#include <vikr/scene/guid_generator.hpp>
+
 #include <string>
-#include <memory>
 
 
 namespace vikr {
@@ -64,7 +65,7 @@ public:
   /**
     Generate a framebuffer.
   */
-  virtual std::unique_ptr<Framebuffer> CreateFramebuffer() = 0;
+  virtual Framebuffer *CreateFramebuffer() = 0;
   
   /**
     Create material, which is handled by resources.
@@ -74,7 +75,7 @@ public:
   /**
     Create vertex buffer id.
   */
-  virtual std::unique_ptr<Vertexbuffer> CreateVertexbuffer(VertexContainer &vertices) = 0;
+  virtual Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) = 0;
 
   /**
     Get the Resource manager from this Rendering Device.
@@ -89,17 +90,48 @@ public:
   /**
     Create a cubemap object.
   */
-  virtual std::unique_ptr<Cubemap> CreateCubemap() = 0;
+  virtual Cubemap *CreateCubemap() = 0;
 
   /**
     Generate RenderPass.
   */
-  virtual std::unique_ptr<RenderPass> CreateRenderPass() = 0;
+  virtual RenderPass *CreateRenderPass() = 0;
 
   /**
-    Create a command buffer to handle recording commands into an organized batch.
+    Destroys the Renderpass in the device.
   */
-  virtual std::unique_ptr<Commandbuffer> CreateCommandbuffer() = 0;
+  virtual vbool DestroyRenderPass(guid_t id) = 0;
+
+  /**
+    Destroys the Vertexbuffer stored inside the device.
+  */
+  virtual vbool DestroyVertexbuffer(guid_t id) = 0;
+  
+  /**
+    Destorys the cubemap stored by the device.
+  */
+  virtual vbool DestroyCubemap(guid_t id) = 0;
+
+  /**
+    Destroys the Framebuffer inside the device.
+  */
+  virtual vbool DestroyFramebuffer(guid_t id) = 0;
+
+  /**
+    Destroy the commandbuffer list.
+  */
+  virtual vbool DestroyCommandbufferList(guid_t id) = 0;
+
+  /**
+    Create a command buffer to handle recording commands into an organized batch,
+      which will then be stored inside the specified CommandbufferList.
+  */
+  virtual Commandbuffer &CreateCommandbuffer(CommandbufferList *list) = 0;
+
+  /**
+    Create Commandbuffer list to use for your Commandbuffers.
+  */
+  virtual CommandbufferList *CreateCommandbufferList() = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_DEVICE_HPP

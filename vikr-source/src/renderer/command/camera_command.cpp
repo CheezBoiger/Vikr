@@ -12,7 +12,7 @@ namespace vikr {
 
 
 
-vvoid CameraCommand::Record(Commandbuffer *buffer) {
+vvoid CameraCommand::Record(Commandbuffer &buffer) {
   if (camera && (camera == Renderer::GetRenderer()->GetCamera())) {
     MaterialValue projection;
     MaterialValue view;
@@ -31,7 +31,7 @@ vvoid CameraCommand::Record(Commandbuffer *buffer) {
     //camera_params["cat"] = { vikr_INT, camera->GetPos() };
     ShaderUniformParams params;
     params.uniforms = &camera_params;
-    buffer->SetShaderUniforms(params);
+    buffer.SetShaderUniforms(params);
   }
 }
 } // vikr

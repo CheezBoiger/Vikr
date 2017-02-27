@@ -41,6 +41,10 @@ Matrix4<_Type> Perspective(_Type fov, _Type aspect, _Type near, _Type far);
 
 template<typename _Type>
 Matrix4<_Type> Orthographic(_Type fov, _Type aspect, _Type near, _Type far);
+
 } // math
 } // vikr
+
+#include <vikr/math/alg/impl/mat_alg.inl>
+
 #endif // __VIKR_MATH_ALGEBRA_HPP

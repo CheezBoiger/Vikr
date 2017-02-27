@@ -34,6 +34,7 @@
 #include <vikr/shader/cubemap.hpp>
 #include <vikr/graphics/pipeline_state.hpp>
 #include <vikr/resources/resource_manager.hpp>
+#include <vikr/scene/first_person_camera.hpp>
 
 #include <vikr/input/window.hpp>
 #include <chrono>
@@ -140,19 +141,17 @@ vvoid DeferredRenderer::Render() {
   RenderContext *context = m_renderDevice->GetContext();
   std::vector<RenderCommand *> &render_commands = m_renderQueue.GetRenderCommands();
   for (RenderCommand *command : render_commands) {
-    std::unique_ptr<Commandbuffer> buf = m_renderDevice->CreateCommandbuffer();
-    command->Record(buf.get());
-    m_commandBufferList.PushBack(buf);
+    Commandbuffer &buf = m_renderDevice->CreateCommandbuffer(m_commandBufferList);
+    command->Record(buf);
   }
   std::vector<RenderCommand *> &deferred_commands = m_renderQueue.GetDeferredCommands();
   for (RenderCommand *command : deferred_commands) {
-    std::unique_ptr<Commandbuffer> buf = m_renderDevice->CreateCommandbuffer();
-    command->Record(buf.get());
-    m_deferredBufferList.PushBack(buf);
+    Commandbuffer &buf = m_renderDevice->CreateCommandbuffer(m_deferredBufferList);
+    command->Record(buf);
   }
 
   // Set the Gbuffer pass.
-  m_gbuffer.ExecutePass(&m_commandBufferList);
+  m_gbuffer.ExecutePass(m_commandBufferList);
 
   // Deferred Shading pass.
   context->SetFramebuffer(DEFAULT_FRAMEBUFFER);
@@ -162,12 +161,12 @@ vvoid DeferredRenderer::Render() {
   for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);
   }
-  context->ExecuteCommands(&m_deferredBufferList);
+  context->ExecuteCommands(m_deferredBufferList);
   
 
   m_renderQueue.Clear();
-  m_commandBufferList.Clear();
-  m_deferredBufferList.Clear();
+  m_commandBufferList->Clear();
+  m_deferredBufferList->Clear();
 
   // Draw the Screen Quad.
   m_screenquad.Execute();
@@ -176,11 +175,17 @@ vvoid DeferredRenderer::Render() {
 
   skybox.Execute();
 
-  printer.Println("Vikr v0.5", 25.0, 25.0, 2.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-  printer.Println("FPS: " + std::to_string(GetFPMS()) + " F/ms", 
-    25.0f, 700.0f, 1.5, glm::vec3(1.0, 1.0, 1.0));
+  // Printing stuff.
+  printer.Println("Vikr v0.5", 25.0, 75.0, 2.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+  printer.Println("Copyright (c) Mario Garcia, Under the MIT License.", 25.0f,
+    25.0f, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f));
+  printer.Println("Frames per ms: " + std::to_string(GetFPMS()) + " F/ms", 
+    25.0f, 700.0f, 1.0, glm::vec3(1.0, 1.0, 1.0));
   printer.Println("Shader Lang: " + m_renderDevice->GetShaderLanguage(), 
-    25.0f, 750.0f, 1.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+    25.0f, 750.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+  printer.Println("Camera pitch: " + std::to_string(static_cast<FPSCamera *>(camera)->GetPitch()) +
+    " Rads",
+    25.0f, 650.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 }
 
 
@@ -223,6 +228,8 @@ vint32 DeferredRenderer::Init(RenderDevice *device) {
   lightShader->LoadShader(f_lightpass);
   lightShader->Build();
   
+  m_commandBufferList = device->CreateCommandbufferList();
+  m_deferredBufferList = device->CreateCommandbufferList();
 
   // Initialize the light parameters for the light shader.
   m_renderDevice->GetContext()->GetPipelineState()->SetShaderProgram(lightShader);
@@ -240,6 +247,7 @@ vint32 DeferredRenderer::Init(RenderDevice *device) {
   param.uniforms = setup.GetMaterialValues();
   m_renderDevice->GetContext()->SetShaderUniforms(&param);
 
+  // Set the viewport, along with the font type for your printer.
   Viewport port;
   port.win_x = 0;
   port.win_y = 0;

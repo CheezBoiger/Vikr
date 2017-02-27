@@ -17,13 +17,12 @@ namespace vikr {
   Texture object, abstraction. This is the texture that is associated with 
   Materials, Meshes, RenderTargets, Cubemaps, and SceneObjects.
 */
-class Texture {
+class Texture : public GUID {
 protected:
   static const std::string kDefaultName;
-  static guid_t count;
 public:
   static const vuint32 kNoTextureId;
-  Texture() : m_id(++count) { }
+  Texture() { }
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Texture);
 
   virtual ~Texture();
@@ -218,8 +217,6 @@ public:
 
   virtual vvoid Cleanup() = 0;
 
-  vuint64 GetId() { return m_id; }
-
 protected:
 
   TextureTarget     m_target                    = vikr_TEXTURE_2D;
@@ -235,7 +232,6 @@ protected:
   vbool             m_alpha                     = true;
   vbool             m_multisampled              = false;
   vint32            m_width                     = 0;
-  const guid_t      m_id                        = 0;
   std::string       m_path                      = "";
   std::string       m_name                      = "noname";
   vbyte             *m_bytecode                 = nullptr;

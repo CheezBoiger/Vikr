@@ -5,6 +5,7 @@
 
 #include "alg/mat.hpp"
 #include "alg/vect.hpp"
+#include "alg/quaternion.hpp"
 
 
 namespace vikr {
@@ -27,5 +28,6 @@ using Vec2 = vikr::math::Vector2<float>;
 using Mat4 = vikr::math::Matrix4<float>;
 using Mat3 = vikr::math::Matrix3<float>;
 using Mat2 = vikr::math::Matrix2<float>;
+using Quat = vikr::math::Quaternion<float>;
 } // vikr
 #endif // __VIKR_MATH_HPP

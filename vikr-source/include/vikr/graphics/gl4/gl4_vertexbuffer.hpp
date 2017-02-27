@@ -19,7 +19,6 @@ class GL4Vertexbuffer : public Vertexbuffer {
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(GL4Vertexbuffer);
   GL4Vertexbuffer()
-    : Vertexbuffer()
   { }
 
   vuint64 GetVertexBufferId() override { return static_cast<vuint64>(m_vbo); }

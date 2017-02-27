@@ -8,6 +8,7 @@
 #include <vikr/shader/texture.hpp>
 #include <vikr/graphics/render_device.hpp>
 #include <vikr/shader/texture_config.hpp>
+#include <vikr/scene/guid_generator.hpp>
 #include <memory>
 #include <vector>
 
@@ -47,6 +48,8 @@ public:
   virtual vvoid ClearSizeOverride() = 0;
   
   virtual vvoid Cleanup() = 0;
+
+  virtual guid_t GetUID() = 0;
 };
 } // vikr
 #endif // __VIKR_CUBEMAP_HPP

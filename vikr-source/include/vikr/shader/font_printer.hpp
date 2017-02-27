@@ -33,7 +33,6 @@ public:
               std::string color_n = "textColor");
 
   vvoid Println(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color);
-  vvoid Print(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color);
 
   vvoid Init(RenderDevice *device, std::string font);
   

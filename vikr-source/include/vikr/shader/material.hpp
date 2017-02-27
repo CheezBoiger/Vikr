@@ -7,6 +7,7 @@
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/shader/shader_config.hpp>
+#include <vikr/scene/guid_generator.hpp>
 #include <vikr/graphics/blendmode.hpp>
 #include <vikr/graphics/cullmode.hpp>
 #include <vikr/graphics/depthmode.hpp>
@@ -28,7 +29,7 @@ class Cubemap;
 /**
   Material defines the textures, cull, and blend of the Mesh.
 */
-class Material {
+class Material : public GUID {
   static const std::string kDefaultName;
 public:
   Material();

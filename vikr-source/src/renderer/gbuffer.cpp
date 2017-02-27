@@ -172,7 +172,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   /**
     Set the RenderPass.
   */
-  m_framebuffer->SetRenderPass(m_renderpass.get());
+  m_framebuffer->SetRenderPass(m_renderpass);
   m_framebuffer->SetViewport(viewport);
   m_framebuffer->Update();
 }
@@ -181,7 +181,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
 vvoid GBuffer::ExecutePass(CommandbufferList *buffer) {
   if (m_device) {
     m_device->GetContext()->Clear();
-    m_device->GetContext()->SetFramebuffer(m_framebuffer.get());
+    m_device->GetContext()->SetFramebuffer(m_framebuffer);
     m_device->GetContext()->GetPipelineState()->SetShaderProgram(m_prgm);
     m_device->GetContext()->ExecuteCommands(buffer);
   }

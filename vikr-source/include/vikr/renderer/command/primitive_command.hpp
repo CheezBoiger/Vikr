@@ -24,12 +24,12 @@ public:
     , m_mesh(mesh) { }
 
 
-  vvoid Record(Commandbuffer *buffer) override {
-    buffer->SetQueryVertexbuffer(m_mesh->GetVertexBuffer());
+  vvoid Record(Commandbuffer &buffer) override {
+    buffer.SetQueryVertexbuffer(m_mesh->GetVertexBuffer());
     if (m_mesh->GetVertices().indices.empty()) {
-      buffer->SetDraw(0, m_mesh->GetVertices().size);
+      buffer.SetDraw(0, m_mesh->GetVertices().size);
     } else {
-      buffer->SetDrawIndexed(nullptr, m_mesh->GetVertices().indices.size());
+      buffer.SetDrawIndexed(nullptr, m_mesh->GetVertices().indices.size());
     }
   }
 

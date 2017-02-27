@@ -198,7 +198,7 @@ vbool GLResourceManager::DestroyPipelineState(std::string name) {
 ShaderProgram *GLResourceManager::CreateShaderProgram() {
   std::shared_ptr<GLSLShaderProgram> prgm =
     std::make_shared<GLSLShaderProgram>();
-  GLResources::shader_programs[prgm->GetGUID()] = prgm;
+  GLResources::shader_programs[prgm->GetUID()] = prgm;
   return prgm.get();
 }
 

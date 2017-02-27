@@ -27,7 +27,7 @@ public:
   Mesh *GetMesh() { return m_mesh; }
   vreal32 GetLineWidth() { return line_width; }
 
-  vvoid Record(Commandbuffer *buffer) override {
+  vvoid Record(Commandbuffer &buffer) override {
   }
 
 private:

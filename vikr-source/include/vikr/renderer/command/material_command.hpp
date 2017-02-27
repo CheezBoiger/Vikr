@@ -29,7 +29,7 @@ public:
     : RenderCommand(RenderCommandType::COMMAND_MATERIAL)
     , m_material(material) { }
 
-  vvoid Record(Commandbuffer *buffer) override {
+  vvoid Record(Commandbuffer &buffer) override {
     if (!m_material) {
       return;
     }
@@ -38,11 +38,11 @@ public:
     //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
 
     if (prgm) {
-      buffer->SetShaderProgram(prgm);
+      buffer.SetShaderProgram(prgm);
     }
     params.samplers = m_material->GetUniformSamplers();
     params.uniforms = m_material->GetMaterialValues();
-    buffer->SetShaderUniforms(params);
+    buffer.SetShaderUniforms(params);
     
   }
 

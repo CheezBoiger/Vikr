@@ -8,6 +8,7 @@
 #include <vikr/platform/vikr_api.hpp>
 
 #include <vikr/shader/shader_config.hpp>
+#include <vikr/scene/guid_generator.hpp>
 
 #include <glm/glm.hpp>
 #include <string>
@@ -18,7 +19,7 @@ namespace vikr {
 /**
   For now it only works with OpenGL, Spir-V not yet implemented!
 */
-class Shader {
+class Shader : public GUID {
 protected:
   /**
     Must not be instantiated by the user.

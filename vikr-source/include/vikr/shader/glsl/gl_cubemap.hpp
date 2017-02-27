@@ -61,6 +61,9 @@ public:
   vint32 GetDepth() override
     { return image_channels; }
 
+  guid_t GetUID() override 
+    { return GLTexture::GetUID(); }
+
 private:
   std::vector<const vchar *> *m_faces = nullptr;
   

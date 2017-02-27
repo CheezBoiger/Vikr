@@ -24,7 +24,7 @@ public:
     m_commands.push_back(std::make_pair(guid, command)); 
   }
 
-  vvoid Record(Commandbuffer *buffer) override {
+  vvoid Record(Commandbuffer &buffer) override {
     for (auto command : m_commands) {
       command.second->Record(buffer); 
     }

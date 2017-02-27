@@ -88,7 +88,7 @@ Texture *VKDevice::GenerateTexture(std::string path, TextureTarget target, vbool
 }
 
 
-std::unique_ptr<Framebuffer> VKDevice::CreateFramebuffer() {
+Framebuffer *VKDevice::CreateFramebuffer() {
   return nullptr;
 }
 
@@ -98,7 +98,7 @@ Material *VKDevice::CreateMaterial(std::string name) {
 }
 
 
-std::unique_ptr<Vertexbuffer> VKDevice::CreateVertexbuffer(VertexContainer &vertices) {
+Vertexbuffer *VKDevice::CreateVertexbuffer(VertexContainer &vertices) {
   return nullptr;
 }
 
@@ -108,7 +108,7 @@ ResourceManager *VKDevice::GetResourceManager() {
 }
 
 
-std::unique_ptr<Cubemap> VKDevice::CreateCubemap() {
+Cubemap *VKDevice::CreateCubemap() {
   return nullptr;
 }
 } // vikr

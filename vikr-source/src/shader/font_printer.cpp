@@ -48,6 +48,8 @@ FontPrinter::FontPrinter(ShaderProgram *shader, std::string projection_name,
 
 vvoid FontPrinter::Println(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color)
 {
+  // NOTE():
+  // These values need to either wrap if over the viewport limit, or something...
   x = (x * 2) - m_viewport.win_width;
   y = (y * 2) - m_viewport.win_height;
   if (!m_renderDevice || !m_fontshader) {
@@ -95,11 +97,6 @@ vvoid FontPrinter::Println(std::string text, vreal32 x, vreal32 y, vreal32 scale
     x += (ch.advance >> 6) * scale;
   }
   ctx->EnableBlendMode(false);
-}
-
-
-vvoid FontPrinter::Print(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color)
-{
 }
 
 

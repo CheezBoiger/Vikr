@@ -9,6 +9,10 @@
 #include <vikr/resources/opengl/gl_resource_manager.hpp>
 #include <vikr/graphics/gl4/gl4_context.hpp>
 
+#include <map>
+#include <memory>
+
+
 namespace vikr {
 
 
@@ -24,11 +28,11 @@ public:
   Texture *GenerateTexture(std::string path,
     TextureTarget target, vbool alpha) override;
   
-  std::unique_ptr<Framebuffer> CreateFramebuffer() override;
+  Framebuffer *CreateFramebuffer() override;
 
   Material *CreateMaterial(std::string name) override;
 
-  std::unique_ptr<Vertexbuffer> CreateVertexbuffer(VertexContainer &vertices) override;
+  Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) override;
 
   ResourceManager *GetResourceManager() override { return &manager; }
 
@@ -37,11 +41,19 @@ public:
   */
   RenderContext *GetContext() override { return &context; }
 
-  std::unique_ptr<Cubemap> CreateCubemap() override;
+  Cubemap *CreateCubemap() override;
 
-  std::unique_ptr<RenderPass> CreateRenderPass() override;
+  RenderPass *CreateRenderPass() override;
 
-  std::unique_ptr<Commandbuffer> CreateCommandbuffer() override;
+  Commandbuffer &CreateCommandbuffer(CommandbufferList *list) override;
+
+  vbool DestroyRenderPass(guid_t id) override;
+  vbool DestroyVertexbuffer(guid_t id) override;
+  vbool DestroyCubemap(guid_t id) override;
+  vbool DestroyFramebuffer(guid_t id) override;
+  vbool DestroyCommandbufferList(guid_t id) override;
+
+  CommandbufferList *CreateCommandbufferList() override;
 
 
 private:

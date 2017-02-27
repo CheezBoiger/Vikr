@@ -37,6 +37,8 @@ public:
   */
   SceneNode();  
 
+  ~SceneNode() { }
+
   /**
     Get the RenderCommand.
   */

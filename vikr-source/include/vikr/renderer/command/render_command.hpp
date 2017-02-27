@@ -40,7 +40,7 @@ public:
     Talk to command buffer, this is where you input commands 
     to the Rendering API.
   */
-  virtual vvoid Record(Commandbuffer *buffer) = 0;
+  virtual vvoid Record(Commandbuffer &buffer) = 0;
 
   vvoid SetDrawOrder(vint32 order) { m_drawOrder = order; }
   vint32 GetDrawOrder() { return m_drawOrder; }

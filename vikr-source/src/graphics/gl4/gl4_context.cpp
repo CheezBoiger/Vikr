@@ -172,7 +172,9 @@ vvoid GL4RenderContext::ClearWithColor(glm::vec4 color) {
 vvoid GL4RenderContext::ExecuteCommands(CommandbufferList *commandbuffer) {
   CLEAN_PIPELINE();
   if (commandbuffer) {
-    for (Commandbuffer *command : commandbuffer->Raw()) {
+    GL4CommandbufferList *list = static_cast<GL4CommandbufferList *>(commandbuffer);
+    for (Commandbuffer *command : list->Raw()) {
+      VIKR_ASSERT(command);
       static_cast<GL4Commandbuffer *>(command)->Execute(this);
     }
   }

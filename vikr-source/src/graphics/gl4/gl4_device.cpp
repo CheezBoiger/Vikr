@@ -17,6 +17,30 @@
 namespace vikr {
 
 
+/**
+Storage for renderpasses inside this device.
+*/
+std::map<guid_t, std::unique_ptr<GL4RenderPass> > m_renderpasses;
+
+/**
+Storage for cubemaps within this device.
+*/
+std::map<guid_t, std::unique_ptr<GL4Cubemap> > m_cubemaps;
+
+/**
+Storage for vertex buffers inside this device.
+*/
+std::map<guid_t, std::unique_ptr<GL4Vertexbuffer> > m_vertexbuffers;
+
+/**
+Storage for framebuffer within this device.
+*/
+std::map<guid_t, std::unique_ptr<GL4Framebuffer> > m_framebuffers;
+
+
+std::map<guid_t, std::unique_ptr<GL4CommandbufferList> > m_commandbufferlists;
+
+
 const std::string GL4RenderDevice::kGLSLShaderLanguage = "glsl";
 
 
@@ -45,10 +69,11 @@ Material *GL4RenderDevice::CreateMaterial(std::string name) {
 /**
   Data is interleaved.
 */
-std::unique_ptr<Vertexbuffer> 
+Vertexbuffer *
 GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices) 
 {
-  GL4Vertexbuffer gbo;
+  std::unique_ptr<GL4Vertexbuffer> gbo =
+    std::make_unique<GL4Vertexbuffer>();
   vuint32 vbo;
   vuint32 vao;
   vuint32 ibo = -1;
@@ -139,34 +164,112 @@ GL4RenderDevice::CreateVertexbuffer(VertexContainer &vertices)
       offset += sizeof(vreal32) * vertices.colors.size();
     }
     glBindVertexArray(0);
-    gbo.StoreVertexArrayId(vao);
-    gbo.StoreVertexBufferId(vbo);
-    gbo.StoreElementBufferId(ibo);
+    gbo->StoreVertexArrayId(vao);
+    gbo->StoreVertexBufferId(vbo);
+    gbo->StoreElementBufferId(ibo);
     vertices.size = data.size();
 
     VIKR_ASSERT(glGetError() == 0);
   }
-
-  return std::make_unique<GL4Vertexbuffer>(std::move(gbo));
+  guid_t uid = gbo->GetUID();
+  m_vertexbuffers[uid] = std::move(gbo);
+  return m_vertexbuffers[uid].get();
 }
 
 
-std::unique_ptr<Framebuffer> GL4RenderDevice::CreateFramebuffer() {
-  return std::make_unique<GL4Framebuffer>();
+Framebuffer *GL4RenderDevice::CreateFramebuffer() {
+  std::unique_ptr<GL4Framebuffer> framebuffer = 
+    std::make_unique<GL4Framebuffer>();
+  guid_t uid = framebuffer->GetUID();
+  m_framebuffers[uid] = std::move(framebuffer);
+  return m_framebuffers[uid].get();
 }
 
 
-std::unique_ptr<Cubemap> GL4RenderDevice::CreateCubemap() {
-  return std::make_unique<GL4Cubemap>();
+Cubemap *GL4RenderDevice::CreateCubemap() {
+  std::unique_ptr<GL4Cubemap> cubemap =
+    std::make_unique<GL4Cubemap>();
+  guid_t uid = cubemap->GetUID();
+  m_cubemaps[uid] = std::move(cubemap);
+  return m_cubemaps[uid].get();
 }
 
 
-std::unique_ptr<RenderPass> GL4RenderDevice::CreateRenderPass() {
-  return std::make_unique<GL4RenderPass>();
+RenderPass *GL4RenderDevice::CreateRenderPass() {
+  std::unique_ptr<GL4RenderPass> renderpass =
+    std::make_unique<GL4RenderPass>();
+  guid_t uid = renderpass->GetUID();
+  m_renderpasses[uid] = std::move(renderpass);
+  return m_renderpasses[uid].get();
 }
 
 
-std::unique_ptr<Commandbuffer> GL4RenderDevice::CreateCommandbuffer() {
-  return std::make_unique<GL4Commandbuffer>();
+Commandbuffer &GL4RenderDevice::CreateCommandbuffer(CommandbufferList *list) {
+  GL4CommandbufferList *glist = static_cast<GL4CommandbufferList *>(list);
+  GL4Commandbuffer buffer;
+  glist->PushBack(buffer);
+  return (*glist->Raw().back());
+}
+
+
+CommandbufferList *GL4RenderDevice::CreateCommandbufferList() {
+  std::unique_ptr<GL4CommandbufferList> list = 
+    std::make_unique<GL4CommandbufferList>();
+  guid_t uid = list->GetUID();
+  m_commandbufferlists[uid] = std::move(list);
+  return m_commandbufferlists[uid].get();
+}
+
+
+vbool GL4RenderDevice::DestroyRenderPass(guid_t id) {
+  auto found = m_renderpasses.find(id);
+  if (found != m_renderpasses.end()) {
+    m_renderpasses.erase(found);
+    return true;
+  }
+  return false;
+}
+
+
+vbool GL4RenderDevice::DestroyCommandbufferList(guid_t id) {
+  auto found = m_commandbufferlists.find(id);
+  if (found != m_commandbufferlists.end()) {
+    m_commandbufferlists.erase(found);
+    return true;
+  }
+  return false;
+}
+
+
+vbool GL4RenderDevice::DestroyVertexbuffer(guid_t id) {
+  auto found = m_vertexbuffers.find(id);
+  if (found != m_vertexbuffers.end()) {
+    found->second->Cleanup();
+    m_vertexbuffers.erase(found);
+    return true;
+  }
+  return false;
+}
+
+
+vbool GL4RenderDevice::DestroyCubemap(guid_t id) {
+  auto found = m_cubemaps.find(id);
+  if (found != m_cubemaps.end()) {
+    found->second->Cleanup();
+    m_cubemaps.erase(found);
+    return true;  
+  }
+  return false;
+}
+
+
+vbool GL4RenderDevice::DestroyFramebuffer(guid_t id) {
+  auto found = m_framebuffers.find(id);
+  if (found != m_framebuffers.end()) {
+    found->second->Cleanup();
+    m_framebuffers.erase(found);
+    return true;  
+  }
+  return false;
 }
 } // vikr 

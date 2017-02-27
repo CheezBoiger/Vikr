@@ -52,6 +52,8 @@ vvoid Skybox::Init(RenderDevice *device) {
 
   mgr->DestroyShader("vert_skybox");
   mgr->DestroyShader("frag_skybox");
+
+  list = device->CreateCommandbufferList();
 }
 
 
@@ -60,9 +62,8 @@ vvoid Skybox::Execute() {
   // Don't forget the pipelinestate!
   ICamera *cam = Renderer::GetRenderer()->GetCamera();
   PipelineState *pipeline = m_device->GetContext()->GetPipelineState();
-  std::unique_ptr<Commandbuffer> buf = m_device->CreateCommandbuffer();
-  sky_cmd.Record(buf.get());
-  list.PushBack(buf);
+  Commandbuffer &buf = m_device->CreateCommandbuffer(list);
+  sky_cmd.Record(buf);
   pipeline->SetShaderProgram(program);
   pipeline->SetDepthFunc(DepthFunc::vikr_DEPTH_LEQUAL);
   pipeline->SetCullMode(false);
@@ -70,14 +71,14 @@ vvoid Skybox::Execute() {
   Material mat;
   mat.SetMat4("vikr_View", glm::mat4(glm::mat3(cam->GetView())));
   mat.SetMat4("vikr_Projection", cam->GetProjection());
-  mat.SetCubemap("skybox", cubemap.get(), 0);
+  mat.SetCubemap("skybox", cubemap, 0);
   ShaderUniformParams params;
   params.samplers = mat.GetUniformSamplers();
   params.uniforms = mat.GetMaterialValues();
   m_device->GetContext()->SetShaderUniforms(&params);
-  m_device->GetContext()->ExecuteCommands(&list);
+  m_device->GetContext()->ExecuteCommands(list);
   pipeline->SetCullMode(true);
   pipeline->SetDepthFunc(DepthFunc::vikr_DEPTH_LESS);
-  list.Clear();
+  list->Clear();
 }
 } // vikr

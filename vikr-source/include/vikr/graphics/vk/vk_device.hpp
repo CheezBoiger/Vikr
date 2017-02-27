@@ -15,6 +15,7 @@
 #include <vikr/resources/vulkan/vk_resource_manager.hpp>
 #include <vikr/shader/cubemap.hpp>
 
+
 namespace vikr {
 
 
@@ -36,23 +37,31 @@ public:
   Texture *GenerateTexture(std::string path, 
     TextureTarget target, vbool alpha) override;
 
-  std::unique_ptr<Framebuffer> CreateFramebuffer() override;
+  Framebuffer *CreateFramebuffer() override;
 
   Material *CreateMaterial(std::string name) override;
   
-  std::unique_ptr<Vertexbuffer> CreateVertexbuffer(VertexContainer &vertices) override;
+  Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) override;
 
   ResourceManager *GetResourceManager() override;
 
   RenderContext *GetContext() override { return &context; }
 
-  std::unique_ptr<Cubemap> CreateCubemap() override;
+  Cubemap *CreateCubemap() override;
 
-  std::unique_ptr<RenderPass> CreateRenderPass() override;
+  RenderPass *CreateRenderPass() override;
 
-  std::unique_ptr<Commandbuffer> CreateCommandbuffer() override;
+  Commandbuffer &CreateCommandbuffer(CommandbufferList *list) override;
 
   VkDevice GetVkDevice() { return m_logicDevice.Get(); }
+
+  vbool DestroyVertexbuffer(guid_t id) override;
+  vbool DestroyCubemap(guid_t id) override;
+  vbool DestroyRenderPass(guid_t id) override;
+  vbool DestroyCommandbufferList(guid_t id) override;
+
+
+  CommandbufferList *CreateCommandbufferList() override;
 
 private:
 

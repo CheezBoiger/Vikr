@@ -11,7 +11,7 @@
 namespace vikr {
 
 
-class VkVertexbuffer : public Vertexbuffer {
+class VKVertexbuffer : public Vertexbuffer {
 public:
 
   vuint64 GetVertexBufferId() override {

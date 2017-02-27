@@ -27,5 +27,16 @@ public:
 
   static guid_t Generate();
 };
+
+
+class GUID {
+public:
+  GUID() : uid(GUIDGenerator::Generate()) { }
+  ~GUID() { }  
+
+  guid_t GetUID() { return uid; }
+private:
+  const guid_t uid;
+};
 } // vikr
 #endif // __VIKR_GUID_GENERATOR_HPP

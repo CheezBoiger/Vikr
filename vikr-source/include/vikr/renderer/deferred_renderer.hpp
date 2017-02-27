@@ -108,8 +108,8 @@ private:
   */
   ShaderProgram *lightShader                              = nullptr;
 
-  CommandbufferList m_commandBufferList;
-  CommandbufferList m_deferredBufferList;
+  CommandbufferList *m_commandBufferList;
+  CommandbufferList *m_deferredBufferList;
 
   FontPrinter printer;
 

@@ -61,7 +61,7 @@ public:
   /**
     Grab the Vertex Buffer Object id of this mesh.
   */
-  Vertexbuffer *GetVertexBuffer() override { return m_vertexBuffer.get(); }
+  Vertexbuffer *GetVertexBuffer() override { return m_vertexBuffer; }
 
   /**
     Grab the type of Graphics Pipeline that this mesh is associated with.
@@ -94,7 +94,7 @@ private:
 
   std::string m_name;
   GraphicsPipeline m_render_type;
-  std::unique_ptr<Vertexbuffer> m_vertexBuffer;
+  Vertexbuffer *m_vertexBuffer;
   vbool is_transparent                  = false;
   vbool is_dirty                        = false;
   VertexContainer m_vertices;

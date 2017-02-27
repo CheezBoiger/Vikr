@@ -24,7 +24,7 @@ class Framebuffer;
   Controls passes that are sent to the Renderer. These RenderPasses
   are what render within a framebuffer for offscreen rendering.
 */
-class RenderPass {
+class RenderPass : public GUID {
 public:
   /**
     Polymorphic Renderpass destructor.

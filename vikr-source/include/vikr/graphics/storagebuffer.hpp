@@ -12,7 +12,7 @@
 namespace vikr {
 
 
-class ShaderStoragebuffer {
+class ShaderStoragebuffer : public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(ShaderStoragebuffer);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(ShaderStoragebuffer);

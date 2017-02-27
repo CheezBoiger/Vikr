@@ -9,6 +9,7 @@
 #define __VIKR_FRAMEBUFFER_HPP
 
 #include <vikr/platform/vikr_types.hpp>
+#include <vikr/scene/guid_generator.hpp>
 #include <vikr/graphics/viewport.hpp>
 #include <glm/glm.hpp>
 
@@ -54,7 +55,7 @@ enum class BufferMode {
   OpenGL: Associates GLFramebuffer
   Vulkan: Associates VKFramebuffer
 */
-class Framebuffer {
+class Framebuffer : public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(vikr::Framebuffer);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(vikr::Framebuffer);
@@ -153,7 +154,6 @@ public:
     Blits this Framebuffer to the specified destination framebuffer.
   */
   virtual vvoid BlitTo(Framebuffer *framebuffer) = 0;
-
 };
 } // vikr
 #endif // __VIKR_FRAMEBUFFER_HPP

@@ -17,7 +17,7 @@ MeshCommand::MeshCommand()
 }
 
 
-vvoid MeshCommand::Record(Commandbuffer *buffer) {
+vvoid MeshCommand::Record(Commandbuffer &buffer) {
   
 }
 } // vikr

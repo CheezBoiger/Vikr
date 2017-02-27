@@ -141,6 +141,8 @@ public:
     Update the camera every frame.
   */
   virtual vvoid Update(vreal32 dt) override;
+
+  
   
 protected:
   // Up vector in the world.

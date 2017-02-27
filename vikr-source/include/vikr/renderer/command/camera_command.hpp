@@ -26,7 +26,7 @@ public:
     : RenderCommand(RenderCommandType::COMMAND_CAMERA)
   { }
 
-  vvoid Record(Commandbuffer *buffer) override;
+  vvoid Record(Commandbuffer &buffer) override;
 
   ICamera *camera;
 

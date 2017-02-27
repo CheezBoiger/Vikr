@@ -19,7 +19,7 @@ class ShaderProgram;
   same through all shader stages in a program, there would be no need to constantly
   declare variables and pass them as varying parameters.
 */
-class Uniformbuffer {
+class Uniformbuffer : public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Uniformbuffer);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Uniformbuffer);

@@ -30,16 +30,16 @@ vvoid ScreenQuad::Init(RenderDevice *device) {
     quad.GetPositions(), quad.GetNormals(), quad.GetUVs());
   m_quad->Build(device);
 
-  std::unique_ptr<Commandbuffer> buffer = device->CreateCommandbuffer();
+  list = device->CreateCommandbufferList();
+  Commandbuffer &buffer = device->CreateCommandbuffer(list);
   command.m_mesh = m_quad;
-  command.Record(buffer.get());
-  list.PushBack(buffer);
+  command.Record(buffer);
 }
 
 
 vvoid ScreenQuad::Execute()
 {
-  m_device->GetContext()->ExecuteCommands(&list);
+  m_device->GetContext()->ExecuteCommands(list);
     
 }
 } // vikr

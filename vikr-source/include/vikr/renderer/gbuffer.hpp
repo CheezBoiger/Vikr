@@ -41,13 +41,13 @@ public:
 
   vuint32 GetNumOfRenderTargets() { return m_rendertargets.size(); }
 
-  Framebuffer *GetFramebuffer() { return m_framebuffer.get(); }
-  RenderPass *GetRenderPass() { return m_renderpass.get(); }
+  Framebuffer *GetFramebuffer() { return m_framebuffer; }
+  RenderPass *GetRenderPass() { return m_renderpass; }
 
 private:
   RenderDevice *m_device = nullptr;
-  std::unique_ptr<RenderPass> m_renderpass;
-  std::unique_ptr<Framebuffer> m_framebuffer;
+  RenderPass *m_renderpass;
+  Framebuffer *m_framebuffer;
   ShaderProgram *m_prgm;
   
   std::array<Texture *, GBUFFER_SIZE> m_rendertargets;

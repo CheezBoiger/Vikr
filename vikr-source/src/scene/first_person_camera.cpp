@@ -4,6 +4,7 @@
 #include <vikr/scene/first_person_camera.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+
 #include <vikr/util/vikr_assert.hpp>
 #include <vikr/util/vikr_log.hpp>
 
@@ -33,8 +34,12 @@ vvoid FPSCamera::Look(glm::vec2 mouse_offset, vbool constrain_pitch) {
 vvoid FPSCamera::Look(vreal32 xoffset, vreal32 yoffset, vbool constrain_pitch) {
   xoffset *= sensitivity;
   yoffset *= sensitivity;
-  yaw_rate -= xoffset;
-  pitch_rate += yoffset;
+
+  yaw_rate = -xoffset;
+  pitch_rate = yoffset;
+  //if (pitch > max_pitch || pitch < -max_pitch) {
+  //  pitch_rate = 0;
+  //}
 }
 
 
@@ -45,22 +50,19 @@ vvoid FPSCamera::SetLookAt(glm::vec3 look) {
   vreal32 y = front.y - temp.y;
   vreal32 theta = std::asin(y / glm::length(front));
   pitch = theta;
-  VikrLog::DisplayMessage(VIKR_NORMAL, "pitch at " + std::to_string(pitch));
 }
 
 
 vvoid FPSCamera::Update(vreal32 dt) {
   yaw_rate = yaw_rate * dt;
   pitch_rate = pitch_rate * dt;
+  if ((pitch + pitch_rate) > max_pitch) {
+    pitch_rate = max_pitch - pitch;
+  } else if ((pitch + pitch_rate) < -max_pitch) {
+    pitch_rate = -max_pitch - pitch;
+  }
   pitch += pitch_rate;
   yaw += yaw_rate;
-  if (pitch > max_pitch) {
-    pitch_rate = max_pitch - (pitch - pitch_rate);
-    pitch = max_pitch; 
-  } else if (pitch < -max_pitch) {
-    pitch_rate = -max_pitch - (pitch - pitch_rate);
-    pitch = -max_pitch;
-  }
   if (type == CamType::ORTHOGRAPHIC) {
     projection = glm::ortho(-1.5f * float(aspect), 1.5f * float(aspect), -1.5f, 1.5f, -10.0f, 10.0f);
   } else if (type == CamType::PERSPECTIVE) {

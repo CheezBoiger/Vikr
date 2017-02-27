@@ -26,19 +26,19 @@ public:
 
   vvoid Init(RenderDevice *device);
 
-  Cubemap *GetCubemap() { return cubemap.get(); }
+  Cubemap *GetCubemap() { return cubemap; }
 
   vvoid Execute();
 
 private:
   RenderDevice *m_device;
-  CommandbufferList list;
+  CommandbufferList *list;
   PrimitiveCommand sky_cmd;
   CameraCommand cam_cmd;
   ShaderProgram *program;
 
   Mesh *skybox;  
-  std::unique_ptr<Cubemap> cubemap;
+  Cubemap *cubemap;
   std::vector <const vchar *> skybox_input;
 };
 } // vikr

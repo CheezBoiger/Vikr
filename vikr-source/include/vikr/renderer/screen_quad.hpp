@@ -40,7 +40,7 @@ public:
 
 private:
   RenderDevice *m_device = nullptr;
-  CommandbufferList list;
+  CommandbufferList *list;
   PrimitiveCommand command;
   Mesh *m_quad = nullptr;
 

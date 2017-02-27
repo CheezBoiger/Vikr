@@ -23,7 +23,6 @@ class Transform;
 
 class TransformCommand : public RenderCommand {
 public:
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(TransformCommand);
 
   TransformCommand(Transform *transform = nullptr) 
     : RenderCommand(RenderCommandType::COMMAND_TRANSFORM)
@@ -31,14 +30,14 @@ public:
     }
 
 
-  vvoid Record(Commandbuffer *buffer) override {
+  vvoid Record(Commandbuffer &buffer) override {
     MaterialValue mat;
     mat.m_mat4 = m_transform->GetTransform();
     mat.type = vikr_MAT4;
     m_transformParam["vikr_Model"] = mat;
     ShaderUniformParams param;
     param.uniforms = &m_transformParam;
-    buffer->SetShaderUniforms(param);
+    buffer.SetShaderUniforms(param);
   }
 
 
