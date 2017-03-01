@@ -3,6 +3,7 @@
 //
 #include <vikr/shader/glsl/glsl_linker.hpp>
 #include <vikr/shader/glsl/glsl_compiler.hpp>
+#include <vikr/shader/glsl/glsl_shader.hpp>
 #include <vikr/shader/shader.hpp>
 #include <vikr/util/vikr_log.hpp>
 
@@ -53,14 +54,15 @@ vint32 GLSLLinker::Link() {
   // Check if any of the shaders where not compiled...
   for (std::map<ShaderStage, Shader *>::iterator it = shaders.begin();
         it != shaders.end(); ++it) {
-    if (!it->second->IsCompiled()) {
+    GLSLShader *gl_shader = static_cast<GLSLShader *>(it->second);
+    if (!gl_shader->IsCompiled()) {
       VikrLog::DisplayMessage(VIKR_ERROR, 
-        "Program cannot be linked => " + it->second->GetName() + " as it is not compiled!");
+        "Program cannot be linked => " + gl_shader->GetName() + " as it is not compiled!");
       glDeleteProgram(program_id);
       program_id = -1;
       return -1;
     }
-    AttachShader(program_id, static_cast<vuint32>(it->second->GetNativeId()));
+    AttachShader(program_id, gl_shader->GetNativeId());
   }
   // link the program to the attach shaders.
   LinkProgram(program_id);

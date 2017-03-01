@@ -10,7 +10,7 @@
 #include <vikr/shader/material.hpp>
 #include <vikr/mesh/mesh.hpp>
 #include <vikr/graphics/pipeline_state.hpp>
-#include <vikr/math/shape/quad.hpp>
+#include <vikr/math/geometry/quad.hpp>
 #include <vikr/renderer/renderer.hpp>
 #include <vikr/scene/camera.hpp>
 #include <vikr/shader/stb/stb_truetype.h>
@@ -91,7 +91,7 @@ vvoid FontPrinter::Println(std::string text, vreal32 x, vreal32 y, vreal32 scale
       1.0, 1.0,
       1.0, 0.0
     };
-    ctx->SetTexture(ch.texture->GetNativeId(), ch.texture->GetNativeTarget(), 0);
+    ctx->SetTexture(ch.texture, 0);
     m_mesh->GetVertexBuffer()->BufferSubData(0, sizeof(vertices), &vertices);
     ctx->Draw(0, m_mesh->GetVertices().positions.size() / 3);
     x += (ch.advance >> 6) * scale;

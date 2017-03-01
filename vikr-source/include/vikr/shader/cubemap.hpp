@@ -29,8 +29,6 @@ public:
   */
   virtual vvoid Load(std::vector<const vchar *> *face_paths) = 0;
 
-  virtual vuint32 GetNativeId() = 0;
-
   virtual vvoid SetMagFilter(TextureFilterMode mode) = 0;
 
   virtual vvoid SetMinFilter(TextureFilterMode mode) = 0;

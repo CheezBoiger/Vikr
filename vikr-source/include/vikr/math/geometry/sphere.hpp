@@ -23,7 +23,7 @@ namespace vikr {
 */
 class Sphere {
 public:
-  // Uses the power of grey skull, well, actually references Frank Luna's Geometry Generator. Kudos!
+  // Uses the power of gray skull, well, actually references Frank Luna's Geometry Generator. Kudos!
   Sphere(vreal32 radius, vuint32 num_subdivisions);
 
 

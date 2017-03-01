@@ -77,7 +77,7 @@ public:
   /**
     Set texture function.
   */
-  virtual vvoid SetTexture(vuint32 texture, vuint32 target, vuint32 index) = 0;
+  virtual vvoid SetTexture(Texture *texture, vuint32 index) = 0;
     
   /**
     Set Rendertarget.

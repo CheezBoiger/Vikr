@@ -81,10 +81,15 @@ vvoid GL4RenderContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
 }
 
 
-vvoid GL4RenderContext::SetTexture(vuint32 texture, vuint32 target, vuint32 index) {  
+vvoid GL4RenderContext::SetTexture(Texture *texture, vuint32 index) {  
   CLEAN_PIPELINE();
+  if (!texture) {
+    VikrLog::DisplayMessage(VIKR_ERROR, "Texture is null.");
+    return;
+  }
+  GLTexture *gl_texture = static_cast<GLTexture *>(texture);
   glActiveTexture(GL_TEXTURE0 + index);
-  glBindTexture(target, texture);
+  glBindTexture(gl_texture->GetNativeTarget(), gl_texture->GetNativeId());
   VIKR_ASSERT(glGetError() == 0);
 }
 
@@ -95,8 +100,8 @@ vvoid GL4RenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
     switch (target->GetRenderType()) {
       case RenderTargetType::render_TEXTURE_MULTISAMPLE:
       case RenderTargetType::render_TEXTURE: {
-        GLTexture *tex = static_cast<GLTexture *>(target->GetTexture());
-        SetTexture(tex->GetNativeId(), tex->GetNativeTarget(), index);
+        Texture *tex = static_cast<Texture *>(target->GetTexture());
+        SetTexture(tex, index);
       }
       break;
       default: break;
@@ -290,11 +295,11 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     for(auto sampler : *params->samplers) {
       if (sampler.second.type != vikr_SAMPLERCUBE) {
         GLTexture *texture = static_cast<GLTexture *>(sampler.second.texture);
-        SetTexture(texture->GetNativeId(), texture->GetNativeTarget(), sampler.second.i);
+        SetTexture(texture, sampler.second.i);
         m_currTextures.push_back(std::move(sampler.second));
       } else {
         GL4Cubemap *cubemap = static_cast<GL4Cubemap *>(sampler.second.cubemap);
-        SetTexture(cubemap->GetNativeId(), cubemap->GetNativeTarget(), sampler.second.i);
+        SetTexture(cubemap, sampler.second.i);
       }
     }
   }
@@ -306,7 +311,9 @@ vvoid GL4RenderContext::ClearTextures() {
   // clear previous textures.
   for (vuint32 i = 0; i < m_currTextures.size(); ++i) {
     GLTexture *tex = static_cast<GLTexture *>(m_currTextures[i].texture);
-    SetTexture(0, tex->GetNativeTarget(), m_currTextures[i].i);
+    glActiveTexture(GL_TEXTURE0 + m_currTextures[i].i);
+    glBindTexture(tex->GetNativeTarget(), tex->GetNativeId());
+    VIKR_ASSERT(glGetError() == 0);
   }
   m_currTextures.clear();
 }

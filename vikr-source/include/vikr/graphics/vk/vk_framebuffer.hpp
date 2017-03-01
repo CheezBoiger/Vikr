@@ -31,7 +31,7 @@ public:
   vvoid SetClearColor(glm::vec3 color) override;
   glm::vec3 GetClearColor() override;
 
-  vuint64 GetFramebufferId() override { return m_fbo.Get(); }
+  VkFramebuffer GetFramebufferId() { return m_fbo.Get(); }
 
   vint32 IsComplete() override;
   

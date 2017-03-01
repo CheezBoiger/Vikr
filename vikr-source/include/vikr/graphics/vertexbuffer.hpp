@@ -51,20 +51,6 @@ public:
   virtual ~Vertexbuffer() { }
 
   /**
-    Get the Vertex Buffer id.
-  */
-  virtual vuint64 GetVertexBufferId() = 0;
-
-  /**
-    Store a vertex buffer id into this VertexBuffer
-  */
-  virtual vvoid StoreVertexBufferId(vuint64 vbo) = 0;
-
-  virtual vuint64 GetElementBufferId() = 0;
-
-  virtual vvoid StoreElementBufferId(vuint64 ibo) = 0;
-
-  /**
     For meshes that require text.
   */
   virtual vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) = 0;

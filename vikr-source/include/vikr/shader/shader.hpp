@@ -47,11 +47,6 @@ public:
   virtual vvoid Cleanup() = 0;
 
   /**
-    Get the program id associated with this shader.
-  */
-  virtual vuint64 GetNativeId() = 0;
-
-  /**
     Get the Shader language.
    */
   ShaderLanguage GetShaderLanguage() { return shader_lang; }

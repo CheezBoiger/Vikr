@@ -19,7 +19,7 @@ vvoid VKContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
 }
 
 
-vvoid VKContext::SetTexture(vuint32 texture, vuint32 target, vuint32 index) {
+vvoid VKContext::SetTexture(Texture *texture, vuint32 index) {
 }
 
 

@@ -19,6 +19,7 @@ class GL4RenderPass;
 class GL4Framebuffer;
 class GL4Commandbuffer;
 class GL4PipelineState;
+class GL4Vertexbuffer;
 struct TextureSampler;
 
 
@@ -36,7 +37,7 @@ public:
   */
   vvoid Draw(vuint32 start, vuint32 vertices) override;
   vvoid DrawIndexed(const vvoid *indices, vuint32 elements) override;
-  vvoid SetTexture(vuint32 texture, vuint32 target, vuint32 index) override;
+  vvoid SetTexture(Texture *texture, vuint32 index) override;
   
   vvoid SetRenderTarget(RenderTarget *target, vuint32 index) override;
 
@@ -82,6 +83,7 @@ private:
   std::vector<TextureSampler> m_currTextures;
   GL4Commandbuffer *m_recordCommandbuffer         = nullptr;
   GL4Framebuffer *m_currFramebuffer               = nullptr;
+  GL4Vertexbuffer *m_queriedVertexbuffer          = nullptr;
 };
 } // vikr
 #endif // __VIKR_GL4_CONTEXT_HPP

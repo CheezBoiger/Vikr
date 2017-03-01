@@ -144,56 +144,6 @@ public:
   virtual vvoid SetMultisampled(vbool enable) = 0;
 
   /**
-    Get the native texture id.
-  */
-  virtual vuint32 GetNativeId() = 0;
-
-  /**
-    Get the native Target id. 
-  */
-  virtual vuint32 GetNativeTarget() = 0;
-  
-  /**
-    Get the native format id.
-  */
-  virtual vuint32 GetNativeFormat() = 0;
-    
-  /**
-    Get the native internal format.
-  */
-  virtual vuint32 GetNativeInternalFormat() = 0;
-
-  /**
-    Get then native filter min.
-  */
-  virtual vuint32 GetNativeFilterMin() = 0;
-
-  /**
-    Get the native filter max.
-  */
-  virtual vuint32 GetNativeFilterMax() = 0;
-
-  /**
-    Get native wrap s coord.
-  */
-  virtual vuint32 GetNativeWrapS() = 0;
-
-  /**
-    Get the native wrap t coord.
-  */
-  virtual vuint32 GetNativeWrapT() = 0;
-
-  /**
-    Get the native wrap r coord.
-  */
-  virtual vuint32 GetNativeWrapR() = 0;
-
-  /**
-    Get the native data type id.
-  */
-  virtual vuint32 GetNativeDataType() = 0;
-
-  /**
     Set whether this texture needs to generate a mipmap for itself.
   */
   vvoid SetMipmapping(vbool mipmap) { m_mipmapping = mipmap; }

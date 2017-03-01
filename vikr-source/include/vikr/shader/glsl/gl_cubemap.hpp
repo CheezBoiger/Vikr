@@ -18,7 +18,7 @@ public:
 
   vvoid Load(std::vector<const vchar *> *faces_path = nullptr) override;
 
-  vuint32 GetNativeId() override { return id; }
+  vuint32 GetGLId() { return id; }
 
   vint32 Finalize() override;
 

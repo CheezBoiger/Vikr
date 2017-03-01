@@ -77,11 +77,6 @@ public:
     Get the clear color of the Framebuffer. 
   */
   virtual glm::vec3 GetClearColor() = 0;
-  
-  /**
-    Get the Framebuffer id.
-  */
-  virtual vuint64 GetFramebufferId() = 0;
 
   /**
     Check if this framebuffer is completely structure for use.

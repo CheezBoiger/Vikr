@@ -25,7 +25,7 @@ public:
   vvoid Compile(std::string path) override;
   vvoid Cleanup() override;
 
-  vuint64 GetNativeId() override { return module.Get(); }
+  VkShaderModule GetNativeId() { return module.Get(); }
   
 private:
   /**

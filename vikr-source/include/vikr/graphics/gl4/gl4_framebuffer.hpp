@@ -35,7 +35,7 @@ public:
   /**
     Get the Framebuffer id.
   */
-  vuint64 GetFramebufferId() override { return static_cast<vuint64>(m_fbo); }
+  vuint32 GetFramebufferId() { return m_fbo; }
   
   /**
     Check if the framebuffer is complete.

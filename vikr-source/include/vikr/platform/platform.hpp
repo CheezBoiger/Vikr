@@ -19,4 +19,9 @@
 #else
  #error "Your operating system is not supported, please try one of the compatible operating systems (Windows/Apple/Linux)"
 #endif // defined(_WIN32)
+
+
+#if defined(__LP64__) || defined(_WIN64) || (defined(__x86_64__) && !defined(__ILP32__) ) || defined(_M_X64) || defined(__ia64) || defined(_M_IA64) || defined(__aarch64__)
+ #define ARCH_64
+#endif
 #endif // __VIKR_PLATFORM_HPP
