@@ -8,7 +8,7 @@
 #include <vikr/shader/cubemap.hpp>
 #include <vikr/scene/icamera.hpp>
 #include <vikr/graphics/pipeline_state.hpp>
-#include <vikr/math/shape/cube.hpp>
+#include <vikr/math/geometry/cube.hpp>
 
 
 namespace vikr {

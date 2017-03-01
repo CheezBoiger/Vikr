@@ -43,6 +43,7 @@ Work in Progress:
   - SSAO
   - Parallax Mapping
   - HDR and Bloom
+  - Anti-Aliasing
 
 Future Works:
   - Physically Based Rendering (PBR)

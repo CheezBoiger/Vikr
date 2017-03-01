@@ -2,7 +2,7 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 
-#include <vikr/math/shape/quad.hpp>
+#include <vikr/math/geometry/quad.hpp>
 #include <initializer_list>
 
 

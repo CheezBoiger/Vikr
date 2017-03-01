@@ -14,7 +14,6 @@ namespace vikr {
 
 
 SceneNode::SceneNode()
-  : guid(GUIDGenerator::Generate()) // for now...
 {
 }
 
@@ -41,7 +40,7 @@ SceneNode *SceneNode::GetChild(guid_t guid) {
   SceneNode *node = nullptr;
   auto it = children.find(guid);
   if (it != children.end()) { 
-    node = children[it->second->guid];
+    node = children[it->second->GetUID()];
   }
   return node;
 }
@@ -50,8 +49,8 @@ SceneNode *SceneNode::GetChild(guid_t guid) {
 SceneNode *SceneNode::AddChild(SceneNode *obj) {
   SceneNode *node = nullptr;
   obj->SetParent(this);
-  node = children[obj->guid];
-  children[obj->guid] = obj;
+  node = children[obj->GetUID()];
+  children[obj->GetUID()] = obj;
   return node;
 }
 
@@ -60,9 +59,9 @@ SceneNode *SceneNode::RemoveChild(guid_t guid) {
   SceneNode *node = nullptr;
   auto it = children.find(guid);
   if (it != children.end()) {
-    node = children[it->second->guid];
+    node = children[it->second->GetUID()];
     node->SetParent(nullptr);
-    children.erase(it->second->guid);  
+    children.erase(it->second->GetUID());  
   }
   return node;
 }
@@ -80,7 +79,7 @@ SceneNode *SceneNode::RemoveChild(std::string tag) {
     if (it->second->Tag.compare(tag) == 0) {
       node = it->second;
       node->SetParent(nullptr);
-      children.erase(it->second->guid);
+      children.erase(it->second->GetUID());
       break;  
     }
   }

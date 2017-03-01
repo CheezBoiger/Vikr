@@ -29,7 +29,7 @@ ResourceManager::ResourceManager(GraphicsPipeline pipe)
 */
 SceneNode *ResourceManager::CreateSceneNode() {
   std::shared_ptr<SceneNode> node = std::make_shared<SceneNode>();
-  Resources::scene_nodes[node->GetGUID()] = node;
+  Resources::scene_nodes[node->GetUID()] = node;
   return node.get();
 }
 

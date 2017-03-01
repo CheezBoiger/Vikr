@@ -28,7 +28,7 @@ namespace vikr {
   SceneNode should be considered abstract, similar to the implementation of Pixar's RenderMan,
   Adobe Illustrator, Unreal Engine's Blueprint System, and you get the point...
 */
-class SceneNode {
+class SceneNode : public GUID {
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(SceneNode);
 
@@ -140,11 +140,6 @@ public:
     to remove!
   */
   //SceneComponent *RemoveComponent(std::string tag);
-  
-  /**
-    Read-only GUID.
-  */
-  guid_t GetGUID() { return guid; }
 
   /**
     Update the SceneNode's children.
@@ -176,11 +171,6 @@ protected:
     The SceneNode's associated components.
   */
   std::map<ComponentType, std::unique_ptr<SceneComponent> > components;
-
-  /**
-    The associated graphical unique id of the SceneNode.
-  */
-  const guid_t guid;
   
   /**
     Does our SceneNode need to be updated, provided that it's contents where changed?

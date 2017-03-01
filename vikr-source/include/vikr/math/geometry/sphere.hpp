@@ -23,7 +23,8 @@ namespace vikr {
 */
 class Sphere {
 public:
-  Sphere(vreal32 radius);
+  // Uses the power of grey skull, well, actually references Frank Luna's Geometry Generator. Kudos!
+  Sphere(vreal32 radius, vuint32 num_subdivisions);
 
 
   std::vector<glm::vec3> &GetPositions() { return positions; }
@@ -34,8 +35,11 @@ public:
 
 private:
 
+  vvoid Subdivide();
+
   std::vector<glm::vec3> positions;
   std::vector<glm::vec3> normals;
+  std::vector<glm::vec3> tangents;
   std::vector<glm::vec2> uvs;
 
   std::vector<vuint32> indices;

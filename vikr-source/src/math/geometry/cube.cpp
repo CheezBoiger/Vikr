@@ -1,7 +1,7 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
-#include <vikr/math/shape/cube.hpp>
+#include <vikr/math/geometry/cube.hpp>
 #include <initializer_list>
 
 namespace vikr {

@@ -7,7 +7,7 @@
 #include <vikr/graphics/viewport.hpp>
 #include <vikr/graphics/render_target.hpp>
 #include <vikr/mesh/mesh.hpp>
-#include <vikr/math/shape/quad.hpp>
+#include <vikr/math/geometry/quad.hpp>
 #include <vikr/shader/shader_program.hpp>
 #include <vikr/shader/shader.hpp>
 

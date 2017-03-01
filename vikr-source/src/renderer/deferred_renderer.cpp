@@ -19,7 +19,7 @@
 #include <vikr/lighting/spot_light.hpp>
 #include <vikr/lighting/directional_light.hpp>
 
-#include <vikr/math/shape/quad.hpp>
+#include <vikr/math/geometry/quad.hpp>
 
 #include <vikr/util/vikr_log.hpp>
 
@@ -179,7 +179,7 @@ vvoid DeferredRenderer::Render() {
   printer.Println("Vikr v0.5", 25.0, 75.0, 2.0f, glm::vec3(1.0f, 1.0f, 1.0f));
   printer.Println("Copyright (c) Mario Garcia, Under the MIT License.", 25.0f,
     25.0f, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f));
-  printer.Println("Frame per ms: " + std::to_string(GetFPMS()) + " ms", 
+  printer.Println("ms per frame: " + std::to_string(GetFPMS()) + " ms", 
     25.0f, 700.0f, 1.0, glm::vec3(1.0, 1.0, 1.0));
   printer.Println("Shader Lang: " + m_renderDevice->GetShaderLanguage(), 
     25.0f, 750.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));

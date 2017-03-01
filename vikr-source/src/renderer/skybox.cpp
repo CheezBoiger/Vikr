@@ -3,7 +3,7 @@
 // 
 #include <vikr/renderer/skybox.hpp>
 #include <vikr/resources/resource_manager.hpp>
-#include <vikr/math/shape/cube.hpp>
+#include <vikr/math/geometry/cube.hpp>
 #include <vikr/graphics/pipeline_state.hpp>
 #include <vikr/renderer/renderer.hpp>
 #include <vikr/shader/material.hpp>

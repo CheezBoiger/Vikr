@@ -4,7 +4,7 @@
 */
 #include <iostream>
 #include <vikr/vikr.hpp>
-#include <vikr/math/shape/cube.hpp>
+#include <vikr/math/geometry/cube.hpp>
 #include <vikr/scene/camera.hpp>
 #include <vikr/lighting/point_light.hpp>
 #include <vikr/lighting/directional_light.hpp>
@@ -22,6 +22,8 @@
 #include <vikr/input/keyboard.hpp>
 #include <vikr/graphics/gl4/gl4_device.hpp>
 #include <vikr/graphics/vk/vk_device.hpp>
+#include <vikr/math/geometry/sphere.hpp>
+
 
 using namespace vikr;
 unsigned int screen_width = 1200;
@@ -63,7 +65,8 @@ int main(int c, char* args[]) {
   DeferredRenderer renderer;
   renderer.SetCamera(&camera);
   renderer.Init(&device);
-
+#define SPONZA 1
+#if SPONZA
   SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), 
     "../../libs/models/sponza_cry/sponza.obj", "sponza", false);
   SceneNode *nano = ModelLoader::ImportModel(renderer.GetDevice(), 
@@ -79,16 +82,17 @@ int main(int c, char* args[]) {
   comp->transform.Scale = glm::vec3(0.05f);
   comp->transform.Position = glm::vec3(0.0f, 0.0f, 0.0f);
   node->Update();
-
+#endif
   // Light components
   Cube cube;
+  Sphere sphere(1.0f, 5);
   Mesh *cube_mesh = 
     renderer.GetDevice()->
     GetResourceManager()->
     CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
   Mesh *light_mesh =
     renderer.GetDevice()->GetResourceManager()->
-    CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
+    CreateMesh(sphere.GetPositions(), sphere.GetNormals(), sphere.GetUVs(), sphere.GetIndices());
   cube_mesh->Build(renderer.GetDevice());
   light_mesh->Build(renderer.GetDevice());
 
@@ -146,8 +150,10 @@ int main(int c, char* args[]) {
     renderer.PushBack(light_object);
     renderer.PushBack(light_node2);
     renderer.PushBack(dlight_node1);
+#if SPONZA
     renderer.PushBack(node);
     renderer.PushBack(nano);
+#endif
     renderer.Render();
 
     renderer.Present();
