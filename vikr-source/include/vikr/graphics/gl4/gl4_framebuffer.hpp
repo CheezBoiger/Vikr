@@ -32,9 +32,6 @@ public:
   glm::vec3 GetClearColor() override { return m_clearcolor; }
   vvoid SetClearColor(glm::vec3 color) override { m_clearcolor = color; }
 
-  /**
-    Get the Framebuffer id.
-  */
   vuint32 GetFramebufferId() { return m_fbo; }
   
   /**

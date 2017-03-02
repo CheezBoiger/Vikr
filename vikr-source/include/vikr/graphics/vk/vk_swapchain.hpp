@@ -15,8 +15,10 @@ class VKSwapChain {
 public:
   VKSwapChain();
 
-
-  vvoid Init();
+  /**
+    Gunna need that physical device to initialize yo...
+  */
+  vvoid Init(VkPhysicalDevice physical_dev);
 
 private:
   

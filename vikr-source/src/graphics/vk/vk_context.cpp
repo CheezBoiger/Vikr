@@ -91,4 +91,29 @@ vvoid VKContext::Present() {
 }
 
 
+vvoid VKContext::SetFramebuffer(Framebuffer *framebuffer) {
+
+}
+
+
+vvoid VKContext::BeginRecord(Commandbuffer *buf) {
+}
+
+
+vvoid VKContext::EndRecord() {
+}
+
+
+Framebuffer *VKContext::GetFramebuffer() {
+  return nullptr;
+}
+
+
+PipelineState *VKContext::GetPipelineState() {
+  return nullptr;
+}
+
+
+vvoid VKContext::ApplyPipelineState(PipelineState *pipeline) {
+}
 } // vikr

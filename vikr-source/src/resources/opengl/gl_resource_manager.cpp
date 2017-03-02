@@ -19,12 +19,10 @@
 namespace vikr {
 
 
-std::unordered_map<std::string, std::shared_ptr<GLSLShader> > GLResources::shaders;
-
-std::map<guid_t, std::shared_ptr<Mesh> > GLResources::meshes;
-std::map<std::string, std::shared_ptr<GLTexture> > GLResources::textures;
-std::map<guid_t, std::shared_ptr<GLSLShaderProgram> > GLResources::shader_programs;
-std::map<std::string, std::shared_ptr<GL4PipelineState> > GLResources::pipelinestates;
+std::unordered_map<guid_t, std::unique_ptr<GLSLShader> > GLResources::shaders;
+std::map<std::string, std::unique_ptr<GLTexture> > GLResources::textures;
+std::map<guid_t, std::unique_ptr<GLSLShaderProgram> > GLResources::shader_programs;
+std::map<guid_t, std::unique_ptr<GL4PipelineState> > GLResources::pipelinestates;
 
 
 GLResourceManager::GLResourceManager()
@@ -34,112 +32,69 @@ GLResourceManager::GLResourceManager()
 
 
 Shader *GLResourceManager::CreateShader(std::string name, ShaderStage stage) {
-  if (GLResources::shaders.find(name) != GLResources::shaders.end()) {
-    return nullptr;
-  }
-  std::shared_ptr<GLSLShader> shader = std::make_shared<GLSLShader>(stage);
+  std::unique_ptr<GLSLShader> shader = std::make_unique<GLSLShader>(stage);
   shader->SetName(name);
 
-  GLResources::shaders[name] = shader;
-  return static_cast<Shader *>(shader.get());
+  GLResources::shaders[shader->GetUID()] = std::move(shader);
+  return static_cast<Shader *>(GLResources::shaders[shader->GetUID()].get());
 }
 
 
-Shader *GLResourceManager::GetShader(std::string name) {
-  if (GLResources::shaders.find(name) != GLResources::shaders.end()) {
-    return static_cast<Shader *>(GLResources::shaders[name].get());
+Shader *GLResourceManager::GetShader(guid_t id) {
+  if (GLResources::shaders.find(id) != GLResources::shaders.end()) {
+    return static_cast<Shader *>(GLResources::shaders[id].get());
   }
   return nullptr;
 }
 
 
-vbool GLResourceManager::DestroyShader(std::string name) {
+vbool GLResourceManager::DestroyShader(guid_t id) {
   vbool success = false;
-  auto it = GLResources::shaders.find(name);
+  auto it = GLResources::shaders.find(id);
   if (it != GLResources::shaders.end()) {
     // cleanup first. Make sure the shader is not leaked.
     it->second->Cleanup();
     GLResources::shaders.erase(it);
-    VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, "Shader => " + name + " removed.");
+    VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, "Shader id => " 
+      + std::to_string(id) + " removed.");
     success = true;
   } 
   return success;
 }
 
 
-Mesh *GLResourceManager::CreateMesh(
-  std::vector<glm::vec3> &positions,
-  std::vector<glm::vec3> &normals,
-  std::vector<glm::vec2> &uvs,
-  std::vector<vuint32> &indices,
-  std::vector<glm::vec3> &tangents,
-  std::vector<glm::vec3> &bitangents,
-  std::vector<glm::vec3> &colors) 
+Texture *GLResourceManager::CreateTexture(
+  std::string name, 
+  TextureTarget target, 
+  std::string filepath, 
+  vbool alpha) 
 {
-  std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-  mesh->Buffer(positions, normals, uvs, indices, tangents, bitangents, colors);
- // mesh->Create();
-  GLResources::meshes[mesh->GetGUID()] = mesh;
-  return mesh.get();
-}
-
-
-Mesh *GLResourceManager::CreateMesh(
-  std::vector<Vertex> &vertices,
-  std::vector<vuint32> &indices) 
-{
-  std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-  mesh->Buffer(vertices, indices);
-  //mesh->Create();
-  GLResources::meshes[mesh->GetGUID()] = mesh;
-  return mesh.get();
-}
-
-
-Mesh *GLResourceManager::GetMesh(guid_t guid) {
-  return GLResources::meshes[guid].get();
-}
-
-
-vbool GLResourceManager::DestroyMesh(guid_t guid) {
-  vbool success = false;
-  auto it = GLResources::meshes.find(guid);
-  if (it != GLResources::meshes.end()) {
-    // Cleanup the mesh vertex buffer.  
-    it->second->GetVertexBuffer()->Cleanup();
-    GLResources::meshes.erase(it);
-    success = true;
-  }
-  return success;
-}
-
-
-Texture *GLResourceManager::CreateTexture(std::string name, TextureTarget target, std::string img_path, vbool alpha) {
-  std::shared_ptr<GLTexture> texture = nullptr;
+  std::unique_ptr<GLTexture> texture = nullptr;
   vint32 width = 0;
   vint32 height = 0;
   vint32 depth = 0;
-  vbyte *bytecode = stbi_load(img_path.c_str(), &width, &height, &depth,
+  vbyte *bytecode = stbi_load(filepath.c_str(), &width, &height, &depth,
                               alpha ? STBI_rgb_alpha : STBI_rgb);
   switch(target) {
-  case vikr_TEXTURE_1D: texture = std::make_shared<GLTexture1D>(width); break;
-  case vikr_TEXTURE_2D: texture = std::make_shared<GLTexture2D>(width, height); break;
-  case vikr_TEXTURE_3D: texture = std::make_shared<GLTexture3D>(width, height, depth); break;
+  case vikr_TEXTURE_1D: texture = std::make_unique<GLTexture1D>(width); break;
+  case vikr_TEXTURE_2D: texture = std::make_unique<GLTexture2D>(width, height); break;
+  case vikr_TEXTURE_3D: texture = std::make_unique<GLTexture3D>(width, height, depth); break;
   case vikr_TEXTURE_CUBEMAP: // not implemented yet.
   default: break;
   }
   if (texture) {
     texture->SetByteCode(bytecode);
     //texture->Finalize(); // No need to tell the resource manager to finalize for us.
-    texture->SetPath(img_path);
+    texture->SetPath(filepath);
     texture->SetName(name);
-    if (!img_path.empty()) {
-      GLResources::textures[img_path] = texture;
+    if (!filepath.empty()) {
+      GLResources::textures[filepath] = std::move(texture);
     } else {
-      GLResources::textures[name] = texture;
+      // No filepath? Use the name instead.
+      GLResources::textures[name] = std::move(texture);
     }
   }
-  return texture.get();
+  return GLResources::textures[name].get();
 }
 
 
@@ -162,31 +117,27 @@ vbool GLResourceManager::DestroyTexture(std::string filepath) {
 
 
 PipelineState *GLResourceManager::CreatePipelineState(std::string name) {
-  auto it = GLResources::pipelinestates.find(name);
-  PipelineState *pipeline = nullptr;
-  if (it == GLResources::pipelinestates.end()) {
-    std::shared_ptr<GL4PipelineState> gl_pipeline = 
-      std::make_unique<GL4PipelineState>();
-    gl_pipeline->SetName(name);
-    GLResources::pipelinestates[name] = gl_pipeline;
-    return static_cast<PipelineState *>(gl_pipeline.get());
-  }
-  return pipeline;
+  std::unique_ptr<GL4PipelineState> gl_pipeline =
+    std::make_unique<GL4PipelineState>();
+  gl_pipeline->SetName(name);
+  guid_t id = gl_pipeline->GetUID();
+  GLResources::pipelinestates[gl_pipeline->GetUID()] = std::move(gl_pipeline);
+  return static_cast<PipelineState *>(GLResources::pipelinestates[id].get());
 }
 
 
-PipelineState *GLResourceManager::GetPipelineState(std::string name) {
-  auto it = GLResources::pipelinestates.find(name);
+PipelineState *GLResourceManager::GetPipelineState(guid_t id) {
+  auto it = GLResources::pipelinestates.find(id);
   if (it != GLResources::pipelinestates.end()) {
-    return GLResources::pipelinestates[name].get();
+    return GLResources::pipelinestates[id].get();
   }
   return nullptr;
 }
 
 
-vbool GLResourceManager::DestroyPipelineState(std::string name) {
+vbool GLResourceManager::DestroyPipelineState(guid_t id) {
   vbool success = false;
-  auto it = GLResources::pipelinestates.find(name);
+  auto it = GLResources::pipelinestates.find(id);
   if (it != GLResources::pipelinestates.end()) {
     GLResources::pipelinestates.erase(it);
     success = true;
@@ -196,10 +147,11 @@ vbool GLResourceManager::DestroyPipelineState(std::string name) {
 
 
 ShaderProgram *GLResourceManager::CreateShaderProgram() {
-  std::shared_ptr<GLSLShaderProgram> prgm =
-    std::make_shared<GLSLShaderProgram>();
-  GLResources::shader_programs[prgm->GetUID()] = prgm;
-  return prgm.get();
+  std::unique_ptr<GLSLShaderProgram> prgm =
+    std::make_unique<GLSLShaderProgram>();
+  guid_t id = prgm->GetUID();
+  GLResources::shader_programs[prgm->GetUID()] = std::move(prgm);
+  return GLResources::shader_programs[id].get();
 }
 
 

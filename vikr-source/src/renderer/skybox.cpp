@@ -24,20 +24,20 @@ vvoid Skybox::Init(RenderDevice *device) {
 
   cubemap = device->CreateCubemap();
   skybox_input = {
-    "../../libs/models/skybox/right.jpg",
-    "../../libs/models/skybox/left.jpg",
-    "../../libs/models/skybox/top.jpg",
-    "../../libs/models/skybox/bottom.jpg",
-    "../../libs/models/skybox/back.jpg",
-    "../../libs/models/skybox/front.jpg",
+    "../../../libs/models/skybox/right.jpg",
+    "../../../libs/models/skybox/left.jpg",
+    "../../../libs/models/skybox/top.jpg",
+    "../../../libs/models/skybox/bottom.jpg",
+    "../../../libs/models/skybox/back.jpg",
+    "../../../libs/models/skybox/front.jpg",
   };
   cubemap->Load(&skybox_input);
 
   ResourceManager *mgr = device->GetResourceManager();
   Shader *vert_skybox = mgr->CreateShader("vert_skybox", VERTEX_SHADER);
   Shader *frag_skybox = mgr->CreateShader("frag_skybox", FRAGMENT_SHADER);
-  vert_skybox->Compile("../../libs/shader/GLSL/skybox.vert");
-  frag_skybox->Compile("../../libs/shader/GLSL/skybox.frag");
+  vert_skybox->Compile("../../../libs/shader/GLSL/skybox.vert");
+  frag_skybox->Compile("../../../libs/shader/GLSL/skybox.frag");
   program = device->GetResourceManager()->CreateShaderProgram();
   program->LoadShader(vert_skybox);
   program->LoadShader(frag_skybox);
@@ -49,9 +49,6 @@ vvoid Skybox::Init(RenderDevice *device) {
   skybox = mgr->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
   skybox->Build(device);
   sky_cmd.m_mesh = skybox;
-
-  mgr->DestroyShader("vert_skybox");
-  mgr->DestroyShader("frag_skybox");
 
   list = device->CreateCommandbufferList();
 }

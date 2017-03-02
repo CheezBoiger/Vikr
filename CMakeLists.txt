@@ -22,6 +22,7 @@ endif()
 set(VIKR_VERSION "v0.5")
 option(vulkan "Build Vikr with Vulkan extension." OFF)
 option(debug "debug the software." OFF)
+option(build64 "Build the Vikr Library for 64-bit applications" OFF)
 
 
 # if (vulkan)
@@ -40,7 +41,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 add_subdirectory(libs/glfw)
 
-
+# This may not need to be here.
 if (Vulkan_FOUND)
   set(VULKAN_FOUND ON)
 endif()
@@ -90,7 +91,9 @@ else()
 endif()
 
 target_link_libraries(${VIKR_NAME} assimp)
-target_link_libraries(${VIKR_NAME} opengl32)
+target_link_libraries(${VIKR_NAME} ${OPENGL_LIBRARIES})
 target_link_libraries(${VIKR_NAME} freetype)
 
-add_subdirectory(test/)
+# Simple Tests.
+add_subdirectory(test/opengl_testing)
+add_subdirectory(test/vulkan_testing)

@@ -16,6 +16,15 @@ namespace vikr {
 class GL4Uniformbuffer : public Uniformbuffer {
 public:
 
+  GL4Uniformbuffer();
+
+  vvoid Generate(vuint32 bytes) override;
+
+  vvoid Bind() override;
+  vvoid Unbind() override;
+
+  
+
 private:
 
 };

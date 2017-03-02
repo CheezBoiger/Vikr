@@ -32,13 +32,11 @@ enum RenderTargetType {
   Be added into RenderPasses. 
 */
 class RenderTarget {
-  //VIKR_DISALLOW_COPY_AND_ASSIGN(RenderTarget);
   /*
     TODO(Garcia): Redesign RenderTargets to NOT bind to 
     a Frame buffer object until we reach our RenderPasses.
   */
 public:
-  //VIKR_DEFAULT_MOVE_AND_ASSIGN(RenderTarget);
   RenderTarget(Texture *texture = nullptr)
     : m_texture(texture) 
   {

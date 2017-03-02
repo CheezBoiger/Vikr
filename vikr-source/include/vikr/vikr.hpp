@@ -17,6 +17,7 @@ namespace detail {
 
 
 static vbool glad_loaded = false;
+static vbool glfw_loaded = false;
 } // detail;
 
 
@@ -30,10 +31,15 @@ vint32 InitVikr(GraphicsPipeline graphicsAPI);
   Has GLAD loaded the OpenGL library?
 */
 VIKR_FORCEINLINE vbool GladLoaded() { return detail::glad_loaded; }
+VIKR_FORCEINLINE vbool GLFWLoaded() { return detail::glad_loaded; }
 
 /**
 */
 VIKR_FORCEINLINE vint32 LoadGlad() {
+  if (GladLoaded()) {
+    return 1;
+  }
+
   if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     return -1;
   }

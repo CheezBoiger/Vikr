@@ -25,8 +25,6 @@ public:
 
   vbool RemoveShader(ShaderStage stage) override;
 
-  vuint32 GetNativeId() override;
-
   vbool Build() override;
 
   vbool IsLinked() override;

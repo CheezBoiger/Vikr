@@ -1,6 +1,5 @@
 /*
-
-  Going to be cleaned up soon...
+  OpenGL Sample test.
 */
 #include <iostream>
 #include <vikr/vikr.hpp>
@@ -47,7 +46,7 @@ void Do_Movement()
 
 int main(int c, char* args[]) {
   InitVikr(vikr_PIPELINE_OPENGL);
-  Window win = Window::CreateVikrWindow(screen_width, screen_height, "Vikr");
+  Window win = Window::CreateVikrWindow(screen_width, screen_height, "Vikr OpenGL");
   Window::SetMainWindow(&win);
   // Options.
   Keyboard::RegisterKeyboardCallback(Keyboard::DefaultKeyCallback);
@@ -68,9 +67,9 @@ int main(int c, char* args[]) {
 #define SPONZA 1
 #if SPONZA
   SceneNode *node = ModelLoader::ImportModel(renderer.GetDevice(), 
-    "../../libs/models/sponza_cry/sponza.obj", "sponza", false);
+    "../../../libs/models/sponza_cry/sponza.obj", "sponza", false);
   SceneNode *nano = ModelLoader::ImportModel(renderer.GetDevice(), 
-    "../../libs/models/nanosuit/nanosuit.obj", "suitboy", true);
+    "../../../libs/models/nanosuit/nanosuit.obj", "suitboy", true);
 
   // suitboy.
   TransformComponent *suitcomp = nano->AddComponent<TransformComponent>();
@@ -158,23 +157,29 @@ int main(int c, char* args[]) {
 
     renderer.Present();
   }
-
 /*
   // Vulkan workbench
-  glfwInit();
-  glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-  GLFWwindow *window = glfwCreateWindow(800, 600, "Vulkan window", nullptr, nullptr);
-  uint32_t extension_count = 0;
-  vkEnumerateInstanceExtensionProperties(nullptr, &extension_count, nullptr);
-  std::cout << extension_count << " extensions supported" << std::endl;
-  glm::mat4 matrix;
-  glm::vec4 vec;
-  auto test = matrix * vec;
+  InitVikr(vikr_PIPELINE_VULKAN);
+  Window win = Window::CreateVikrWindow(screen_width, screen_height, "Vikr");
+  Window::SetMainWindow(&win);
+  // Options.
+  Keyboard::RegisterKeyboardCallback(Keyboard::DefaultKeyCallback);
+  Mouse::RegisterMouseCallback(Mouse::DefaultMouseCallback);
+  Mouse::SetMouseMode(Mouse::Mode::MOUSE_CURSOR_DISABLED);
 
+  camera.SetViewport(0, 0, screen_width, screen_height);
+  camera.SetClip(0.1, 10000);
+  camera.SetFOV(45.0f);
+  camera.SetSpeed(30.0f);
+  camera.SetSensitivity(0.50f);
+  camera.SetLookAt(glm::vec3(0.0f, 0.0f, 0.0f));
+
+
+  VKDevice device;
   // Another standard game loop
-  while (!glfwWindowShouldClose(window)) {
-    glfwPollEvents();
-    glfwSwapBuffers(window);
+  while (!Window::GetMainWindow()->IsClosed()) {
+    CalculateDeltaTime();
+    PollEvents();
   }
 */
   vikr::Cleanup();

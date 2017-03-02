@@ -36,6 +36,8 @@ public:
     Get the current physical device being used.
   */
   VkPhysicalDevice GetCurrentDevice() { return m_physicalDevice; }
+
+  std::vector<const vchar *> &GetDeviceExtensions() { return device_ext; }
 private:
   /**
     Rate our found devices.

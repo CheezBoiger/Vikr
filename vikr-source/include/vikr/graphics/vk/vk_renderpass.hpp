@@ -29,6 +29,8 @@ public:
 
   RenderTarget *GetRenderTarget(vuint32 attachment) override;
 
+  VkRenderPass GetNativePass() {return m_renderpass.Get(); }
+
 private:
   
   VkMemoryManager<VkRenderPass> m_renderpass;

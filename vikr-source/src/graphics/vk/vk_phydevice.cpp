@@ -45,9 +45,9 @@ vvoid VKPhysicalDevice::CheckSuitableDevices(VkInstance &instance) {
 
 
 vbool VKPhysicalDevice::IsSuitable(VkPhysicalDevice &device) {
-  VkPhysicalDeviceProperties properties;
-  VkPhysicalDeviceFeatures features;
-  VkPhysicalDeviceMemoryProperties memory_properties;
+  VkPhysicalDeviceProperties properties = { };
+  VkPhysicalDeviceFeatures features = { };
+  VkPhysicalDeviceMemoryProperties memory_properties = { };
   VKQueueFamily family = VKQueueFamily::FindQueueFamilies(device);
   vkGetPhysicalDeviceProperties(device, &properties);
   vkGetPhysicalDeviceFeatures(device, &features);

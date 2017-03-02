@@ -34,12 +34,7 @@ public:
 
   std::string GetShaderLanguage() override;
 
-  Texture *GenerateTexture(std::string path, 
-    TextureTarget target, vbool alpha) override;
-
   Framebuffer *CreateFramebuffer() override;
-
-  Material *CreateMaterial(std::string name) override;
   
   Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) override;
 
@@ -59,6 +54,7 @@ public:
   vbool DestroyCubemap(guid_t id) override;
   vbool DestroyRenderPass(guid_t id) override;
   vbool DestroyCommandbufferList(guid_t id) override;
+  vbool DestroyFramebuffer(guid_t id) override;
 
 
   CommandbufferList *CreateCommandbufferList() override;

@@ -26,6 +26,7 @@ VKDevice::VKDevice()
   Setup();
 }
 
+// Pipeline setup.
 vvoid VKDevice::Setup() {
   VKInstance::CreateInstance();
   VKSurface::CreateSurface();
@@ -43,14 +44,14 @@ vvoid VKDevice::DeterminePhysicalDevice() {
 vvoid VKDevice::CreateLogicalDevices() {
   VKQueueFamily indices = 
     VKQueueFamily::FindQueueFamilies(m_physicalDevice.GetCurrentDevice());
-  VkPhysicalDeviceFeatures device_features;
+  VkPhysicalDeviceFeatures device_features = { };
   
   std::vector<VkDeviceQueueCreateInfo> queue_createInfos;
   std::set<vint32> unique_queueFamilies =  { indices.GetGFRFamily(), indices.GetPrstFamily()};
 
   vreal32 priority = 1.0f;
   for (vint32 queueFamily : unique_queueFamilies) {
-    VkDeviceQueueCreateInfo queue_info;
+    VkDeviceQueueCreateInfo queue_info = { };
     queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
     queue_info.queueFamilyIndex = queueFamily;
     queue_info.queueCount = 1;
@@ -58,15 +59,17 @@ vvoid VKDevice::CreateLogicalDevices() {
     queue_createInfos.push_back(queue_info);
   }
 
-  VkDeviceCreateInfo device_info;
+  VkDeviceCreateInfo device_info = { };
   device_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
   device_info.pQueueCreateInfos = queue_createInfos.data();
-  device_info.queueCreateInfoCount = (vuint32) queue_createInfos.size();
+  device_info.queueCreateInfoCount = (vuint32 )queue_createInfos.size();
   device_info.pEnabledFeatures = &device_features;
-  device_info.enabledExtensionCount = false;
+  // Enable extensions here.
+  device_info.enabledExtensionCount = m_physicalDevice.GetDeviceExtensions().size();
+  device_info.ppEnabledExtensionNames = m_physicalDevice.GetDeviceExtensions().data();
   // For debuggin purposes, we'll leave it out for now. This will 
   // require Validation Layers in the future. 
-  device_info.enabledLayerCount = false; 
+  device_info.enabledLayerCount = 0; 
 
   if (vkCreateDevice(m_physicalDevice.GetCurrentDevice(),
         &device_info, nullptr, m_logicDevice.Replace()) != VK_SUCCESS) {
@@ -83,17 +86,7 @@ std::string VKDevice::GetShaderLanguage() {
 }
 
 
-Texture *VKDevice::GenerateTexture(std::string path, TextureTarget target, vbool alpha) {
-  return nullptr;
-}
-
-
 Framebuffer *VKDevice::CreateFramebuffer() {
-  return nullptr;
-}
-
-
-Material *VKDevice::CreateMaterial(std::string name) {
   return nullptr;
 }
 
@@ -110,5 +103,44 @@ ResourceManager *VKDevice::GetResourceManager() {
 
 Cubemap *VKDevice::CreateCubemap() {
   return nullptr;
+}
+
+
+RenderPass *VKDevice::CreateRenderPass() {
+  return nullptr;
+}
+
+
+Commandbuffer &VKDevice::CreateCommandbuffer(CommandbufferList *list) {
+  throw new std::bad_alloc();
+}
+
+
+CommandbufferList *VKDevice::CreateCommandbufferList() {
+  return nullptr;
+}
+
+vbool VKDevice::DestroyVertexbuffer(guid_t id) {
+  return false;
+}
+
+
+vbool VKDevice::DestroyCubemap(guid_t id) {
+  return false;
+}
+
+
+vbool VKDevice::DestroyRenderPass(guid_t id) {
+  return false;
+}
+
+
+vbool VKDevice::DestroyCommandbufferList(guid_t id) {
+  return false;
+}
+
+
+vbool VKDevice::DestroyFramebuffer(guid_t id) {
+  return false;
 }
 } // vikr

@@ -53,24 +53,9 @@ public:
   virtual std::string GetShaderLanguage() = 0;
 
   /**
-    Generate a Texture from this RenderDevice.
-
-    @param path The file path to the texture file.
-    @param target The texture target, such as if it's 1D, 2D, 3D, etc.
-    @param alpha If the texture contains an alpha component, this is transparency.
-  */
-  virtual Texture *GenerateTexture(std::string path, 
-    TextureTarget target, vbool alpha) = 0;
-
-  /**
     Generate a framebuffer.
   */
   virtual Framebuffer *CreateFramebuffer() = 0;
-  
-  /**
-    Create material, which is handled by resources.
-  */
-  virtual Material *CreateMaterial(std::string name) = 0;
 
   /**
     Create vertex buffer id.

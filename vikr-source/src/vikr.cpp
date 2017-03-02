@@ -7,7 +7,9 @@ namespace vikr {
 
 vint32 InitVikr(GraphicsPipeline graphicsAPI) {
   vint32 success = 1;
-  glfwInit();
+  if (!GladLoaded()) {
+    glfwInit();
+  }
   switch (graphicsAPI) {
     case vikr_PIPELINE_OPENGL:
     {

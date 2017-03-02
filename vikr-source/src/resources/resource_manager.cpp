@@ -14,8 +14,9 @@
 namespace vikr {
 
 
-std::unordered_map<guid_t, std::shared_ptr<SceneNode> > Resources::scene_nodes;
+std::unordered_map<guid_t, std::unique_ptr<SceneNode> > Resources::scene_nodes;
 std::map<std::string, std::shared_ptr<Material> > Resources::materials;
+std::map<guid_t, std::unique_ptr<Mesh> > Resources::meshes;
 
 
 ResourceManager::ResourceManager(GraphicsPipeline pipe)
@@ -28,9 +29,9 @@ ResourceManager::ResourceManager(GraphicsPipeline pipe)
   Creating the scene node via the resource manager.
 */
 SceneNode *ResourceManager::CreateSceneNode() {
-  std::shared_ptr<SceneNode> node = std::make_shared<SceneNode>();
-  Resources::scene_nodes[node->GetUID()] = node;
-  return node.get();
+  std::unique_ptr<SceneNode> node = std::make_unique<SceneNode>();
+  Resources::scene_nodes[node->GetUID()] = std::move(node);
+  return Resources::scene_nodes[node->GetUID()].get();
 }
 
 
@@ -38,6 +39,58 @@ SceneNode *ResourceManager::GetSceneNode(guid_t guid) {
   SceneNode *node = nullptr;
   node = Resources::scene_nodes[guid].get();
   return node;
+}
+
+
+vbool ResourceManager::DestroySceneNode(guid_t guid, vbool destroy_subtree) {
+  return false;
+}
+
+
+Mesh *ResourceManager::CreateMesh(
+  std::vector<glm::vec3> &positions,
+  std::vector<glm::vec3> &normals,
+  std::vector<glm::vec2> &uvs,
+  std::vector<vuint32> &indices,
+  std::vector<glm::vec3> &tangents,
+  std::vector<glm::vec3> &bitangents,
+  std::vector<glm::vec3> &colors)
+{
+  std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
+  mesh->Buffer(positions, normals, uvs, indices, tangents, bitangents, colors);
+  // mesh->Create();
+  Resources::meshes[mesh->GetGUID()] = std::move(mesh);
+  return Resources::meshes[mesh->GetGUID()].get();
+}
+
+
+Mesh *ResourceManager::CreateMesh(
+  std::vector<Vertex> &vertices,
+  std::vector<vuint32> &indices)
+{
+  std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
+  mesh->Buffer(vertices, indices);
+  //mesh->Create();
+  Resources::meshes[mesh->GetGUID()] = std::move(mesh);
+  return mesh.get();
+}
+
+
+Mesh *ResourceManager::GetMesh(guid_t guid) {
+  return Resources::meshes[guid].get();
+}
+
+
+vbool ResourceManager::DestroyMesh(guid_t guid) {
+  vbool success = false;
+  auto it = Resources::meshes.find(guid);
+  if(it != Resources::meshes.end()) {
+    // Cleanup the mesh vertex buffer.  
+    it->second->GetVertexBuffer()->Cleanup();
+    Resources::meshes.erase(it);
+    success = true;
+  }
+  return success;
 }
 
 

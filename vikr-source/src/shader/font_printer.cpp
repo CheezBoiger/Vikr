@@ -161,17 +161,14 @@ vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
 
 
   Shader *vert_font = device->GetResourceManager()->CreateShader("vert_font", VERTEX_SHADER);
-  vert_font->Compile("../../libs/shader/GLSL/font.vert");
+  vert_font->Compile("../../../libs/shader/GLSL/font.vert");
   Shader *frag_font = device->GetResourceManager()->CreateShader("frag_font", PIXEL_SHADER);
-  frag_font->Compile("../../libs/shader/GLSL/font.frag");
+  frag_font->Compile("../../../libs/shader/GLSL/font.frag");
 
   m_fontshader = device->GetResourceManager()->CreateShaderProgram();
   m_fontshader->LoadShader(vert_font);
   m_fontshader->LoadShader(frag_font);
   m_fontshader->Build();
-
-  device->GetResourceManager()->DestroyShader(vert_font->GetName());
-  device->GetResourceManager()->DestroyShader(frag_font->GetName());
 }
 
 

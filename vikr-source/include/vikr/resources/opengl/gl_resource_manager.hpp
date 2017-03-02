@@ -40,37 +40,23 @@ public:
     @return the reference to the shader object. Nullptr if no shader was found by that
             name. 
   */
-  Shader *GetShader(std::string name) override;
+  Shader *GetShader(guid_t name) override;
   
   /**
     Destroy a Shader given its name.
     @return True if the shader was destroyed, false if no shader by the name provided, was 
     found.
   */
-  vbool DestroyShader(std::string name) override;
+  vbool DestroyShader(guid_t name) override;
 
   /**
   */
   PipelineState *CreatePipelineState(std::string name) override;
-  PipelineState *GetPipelineState(std::string name) override;
-  vbool DestroyPipelineState(std::string name) override;
-
-  Mesh *CreateMesh(std::vector<glm::vec3> &positions,
-    std::vector<glm::vec3> &normals,
-    std::vector<glm::vec2> &uvs,
-    std::vector<vuint32> &indices = std::vector<vuint32>(),
-    std::vector<glm::vec3> &tangents = std::vector<glm::vec3>(),
-    std::vector<glm::vec3> &bitangents = std::vector<glm::vec3>(),
-    std::vector<glm::vec3> &colors = std::vector<glm::vec3>()) override;
-
-  Mesh *CreateMesh(std::vector<Vertex> &vertices,
-    std::vector<vuint32> &indices = std::vector<vuint32>()) override;
-
-  Mesh *GetMesh(guid_t guid) override;
-  vbool DestroyMesh(guid_t guid) override;
+  PipelineState *GetPipelineState(guid_t id) override;
+  vbool DestroyPipelineState(guid_t id) override;
 
   Texture *CreateTexture(std::string name, TextureTarget target, 
-    std::string image_path, vbool alpha) override;
+    std::string filepath, vbool alpha) override;
   Texture *GetTexture(std::string filepath) override;
   vbool DestroyTexture(std::string filepath) override;
 
@@ -84,20 +70,15 @@ public:
   OpenGL Specific Resources.
 */
 class GLResources : public Resources {
-  static std::unordered_map<std::string, std::shared_ptr<GLSLShader> > shaders;
-
-  /**
-  Contains PtrToMesh data.
-  */
-  static std::map<guid_t, std::shared_ptr<Mesh> > meshes;
+  static std::unordered_map<guid_t, std::unique_ptr<GLSLShader> > shaders;
 
   /**
   Contains material data.
   */
-  static std::map<std::string, std::shared_ptr<GLTexture> > textures;
+  static std::map<std::string, std::unique_ptr<GLTexture> > textures;
 
-  static std::map<guid_t, std::shared_ptr<GLSLShaderProgram> > shader_programs;
-  static std::map<std::string, std::shared_ptr<GL4PipelineState> > pipelinestates; 
+  static std::map<guid_t, std::unique_ptr<GLSLShaderProgram> > shader_programs;
+  static std::map<guid_t, std::unique_ptr<GL4PipelineState> > pipelinestates; 
 
   friend class GLResourceManager;
 };

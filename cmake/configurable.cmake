@@ -6,6 +6,7 @@ set(GLFW_INCLUDE_DIR libs/glfw/include/GLFW)
 set(FREETYPE_INCLUDE_DIR libs/freetype/include)
 set(FREETYPE_SECONDARY_DIR libs/freetype/include/freetype2)
 
+
 find_package(Vulkan)
 if (vulkan AND VULKAN_FOUND)
   message("Vulkan API enabled...")
@@ -16,6 +17,16 @@ if (vulkan AND VULKAN_FOUND)
 elseif(vulkan AND NOT VULKAN_FOUND)
  message(FATAL_ERROR "Vulkan not found, cannot continue with \"vulkan\" command")
 endif()
+
+# Find OpenGL as we will need it.
+find_package(OpenGL)
+
+if (OPENGL_FOUND)
+  message("OpenGL enabled by default")
+elseif(NOT OPENGL_FOUND AND NOT VULKAN_FOUND)
+  message(FATAL_ERROR "No Rendering Driver was found on this system! Aborting build...")
+endif()
+
 
 if (debug)
  message("DEBUG MODE ON")

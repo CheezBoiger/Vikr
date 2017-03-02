@@ -24,6 +24,11 @@ if (vulkan)
 
   set(VIKR_GLOB
     ${VIKR_GLOB}
+    ${VIKR_RESOURCES_VULKAN_SRC_DIR}/vk_resource_manager.cpp
+  )
+
+  set(VIKR_GLOB
+    ${VIKR_GLOB}
     ${VIKR_RESOURCES_VULKAN_DETAIL_DIR}/vk_memorymanager.inl
   )
 

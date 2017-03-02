@@ -25,12 +25,7 @@ public:
   */
   std::string GetShaderLanguage() override;
   
-  Texture *GenerateTexture(std::string path,
-    TextureTarget target, vbool alpha) override;
-  
   Framebuffer *CreateFramebuffer() override;
-
-  Material *CreateMaterial(std::string name) override;
 
   Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) override;
 

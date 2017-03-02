@@ -54,18 +54,6 @@ std::string GL4RenderDevice::GetShaderLanguage() {
 }
 
 
-Texture *GL4RenderDevice::GenerateTexture(
-  std::string path, TextureTarget target, vbool alpha) 
-{
-  return manager.CreateTexture("", target, path, alpha);
-}
-
-
-Material *GL4RenderDevice::CreateMaterial(std::string name) {
-  return manager.CreateMaterial(name);
-}
-
-
 /**
   Data is interleaved.
 */

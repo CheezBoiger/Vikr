@@ -45,12 +45,12 @@ public:
     be returned. Resources takes care of this.
   */
   virtual Shader *CreateShader(std::string name, ShaderStage stage) = 0;
-  virtual Shader *GetShader(std::string name) = 0;
-  virtual vbool DestroyShader(std::string name) = 0;
+  virtual Shader *GetShader(guid_t id) = 0;
+  virtual vbool DestroyShader(guid_t id) = 0;
 
   virtual PipelineState *CreatePipelineState(std::string name) = 0;
-  virtual PipelineState *GetPipelineState(std::string name) = 0;
-  virtual vbool DestroyPipelineState(std::string name) = 0;
+  virtual PipelineState *GetPipelineState(guid_t id) = 0;
+  virtual vbool DestroyPipelineState(guid_t id) = 0;
 
 
   virtual ShaderProgram *CreateShaderProgram() = 0;
@@ -60,24 +60,24 @@ public:
   /**
     Creates the mesh object that is handled by the ResourceManager.
   */
-  virtual Mesh *CreateMesh(std::vector<glm::vec3> &positions,
+  Mesh *CreateMesh(std::vector<glm::vec3> &positions,
     std::vector<glm::vec3> &normals,
     std::vector<glm::vec2> &uvs,
     std::vector<vuint32> &indices = std::vector<vuint32>(),
     std::vector<glm::vec3> &tangents = std::vector<glm::vec3>(),
     std::vector<glm::vec3> &bitangents = std::vector<glm::vec3>(),
-    std::vector<glm::vec3> &colors = std::vector<glm::vec3>()) = 0;
+    std::vector<glm::vec3> &colors = std::vector<glm::vec3>());
   
   /**
     Creates the mesh object, that is handled by the ResourceManager.
   */
-  virtual Mesh *CreateMesh(std::vector<Vertex> &vertices,
-    std::vector<vuint32> &indices = std::vector<vuint32>()) = 0;
-  virtual Mesh *GetMesh(guid_t guid) = 0;
-  virtual vbool DestroyMesh(guid_t guid) = 0;
+  Mesh *CreateMesh(std::vector<Vertex> &vertices,
+    std::vector<vuint32> &indices = std::vector<vuint32>());
+  Mesh *GetMesh(guid_t guid);
+  vbool DestroyMesh(guid_t guid);
 
   virtual Texture *CreateTexture(std::string name, TextureTarget target, 
-    std::string image_path, vbool alpha) = 0;
+    std::string filepath, vbool alpha) = 0;
   virtual Texture *GetTexture(std::string filepath) = 0;
   virtual vbool DestroyTexture(std::string filepath) = 0;
 
@@ -92,7 +92,8 @@ public:
     Destroys SceneNode, along with a choice of whether or not you wish to 
     destroy the entire subtree heirarchy.
   */
-  vint32 DestroySceneNode(guid_t guid, vbool destroy_subtree);
+  vbool DestroySceneNode(guid_t guid, vbool destroy_subtree);
+
 
   Material *CreateMaterial(std::string mat_name);
   Material *GetMaterial(std::string name);
@@ -121,8 +122,13 @@ protected:
   /**
     The resources of scenenode and scenecomponents.
   */
-  static std::unordered_map<guid_t, std::shared_ptr<SceneNode> > scene_nodes;
+  static std::unordered_map<guid_t, std::unique_ptr<SceneNode> > scene_nodes;
   static std::map<std::string, std::shared_ptr<Material> > materials;
+
+  /**
+    Contains PtrToMesh data.
+  */
+  static std::map<guid_t, std::unique_ptr<Mesh> > meshes;
 
   friend class ResourceManager;
 };
