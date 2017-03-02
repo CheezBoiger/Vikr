@@ -31,11 +31,6 @@ public:
     Generate the Uniformbuffer object with allocated x amount of bytes.
   */
   virtual vvoid Generate(vuint32 bytes) = 0;
-
-  /**
-    Get the Uniform Id.
-  */
-  virtual vuint64 GetUniformId() = 0;
   
   virtual vvoid Bind() = 0;
   virtual vvoid Unbind() = 0;

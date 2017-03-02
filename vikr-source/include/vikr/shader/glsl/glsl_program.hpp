@@ -21,7 +21,7 @@ public:
   Shader *GetShader(ShaderStage stage) override;
   vbool LoadShader(Shader *shader, vbool force = false) override;
   vbool RemoveShader(ShaderStage stage) override;
-  vuint32 GetNativeId() override { return program_id; }
+  vuint32 GetNativeId() { return program_id; }
 
   vbool Build() override;
   vbool IsLinked() override { return islinked; }

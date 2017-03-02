@@ -218,7 +218,7 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     TODO(): Will need to parse these location values in the future.
   */
   //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
-  shader_program = m_currPipeline->GetShaderProgram()->GetNativeId();
+  shader_program = static_cast<GLSLShaderProgram *>(m_currPipeline->GetShaderProgram())->GetNativeId();
   if (params->uniforms) {
     for (auto variable : *params->uniforms) {
       std::string s = variable.first;

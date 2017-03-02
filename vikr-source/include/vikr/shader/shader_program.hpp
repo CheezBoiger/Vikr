@@ -41,8 +41,6 @@ public:
 
   virtual vbool RemoveShader(ShaderStage stage) = 0;
 
-  virtual vuint32 GetNativeId() = 0;
-
   virtual vbool Build() = 0;
 
   virtual vbool IsLinked() = 0;
