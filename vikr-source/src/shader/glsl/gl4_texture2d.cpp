@@ -23,9 +23,9 @@ GL4Texture2D::GL4Texture2D(vuint32 width, vuint32 height)
 
 vint32 GL4Texture2D::Finalize() {
   if (m_multisampled) {
-    m_target = vikr_TEXTURE_2D_MULTISAMPLE;
+    m_target = vikr_TARGET_2D_MULTISAMPLE;
   } else {
-    m_target = vikr_TEXTURE_2D;
+    m_target = vikr_TARGET_2D;
   }
   native_target = GetNativeTextureTarget(m_target);
   glGenTextures(1, &id);

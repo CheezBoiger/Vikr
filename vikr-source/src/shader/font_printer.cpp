@@ -125,18 +125,18 @@ vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
     }
     Texture *texture = device->GetResourceManager()->CreateTexture(
       std::to_string(c),
-      vikr_TEXTURE_2D,
+      vikr_TARGET_2D,
       "",
       false);
     texture->SetByteCode(face->glyph->bitmap.buffer, false);
     texture->SetWidth(face->glyph->bitmap.width);
     texture->SetHeight(face->glyph->bitmap.rows);
-    texture->SetWrapS(vikr_TEXTURE_CLAMP_TO_EDGE);
-    texture->SetWrapT(vikr_TEXTURE_CLAMP_TO_EDGE);
-    texture->SetFormat(vikr_RED);
-    texture->SetInternalFormat(vikr_RED);
-    texture->SetFilterMin(vikr_TEXTURE_LINEAR);
-    texture->SetFilterMax(vikr_TEXTURE_LINEAR);
+    texture->SetWrapS(vikr_WRAP_CLAMP_TO_EDGE);
+    texture->SetWrapT(vikr_WRAP_CLAMP_TO_EDGE);
+    texture->SetFormat(vikr_FORMAT_RED);
+    texture->SetInternalFormat(vikr_FORMAT_RED);
+    texture->SetFilterMin(vikr_FILTER_LINEAR);
+    texture->SetFilterMax(vikr_FILTER_LINEAR);
     texture->SetMipmapping(false);
     texture->Finalize();
     Character character = {
@@ -160,9 +160,9 @@ vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
   }  
 
 
-  Shader *vert_font = device->GetResourceManager()->CreateShader("vert_font", VERTEX_SHADER);
+  Shader *vert_font = device->GetResourceManager()->CreateShader("vert_font", vikr_VERTEX_SHADER);
   vert_font->Compile("../../../libs/shader/GLSL/font.vert");
-  Shader *frag_font = device->GetResourceManager()->CreateShader("frag_font", PIXEL_SHADER);
+  Shader *frag_font = device->GetResourceManager()->CreateShader("frag_font", vikr_PIXEL_SHADER);
   frag_font->Compile("../../../libs/shader/GLSL/font.frag");
 
   m_fontshader = device->GetResourceManager()->CreateShaderProgram();

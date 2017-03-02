@@ -77,10 +77,10 @@ Texture *GLResourceManager::CreateTexture(
   vbyte *bytecode = stbi_load(filepath.c_str(), &width, &height, &depth,
                               alpha ? STBI_rgb_alpha : STBI_rgb);
   switch(target) {
-  case vikr_TEXTURE_1D: texture = std::make_unique<GL4Texture1D>(width); break;
-  case vikr_TEXTURE_2D: texture = std::make_unique<GL4Texture2D>(width, height); break;
-  case vikr_TEXTURE_3D: texture = std::make_unique<GL4Texture3D>(width, height, depth); break;
-  case vikr_TEXTURE_CUBEMAP: // not implemented yet.
+  case vikr_TARGET_1D: texture = std::make_unique<GL4Texture1D>(width); break;
+  case vikr_TARGET_2D: texture = std::make_unique<GL4Texture2D>(width, height); break;
+  case vikr_TARGET_3D: texture = std::make_unique<GL4Texture3D>(width, height, depth); break;
+  case vikr_TARGET_CUBEMAP: // not implemented yet.
   default: break;
   }
   guid_t id = texture->GetUID();

@@ -36,14 +36,14 @@ vvoid Material::SetTexture(std::string name, Texture *texture, vuint32 i) {
     m_uniform_samplers[name].texture = texture;
     m_uniform_samplers[name].i = i;
     switch (texture->GetTargetFormat()) {
-      case vikr_TEXTURE_2D:       m_uniform_samplers[name].type = vikr_SAMPLER2D;    break;
-      case vikr_TEXTURE_3D:       m_uniform_samplers[name].type = vikr_SAMPLER3D;    break;
-      default:                    m_uniform_samplers[name].type = vikr_SAMPLER2D;    break;
+      case vikr_TARGET_2D:       m_uniform_samplers[name].type = vikr_UNIFORM_SAMPLER2D;    break;
+      case vikr_TARGET_3D:       m_uniform_samplers[name].type = vikr_UNIFORM_SAMPLER3D;    break;
+      default:                    m_uniform_samplers[name].type = vikr_UNIFORM_SAMPLER2D;    break;
     }
   }
 
   m_material_values[name].m_integer = i;
-  m_material_values[name].type = vikr_INT;
+  m_material_values[name].type = vikr_UNIFORM_INT;
 }
 
 
@@ -51,70 +51,70 @@ vvoid Material::SetCubemap(std::string name, Cubemap *cubemap, vuint32 i) {
   if (cubemap) {
     m_uniform_samplers[name].cubemap = cubemap;
     m_uniform_samplers[name].i = i;
-    m_uniform_samplers[name].type = vikr_SAMPLERCUBE;
+    m_uniform_samplers[name].type = vikr_UNIFORM_SAMPLERCUBE;
   }
 
   m_material_values[name].m_integer = i;
-  m_material_values[name].type = vikr_INT;
+  m_material_values[name].type = vikr_UNIFORM_INT;
 }
 
 
 vvoid Material::SetBool(std::string name, vbool value) {
   m_material_values[name].m_bool = value;
-  m_material_values[name].type = vikr_BOOL;
+  m_material_values[name].type = vikr_UNIFORM_BOOL;
 }
 
 
 vvoid Material::SetInt(std::string name, vint32 value) {
   m_material_values[name].m_integer = value;
-  m_material_values[name].type = vikr_INT;
+  m_material_values[name].type = vikr_UNIFORM_INT;
 }
 
 
 vvoid Material::SetFloat(std::string name, vreal32 value) {
   m_material_values[name].m_float = value;
-  m_material_values[name].type = vikr_FLOAT;  
+  m_material_values[name].type = vikr_UNIFORM_FLOAT;  
 }
 
 
 vvoid Material::SetDouble(std::string name, vreal64 value) {
   m_material_values[name].m_double = value;
-  m_material_values[name].type = vikr_DOUBLE;
+  m_material_values[name].type = vikr_UNIFORM_DOUBLE;
 }
 
 
 vvoid Material::SetMat2(std::string name, glm::mat2 value) {
   m_material_values[name].m_mat2 = value;
-  m_material_values[name].type = vikr_MAT2;
+  m_material_values[name].type = vikr_UNIFORM_MAT2;
 }
 
 
 vvoid Material::SetMat3(std::string name, glm::mat3 value) {
   m_material_values[name].m_mat3 = value;
-  m_material_values[name].type = vikr_MAT3;
+  m_material_values[name].type = vikr_UNIFORM_MAT3;
 }
 
 
 vvoid Material::SetMat4(std::string name, glm::mat4 value) {
   m_material_values[name].m_mat4 = value;
-  m_material_values[name].type = vikr_MAT4;
+  m_material_values[name].type = vikr_UNIFORM_MAT4;
 }
 
 
 vvoid Material::SetVector2fv(std::string name, glm::vec2 value) {
   m_material_values[name].m_vec2 = value;
-  m_material_values[name].type = vikr_VEC2;
+  m_material_values[name].type = vikr_UNIFORM_VEC2;
 }
 
 
 vvoid Material::SetVector3fv(std::string name, glm::vec3 value) {
   m_material_values[name].m_vec3 = value;
-  m_material_values[name].type = vikr_VEC3;
+  m_material_values[name].type = vikr_UNIFORM_VEC3;
 }
 
 
 vvoid Material::SetVector4fv(std::string name, glm::vec4 value) {
   m_material_values[name].m_vec4 = value;
-  m_material_values[name].type = vikr_VEC4;
+  m_material_values[name].type = vikr_UNIFORM_VEC4;
 }
 } // vikr

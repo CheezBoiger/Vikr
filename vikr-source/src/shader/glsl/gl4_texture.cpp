@@ -10,10 +10,10 @@ namespace vikr {
 
 GLenum GL4Texture::GetNativeWrapMode(TextureWrapMode mode) {
   switch (mode) {
-    case vikr_TEXTURE_REPEAT: return GL_REPEAT;
-    case vikr_TEXTURE_MIRRORED_REPEAT: return GL_MIRRORED_REPEAT;
-    case vikr_TEXTURE_CLAMP_TO_EDGE: return GL_CLAMP_TO_EDGE;
-    case vikr_TEXTURE_CLAMP_TO_BORDER: return GL_CLAMP_TO_BORDER;
+    case vikr_WRAP_REPEAT: return GL_REPEAT;
+    case vikr_WRAP_MIRRORED_REPEAT: return GL_MIRRORED_REPEAT;
+    case vikr_WRAP_CLAMP_TO_EDGE: return GL_CLAMP_TO_EDGE;
+    case vikr_WRAP_CLAMP_TO_BORDER: return GL_CLAMP_TO_BORDER;
     default: return GL_REPEAT;
   }
 }
@@ -21,12 +21,12 @@ GLenum GL4Texture::GetNativeWrapMode(TextureWrapMode mode) {
 
 GLenum GL4Texture::GetNativeFilterMode(TextureFilterMode mode) {
   switch (mode) {
-    case vikr_TEXTURE_NEAREST: return GL_NEAREST;
-    case vikr_TEXTURE_LINEAR: return GL_LINEAR;
-    case vikr_TEXTURE_NEAREST_MIPMAP_NEAREST: return GL_NEAREST_MIPMAP_NEAREST;
-    case vikr_TEXTURE_LINEAR_MIPMAP_NEAREST: return GL_LINEAR_MIPMAP_NEAREST;
-    case vikr_TEXTURE_LINEAR_MIPMAP_LINEAR: return GL_LINEAR_MIPMAP_LINEAR;
-    case vikr_TEXTURE_NEAREST_MIPMAP_LINEAR: return GL_NEAREST_MIPMAP_LINEAR;
+    case vikr_FILTER_NEAREST: return GL_NEAREST;
+    case vikr_FILTER_LINEAR: return GL_LINEAR;
+    case vikr_FILTER_NEAREST_MIPMAP_NEAREST: return GL_NEAREST_MIPMAP_NEAREST;
+    case vikr_FILTER_LINEAR_MIPMAP_NEAREST: return GL_LINEAR_MIPMAP_NEAREST;
+    case vikr_FILTER_LINEAR_MIPMAP_LINEAR: return GL_LINEAR_MIPMAP_LINEAR;
+    case vikr_FILTER_NEAREST_MIPMAP_LINEAR: return GL_NEAREST_MIPMAP_LINEAR;
     default: return GL_LINEAR;
   }
 }
@@ -34,17 +34,17 @@ GLenum GL4Texture::GetNativeFilterMode(TextureFilterMode mode) {
 
 GLenum GL4Texture::GetNativeTextureTarget(TextureTarget target) {
   switch (target) {
-    case vikr_TEXTURE_1D: return GL_TEXTURE_1D;
-    case vikr_TEXTURE_2D: return GL_TEXTURE_2D; 
-    case vikr_TEXTURE_2D_MULTISAMPLE: return GL_TEXTURE_2D_MULTISAMPLE;
-    case vikr_TEXTURE_3D: return GL_TEXTURE_3D;
-    case vikr_TEXTURE_CUBEMAP: return GL_TEXTURE_CUBE_MAP;
-    case vikr_TEXTURE_CUBEMAP_POSITIVE_X: return GL_TEXTURE_CUBE_MAP_POSITIVE_X;
-    case vikr_TEXTURE_CUBEMAP_NEGATIVE_X: return GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
-    case vikr_TEXTURE_CUBEMAP_POSITIVE_Y: return GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
-    case vikr_TEXTURE_CUBEMAP_NEGATIVE_Y: return GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
-    case vikr_TEXTURE_CUBEMAP_POSITIVE_Z: return GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
-    case vikr_TEXTURE_CUBEMAP_NEGATIVE_Z: return GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
+    case vikr_TARGET_1D: return GL_TEXTURE_1D;
+    case vikr_TARGET_2D: return GL_TEXTURE_2D; 
+    case vikr_TARGET_2D_MULTISAMPLE: return GL_TEXTURE_2D_MULTISAMPLE;
+    case vikr_TARGET_3D: return GL_TEXTURE_3D;
+    case vikr_TARGET_CUBEMAP: return GL_TEXTURE_CUBE_MAP;
+    case vikr_TARGET_CUBEMAP_POSITIVE_X: return GL_TEXTURE_CUBE_MAP_POSITIVE_X;
+    case vikr_TARGET_CUBEMAP_NEGATIVE_X: return GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
+    case vikr_TARGET_CUBEMAP_POSITIVE_Y: return GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
+    case vikr_TARGET_CUBEMAP_NEGATIVE_Y: return GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
+    case vikr_TARGET_CUBEMAP_POSITIVE_Z: return GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
+    case vikr_TARGET_CUBEMAP_NEGATIVE_Z: return GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
     default:  return GL_TEXTURE_2D;
   }
 }
@@ -52,13 +52,13 @@ GLenum GL4Texture::GetNativeTextureTarget(TextureTarget target) {
 
 GLenum GL4Texture::GetNativeTextureFormat(TextureFormat format) {
   switch (format) {
-    case vikr_RGB: return GL_RGB;
-    case vikr_RGBA: return GL_RGBA;
-    case vikr_RGB16F: return GL_RGB16F;
-    case vikr_RGB32F: return GL_RGB32F;
-    case vikr_DEPTH: return GL_DEPTH_COMPONENT;
-    case vikr_ALPHA: return GL_ALPHA;
-    case vikr_RED: return GL_RED;
+    case vikr_FORMAT_RGB: return GL_RGB;
+    case vikr_FORMAT_RGBA: return GL_RGBA;
+    case vikr_FORMAT_RGB16F: return GL_RGB16F;
+    case vikr_FORMAT_RGB32F: return GL_RGB32F;
+    case vikr_FORMAT_DEPTH: return GL_DEPTH_COMPONENT;
+    case vikr_FORMAT_ALPHA: return GL_ALPHA;
+    case vikr_FORMAT_RED: return GL_RED;
     default: return GL_RGBA;
   }  
 }
@@ -66,9 +66,9 @@ GLenum GL4Texture::GetNativeTextureFormat(TextureFormat format) {
 
 GLenum GL4Texture::GetNativeDataTypeFormat(DataTypeFormat format) {
   switch (format) {
-    case data_UNSIGNED_BYTE: return GL_UNSIGNED_BYTE;
-    case data_UNSIGNED_INT: return GL_UNSIGNED_INT;
-    case data_FLOAT: return GL_FLOAT;
+    case vikr_DATATYPE_UNSIGNED_BYTE: return GL_UNSIGNED_BYTE;
+    case vikr_DATATYPE_UNSIGNED_INT: return GL_UNSIGNED_INT;
+    case vikr_DATATYPE_FLOAT: return GL_FLOAT;
     default: return GL_UNSIGNED_BYTE;
   }
 }

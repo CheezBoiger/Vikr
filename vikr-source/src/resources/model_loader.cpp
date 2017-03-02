@@ -193,7 +193,7 @@ Material *ModelLoader::ParseMaterial(
     if (it == loaded_textures.end()) { 
       texture = device->GetResourceManager()->CreateTexture(
         name,
-        TextureTarget::vikr_TEXTURE_2D, 
+        TextureTarget::vikr_TARGET_2D, 
         filepath, 
         true);
       texture->Finalize();
@@ -216,7 +216,7 @@ Material *ModelLoader::ParseMaterial(
     if (it == loaded_textures.end()) {
       texture = device->GetResourceManager()->CreateTexture(
         name,
-        vikr_TEXTURE_2D, 
+        vikr_TARGET_2D, 
         filepath, 
         true);
       texture->Finalize();
@@ -238,7 +238,7 @@ Material *ModelLoader::ParseMaterial(
     if (it == loaded_textures.end()) {
       texture = device->GetResourceManager()->CreateTexture(
         name,
-        vikr_TEXTURE_2D,
+        vikr_TARGET_2D,
         filepath,
         true);
       texture->Finalize();
@@ -260,7 +260,7 @@ Material *ModelLoader::ParseMaterial(
     if (it == loaded_textures.end()) { 
       texture = device->GetResourceManager()->CreateTexture(
         name,
-        vikr_TEXTURE_2D, 
+        vikr_TARGET_2D, 
         filepath, 
         true);
       texture->Finalize();
@@ -282,7 +282,7 @@ Material *ModelLoader::ParseMaterial(
     if (it == loaded_textures.end()) {
       texture = device->GetResourceManager()->CreateTexture(
         name,
-        vikr_TEXTURE_2D, 
+        vikr_TARGET_2D, 
         filepath, 
         true);
       texture->Finalize();
@@ -304,7 +304,7 @@ Material *ModelLoader::ParseMaterial(
     if (it == loaded_textures.end()) { 
       texture = device->GetResourceManager()->CreateTexture(
         name,
-        vikr_TEXTURE_2D, 
+        vikr_TARGET_2D, 
         filepath, 
         true);
       texture->Finalize();

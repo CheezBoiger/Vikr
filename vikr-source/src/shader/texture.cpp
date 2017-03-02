@@ -20,8 +20,14 @@ Texture::~Texture()
 }
 
 
-vbyte *Texture::CreateImageByteCode(std::string tex_path, vint32 *width, vint32 *height, vint32 *channels, vbool alpha) {
-  stbi_uc *image = stbi_load(tex_path.c_str(), width, height, channels, alpha ? STBI_rgb_alpha : STBI_rgb);
+vbyte *Texture::CreateImageByteCode(
+  std::string filepath, 
+  vint32 *width, 
+  vint32 *height, 
+  vint32 *channels, 
+  vbool alpha) 
+{
+  stbi_uc *image = stbi_load(filepath.c_str(), width, height, channels, alpha ? STBI_rgb_alpha : STBI_rgb);
   if (!image) {
     VIKR_ASSERTION(!image);
     image = nullptr;

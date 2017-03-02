@@ -24,7 +24,7 @@ protected:
   /**
     Must not be instantiated by the user.
   */
-  Shader(ShaderStage stage = VERTEX_SHADER, ShaderLanguage lang = vikr_NOLANG);
+  Shader(ShaderStage stage = vikr_VERTEX_SHADER, ShaderLanguage lang = vikr_NOLANG);
 
 public:
   static const vuint32 kNoShaderId;
@@ -71,7 +71,7 @@ protected:
   /**
     Shader stage of this shader object.
   */
-  ShaderStage shader_stage              = VERTEX_SHADER;
+  ShaderStage shader_stage              = vikr_VERTEX_SHADER;
 
   /**
     Shader Language.

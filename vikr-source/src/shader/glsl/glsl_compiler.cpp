@@ -27,12 +27,12 @@ vvoid GLSLCompiler::LoadShaderFile() {
   const GLchar* shader_code_c = shader_code.c_str();
   GLenum s = GL_VERTEX_SHADER;
   switch (shader_stage) {
-    case VERTEX_SHADER: s = GL_VERTEX_SHADER; break;
-    case FRAGMENT_SHADER: s = GL_FRAGMENT_SHADER; break;
-    case GEOMETRY_SHADER: s = GL_GEOMETRY_SHADER; break;
-    case COMPUTE_SHADER: s = GL_COMPUTE_SHADER; break;
-    case TESS_CONTROL_SHADER: s = GL_TESS_CONTROL_SHADER; break;
-    case TESS_EVALUATION_SHADER: s = GL_TESS_EVALUATION_SHADER; break;
+    case vikr_VERTEX_SHADER: s = GL_VERTEX_SHADER; break;
+    case vikr_FRAGMENT_SHADER: s = GL_FRAGMENT_SHADER; break;
+    case vikr_GEOMETRY_SHADER: s = GL_GEOMETRY_SHADER; break;
+    case vikr_COMPUTE_SHADER: s = GL_COMPUTE_SHADER; break;
+    case vikr_TESS_CONTROL_SHADER: s = GL_TESS_CONTROL_SHADER; break;
+    case vikr_TESS_EVALUATION_SHADER: s = GL_TESS_EVALUATION_SHADER; break;
     default: s = GL_VERTEX_SHADER; break;
   }
   shader_id = CreateShader(s);

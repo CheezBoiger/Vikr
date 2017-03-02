@@ -59,11 +59,11 @@ private:
   vvoid DetermineRenderType() {
     if (m_texture) {
       switch (m_texture->GetTargetFormat()) {
-        case vikr_TEXTURE_3D:
-        case vikr_TEXTURE_2D:
-        case vikr_TEXTURE_1D: 
+        case vikr_TARGET_3D:
+        case vikr_TARGET_2D:
+        case vikr_TARGET_1D: 
           m_renderType = render_TEXTURE; break;
-        case vikr_TEXTURE_2D_MULTISAMPLE: 
+        case vikr_TARGET_2D_MULTISAMPLE: 
           m_renderType = render_TEXTURE_MULTISAMPLE; break;
         default: 
           m_renderType = render_TEXTURE; break;

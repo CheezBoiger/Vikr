@@ -34,21 +34,21 @@ enum ShaderLanguage {
 Defined Shader stages.
 */
 enum ShaderStage {
-  VERTEX_SHADER,
+  vikr_VERTEX_SHADER,
   // Fragment shader is equivalent to Pixel shaders.
-  FRAGMENT_SHADER,
-  GEOMETRY_SHADER,
-  COMPUTE_SHADER,
+  vikr_FRAGMENT_SHADER,
+  vikr_GEOMETRY_SHADER,
+  vikr_COMPUTE_SHADER,
   // Tesselation Control shader is equivalent to Hull shaders.
-  TESS_CONTROL_SHADER,
+  vikr_TESS_CONTROL_SHADER,
   // Tesselation Evaluation shader is equivalent to Domain shaders.
-  TESS_EVALUATION_SHADER,
+  vikr_TESS_EVALUATION_SHADER,
   // Pixel Shader is equivalent to Fragment shaders.
-  PIXEL_SHADER = FRAGMENT_SHADER,
+  vikr_PIXEL_SHADER = vikr_FRAGMENT_SHADER,
   // Hull shader is equivalent to Control shaders.
-  HULL_SHADER = TESS_CONTROL_SHADER,
+  vikr_HULL_SHADER = vikr_TESS_CONTROL_SHADER,
   // Domain shader is equivalent to evaluation shaders.
-  DOMAIN_SHADER = TESS_EVALUATION_SHADER
+  vikr_DOMAIN_SHADER = vikr_TESS_EVALUATION_SHADER
 };
 
 
@@ -57,21 +57,21 @@ We determine the uniform type for our Uniform object
 within the shader.
 */
 enum ShaderUniformType {
-  vikr_TEXTURE2D,
-  vikr_TEXTURE3D,
-  vikr_SAMPLER2D,
-  vikr_SAMPLER3D,
-  vikr_SAMPLERCUBE,
-  vikr_INT,
-  vikr_FLOAT,
-  vikr_DOUBLE,
-  vikr_BOOL,
-  vikr_VEC2,
-  vikr_VEC3,
-  vikr_VEC4,
-  vikr_MAT2,
-  vikr_MAT3,
-  vikr_MAT4
+  vikr_UNIFORM_TEXTURE2D,
+  vikr_UNIFORM_TEXTURE3D,
+  vikr_UNIFORM_SAMPLER2D,
+  vikr_UNIFORM_SAMPLER3D,
+  vikr_UNIFORM_SAMPLERCUBE,
+  vikr_UNIFORM_INT,
+  vikr_UNIFORM_FLOAT,
+  vikr_UNIFORM_DOUBLE,
+  vikr_UNIFORM_BOOL,
+  vikr_UNIFORM_VEC2,
+  vikr_UNIFORM_VEC3,
+  vikr_UNIFORM_VEC4,
+  vikr_UNIFORM_MAT2,
+  vikr_UNIFORM_MAT3,
+  vikr_UNIFORM_MAT4
 };
 
 

@@ -35,14 +35,14 @@ public:
         std::string id = std::to_string(plight->GetLightId());
         MaterialValue pos, ambient, diffuse, specular, constant, linear, quad, blinn;
         MaterialValue enabled;
-        pos.type = vikr_VEC3; pos.m_vec3 = plight->GetPos();
-        ambient.type = vikr_VEC3;     ambient.m_vec3 = plight->GetAmbient();
-        specular.type = vikr_VEC3;    specular.m_vec3 = plight->GetSpecular();
-        diffuse.type = vikr_VEC3;     diffuse.m_vec3 = plight->GetDiffuse();
-        constant.type = vikr_FLOAT;   constant.m_float = plight->GetConstant();
-        linear.type = vikr_FLOAT;     linear.m_float = plight->GetLinear();
-        quad.type = vikr_FLOAT;       quad.m_float = plight->GetQuadratic();
-        enabled.type = vikr_BOOL;     enabled.m_bool = plight->IsEnabled();
+        pos.type = vikr_UNIFORM_VEC3; pos.m_vec3 = plight->GetPos();
+        ambient.type = vikr_UNIFORM_VEC3;     ambient.m_vec3 = plight->GetAmbient();
+        specular.type = vikr_UNIFORM_VEC3;    specular.m_vec3 = plight->GetSpecular();
+        diffuse.type = vikr_UNIFORM_VEC3;     diffuse.m_vec3 = plight->GetDiffuse();
+        constant.type = vikr_UNIFORM_FLOAT;   constant.m_float = plight->GetConstant();
+        linear.type = vikr_UNIFORM_FLOAT;     linear.m_float = plight->GetLinear();
+        quad.type = vikr_UNIFORM_FLOAT;       quad.m_float = plight->GetQuadratic();
+        enabled.type = vikr_UNIFORM_BOOL;     enabled.m_bool = plight->IsEnabled();
         light_params = {
           std::make_pair("vikr_pointLights[" + id + "].position", pos),
           std::make_pair("vikr_pointLights[" + id + "].ambient", ambient),

@@ -93,11 +93,11 @@ vvoid GL4Framebuffer::Update() {
   vuint32 count = 0;
   for (auto &val : m_renderPass->GetRenderTargets()) {
     GL4Texture *texture = static_cast<GL4Texture *>(val.second.GetTexture());
-    if(texture->GetTargetFormat() != vikr_TEXTURE_2D &&
-       texture->GetTargetFormat() != vikr_TEXTURE_2D_MULTISAMPLE) {
+    if(texture->GetTargetFormat() != vikr_TARGET_2D &&
+       texture->GetTargetFormat() != vikr_TARGET_2D_MULTISAMPLE) {
       VikrLog::DisplayMessage(VIKR_WARNING, "RenderTarget is not of Texture2D format!");
     }
-    if (texture->GetFormat() != vikr_DEPTH) {
+    if (texture->GetFormat() != vikr_FORMAT_DEPTH) {
       glFramebufferTexture2D(GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0 + val.first, texture->GetNativeTarget(), texture->GetNativeId(), 0);
       attachments[count] = GL_COLOR_ATTACHMENT0 + count;
@@ -132,7 +132,7 @@ vvoid GL4Framebuffer::ClearAttachments() {
        i != structure.end();
         ++i)
   {
-    if (i->second.GetTexture()->GetFormat() == vikr_DEPTH) {
+    if (i->second.GetTexture()->GetFormat() == vikr_FORMAT_DEPTH) {
       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
     } else {
       if (i->second.GetTexture()->IsMultisampled()) {
@@ -175,7 +175,7 @@ vvoid GL4Framebuffer::SetViewport(const Viewport &viewport) {
 
 vbool GL4Framebuffer::HasDepthStencil() {
   for (auto &i : m_renderPass->GetRenderTargets()) {
-    if (i.second.GetTexture()->GetInternalFormat() == vikr_DEPTH) {
+    if (i.second.GetTexture()->GetInternalFormat() == vikr_FORMAT_DEPTH) {
       return true;
     }
   }

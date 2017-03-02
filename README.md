@@ -79,7 +79,7 @@ just type, within your folder that you plan to build the project in:
 ```
 cmake -Dvulkan=ON path/to/vikr/project/
 ```
-
+Keep in mind, cmake attempts to find Vulkan Libraries in 64-bit (the Bin folder of your Vulkan API Sources), you may have to change it on Visual Studio, inside Properties -> Linker -> additional libraries (or somefin like that).
 
 # Further Note
 This is an engine solely for researching and as a hobby, especially if you are interested in how Renderers work. If you are looking for a well designed Graphics Renderer, I suggest looking into Pixar's RenderMan, Autodesk Maya, 3DSMax, AutoCAD, Blender, and/or other professional software. If you are looking for a stable Game Engine for Game development, I would definitely recommend Unity, Unreal Engine (highly recommend), Crytek Engine, Cocos2D, Torque, BansheeEngine, Pomdog and/or other professional/indie game engines. 

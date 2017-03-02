@@ -44,22 +44,22 @@ vvoid SpvCompiler::LoadShaderFile() {
     return;
   }
   switch (shader_stage) {
-    case VERTEX_SHADER: 
+    case vikr_VERTEX_SHADER: 
       pipelineShaderStage.stage = VK_SHADER_STAGE_VERTEX_BIT;
       break;
-    case FRAGMENT_SHADER: 
+    case vikr_FRAGMENT_SHADER: 
       pipelineShaderStage.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
       break;
-    case TESS_CONTROL_SHADER: 
+    case vikr_TESS_CONTROL_SHADER: 
       pipelineShaderStage.stage = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
       break;
-    case TESS_EVALUATION_SHADER: 
+    case vikr_TESS_EVALUATION_SHADER: 
       pipelineShaderStage.stage = VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
       break;
-    case GEOMETRY_SHADER: 
+    case vikr_GEOMETRY_SHADER: 
       pipelineShaderStage.stage = VK_SHADER_STAGE_GEOMETRY_BIT;
       break;
-    case COMPUTE_SHADER: 
+    case vikr_COMPUTE_SHADER: 
       pipelineShaderStage.stage = VK_SHADER_STAGE_COMPUTE_BIT;
       break;
     default: 

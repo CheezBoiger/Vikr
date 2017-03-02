@@ -30,7 +30,7 @@ public:
   /**
     Generates bytecode for the provided image.
   */
-  static vbyte *CreateImageByteCode(std::string tex_path, 
+  static vbyte *CreateImageByteCode(std::string filepath, 
             vint32 *width, vint32 *height, vint32 *channels, vbool alpha);
 
   /**
@@ -169,15 +169,15 @@ public:
 
 protected:
 
-  TextureTarget     m_target                    = vikr_TEXTURE_2D;
-  TextureFormat     m_format                    = vikr_RGBA;
-  TextureFormat     m_internal_format           = vikr_RGBA;
-  TextureFilterMode m_filter_min                = vikr_TEXTURE_LINEAR_MIPMAP_LINEAR;
-  TextureFilterMode m_filter_max                = vikr_TEXTURE_LINEAR;
-  TextureWrapMode   m_wrap_s                    = vikr_TEXTURE_REPEAT;
-  TextureWrapMode   m_wrap_t                    = vikr_TEXTURE_REPEAT;
-  TextureWrapMode   m_wrap_r                    = vikr_TEXTURE_REPEAT;
-  DataTypeFormat    m_datatype                  = data_UNSIGNED_BYTE;
+  TextureTarget     m_target                    = vikr_TARGET_2D;
+  TextureFormat     m_format                    = vikr_FORMAT_RGBA;
+  TextureFormat     m_internal_format           = vikr_FORMAT_RGBA;
+  TextureFilterMode m_filter_min                = vikr_FILTER_LINEAR_MIPMAP_LINEAR;
+  TextureFilterMode m_filter_max                = vikr_FILTER_LINEAR;
+  TextureWrapMode   m_wrap_s                    = vikr_WRAP_REPEAT;
+  TextureWrapMode   m_wrap_t                    = vikr_WRAP_REPEAT;
+  TextureWrapMode   m_wrap_r                    = vikr_WRAP_REPEAT;
+  DataTypeFormat    m_datatype                  = vikr_DATATYPE_UNSIGNED_BYTE;
   vbool             m_mipmapping                = true;
   vbool             m_alpha                     = true;
   vbool             m_multisampled              = false;

@@ -19,13 +19,13 @@ const vuint32 SHADOW_HEIGHT = 1024;
 
 GL4Cubemap::GL4Cubemap()
 {
-  GL4Texture::SetTarget(vikr_TEXTURE_CUBEMAP);
-  GL4Texture::SetFilterMin(vikr_TEXTURE_LINEAR);
-  GL4Texture::SetWrapS(vikr_TEXTURE_CLAMP_TO_EDGE);
-  GL4Texture::SetWrapT(vikr_TEXTURE_CLAMP_TO_EDGE);
-  GL4Texture::SetWrapR(vikr_TEXTURE_CLAMP_TO_EDGE);
-  GL4Texture::SetInternalFormat(vikr_RGB);
-  GL4Texture::SetFormat(vikr_RGB);
+  GL4Texture::SetTarget(vikr_TARGET_CUBEMAP);
+  GL4Texture::SetFilterMin(vikr_FILTER_LINEAR);
+  GL4Texture::SetWrapS(vikr_WRAP_CLAMP_TO_EDGE);
+  GL4Texture::SetWrapT(vikr_WRAP_CLAMP_TO_EDGE);
+  GL4Texture::SetWrapR(vikr_WRAP_CLAMP_TO_EDGE);
+  GL4Texture::SetInternalFormat(vikr_FORMAT_RGB);
+  GL4Texture::SetFormat(vikr_FORMAT_RGB);
 }
 
 
@@ -36,7 +36,7 @@ vvoid GL4Cubemap::Load(std::vector<const vchar *> *face_path) {
 
 
 vint32 GL4Cubemap::Finalize() {
-  m_target = vikr_TEXTURE_CUBEMAP;
+  m_target = vikr_TARGET_CUBEMAP;
   native_target = GL4Texture::GetNativeTextureTarget(m_target);
   if (id == Texture::kNoTextureId) {
     glGenTextures(1, &id);

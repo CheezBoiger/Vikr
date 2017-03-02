@@ -21,7 +21,7 @@ GL4Texture1D::GL4Texture1D(vuint32 width)
 
 
 vint32 GL4Texture1D::Finalize() {
-  m_target = vikr_TEXTURE_1D;
+  m_target = vikr_TARGET_1D;
   native_target = GetNativeTextureTarget(m_target);
   glGenTextures(1, &id);
   Bind();

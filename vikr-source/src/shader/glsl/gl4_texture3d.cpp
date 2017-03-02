@@ -22,7 +22,7 @@ GL4Texture3D::GL4Texture3D(vuint32 width, vuint32 height, vuint32 depth)
 
 
 vint32 GL4Texture3D::Finalize() {
-  m_target = vikr_TEXTURE_3D;
+  m_target = vikr_TARGET_3D;
   native_target  = GetNativeTextureTarget(m_target);
   glGenTextures(1, &id);
   Bind();

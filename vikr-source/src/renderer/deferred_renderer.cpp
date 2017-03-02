@@ -219,8 +219,8 @@ vint32 DeferredRenderer::Init(RenderDevice *device) {
     Light shader.
   */
   ResourceManager *mgr = m_renderDevice->GetResourceManager();
-  Shader *v_lightpass = mgr->CreateShader("lightpass_v", VERTEX_SHADER);
-  Shader *f_lightpass = mgr->CreateShader("lightpass_f", FRAGMENT_SHADER);
+  Shader *v_lightpass = mgr->CreateShader("lightpass_v", vikr_VERTEX_SHADER);
+  Shader *f_lightpass = mgr->CreateShader("lightpass_f", vikr_FRAGMENT_SHADER);
   v_lightpass->Compile("../../../libs/shader/GLSL/deferred/lightpass.vert");
   f_lightpass->Compile("../../../libs/shader/GLSL/deferred/lightpass.frag");
   lightShader = mgr->CreateShaderProgram();
