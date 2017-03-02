@@ -1,26 +1,26 @@
 //
 // Copyright (c) Mario Garcia. Under the MIT License.
 //
-#include <vikr/shader/glsl/gl_texture1d.hpp>
-#include <vikr/shader/glsl/gl_texture.hpp>
+#include <vikr/shader/glsl/gl4_texture1d.hpp>
+#include <vikr/shader/glsl/gl4_texture.hpp>
 #include <vikr/util/vikr_log.hpp>
 
 
 namespace vikr {
 
 
-GLTexture1D::GLTexture1D()
+GL4Texture1D::GL4Texture1D()
 {
 }
 
 
-GLTexture1D::GLTexture1D(vuint32 width)
+GL4Texture1D::GL4Texture1D(vuint32 width)
 {
   m_width = width;
 }
 
 
-vint32 GLTexture1D::Finalize() {
+vint32 GL4Texture1D::Finalize() {
   m_target = vikr_TEXTURE_1D;
   native_target = GetNativeTextureTarget(m_target);
   glGenTextures(1, &id);

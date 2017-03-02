@@ -1,7 +1,7 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
-#include <vikr/shader/glsl/gl_texture2d.hpp>
+#include <vikr/shader/glsl/gl4_texture2d.hpp>
 #include <vikr/util/vikr_log.hpp>
 #include <vikr/util/vikr_assert.hpp>
 
@@ -9,19 +9,19 @@
 namespace vikr {
 
 
-GLTexture2D::GLTexture2D()
+GL4Texture2D::GL4Texture2D()
 {
 }
 
 
-GLTexture2D::GLTexture2D(vuint32 width, vuint32 height) 
+GL4Texture2D::GL4Texture2D(vuint32 width, vuint32 height) 
 {
   m_width = width;
   m_height = height;
 }
 
 
-vint32 GLTexture2D::Finalize() {
+vint32 GL4Texture2D::Finalize() {
   if (m_multisampled) {
     m_target = vikr_TEXTURE_2D_MULTISAMPLE;
   } else {

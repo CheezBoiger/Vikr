@@ -8,7 +8,7 @@
 #include <vikr/graphics/gl4/gl4_renderpass.hpp>
 #include <vikr/graphics/gl4/gl4_commandbuffer.hpp>
 #include <vikr/graphics/gl4/gl4_pipeline_state.hpp>
-#include <vikr/shader/glsl/gl_cubemap.hpp>
+#include <vikr/shader/glsl/gl4_cubemap.hpp>
 
 #include <vikr/util/vikr_log.hpp>
 #include <cstddef>

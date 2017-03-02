@@ -5,16 +5,16 @@
 #define __VIKR_GL_TEXTURE1D_HPP
 
 
-#include <vikr/shader/glsl/gl_texture.hpp>
+#include <vikr/shader/glsl/gl4_texture.hpp>
 
 
 namespace vikr {
 
 
-class GLTexture1D : public GLTexture {
+class GL4Texture1D : public GL4Texture {
 public:
-  GLTexture1D();
-  GLTexture1D(vuint32 width);
+  GL4Texture1D();
+  GL4Texture1D(vuint32 width);
 
   virtual vint32 GetHeight() override { return -1; }
   virtual vint32 GetDepth() override { return -1; }

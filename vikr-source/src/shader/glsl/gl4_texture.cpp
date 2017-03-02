@@ -1,14 +1,14 @@
 //
 // Copyright (c) Mario Garcia. Under the MIT License.
 //
-#include <vikr/shader/glsl/gl_texture.hpp>
+#include <vikr/shader/glsl/gl4_texture.hpp>
 #include <vikr/util/vikr_log.hpp>
 
 
 namespace vikr {
 
 
-GLenum GLTexture::GetNativeWrapMode(TextureWrapMode mode) {
+GLenum GL4Texture::GetNativeWrapMode(TextureWrapMode mode) {
   switch (mode) {
     case vikr_TEXTURE_REPEAT: return GL_REPEAT;
     case vikr_TEXTURE_MIRRORED_REPEAT: return GL_MIRRORED_REPEAT;
@@ -19,7 +19,7 @@ GLenum GLTexture::GetNativeWrapMode(TextureWrapMode mode) {
 }
 
 
-GLenum GLTexture::GetNativeFilterMode(TextureFilterMode mode) {
+GLenum GL4Texture::GetNativeFilterMode(TextureFilterMode mode) {
   switch (mode) {
     case vikr_TEXTURE_NEAREST: return GL_NEAREST;
     case vikr_TEXTURE_LINEAR: return GL_LINEAR;
@@ -32,7 +32,7 @@ GLenum GLTexture::GetNativeFilterMode(TextureFilterMode mode) {
 }
 
 
-GLenum GLTexture::GetNativeTextureTarget(TextureTarget target) {
+GLenum GL4Texture::GetNativeTextureTarget(TextureTarget target) {
   switch (target) {
     case vikr_TEXTURE_1D: return GL_TEXTURE_1D;
     case vikr_TEXTURE_2D: return GL_TEXTURE_2D; 
@@ -50,11 +50,12 @@ GLenum GLTexture::GetNativeTextureTarget(TextureTarget target) {
 }
 
 
-GLenum GLTexture::GetNativeTextureFormat(TextureFormat format) {
+GLenum GL4Texture::GetNativeTextureFormat(TextureFormat format) {
   switch (format) {
     case vikr_RGB: return GL_RGB;
     case vikr_RGBA: return GL_RGBA;
     case vikr_RGB16F: return GL_RGB16F;
+    case vikr_RGB32F: return GL_RGB32F;
     case vikr_DEPTH: return GL_DEPTH_COMPONENT;
     case vikr_ALPHA: return GL_ALPHA;
     case vikr_RED: return GL_RED;
@@ -63,7 +64,7 @@ GLenum GLTexture::GetNativeTextureFormat(TextureFormat format) {
 }
 
 
-GLenum GLTexture::GetNativeDataTypeFormat(DataTypeFormat format) {
+GLenum GL4Texture::GetNativeDataTypeFormat(DataTypeFormat format) {
   switch (format) {
     case data_UNSIGNED_BYTE: return GL_UNSIGNED_BYTE;
     case data_UNSIGNED_INT: return GL_UNSIGNED_INT;
@@ -73,61 +74,61 @@ GLenum GLTexture::GetNativeDataTypeFormat(DataTypeFormat format) {
 }
 
 
-GLTexture::GLTexture()
+GL4Texture::GL4Texture()
 {
   CleanParams();
 }
 
 
-vvoid GLTexture::SetFormat(TextureFormat format) {
+vvoid GL4Texture::SetFormat(TextureFormat format) {
   m_format = format;
   native_format = GetNativeTextureFormat(m_format);
 }
 
 
-vvoid GLTexture::SetInternalFormat(TextureFormat format) {
+vvoid GL4Texture::SetInternalFormat(TextureFormat format) {
   m_internal_format = format;
   native_internal_format = GetNativeTextureFormat(format);
 }
 
 
-vvoid GLTexture::SetFilterMin(TextureFilterMode filter) {
+vvoid GL4Texture::SetFilterMin(TextureFilterMode filter) {
   m_filter_min = filter;
   native_filter_min = GetNativeFilterMode(m_filter_min);
 }
 
 
-vvoid GLTexture::SetFilterMax(TextureFilterMode filter) {
+vvoid GL4Texture::SetFilterMax(TextureFilterMode filter) {
   m_filter_max = filter;
   native_filter_max = GetNativeFilterMode(m_filter_max);
 }
 
 
-vvoid GLTexture::SetWrapS(TextureWrapMode mode) {
+vvoid GL4Texture::SetWrapS(TextureWrapMode mode) {
   m_wrap_s = mode;
   native_wrap_s = GetNativeWrapMode(m_wrap_s);
 }
 
 
-vvoid GLTexture::SetWrapT(TextureWrapMode mode) {
+vvoid GL4Texture::SetWrapT(TextureWrapMode mode) {
   m_wrap_t = mode;
   native_wrap_t = GetNativeWrapMode(m_wrap_t);
 }
 
 
-vvoid GLTexture::SetWrapR(TextureWrapMode mode) {
+vvoid GL4Texture::SetWrapR(TextureWrapMode mode) {
   m_wrap_r = mode;
   native_wrap_r = GetNativeWrapMode(m_wrap_r);
 }
 
 
-vvoid GLTexture::SetDataTypeFormat(DataTypeFormat format) {
+vvoid GL4Texture::SetDataTypeFormat(DataTypeFormat format) {
   m_datatype = format;
   native_datatype = GetNativeDataTypeFormat(format);
 }
 
 
-vvoid GLTexture::Bind(vint32 texture) {
+vvoid GL4Texture::Bind(vint32 texture) {
   if (texture >= 0) {
     glActiveTexture(GL_TEXTURE0 + texture);
   }
@@ -135,12 +136,12 @@ vvoid GLTexture::Bind(vint32 texture) {
 }
 
 
-vvoid GLTexture::Unbind() {
+vvoid GL4Texture::Unbind() {
   glBindTexture(native_target, 0);
 }
 
 
-vvoid GLTexture::CleanParams() {
+vvoid GL4Texture::CleanParams() {
   SetWrapT(m_wrap_r);
   SetWrapS(m_wrap_s);
   SetWrapR(m_wrap_r);
@@ -152,7 +153,7 @@ vvoid GLTexture::CleanParams() {
 }
 
 
-vvoid GLTexture::SetTarget(TextureTarget target) {
+vvoid GL4Texture::SetTarget(TextureTarget target) {
   // should not be able to change the texture target.
 }
 } // vikr

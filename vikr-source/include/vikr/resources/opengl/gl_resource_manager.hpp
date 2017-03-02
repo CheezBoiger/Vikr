@@ -17,7 +17,7 @@ namespace vikr {
 
 
 class GLSLShader;
-class GLTexture;
+class GL4Texture;
 class GLSLShaderProgram;
 class GL4PipelineState;
 
@@ -75,7 +75,7 @@ class GLResources : public Resources {
   /**
   Contains material data.
   */
-  static std::map<guid_t, std::unique_ptr<GLTexture> > textures;
+  static std::map<guid_t, std::unique_ptr<GL4Texture> > textures;
 
   static std::map<guid_t, std::unique_ptr<GLSLShaderProgram> > shader_programs;
   static std::map<guid_t, std::unique_ptr<GL4PipelineState> > pipelinestates; 

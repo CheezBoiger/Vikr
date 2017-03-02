@@ -10,6 +10,13 @@
 
 namespace vikr {
 
+class SpvTexture : public Texture {
+public:
 
+
+private:
+
+
+};
 } // vikr
 #endif // __VIKR_SPV_TEXTURE_HPP

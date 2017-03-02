@@ -4,7 +4,7 @@
 #include <vikr/graphics/gl4/gl4_framebuffer.hpp>
 #include <vikr/graphics/gl4/gl4_rendertarget.hpp>
 #include <vikr/graphics/gl4/gl4_renderpass.hpp>
-#include <vikr/shader/glsl/gl_texture2d.hpp>
+#include <vikr/shader/glsl/gl4_texture2d.hpp>
 #include <vikr/util/vikr_log.hpp>
 #include <vikr/util/vikr_assert.hpp>
 #include <vikr/input/window.hpp>
@@ -92,7 +92,7 @@ vvoid GL4Framebuffer::Update() {
   GLenum attachments[GL_MAX_COLOR_ATTACHMENTS];
   vuint32 count = 0;
   for (auto &val : m_renderPass->GetRenderTargets()) {
-    GLTexture *texture = static_cast<GLTexture *>(val.second.GetTexture());
+    GL4Texture *texture = static_cast<GL4Texture *>(val.second.GetTexture());
     if(texture->GetTargetFormat() != vikr_TEXTURE_2D &&
        texture->GetTargetFormat() != vikr_TEXTURE_2D_MULTISAMPLE) {
       VikrLog::DisplayMessage(VIKR_WARNING, "RenderTarget is not of Texture2D format!");

@@ -4,15 +4,15 @@
 #ifndef __VIKR_GL_TEXTURE2D_HPP
 #define __VIKR_GL_TEXTURE2D_HPP
 
-#include <vikr/shader/glsl/gl_texture1d.hpp>
+#include <vikr/shader/glsl/gl4_texture1d.hpp>
 
 namespace vikr {
 
 
-class GLTexture2D : public GLTexture1D {
+class GL4Texture2D : public GL4Texture1D {
 public:
-  GLTexture2D(vuint32 width, vuint32 height = 0);
-  GLTexture2D();
+  GL4Texture2D(vuint32 width, vuint32 height = 0);
+  GL4Texture2D();
   
   virtual vint32 Finalize() override;
 

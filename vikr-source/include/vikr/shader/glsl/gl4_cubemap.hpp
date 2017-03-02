@@ -6,12 +6,12 @@
 
 
 #include <vikr/shader/cubemap.hpp>
-#include <vikr/shader/glsl/gl_texture.hpp>
+#include <vikr/shader/glsl/gl4_texture.hpp>
 
 namespace vikr {
 
 
-class GL4Cubemap : public Cubemap, public GLTexture {
+class GL4Cubemap : public Cubemap, public GL4Texture {
 public:
 
   GL4Cubemap();
@@ -23,19 +23,19 @@ public:
   vint32 Finalize() override;
 
   vvoid SetMagFilter(TextureFilterMode mode) override 
-    { GLTexture::SetFilterMax(mode); }
+    { GL4Texture::SetFilterMax(mode); }
 
   vvoid SetMinFilter(TextureFilterMode mode) override
-    { GLTexture::SetFilterMin(mode); }
+    { GL4Texture::SetFilterMin(mode); }
 
   vvoid SetWrapS(TextureWrapMode mode) override
-    { GLTexture::SetWrapS(mode); }
+    { GL4Texture::SetWrapS(mode); }
 
   vvoid SetWrapT(TextureWrapMode mode) override 
-    { GLTexture::SetWrapT(mode); }
+    { GL4Texture::SetWrapT(mode); }
 
   vvoid SetWrapR(TextureWrapMode mode) override
-    { GLTexture::SetWrapR(mode); }
+    { GL4Texture::SetWrapR(mode); }
 
   vvoid OverrideFaceWidth(vuint32 val) override
     { overriding = true; image_width = val; }
@@ -44,7 +44,7 @@ public:
     { overriding = true; image_height = val; }
 
   vvoid Cleanup() override
-    { GLTexture::Cleanup(); } 
+    { GL4Texture::Cleanup(); } 
 
   vvoid ClearSizeOverride() override
     { overriding = false; }
@@ -62,7 +62,7 @@ public:
     { return image_channels; }
 
   guid_t GetUID() override 
-    { return GLTexture::GetUID(); }
+    { return GL4Texture::GetUID(); }
 
 private:
   std::vector<const vchar *> *m_faces = nullptr;

@@ -3,7 +3,7 @@
 //
 #include <vikr/graphics/gl4/gl4_rendertarget.hpp>
 #include <vikr/lighting/light.hpp>
-#include <vikr/shader/glsl/gl_texture2d.hpp>
+#include <vikr/shader/glsl/gl4_texture2d.hpp>
 #include <vikr/util/vikr_log.hpp>
 
 

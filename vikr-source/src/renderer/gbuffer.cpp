@@ -25,7 +25,6 @@ vvoid GBuffer::Init(RenderDevice *device) {
   viewport.win_y = 0;
   viewport.win_width = Window::GetMainWindow()->GetWidth();
   viewport.win_height = Window::GetMainWindow()->GetHeight();
- 
   ResourceManager *mgr = device->GetResourceManager();
   
   m_rendertargets[0] = mgr->CreateTexture("gPosition", vikr_TEXTURE_2D, "", false);

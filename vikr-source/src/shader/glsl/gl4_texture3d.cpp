@@ -1,19 +1,19 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 // 
-#include <vikr/shader/glsl/gl_texture3d.hpp>
+#include <vikr/shader/glsl/gl4_texture3d.hpp>
 #include <vikr/util/vikr_log.hpp>
 
 
 namespace vikr {
 
 
-GLTexture3D::GLTexture3D()
+GL4Texture3D::GL4Texture3D()
 {
 }
 
 
-GLTexture3D::GLTexture3D(vuint32 width, vuint32 height, vuint32 depth)
+GL4Texture3D::GL4Texture3D(vuint32 width, vuint32 height, vuint32 depth)
 {
   m_width = width;
   m_height = height;
@@ -21,7 +21,7 @@ GLTexture3D::GLTexture3D(vuint32 width, vuint32 height, vuint32 depth)
 }
 
 
-vint32 GLTexture3D::Finalize() {
+vint32 GL4Texture3D::Finalize() {
   m_target = vikr_TEXTURE_3D;
   native_target  = GetNativeTextureTarget(m_target);
   glGenTextures(1, &id);

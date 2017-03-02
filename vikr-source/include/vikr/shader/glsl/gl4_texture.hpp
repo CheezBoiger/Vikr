@@ -10,7 +10,7 @@
 namespace vikr {
 
 
-class GLTexture : public Texture {
+class GL4Texture : public Texture {
 public:
   static GLenum GetNativeWrapMode(TextureWrapMode mode);
   static GLenum GetNativeFilterMode(TextureFilterMode mode);
@@ -18,7 +18,7 @@ public:
   static GLenum GetNativeTextureFormat(TextureFormat format);
   static GLenum GetNativeDataTypeFormat(DataTypeFormat format);
 
-  GLTexture();
+  GL4Texture();
 
 
   virtual vint32 Finalize() override = 0;

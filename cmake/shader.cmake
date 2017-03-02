@@ -39,12 +39,12 @@ endif()
 # OpenGL always enabled
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_SHADER_GLSL_SRC_DIR}/gl_cubemap.cpp
+  ${VIKR_SHADER_GLSL_SRC_DIR}/gl4_cubemap.cpp
   ${VIKR_SHADER_GLSL_SRC_DIR}/glsl_preprocessor.cpp
-  ${VIKR_SHADER_GLSL_SRC_DIR}/gl_texture.cpp
-  ${VIKR_SHADER_GLSL_SRC_DIR}/gl_texture1d.cpp
-  ${VIKR_SHADER_GLSL_SRC_DIR}/gl_texture2d.cpp
-  ${VIKR_SHADER_GLSL_SRC_DIR}/gl_texture3d.cpp
+  ${VIKR_SHADER_GLSL_SRC_DIR}/gl4_texture.cpp
+  ${VIKR_SHADER_GLSL_SRC_DIR}/gl4_texture1d.cpp
+  ${VIKR_SHADER_GLSL_SRC_DIR}/gl4_texture2d.cpp
+  ${VIKR_SHADER_GLSL_SRC_DIR}/gl4_texture3d.cpp
   ${VIKR_SHADER_GLSL_SRC_DIR}/glsl_compiler.cpp
   ${VIKR_SHADER_GLSL_SRC_DIR}/glsl_linker.cpp
   ${VIKR_SHADER_GLSL_SRC_DIR}/glsl_shader.cpp
@@ -56,12 +56,12 @@ set(VIKR_GLOB
   ${VIKR_SHADER_GLSL_INCLUDE_DIR}/glsl_shader.hpp
   ${VIKR_SHADER_GLSL_INCLUDE_DIR}/glsl_linker.hpp
   ${VIKR_SHADER_GLSL_INCLUDE_DIR}/glsl_compiler.hpp
-  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl_texture3d.hpp
-  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl_texture2d.hpp
-  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl_texture1d.hpp
-  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl_texture.hpp
+  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl4_texture3d.hpp
+  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl4_texture2d.hpp
+  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl4_texture1d.hpp
+  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl4_texture.hpp
   ${VIKR_SHADER_GLSL_INCLUDE_DIR}/glsl_preprocessor.hpp
-  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl_cubemap.hpp
+  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl4_cubemap.hpp
   ${VIKR_SHADER_GLSL_INCLUDE_DIR}/glsl_program.hpp
 )
 

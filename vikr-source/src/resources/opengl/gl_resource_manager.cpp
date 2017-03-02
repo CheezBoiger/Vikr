@@ -5,9 +5,9 @@
 #include <vikr/shader/glsl/glsl_shader.hpp>
 #include <vikr/shader/material.hpp>
 #include <vikr/mesh/mesh.hpp>
-#include <vikr/shader/glsl/gl_texture1d.hpp>
-#include <vikr/shader/glsl/gl_texture2d.hpp>
-#include <vikr/shader/glsl/gl_texture3d.hpp>
+#include <vikr/shader/glsl/gl4_texture1d.hpp>
+#include <vikr/shader/glsl/gl4_texture2d.hpp>
+#include <vikr/shader/glsl/gl4_texture3d.hpp>
 #include <vikr/shader/glsl/glsl_program.hpp>
 #include <vikr/shader/stb/stb_image.h>
 
@@ -20,7 +20,7 @@ namespace vikr {
 
 
 std::unordered_map<guid_t, std::unique_ptr<GLSLShader> > GLResources::shaders;
-std::map<guid_t, std::unique_ptr<GLTexture> > GLResources::textures;
+std::map<guid_t, std::unique_ptr<GL4Texture> > GLResources::textures;
 std::map<guid_t, std::unique_ptr<GLSLShaderProgram> > GLResources::shader_programs;
 std::map<guid_t, std::unique_ptr<GL4PipelineState> > GLResources::pipelinestates;
 
@@ -70,16 +70,16 @@ Texture *GLResourceManager::CreateTexture(
   std::string filepath, 
   vbool alpha) 
 {
-  std::unique_ptr<GLTexture> texture = nullptr;
+  std::unique_ptr<GL4Texture> texture = nullptr;
   vint32 width = 0;
   vint32 height = 0;
   vint32 depth = 0;
   vbyte *bytecode = stbi_load(filepath.c_str(), &width, &height, &depth,
                               alpha ? STBI_rgb_alpha : STBI_rgb);
   switch(target) {
-  case vikr_TEXTURE_1D: texture = std::make_unique<GLTexture1D>(width); break;
-  case vikr_TEXTURE_2D: texture = std::make_unique<GLTexture2D>(width, height); break;
-  case vikr_TEXTURE_3D: texture = std::make_unique<GLTexture3D>(width, height, depth); break;
+  case vikr_TEXTURE_1D: texture = std::make_unique<GL4Texture1D>(width); break;
+  case vikr_TEXTURE_2D: texture = std::make_unique<GL4Texture2D>(width, height); break;
+  case vikr_TEXTURE_3D: texture = std::make_unique<GL4Texture3D>(width, height, depth); break;
   case vikr_TEXTURE_CUBEMAP: // not implemented yet.
   default: break;
   }

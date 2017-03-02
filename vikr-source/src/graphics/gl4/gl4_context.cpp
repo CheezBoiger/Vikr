@@ -7,7 +7,7 @@
 #include <vikr/graphics/gl4/gl4_renderpass.hpp>
 #include <vikr/graphics/gl4/gl4_vertexbuffer.hpp>
 #include <vikr/graphics/gl4/gl4_framebuffer.hpp>
-#include <vikr/shader/glsl/gl_cubemap.hpp>
+#include <vikr/shader/glsl/gl4_cubemap.hpp>
 #include <vikr/graphics/command_buffer.hpp>
 #include <vikr/graphics/graphics_command.hpp>
 #include <vikr/graphics/render_pass.hpp>
@@ -15,9 +15,9 @@
 #include <vikr/graphics/framebuffer.hpp>
 #include <vikr/graphics/pipeline_state.hpp>
 
-#include <vikr/shader/glsl/gl_texture.hpp>
+#include <vikr/shader/glsl/gl4_texture.hpp>
 #include <vikr/shader/shader_uniform_params.hpp>
-#include <vikr/shader/glsl/gl_texture.hpp>
+#include <vikr/shader/glsl/gl4_texture.hpp>
 
 #include <glm/gtc/type_ptr.hpp>
 #include <vikr/util/vikr_log.hpp>
@@ -87,7 +87,7 @@ vvoid GL4RenderContext::SetTexture(Texture *texture, vuint32 index) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Texture is null.");
     return;
   }
-  GLTexture *gl_texture = static_cast<GLTexture *>(texture);
+  GL4Texture *gl_texture = static_cast<GL4Texture *>(texture);
   glActiveTexture(GL_TEXTURE0 + index);
   glBindTexture(gl_texture->GetNativeTarget(), gl_texture->GetNativeId());
   VIKR_ASSERT(glGetError() == 0);
@@ -294,7 +294,7 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     m_currTextures.reserve(params->samplers->size());
     for(auto sampler : *params->samplers) {
       if (sampler.second.type != vikr_SAMPLERCUBE) {
-        GLTexture *texture = static_cast<GLTexture *>(sampler.second.texture);
+        GL4Texture *texture = static_cast<GL4Texture *>(sampler.second.texture);
         SetTexture(texture, sampler.second.i);
         m_currTextures.push_back(std::move(sampler.second));
       } else {
@@ -310,7 +310,7 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
 vvoid GL4RenderContext::ClearTextures() {
   // clear previous textures.
   for (vuint32 i = 0; i < m_currTextures.size(); ++i) {
-    GLTexture *tex = static_cast<GLTexture *>(m_currTextures[i].texture);
+    GL4Texture *tex = static_cast<GL4Texture *>(m_currTextures[i].texture);
     glActiveTexture(GL_TEXTURE0 + m_currTextures[i].i);
     glBindTexture(tex->GetNativeTarget(), tex->GetNativeId());
     VIKR_ASSERT(glGetError() == 0);
