@@ -20,7 +20,6 @@ Mesh::Mesh(GraphicsPipeline pipeline)
   : m_vertexBuffer(nullptr)
   , m_render_type(pipeline)
   , m_name(kDefaultName)
-  , guid(GUIDGenerator::Generate())
 {
 }
 

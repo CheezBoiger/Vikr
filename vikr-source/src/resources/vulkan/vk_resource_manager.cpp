@@ -71,12 +71,12 @@ Texture *VKResourceManager::CreateTexture(
 }
 
 
-Texture *VKResourceManager::GetTexture(std::string filepath) {
+Texture *VKResourceManager::GetTexture(guid_t id) {
   return nullptr;
 }
 
 
-vbool VKResourceManager::DestroyTexture(std::string filepath) {
+vbool VKResourceManager::DestroyTexture(guid_t id) {
   return false;
 }
 } // vikr

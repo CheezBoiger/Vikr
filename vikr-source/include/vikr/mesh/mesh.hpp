@@ -80,11 +80,6 @@ public:
   std::string GetName() { return m_name; }
 
   /**
-    Unique Identification number for the mesh.
-  */
-  guid_t GetGUID() override { return guid; }
-
-  /**
     For animation purposes. Dirty values are checked in case the mesh needs to
     update other components.
   */
@@ -98,8 +93,6 @@ private:
   vbool is_transparent                  = false;
   vbool is_dirty                        = false;
   VertexContainer m_vertices;
-
-  guid_t guid;
 };
 } // vikr
 #endif // __VIKR_MESH_HPP

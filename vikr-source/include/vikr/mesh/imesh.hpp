@@ -24,7 +24,7 @@ class Vertexbuffer;
 /**
   Mesh Interface. Used for abstracting meshes if new meshes need to be created.
 */
-class IMesh {
+class IMesh : public GUID {
 public:
   IMesh() { }
   virtual ~IMesh() { }
@@ -48,8 +48,6 @@ public:
   virtual GraphicsPipeline GetRenderType() = 0;
   virtual VertexContainer &GetVertices() = 0;
   virtual vbool IsDirty() = 0;
-
-  virtual guid_t GetGUID() = 0;
 };
 } // vikr
 #endif // __VIKR_IMESH_HPP

@@ -57,8 +57,8 @@ public:
 
   Texture *CreateTexture(std::string name, TextureTarget target, 
     std::string filepath, vbool alpha) override;
-  Texture *GetTexture(std::string filepath) override;
-  vbool DestroyTexture(std::string filepath) override;
+  Texture *GetTexture(guid_t id) override;
+  vbool DestroyTexture(guid_t id) override;
 
   ShaderProgram *CreateShaderProgram() override;
   ShaderProgram *GetShaderProgram(guid_t id) override;
@@ -75,7 +75,7 @@ class GLResources : public Resources {
   /**
   Contains material data.
   */
-  static std::map<std::string, std::unique_ptr<GLTexture> > textures;
+  static std::map<guid_t, std::unique_ptr<GLTexture> > textures;
 
   static std::map<guid_t, std::unique_ptr<GLSLShaderProgram> > shader_programs;
   static std::map<guid_t, std::unique_ptr<GL4PipelineState> > pipelinestates; 

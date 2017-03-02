@@ -20,7 +20,7 @@ namespace vikr {
 
 
 std::unordered_map<guid_t, std::unique_ptr<GLSLShader> > GLResources::shaders;
-std::map<std::string, std::unique_ptr<GLTexture> > GLResources::textures;
+std::map<guid_t, std::unique_ptr<GLTexture> > GLResources::textures;
 std::map<guid_t, std::unique_ptr<GLSLShaderProgram> > GLResources::shader_programs;
 std::map<guid_t, std::unique_ptr<GL4PipelineState> > GLResources::pipelinestates;
 
@@ -35,8 +35,9 @@ Shader *GLResourceManager::CreateShader(std::string name, ShaderStage stage) {
   std::unique_ptr<GLSLShader> shader = std::make_unique<GLSLShader>(stage);
   shader->SetName(name);
 
+  guid_t id = shader->GetUID();
   GLResources::shaders[shader->GetUID()] = std::move(shader);
-  return static_cast<Shader *>(GLResources::shaders[shader->GetUID()].get());
+  return static_cast<Shader *>(GLResources::shaders[id].get());
 }
 
 
@@ -82,29 +83,25 @@ Texture *GLResourceManager::CreateTexture(
   case vikr_TEXTURE_CUBEMAP: // not implemented yet.
   default: break;
   }
+  guid_t id = texture->GetUID();
   if (texture) {
     texture->SetByteCode(bytecode);
     //texture->Finalize(); // No need to tell the resource manager to finalize for us.
     texture->SetPath(filepath);
     texture->SetName(name);
-    if (!filepath.empty()) {
-      GLResources::textures[filepath] = std::move(texture);
-    } else {
-      // No filepath? Use the name instead.
-      GLResources::textures[name] = std::move(texture);
-    }
+    GLResources::textures[texture->GetUID()] = std::move(texture);
   }
-  return GLResources::textures[name].get();
+  return GLResources::textures[id].get();
 }
 
 
-Texture *GLResourceManager::GetTexture(std::string filepath) {
-  return GLResources::textures[filepath].get();
+Texture *GLResourceManager::GetTexture(guid_t id) {
+  return GLResources::textures[id].get();
 }
 
 
-vbool GLResourceManager::DestroyTexture(std::string filepath) {
-  auto it = GLResources::textures.find(filepath);
+vbool GLResourceManager::DestroyTexture(guid_t id) {
+  auto it = GLResources::textures.find(id);
   vbool success = false;
   if (it != GLResources::textures.end()) {
     // Cleanup first.

@@ -32,8 +32,8 @@ public:
   
   Texture *CreateTexture(std::string name, TextureTarget target, 
     std::string filepath, vbool alpha) override;
-  Texture *GetTexture(std::string filepath) override;
-  vbool DestroyTexture(std::string filepath) override;
+  Texture *GetTexture(guid_t id) override;
+  vbool DestroyTexture(guid_t id) override;
 
 };
 

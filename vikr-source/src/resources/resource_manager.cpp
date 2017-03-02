@@ -30,8 +30,9 @@ ResourceManager::ResourceManager(GraphicsPipeline pipe)
 */
 SceneNode *ResourceManager::CreateSceneNode() {
   std::unique_ptr<SceneNode> node = std::make_unique<SceneNode>();
+  guid_t id = node->GetUID();
   Resources::scene_nodes[node->GetUID()] = std::move(node);
-  return Resources::scene_nodes[node->GetUID()].get();
+  return Resources::scene_nodes[id].get();
 }
 
 
@@ -59,8 +60,9 @@ Mesh *ResourceManager::CreateMesh(
   std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
   mesh->Buffer(positions, normals, uvs, indices, tangents, bitangents, colors);
   // mesh->Create();
-  Resources::meshes[mesh->GetGUID()] = std::move(mesh);
-  return Resources::meshes[mesh->GetGUID()].get();
+  guid_t id = mesh->GetUID();
+  Resources::meshes[mesh->GetUID()] = std::move(mesh);
+  return Resources::meshes[id].get();
 }
 
 
@@ -71,8 +73,9 @@ Mesh *ResourceManager::CreateMesh(
   std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
   mesh->Buffer(vertices, indices);
   //mesh->Create();
-  Resources::meshes[mesh->GetGUID()] = std::move(mesh);
-  return mesh.get();
+  guid_t id = mesh->GetUID();
+  Resources::meshes[mesh->GetUID()] = std::move(mesh);
+  return Resources::meshes[id].get();
 }
 
 

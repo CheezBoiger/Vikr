@@ -78,8 +78,8 @@ public:
 
   virtual Texture *CreateTexture(std::string name, TextureTarget target, 
     std::string filepath, vbool alpha) = 0;
-  virtual Texture *GetTexture(std::string filepath) = 0;
-  virtual vbool DestroyTexture(std::string filepath) = 0;
+  virtual Texture *GetTexture(guid_t id) = 0;
+  virtual vbool DestroyTexture(guid_t id) = 0;
 
   /**
     Much involves the interface design of ResourceManager, but this is common.
