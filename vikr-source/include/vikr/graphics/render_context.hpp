@@ -41,6 +41,7 @@ class CommandbufferList;
 class PipelineState;
 class Vertexbuffer;
 class Framebuffer;
+class Material;
 
 struct ShaderUniformParams;
 struct Viewport;
@@ -172,6 +173,9 @@ public:
     Sets the Shader uniforms when needed.
   */
   virtual vvoid SetShaderUniforms(ShaderUniformParams *params) = 0;
+
+
+  virtual vvoid SetMaterial(Material *material) = 0;
 
   /**
     Query the Vertex buffer, in this case, it must be called everytime

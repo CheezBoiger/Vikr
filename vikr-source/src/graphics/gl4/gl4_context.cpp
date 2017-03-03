@@ -14,6 +14,7 @@
 #include <vikr/graphics/render_target.hpp>
 #include <vikr/graphics/framebuffer.hpp>
 #include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/shader/material.hpp>
 
 #include <vikr/shader/glsl/gl4_texture.hpp>
 #include <vikr/shader/shader_uniform_params.hpp>
@@ -360,5 +361,13 @@ vvoid GL4RenderContext::ApplyPipelineState(PipelineState *pipelinestate) {
 
 Framebuffer *GL4RenderContext::GetFramebuffer() {
   return static_cast<Framebuffer *>(m_currFramebuffer);
+}
+
+
+vvoid GL4RenderContext::SetMaterial(Material *material) {
+  ShaderUniformParams params;
+  params.uniforms = material->GetMaterialValues();
+  params.samplers = material->GetUniformSamplers();
+  SetShaderUniforms(&params);
 }
 } // vikr

@@ -68,6 +68,9 @@ public:
   vvoid SetQueryVertexbuffer(Vertexbuffer *buffer) override;
 
 
+  vvoid SetMaterial(Material *material) override;
+
+
   vbool IsRecording() override;
   
 

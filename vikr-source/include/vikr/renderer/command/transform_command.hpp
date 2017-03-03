@@ -10,6 +10,7 @@
 #include <vikr/graphics/command_buffer.hpp>
 #include <vikr/shader/shader_uniform_params.hpp>
 #include <vikr/scene/transform.hpp>
+#include <vikr/shader/material.hpp>
 
 #include <map>
 #include <memory>
@@ -31,21 +32,17 @@ public:
 
 
   vvoid Record(Commandbuffer &buffer) override {
-    MaterialValue mat;
-    mat.m_mat4 = m_transform->GetTransform();
-    mat.type = vikr_UNIFORM_MAT4;
-    m_transformParam["vikr_Model"] = mat;
-    ShaderUniformParams param;
-    param.uniforms = &m_transformParam;
-    buffer.SetShaderUniforms(param);
+    buffer.BeginRecord();
+    m_material.SetMat4("vikr_Model", m_transform->GetTransform());
+    buffer.SetMaterial(&m_material);
+    buffer.EndRecord();
   }
 
 
   Transform *m_transform;
 
 private:
-
-  std::map<std::string, MaterialValue> m_transformParam;
+  Material m_material;
   VIKR_DISALLOW_COPY_AND_ASSIGN(TransformCommand);
 };
 } // vikr

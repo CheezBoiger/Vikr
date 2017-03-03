@@ -2,6 +2,8 @@
 // Copyright (c) Mario Garcia, Under the MIT License. 
 //
 #include <vikr/graphics/vk/vk_context.hpp>
+#include <vikr/shader/material.hpp>
+
 
 namespace vikr {
 
@@ -115,5 +117,9 @@ PipelineState *VKContext::GetPipelineState() {
 
 
 vvoid VKContext::ApplyPipelineState(PipelineState *pipeline) {
+}
+
+
+vvoid VKContext::SetMaterial(Material *material) {
 }
 } // vikr

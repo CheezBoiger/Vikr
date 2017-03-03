@@ -59,6 +59,7 @@ class RenderPass;
 class PipelineState;
 class Vertexbuffer;
 class ShaderProgram;
+class Material;
 
 struct ShaderUniformParams;
 struct Viewport;
@@ -90,6 +91,7 @@ public:
   virtual vvoid SetConfigurePipelineState(PipelineState *pipelinestate) = 0;
   virtual vvoid SetShaderUniforms(ShaderUniformParams params) = 0;
   virtual vvoid SetQueryVertexbuffer(Vertexbuffer *buffer) = 0;
+  virtual vvoid SetMaterial(Material *material) = 0;
 
   virtual vbool IsRecording() = 0;
 };

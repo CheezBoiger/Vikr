@@ -25,6 +25,7 @@ public:
   }
 
   vvoid Record(Commandbuffer &buffer) override {
+    // Doesn't need to record itself, only the commands inside.
     for (auto command : m_commands) {
       command.second->Record(buffer); 
     }

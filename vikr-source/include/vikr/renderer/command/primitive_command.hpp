@@ -25,12 +25,14 @@ public:
 
 
   vvoid Record(Commandbuffer &buffer) override {
+    buffer.BeginRecord();
     buffer.SetQueryVertexbuffer(m_mesh->GetVertexBuffer());
     if (m_mesh->GetVertices().indices.empty()) {
       buffer.SetDraw(0, m_mesh->GetVertices().size);
     } else {
       buffer.SetDrawIndexed(nullptr, m_mesh->GetVertices().indices.size());
     }
+    buffer.EndRecord();
   }
 
   Mesh *m_mesh;

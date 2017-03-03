@@ -30,20 +30,19 @@ public:
     , m_material(material) { }
 
   vvoid Record(Commandbuffer &buffer) override {
+    buffer.BeginRecord();
     if (!m_material) {
       return;
     }
-    ShaderUniformParams params;
     ShaderProgram *prgm = m_material->GetShaderProgram();
     //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
 
     if (prgm) {
       buffer.SetShaderProgram(prgm);
     }
-    params.samplers = m_material->GetUniformSamplers();
-    params.uniforms = m_material->GetMaterialValues();
-    buffer.SetShaderUniforms(params);
-    
+    buffer.SetMaterial(m_material);
+
+    buffer.EndRecord();
   }
 
   Material *m_material;

@@ -66,6 +66,7 @@ public:
 
   vvoid Present() override;
 
+  vvoid SetMaterial(Material *material) override;
 
   VkQueue &GetGraphicsQueue() { return m_queueGraphicsBuffer; }
   VkQueue &GetPresentationQueue() { return m_queuePresentBuffer; }

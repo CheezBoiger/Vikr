@@ -72,6 +72,7 @@ public:
   Framebuffer *GetFramebuffer() override;
   PipelineState *GetPipelineState() override;
   vvoid ApplyPipelineState(PipelineState *pipelinestate) override;
+  vvoid SetMaterial(Material *material) override;
 
   vvoid Present() override;
 

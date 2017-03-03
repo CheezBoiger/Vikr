@@ -13,13 +13,15 @@ namespace vikr {
 
 
 vvoid CameraCommand::Record(Commandbuffer &buffer) {
+  buffer.BeginRecord();
   if (camera && (camera == Renderer::GetRenderer()->GetCamera())) {
     m_material.SetMat4("vikr_Projection", camera->GetProjection());
     m_material.SetMat4("vikr_View", camera->GetView());
     m_material.SetVector3fv("vikr_CamPosition", camera->GetPos());
     ShaderUniformParams params;
     params.uniforms = m_material.GetMaterialValues();
-    buffer.SetShaderUniforms(params);
+    buffer.SetMaterial(&m_material);
   }
+  buffer.EndRecord();
 }
 } // vikr
