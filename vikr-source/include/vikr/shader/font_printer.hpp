@@ -9,6 +9,7 @@
 
 #include <vikr/graphics/viewport.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <vikr/graphics/command_buffer.hpp>
 
 
 namespace vikr {
@@ -32,12 +33,13 @@ public:
               std::string projection_name = "projection",
               std::string color_n = "textColor");
 
-  vvoid Println(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color);
+  vvoid SetPrintln(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color);
 
   vvoid Init(RenderDevice *device, std::string font);
   
   vvoid Reset(RenderDevice *device, std::string font);
 
+  vvoid Print();
 
   vvoid SetShader(ShaderProgram *prgm) { m_fontshader = prgm; }
 
@@ -73,6 +75,7 @@ private:
     Font shader.
   */
   ShaderProgram *m_fontshader = nullptr;
+  CommandbufferList *printlist;
   std::string proj_name;
   std::string color_name;
 };

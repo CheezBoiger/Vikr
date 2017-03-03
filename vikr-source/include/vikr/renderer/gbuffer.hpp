@@ -49,6 +49,7 @@ private:
   RenderPass *m_renderpass;
   Framebuffer *m_framebuffer;
   ShaderProgram *m_prgm;
+  CommandbufferList *bufferlist;
   
   std::array<Texture *, GBUFFER_SIZE> m_rendertargets;
 };

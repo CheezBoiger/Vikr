@@ -58,8 +58,18 @@ public:
 
   vvoid SetShaderProgram(ShaderProgram *program) override;
 
+  
+  vvoid SetFramebuffer(Framebuffer *framebuffer) override;
+
+
+  vvoid SetTexture(Texture *texture, vuint32 index) override;
+
 
   vvoid SetConfigurePipelineState(PipelineState *pipelinestate) override;
+
+
+  vvoid SetBufferSubData(vint32 offset, vuint32 size, 
+    vreal32 *data, vbool heap_allocated = false) override;
 
 
   vvoid SetShaderUniforms(ShaderUniformParams params) override;
@@ -69,6 +79,33 @@ public:
 
 
   vvoid SetMaterial(Material *material) override;
+
+  
+  vvoid SetBlending(vbool enable) override;
+  
+
+  vvoid SetDepthMode(vbool enable) override;
+  
+
+  vvoid SetCulling(vbool enable) override;
+
+  
+  vvoid SetDepthFunc(DepthFunc func) override;
+
+
+  vvoid SetBlendFunc(BlendFunc src, BlendFunc dst) override;
+
+
+  vvoid SetBlendEq(BlendEq eq) override;
+
+
+  vvoid SetFrontFace(FrontFace face) override;
+
+
+  vvoid SetCullFace(CullFace face) override;
+
+  
+  vvoid ForcePipelineUpdate() override;
 
 
   vbool IsRecording() override;
@@ -92,6 +129,8 @@ public:
 
 private:
 
+  // TODO(): Needs better optimization!
+  // Vector will ruin m_raw ptr data, need a better solution...
   std::list<GL4Commandbuffer> m_commandbuffers;
   std::list<Commandbuffer *> m_raw;
 };

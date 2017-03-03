@@ -74,6 +74,8 @@ public:
   vvoid ApplyPipelineState(PipelineState *pipelinestate) override;
   vvoid SetMaterial(Material *material) override;
 
+  GL4Vertexbuffer *GetCurrentVertexbuffer() { return m_queriedVertexbuffer; }
+
   vvoid Present() override;
 
 private:

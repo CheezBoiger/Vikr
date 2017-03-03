@@ -68,6 +68,8 @@ public:
 
   vvoid SetMaterial(Material *material) override;
 
+  Vertexbuffer *GetCurrentVertexbuffer() { return nullptr; }
+
   VkQueue &GetGraphicsQueue() { return m_queueGraphicsBuffer; }
   VkQueue &GetPresentationQueue() { return m_queuePresentBuffer; }
 

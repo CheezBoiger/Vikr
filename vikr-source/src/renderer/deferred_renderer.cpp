@@ -175,15 +175,16 @@ vvoid DeferredRenderer::Render() {
 
   skybox.Execute();
 
-  // Printing stuff.
-  printer.Println("Vikr v0.5", 25.0, 75.0, 2.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-  printer.Println("Copyright (c) Mario Garcia, Under the MIT License.", 25.0f,
+  // Printing stuff. 
+  
+  printer.SetPrintln("Vikr v0.5", 25.0, 75.0, 2.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+  printer.SetPrintln("Copyright (c) Mario Garcia, Under the MIT License.", 25.0f,
     25.0f, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f));
-  printer.Println("ms per frame: " + std::to_string(GetFPMS()) + " ms", 
+  printer.SetPrintln("ms per frame: " + std::to_string(GetFPMS()) + " ms", 
     25.0f, 700.0f, 1.0, glm::vec3(1.0, 1.0, 1.0));
-  printer.Println("Shader Lang: " + m_renderDevice->GetShaderLanguage(), 
+  printer.SetPrintln("Shader Lang: " + m_renderDevice->GetShaderLanguage(), 
     25.0f, 750.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-  printer.Println("Camera pitch: " + std::to_string(static_cast<FPSCamera *>(camera)->GetPitch()) +
+  printer.SetPrintln("Camera pitch: " + std::to_string(static_cast<FPSCamera *>(camera)->GetPitch()) +
     " Rads",
     25.0f, 650.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
 }
@@ -232,8 +233,10 @@ vint32 DeferredRenderer::Init(RenderDevice *device) {
   m_deferredBufferList = device->CreateCommandbufferList();
 
   // Initialize the light parameters for the light shader.
-  m_renderDevice->GetContext()->GetPipelineState()->SetShaderProgram(lightShader);
-  m_renderDevice->GetContext()->GetPipelineState()->Update();
+  Commandbuffer &commandbuffer = device->CreateCommandbuffer(m_commandBufferList);
+
+  commandbuffer.BeginRecord();
+  commandbuffer.SetShaderProgram(lightShader);
   Material setup;
   setup.SetInt("gPosition", 0);
   setup.SetInt("gNormal", 1);
@@ -245,7 +248,11 @@ vint32 DeferredRenderer::Init(RenderDevice *device) {
   setup.SetInt("gNorm", 7);
   ShaderUniformParams param;
   param.uniforms = setup.GetMaterialValues();
-  m_renderDevice->GetContext()->SetShaderUniforms(&param);
+  commandbuffer.SetShaderUniforms(param);
+  commandbuffer.EndRecord();
+
+  device->GetContext()->ExecuteCommands(m_commandBufferList);
+  m_commandBufferList->Clear();
 
   // Set the viewport, along with the font type for your printer.
   Viewport port;

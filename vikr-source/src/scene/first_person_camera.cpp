@@ -78,6 +78,5 @@ vvoid FPSCamera::Update(vreal32 dt) {
   view = glm::lookAt(pos, front + pos, up);
   yaw_rate = 0; 
   pitch_rate = 0;
-  VikrLog::DisplayMessage(VIKR_NORMAL, "pitch at " + std::to_string(pitch));
 }
 } // vikr

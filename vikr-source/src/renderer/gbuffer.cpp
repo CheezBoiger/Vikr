@@ -174,15 +174,24 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_framebuffer->SetRenderPass(m_renderpass);
   m_framebuffer->SetViewport(viewport);
   m_framebuffer->Update();
+
+  bufferlist = device->CreateCommandbufferList();
 }
 
 
 vvoid GBuffer::ExecutePass(CommandbufferList *buffer) {
   if (m_device) {
-    m_device->GetContext()->Clear();
-    m_device->GetContext()->SetFramebuffer(m_framebuffer);
-    m_device->GetContext()->GetPipelineState()->SetShaderProgram(m_prgm);
+    Commandbuffer &command = m_device->CreateCommandbuffer(bufferlist);
+    command.BeginRecord();
+    command.SetClear();
+    command.SetFramebuffer(m_framebuffer);
+    command.SetShaderProgram(m_prgm);
+    command.EndRecord();
+
+    m_device->GetContext()->ExecuteCommands(bufferlist);
     m_device->GetContext()->ExecuteCommands(buffer);
+  
+    bufferlist->Clear();
   }
 }
 } // vikr

@@ -325,6 +325,7 @@ vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
   if (buffer) {
     GL4Vertexbuffer *buf = static_cast<GL4Vertexbuffer *>(buffer);
     glBindVertexArray(static_cast<vuint32>(buf->GetVertexArrayId()));
+    m_queriedVertexbuffer = buf;
   }
   VIKR_ASSERT(glGetError() == 0);
 }

@@ -41,6 +41,11 @@
 #include <vikr/graphics/topology.hpp>
 #include <vikr/graphics/graphics_command.hpp>
 #include <vikr/scene/guid_generator.hpp>
+
+#include <vikr/graphics/blendmode.hpp>
+#include <vikr/graphics/depthmode.hpp>
+#include <vikr/graphics/cullmode.hpp>
+#include <vikr/graphics/stencildepth.hpp>
 #include <glm/glm.hpp>
 
 #include <vector>
@@ -60,6 +65,8 @@ class PipelineState;
 class Vertexbuffer;
 class ShaderProgram;
 class Material;
+class Framebuffer;
+class Texture;
 
 struct ShaderUniformParams;
 struct Viewport;
@@ -92,6 +99,25 @@ public:
   virtual vvoid SetShaderUniforms(ShaderUniformParams params) = 0;
   virtual vvoid SetQueryVertexbuffer(Vertexbuffer *buffer) = 0;
   virtual vvoid SetMaterial(Material *material) = 0;
+  /**
+    TODO(): This requires new in order to subdata with text! Need better optimization.
+  */
+  virtual vvoid SetBufferSubData(vint32 offset, vuint32 size, 
+    vreal32 *data, vbool heap_allocated = false) = 0;
+
+  // New Commands!
+  virtual vvoid SetFramebuffer(Framebuffer *framebuffer) = 0;
+  virtual vvoid SetBlending(vbool enable) = 0;
+  virtual vvoid SetDepthMode(vbool enable) = 0;
+  virtual vvoid SetDepthFunc(DepthFunc func) = 0;
+  virtual vvoid SetBlendEq(BlendEq eq) = 0;
+  virtual vvoid SetBlendFunc(BlendFunc src, BlendFunc dst) = 0;
+  virtual vvoid SetFrontFace(FrontFace face) = 0;
+  virtual vvoid SetCulling(vbool enable) = 0;
+  virtual vvoid SetCullFace(CullFace face) = 0;
+  virtual vvoid ForcePipelineUpdate() = 0;
+
+  virtual vvoid SetTexture(Texture *texture, vuint32 index) = 0;
 
   virtual vbool IsRecording() = 0;
 };

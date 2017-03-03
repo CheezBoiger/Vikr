@@ -15,6 +15,8 @@
 #include <vikr/scene/camera.hpp>
 #include <vikr/shader/stb/stb_truetype.h>
 #include <vikr/shader/shader_program.hpp>
+#include <vikr/resources/threading/vikr_thread.hpp>
+#include <vikr/resources/threading/vikr_mutex.hpp>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <string>
@@ -46,7 +48,7 @@ FontPrinter::FontPrinter(ShaderProgram *shader, std::string projection_name,
 }
 
 
-vvoid FontPrinter::Println(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color)
+vvoid FontPrinter::SetPrintln(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color)
 {
   // NOTE():
   // These values need to either wrap if over the viewport limit, or something...
@@ -55,9 +57,13 @@ vvoid FontPrinter::Println(std::string text, vreal32 x, vreal32 y, vreal32 scale
   if (!m_renderDevice || !m_fontshader) {
     return;
   }
+  Commandbuffer &command = m_renderDevice->CreateCommandbuffer(printlist);
   RenderContext *ctx = m_renderDevice->GetContext();
-  ctx->GetPipelineState()->SetShaderProgram(m_fontshader);
-  ctx->GetPipelineState()->Update();
+  command.BeginRecord();
+  command.SetShaderProgram(m_fontshader);
+  command.ForcePipelineUpdate();
+  //ctx->GetPipelineState()->SetShaderProgram(m_fontshader);
+  //ctx->GetPipelineState()->Update();
   Material mtl;
   ShaderUniformParams params;
   projection = glm::ortho(-1200.0f, 1200.f, -800.0f, 800.0f); // Hardcoded value!
@@ -66,9 +72,12 @@ vvoid FontPrinter::Println(std::string text, vreal32 x, vreal32 y, vreal32 scale
   mtl.SetVector3fv(color_name, color);
   params.samplers = mtl.GetUniformSamplers();
   params.uniforms = mtl.GetMaterialValues();
-  ctx->SetShaderUniforms(&params);
-  ctx->EnableBlendMode(true);
-  ctx->QueryVertexbuffer(m_mesh->GetVertexBuffer());
+  command.SetMaterial(&mtl);
+  command.SetBlending(true);
+  command.SetQueryVertexbuffer(m_mesh->GetVertexBuffer());
+  //ctx->SetShaderUniforms(&params);
+  //ctx->EnableBlendMode(true);
+  //ctx->QueryVertexbuffer(m_mesh->GetVertexBuffer());
   for (std::string::const_iterator it = text.begin(); it != text.end(); it++) {
     Character &ch = characters[*it];
     vreal32 xpos = (x + ch.bearing.x * scale) / m_viewport.win_width;
@@ -76,7 +85,7 @@ vvoid FontPrinter::Println(std::string text, vreal32 x, vreal32 y, vreal32 scale
 
     vreal32 w = (ch.size.x * scale) / m_viewport.win_width;
     vreal32 h = ch.size.y * scale / m_viewport.win_height;
-    vreal32 vertices[] = {
+    vreal32 *vertices = new vreal32[30] {
             xpos,     ypos + h,   0.0,
             xpos,     ypos,       0.0,
             xpos + w, ypos,       0.0,
@@ -91,13 +100,21 @@ vvoid FontPrinter::Println(std::string text, vreal32 x, vreal32 y, vreal32 scale
       1.0, 1.0,
       1.0, 0.0
     };
-    ctx->SetTexture(ch.texture, 0);
-    m_mesh->GetVertexBuffer()->BufferSubData(0, sizeof(vertices), &vertices);
-    ctx->Draw(0, m_mesh->GetVertices().positions.size() / 3);
+    command.SetTexture(ch.texture, 0);
+    command.SetBufferSubData(0, 30, vertices, true);
+    command.SetDraw(0, m_mesh->GetVertices().positions.size() / 3);
+    //ctx->SetTexture(ch.texture, 0);
+    //m_mesh->GetVertexBuffer()->BufferSubData(0, sizeof(vertices), &vertices);
+    //ctx->Draw(0, m_mesh->GetVertices().positions.size() / 3);
     x += (ch.advance >> 6) * scale;
   }
-  ctx->EnableBlendMode(false);
+  command.SetBlending(false);
+  command.EndRecord();
+
+  m_renderDevice->GetContext()->ExecuteCommands(printlist);
+  printlist->Clear();
 }
+
 
 
 vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
@@ -169,6 +186,8 @@ vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
   m_fontshader->LoadShader(vert_font);
   m_fontshader->LoadShader(frag_font);
   m_fontshader->Build();
+
+  printlist = device->CreateCommandbufferList();
 }
 
 

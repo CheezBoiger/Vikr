@@ -58,6 +58,7 @@ GLenum GetGLBlendEq(BlendEq eq) {
 
 
 GL4PipelineState::GL4PipelineState()
+  : program(nullptr)
 {
   m_viewport = {
     0,
@@ -69,7 +70,8 @@ GL4PipelineState::GL4PipelineState()
 
 vvoid GL4PipelineState::Update() {
   if (!m_dirty) {
-    VikrLog::DisplayMessage(VIKR_NOTIFY, "Nothing to configure for pipeline state, skipping...");
+    VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, 
+      "Nothing to configure for pipeline state, skipping...");
     return;
   }
 
