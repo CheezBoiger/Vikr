@@ -8,6 +8,7 @@
 #include <vikr/renderer/command/render_command.hpp>
 #include <vikr/shader/shader_uniform_params.hpp>
 #include <vikr/shader/shader_config.hpp>
+#include <vikr/shader/material.hpp>
 #include <map>
 
 
@@ -31,7 +32,7 @@ public:
   ICamera *camera;
 
 private:
-  std::map<std::string, MaterialValue> camera_params;
+  Material m_material;
 }; 
 } // vikr 
 #endif // __VIKR_CAMERA_COMMAND_HPP

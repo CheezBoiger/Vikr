@@ -11,6 +11,7 @@
 #include <vikr/shader/shader_uniform_params.hpp>
 #include <vikr/shader/shader_config.hpp>
 #include <vikr/graphics/command_buffer.hpp>
+#include <vikr/shader/material.hpp>
 #include <vikr/lighting/light.hpp>
 
 #include <map>
@@ -33,26 +34,14 @@ public:
       {
         PointLight *plight = static_cast<PointLight *>(light);
         std::string id = std::to_string(plight->GetLightId());
-        MaterialValue pos, ambient, diffuse, specular, constant, linear, quad, blinn;
-        MaterialValue enabled;
-        pos.type = vikr_UNIFORM_VEC3; pos.m_vec3 = plight->GetPos();
-        ambient.type = vikr_UNIFORM_VEC3;     ambient.m_vec3 = plight->GetAmbient();
-        specular.type = vikr_UNIFORM_VEC3;    specular.m_vec3 = plight->GetSpecular();
-        diffuse.type = vikr_UNIFORM_VEC3;     diffuse.m_vec3 = plight->GetDiffuse();
-        constant.type = vikr_UNIFORM_FLOAT;   constant.m_float = plight->GetConstant();
-        linear.type = vikr_UNIFORM_FLOAT;     linear.m_float = plight->GetLinear();
-        quad.type = vikr_UNIFORM_FLOAT;       quad.m_float = plight->GetQuadratic();
-        enabled.type = vikr_UNIFORM_BOOL;     enabled.m_bool = plight->IsEnabled();
-        light_params = {
-          std::make_pair("vikr_pointLights[" + id + "].position", pos),
-          std::make_pair("vikr_pointLights[" + id + "].ambient", ambient),
-          std::make_pair("vikr_pointLights[" + id + "].diffuse", diffuse),
-          std::make_pair("vikr_pointLights[" + id + "].specular", specular),
-          std::make_pair("vikr_pointLights[" + id + "].constant", constant),
-          std::make_pair("vikr_pointLights[" + id + "].linear", linear),
-          std::make_pair("vikr_pointLights[" + id + "].quadratic", quad),
-          std::make_pair("vikr_pointLights[" + id + "].enabled", enabled)
-        };
+        m_material.SetVector3fv("vikr_pointLights[" + id + "].position", plight->GetPos());
+        m_material.SetVector3fv("vikr_pointLights[" + id + "].ambient", plight->GetAmbient());
+        m_material.SetVector3fv("vikr_pointLights[" + id + "].diffuse", plight->GetDiffuse());
+        m_material.SetVector3fv("vikr_pointLights[" + id + "].specular", plight->GetSpecular());
+        m_material.SetFloat("vikr_pointLights[" + id + "].constant", plight->GetConstant());
+        m_material.SetFloat("vikr_pointLights[" + id + "].linear", plight->GetLinear());
+        m_material.SetFloat("vikr_pointLights[" + id + "].quadratic", plight->GetQuadratic());
+        m_material.SetBool("vikr_pointLights[" + id + "].enabled", plight->IsEnabled());
       }
       break;
       case vikr_DIRECTIONLIGHT:
@@ -60,12 +49,11 @@ public:
         DirectionalLight *dlight = static_cast<DirectionalLight *>(light);
         Material dir_mat;
         std::string id = std::to_string(dlight->GetLightId());
-        dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].direction", dlight->GetDirection());
-        dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].ambient", dlight->GetAmbient());
-        dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].diffuse", dlight->GetDiffuse());
-        dir_mat.SetVector3fv("vikr_directionalLights[" + id + "].specular", dlight->GetSpecular());
-        dir_mat.SetBool("vikr_directionalLights[" + id + "].enabled", dlight->IsEnabled());
-        light_params = std::move(*dir_mat.GetMaterialValues());
+        m_material.SetVector3fv("vikr_directionalLights[" + id + "].direction", dlight->GetDirection());
+        m_material.SetVector3fv("vikr_directionalLights[" + id + "].ambient", dlight->GetAmbient());
+        m_material.SetVector3fv("vikr_directionalLights[" + id + "].diffuse", dlight->GetDiffuse());
+        m_material.SetVector3fv("vikr_directionalLights[" + id + "].specular", dlight->GetSpecular());
+        m_material.SetBool("vikr_directionalLights[" + id + "].enabled", dlight->IsEnabled());
       }
       break;
       case vikr_SPOTLIGHT:
@@ -76,14 +64,15 @@ public:
       default:
       break;
     }
-    params.uniforms = &light_params;
+    //params.uniforms = &light_params;
+    params.uniforms = m_material.GetMaterialValues();
     buffer.SetShaderUniforms(params);
   }
 
 
   Light *light;  
 private:
-  std::map<std::string, MaterialValue> light_params;
+  Material m_material;
 };
 } // vikr
 #endif // __VIKR_LIGHT_COMMAND_HPP
