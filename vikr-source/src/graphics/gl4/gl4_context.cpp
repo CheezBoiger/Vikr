@@ -289,9 +289,9 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     }
   }
 
+  ClearTextures();
   // Bind all texture that was given.
   if (params->samplers) {
-    ClearTextures();
     m_currTextures.reserve(params->samplers->size());
     for(auto sampler : *params->samplers) {
       if (sampler.second.type != vikr_UNIFORM_SAMPLERCUBE) {
@@ -313,7 +313,7 @@ vvoid GL4RenderContext::ClearTextures() {
   for (vuint32 i = 0; i < m_currTextures.size(); ++i) {
     GL4Texture *tex = static_cast<GL4Texture *>(m_currTextures[i].texture);
     glActiveTexture(GL_TEXTURE0 + m_currTextures[i].i);
-    glBindTexture(tex->GetNativeTarget(), tex->GetNativeId());
+    glBindTexture(tex->GetNativeTarget(), 0);
     VIKR_ASSERT(glGetError() == 0);
   }
   m_currTextures.clear();
