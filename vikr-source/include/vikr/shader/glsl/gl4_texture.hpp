@@ -15,8 +15,9 @@ public:
   static GLenum GetNativeWrapMode(TextureWrapMode mode);
   static GLenum GetNativeFilterMode(TextureFilterMode mode);
   static GLenum GetNativeTextureTarget(TextureTarget target);
-  static GLenum GetNativeTextureFormat(TextureFormat format);
-  static GLenum GetNativeDataTypeFormat(DataTypeFormat format);
+  static GLenum GetBaseFormat(ImageFormat format);
+  static GLenum GetInternalFormat(ImageFormat format);
+  static GLenum GetNativeDataTypeFormat(ImageFormat format);
 
   GL4Texture();
 
@@ -25,14 +26,12 @@ public:
   virtual vvoid Bind(vint32 texture = -1) override;
   virtual vvoid Unbind() override;
 
-  vvoid SetFormat(TextureFormat format) override;
-  vvoid SetInternalFormat(TextureFormat format) override;
+  vvoid SetFormat(ImageFormat format) override;
   vvoid SetFilterMin(TextureFilterMode filter) override;
   vvoid SetFilterMax(TextureFilterMode filter) override;
   vvoid SetWrapS(TextureWrapMode mode) override;
   vvoid SetWrapT(TextureWrapMode mode) override;
   vvoid SetWrapR(TextureWrapMode mode) override;
-  vvoid SetDataTypeFormat(DataTypeFormat format) override;
   vvoid SetTarget(TextureTarget target) override;
   vuint32 GetNativeId() { return id; }
 
@@ -60,13 +59,14 @@ public:
   vvoid Cleanup() override { glDeleteTextures(1, &id); id = Texture::kNoTextureId; }
 
 protected:
+  vvoid SetPixelStore();
   vuint32 id                          = 0;
 
   vuint32 native_target               = GL_TEXTURE_2D;
   vuint32 native_format               = GL_RGBA;
-  vuint32 native_internal_format      = GL_RGBA;
+  vuint32 native_internal_format      = GL_RGBA32UI;
   vuint32 native_filter_min           = GL_LINEAR_MIPMAP_LINEAR;
-  vuint32 native_datatype             = GL_UNSIGNED_BYTE;
+  vuint32 native_datatype             = GL_UNSIGNED_INT;
   vuint32 native_filter_max           = GL_LINEAR;
   vuint32 native_wrap_s               = GL_REPEAT;
   vuint32 native_wrap_t               = GL_REPEAT;

@@ -24,8 +24,7 @@ GL4Cubemap::GL4Cubemap()
   GL4Texture::SetWrapS(vikr_WRAP_CLAMP_TO_EDGE);
   GL4Texture::SetWrapT(vikr_WRAP_CLAMP_TO_EDGE);
   GL4Texture::SetWrapR(vikr_WRAP_CLAMP_TO_EDGE);
-  GL4Texture::SetInternalFormat(vikr_FORMAT_RGB);
-  GL4Texture::SetFormat(vikr_FORMAT_RGB);
+  GL4Texture::SetFormat(vikr_FORMAT_R8G8B8_UINT);
 }
 
 
@@ -38,6 +37,7 @@ vvoid GL4Cubemap::Load(std::vector<const vchar *> *face_path) {
 vint32 GL4Cubemap::Finalize() {
   m_target = vikr_TARGET_CUBEMAP;
   native_target = GL4Texture::GetNativeTextureTarget(m_target);
+  SetPixelStore();
   if (id == Texture::kNoTextureId) {
     glGenTextures(1, &id);
   }
@@ -52,7 +52,7 @@ vint32 GL4Cubemap::Finalize() {
     } else {
       image = nullptr;
     }
-
+    VIKR_ASSERT(glGetError() == 0);
     if (overriding) {
       width = image_width;
       height = image_height;
@@ -62,19 +62,20 @@ vint32 GL4Cubemap::Finalize() {
       image_height = height;
       image_channels = channels;
     }
-
     glTexImage2D(
       GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 
       0,
-      native_format,
+      native_internal_format,
       width,
       height,
       0,
-      native_internal_format,
+      native_format,
       native_datatype, 
       image
     ); 
-    VIKR_ASSERT(glGetError() == 0);
+    GLenum err = glGetError();
+    VikrLog::DisplayMessage(VIKR_ERROR, std::to_string(err));
+    VIKR_ASSERT(err == 0);
   }
   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, native_filter_min);
   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, native_filter_max);

@@ -28,12 +28,14 @@ vint32 GL4Texture2D::Finalize() {
     m_target = vikr_TARGET_2D;
   }
   native_target = GetNativeTextureTarget(m_target);
+  SetPixelStore();
   glGenTextures(1, &id);
   Bind();
   if (m_multisampled) {
     glTexImage2DMultisample(native_target, 0, native_internal_format, m_width, m_height, GL_TRUE);
   } else {
     glTexImage2D(native_target, 0, native_internal_format, m_width, m_height, 0, native_format, native_datatype, m_bytecode);
+    VIKR_ASSERT(glGetError() == 0);
     glTexParameteri(native_target, GL_TEXTURE_MIN_FILTER, native_filter_min);
     glTexParameteri(native_target, GL_TEXTURE_MAG_FILTER, native_filter_max);
     glTexParameteri(native_target, GL_TEXTURE_WRAP_S, native_wrap_s);

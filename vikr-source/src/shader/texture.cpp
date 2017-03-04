@@ -12,7 +12,7 @@ namespace vikr {
 
 
 const std::string Texture::kDefaultName = "default_texture";
-const vuint32 Texture::kNoTextureId = -1;
+const vuint32 Texture::kNoTextureId = 0;
 
 
 Texture::~Texture()

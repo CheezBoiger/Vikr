@@ -23,6 +23,7 @@ GL4Texture1D::GL4Texture1D(vuint32 width)
 vint32 GL4Texture1D::Finalize() {
   m_target = vikr_TARGET_1D;
   native_target = GetNativeTextureTarget(m_target);
+  SetPixelStore();
   glGenTextures(1, &id);
   Bind();
   glTexImage1D(native_target, 0, native_internal_format, m_width, 0, native_format, native_datatype, m_bytecode);

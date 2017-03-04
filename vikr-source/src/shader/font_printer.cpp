@@ -150,8 +150,7 @@ vvoid FontPrinter::Init(RenderDevice *device, ResourceManager *mgr, std::string 
     texture->SetHeight(face->glyph->bitmap.rows);
     texture->SetWrapS(vikr_WRAP_CLAMP_TO_EDGE);
     texture->SetWrapT(vikr_WRAP_CLAMP_TO_EDGE);
-    texture->SetFormat(vikr_FORMAT_RED);
-    texture->SetInternalFormat(vikr_FORMAT_RED);
+    texture->SetFormat(vikr_FORMAT_R8_UINT);
     texture->SetFilterMin(vikr_FILTER_LINEAR);
     texture->SetFilterMax(vikr_FILTER_LINEAR);
     texture->SetMipmapping(false);

@@ -53,7 +53,7 @@ GL4RenderContext::GL4RenderContext()
 {
   glEnable(GL_FRAMEBUFFER_SRGB);
   glEnable(GL_MULTISAMPLE);
-  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+  VIKR_ASSERT(glGetError() == 0);
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 

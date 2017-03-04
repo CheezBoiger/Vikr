@@ -171,7 +171,7 @@ vvoid DeferredRenderer::Render() {
   // Draw the Screen Quad.
   m_screenquad.Execute();
 
-  m_gbuffer.GetFramebuffer()->BlitTo(DEFAULT_FRAMEBUFFER);
+ m_gbuffer.GetFramebuffer()->BlitTo(DEFAULT_FRAMEBUFFER);
 
   skybox.Execute();
 

@@ -12,6 +12,7 @@
  #include <csignal>
 #endif // VIKR_LINUX
 
+#define VIKR_DEBUG_ENABLED
 
 #if defined(VIKR_DEBUG_ENABLED)
  #define VIKR_DEBUG(stmnt, ...) std::printf(stmnt, ##__VA_ARGS__)

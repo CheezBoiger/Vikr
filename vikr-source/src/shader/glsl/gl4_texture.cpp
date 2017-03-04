@@ -50,26 +50,115 @@ GLenum GL4Texture::GetNativeTextureTarget(TextureTarget target) {
 }
 
 
-GLenum GL4Texture::GetNativeTextureFormat(TextureFormat format) {
+GLenum GL4Texture::GetBaseFormat(ImageFormat format) {
   switch (format) {
-    case vikr_FORMAT_RGB: return GL_RGB;
-    case vikr_FORMAT_RGBA: return GL_RGBA;
-    case vikr_FORMAT_RGB16F: return GL_RGB16F;
-    case vikr_FORMAT_RGB32F: return GL_RGB32F;
-    case vikr_FORMAT_DEPTH: return GL_DEPTH_COMPONENT;
-    case vikr_FORMAT_ALPHA: return GL_ALPHA;
-    case vikr_FORMAT_RED: return GL_RED;
+    case vikr_FORMAT_R32_SFLOAT:
+    case vikr_FORMAT_R16_SFLOAT:
+    case vikr_FORMAT_R8_SNORM: //return GL_RED;
+    case vikr_FORMAT_R8_SINT:
+    case vikr_FORMAT_R8_UINT:
+    case vikr_FORMAT_R8_UNORM:
+    case vikr_FORMAT_R16_SINT:
+    case vikr_FORMAT_R16_UINT:
+    case vikr_FORMAT_R32_SINT: 
+    case vikr_FORMAT_R32_UINT: return GL_RED;//return GL_RED_INTEGER;
+    case vikr_FORMAT_R8G8B8_SINT:
+    case vikr_FORMAT_R8G8B8_UINT:
+    case vikr_FORMAT_R32G32B32_UINT:
+    case vikr_FORMAT_R16G16B16_SINT:
+    case vikr_FORMAT_R16G16B16_UINT: //return GL_RGB_INTEGER;
+    case vikr_FORMAT_R16G16B16_SFLOAT:
+    case vikr_FORMAT_R32G32B32_SFLOAT: return GL_RGB;
+    case vikr_FORMAT_R8G8B8A8_SINT:
+    case vikr_FORMAT_R8G8B8A8_UINT: 
+    case vikr_FORMAT_R16G16B16A16_SINT:
+    case vikr_FORMAT_R16G16B16A16_UINT:
+    case vikr_FORMAT_R32G32B32A32_SINT:
+    case vikr_FORMAT_R32G32B32A32_UINT: //return GL_RGBA_INTEGER;
+    case vikr_FORMAT_R8G8B8A8_UNORM:
+    case vikr_FORMAT_R8G8B8A8_SNORM:
+    case vikr_FORMAT_R16G16B16A16_SFLOAT:
+    case vikr_FORMAT_R32G32B32A32_SFLOAT: return GL_RGBA;
+    case vikr_FORMAT_D16_UNORM:
+    case vikr_FORMAT_D32_SFLOAT: return GL_DEPTH_COMPONENT;
+    //case vikr_FORMAT_D32_SFLOAT: return GL_DEPTH_COMPONENT32F;
     default: return GL_RGBA;
   }  
 }
 
 
-GLenum GL4Texture::GetNativeDataTypeFormat(DataTypeFormat format) {
+GLenum GL4Texture::GetInternalFormat(ImageFormat format) {
   switch (format) {
-    case vikr_DATATYPE_UNSIGNED_BYTE: return GL_UNSIGNED_BYTE;
-    case vikr_DATATYPE_UNSIGNED_INT: return GL_UNSIGNED_INT;
-    case vikr_DATATYPE_FLOAT: return GL_FLOAT;
-    default: return GL_UNSIGNED_BYTE;
+
+    case vikr_FORMAT_R8_SINT: //return GL_R8I;
+    case vikr_FORMAT_R8_UINT: //return GL_R8UI;
+    case vikr_FORMAT_R8_UNORM: // NO UNORM
+    case vikr_FORMAT_R8_SNORM: return GL_R8;//return GL_R8_SNORM;
+    case vikr_FORMAT_R16_SFLOAT: //return GL_R16F;
+    case vikr_FORMAT_R16_SINT: //return GL_R16I;
+    case vikr_FORMAT_R16_UINT:  return GL_R16;//return GL_R16UI;
+    case vikr_FORMAT_R32_SFLOAT: //return GL_R32F;
+    case vikr_FORMAT_R32_SINT: //return GL_R32I;
+    case vikr_FORMAT_R32_UINT: return GL_RED;//return GL_R32UI;
+    case vikr_FORMAT_R16G16B16_SFLOAT: return GL_RGB16F;
+    case vikr_FORMAT_R8G8B8_SINT: //return GL_RGB8I;
+    case vikr_FORMAT_R8G8B8_UINT: return GL_RGB8;//return GL_RGB8UI;
+    case vikr_FORMAT_R16G16B16_SINT: //return GL_RGB16I;
+    case vikr_FORMAT_R16G16B16_UINT: return GL_RGB16;//return GL_RGB16UI;
+    case vikr_FORMAT_R32G32B32_UINT: //return GL_RGBA32UI;
+    case vikr_FORMAT_R32G32B32_SINT:
+    case vikr_FORMAT_R32G32B32_SFLOAT: return GL_RGB;//return GL_RGB32F;
+    case vikr_FORMAT_R8G8B8A8_SINT: //return GL_RGBA8I;
+    case vikr_FORMAT_R8G8B8A8_UINT: //return GL_RGBA8UI;
+    case vikr_FORMAT_R8G8B8A8_UNORM: // NO UNORM
+    case vikr_FORMAT_R8G8B8A8_SNORM: //return GL_RGBA8_SNORM;
+    case vikr_FORMAT_R16G16B16A16_SFLOAT: //return GL_RGBA16F;
+    case vikr_FORMAT_R16G16B16A16_SINT: //return GL_RGBA16I;
+    case vikr_FORMAT_R16G16B16A16_UINT: //return GL_RGBA16UI;
+    case vikr_FORMAT_R32G32B32A32_SINT: //return GL_RGBA32I;
+    case vikr_FORMAT_R32G32B32A32_UINT: return GL_RGBA;//return GL_RGBA32UI;
+    case vikr_FORMAT_R32G32B32A32_SFLOAT: return GL_RGBA32F;
+    case vikr_FORMAT_D16_UNORM: //return GL_DEPTH_COMPONENT16;
+    case vikr_FORMAT_D32_SFLOAT: return GL_DEPTH_COMPONENT;
+    //case vikr_FORMAT_D32_SFLOAT: return GL_DEPTH_COMPONENT32F;
+    default: return GL_RGBA;
+  }
+}
+
+
+GLenum GL4Texture::GetNativeDataTypeFormat(ImageFormat format) {
+  switch (format) {
+
+  case vikr_FORMAT_R8_UINT:
+  case vikr_FORMAT_R16_UINT:
+  case vikr_FORMAT_R8G8B8_UINT:
+  case vikr_FORMAT_R8G8B8A8_UINT: return GL_UNSIGNED_BYTE;
+  case vikr_FORMAT_R8_SINT:
+  case vikr_FORMAT_R8G8B8_SINT:
+  case vikr_FORMAT_R8G8B8A8_SINT: return GL_BYTE;
+  case vikr_FORMAT_R16_SINT: 
+  case vikr_FORMAT_R16G16B16_SINT: 
+  case vikr_FORMAT_R16G16B16A16_SINT:
+  case vikr_FORMAT_R32_SINT:
+  case vikr_FORMAT_R32G32B32A32_SINT: return GL_INT;
+  case vikr_FORMAT_R16G16B16_UINT:
+  case vikr_FORMAT_R16G16B16A16_UINT: return GL_UNSIGNED_SHORT;
+  case vikr_FORMAT_R32_UINT:
+  case vikr_FORMAT_R32G32B32_UINT:
+  case vikr_FORMAT_R32G32B32A32_UINT: return GL_UNSIGNED_INT;
+  case vikr_FORMAT_R16_SFLOAT:
+  case vikr_FORMAT_R32_SFLOAT:
+  case vikr_FORMAT_R16G16B16_SFLOAT:
+  case vikr_FORMAT_R32G32B32_SFLOAT:
+  case vikr_FORMAT_R16G16B16A16_SFLOAT:
+  case vikr_FORMAT_R32G32B32A32_SFLOAT:
+  case vikr_FORMAT_D32_SFLOAT: return GL_FLOAT;
+  case vikr_FORMAT_R8_SNORM: 
+  case vikr_FORMAT_R8G8B8A8_SNORM: return GL_SIGNED_NORMALIZED;
+  case vikr_FORMAT_R8_UNORM:
+  case vikr_FORMAT_R8G8B8A8_UNORM:
+  case vikr_FORMAT_D16_UNORM: return GL_UNSIGNED_NORMALIZED;
+  default: return GL_UNSIGNED_BYTE;
   }
 }
 
@@ -80,15 +169,11 @@ GL4Texture::GL4Texture()
 }
 
 
-vvoid GL4Texture::SetFormat(TextureFormat format) {
+vvoid GL4Texture::SetFormat(ImageFormat format) {
   m_format = format;
-  native_format = GetNativeTextureFormat(m_format);
-}
-
-
-vvoid GL4Texture::SetInternalFormat(TextureFormat format) {
-  m_internal_format = format;
-  native_internal_format = GetNativeTextureFormat(format);
+  native_format = GetBaseFormat(format);
+  native_internal_format = GetInternalFormat(format);
+  native_datatype = GetNativeDataTypeFormat(format);
 }
 
 
@@ -122,12 +207,6 @@ vvoid GL4Texture::SetWrapR(TextureWrapMode mode) {
 }
 
 
-vvoid GL4Texture::SetDataTypeFormat(DataTypeFormat format) {
-  m_datatype = format;
-  native_datatype = GetNativeDataTypeFormat(format);
-}
-
-
 vvoid GL4Texture::Bind(vint32 texture) {
   if (texture >= 0) {
     glActiveTexture(GL_TEXTURE0 + texture);
@@ -145,9 +224,7 @@ vvoid GL4Texture::CleanParams() {
   SetWrapT(m_wrap_r);
   SetWrapS(m_wrap_s);
   SetWrapR(m_wrap_r);
-  SetDataTypeFormat(m_datatype);
   SetFormat(m_format);
-  SetInternalFormat(m_internal_format);
   SetFilterMin(m_filter_min);
   SetFilterMax(m_filter_max);
 }
@@ -155,5 +232,23 @@ vvoid GL4Texture::CleanParams() {
 
 vvoid GL4Texture::SetTarget(TextureTarget target) {
   // should not be able to change the texture target.
+}
+
+
+vvoid GL4Texture::SetPixelStore() 
+{
+  vint32 align;
+  switch (native_datatype) {
+    case GL_BYTE:
+    case GL_UNSIGNED_BYTE: align = 1; break;
+    case GL_SHORT:
+    case GL_UNSIGNED_SHORT: align = 2; break;
+    case GL_INT:
+    case GL_UNSIGNED_INT: 
+    case GL_FLOAT: align = 4; break;
+    case GL_DOUBLE: align = 8; break;
+    default: align = 4;
+  }
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 }
 } // vikr

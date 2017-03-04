@@ -99,7 +99,7 @@ vvoid GL4Framebuffer::Update() {
        texture->GetTargetFormat() != vikr_TARGET_2D_MULTISAMPLE) {
       VikrLog::DisplayMessage(VIKR_WARNING, "RenderTarget is not of Texture2D format!");
     }
-    if (texture->GetFormat() != vikr_FORMAT_DEPTH) {
+    if (texture->GetNativeFormat() != GL_DEPTH_COMPONENT) {
       glFramebufferTexture2D(GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0 + val.first, texture->GetNativeTarget(), texture->GetNativeId(), 0);
       attachments[count] = GL_COLOR_ATTACHMENT0 + count;
@@ -134,10 +134,11 @@ vvoid GL4Framebuffer::ClearAttachments() {
        i != structure.end();
         ++i)
   {
-    if (i->second.GetTexture()->GetFormat() == vikr_FORMAT_DEPTH) {
+    GL4Texture *texture = static_cast<GL4Texture *>(i->second.GetTexture());
+    if (texture->GetNativeFormat() == GL_DEPTH_COMPONENT) {
       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
     } else {
-      if (i->second.GetTexture()->IsMultisampled()) {
+      if (texture->IsMultisampled()) {
         glFramebufferTexture2D(GL_FRAMEBUFFER,
           GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D_MULTISAMPLE, 0, 0);
       } else {
@@ -177,7 +178,8 @@ vvoid GL4Framebuffer::SetViewport(const Viewport &viewport) {
 
 vbool GL4Framebuffer::HasDepthStencil() {
   for (auto &i : m_renderPass->GetRenderTargets()) {
-    if (i.second.GetTexture()->GetInternalFormat() == vikr_FORMAT_DEPTH) {
+    GL4Texture *texture = static_cast<GL4Texture *>(i.second.GetTexture());
+    if (texture->GetNativeFormat() == GL_DEPTH_COMPONENT) {
       return true;
     }
   }
@@ -196,10 +198,12 @@ vbool GL4Framebuffer::IsMultisampled() {
 
 
 vvoid GL4Framebuffer::BlitTo(Framebuffer *framebuffer) {
+  VIKR_ASSERT(glGetError() == 0);
   // nothing yet
   // will consider using glBlitFramebuffer
   GL4Framebuffer *glFb = static_cast<GL4Framebuffer *>(framebuffer);
   glBindFramebuffer(GL_READ_FRAMEBUFFER, m_fbo);
+  VIKR_ASSERT(glGetError() == 0);
   if (framebuffer) {
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 
       static_cast<vuint32>(glFb->GetFramebufferId()));
@@ -225,7 +229,9 @@ vvoid GL4Framebuffer::BlitTo(Framebuffer *framebuffer) {
       0, 0, Window::GetMainWindow()->GetWidth(), Window::GetMainWindow()->GetHeight(),
       GL_DEPTH_BUFFER_BIT, GL_NEAREST
     );
-    VIKR_ASSERT(glGetError() == 0);
+    GLenum err = glGetError();
+    VikrLog::DisplayMessage(VIKR_ERROR, std::to_string(err));
+    VIKR_ASSERT(err == 0);
   }
 }
 } // vikr

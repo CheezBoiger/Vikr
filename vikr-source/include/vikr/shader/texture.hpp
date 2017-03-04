@@ -38,11 +38,9 @@ public:
     This can be a 1D, 2D, 3D, or cubemap.
   */
   TextureTarget GetTargetFormat() { return m_target; }
-  TextureFormat GetFormat() { return m_format; }
-  TextureFormat GetInternalFormat() { return m_internal_format; }
+  ImageFormat GetFormat() { return m_format; }
   TextureFilterMode GetFilterMin() { return m_filter_min; }
   TextureFilterMode GetFilterMax() {  return m_filter_max; }
-  DataTypeFormat GetDataTypeFormat() { return m_datatype; }
 
   /**
     Texture coordinate wrapping for coord S. 
@@ -102,12 +100,7 @@ public:
     Format represents the storage type of the texture. This can be RGB, RGBA, Depth, or
     ALPHA, etc.
   */
-  virtual vvoid SetFormat(TextureFormat format) = 0;
-
-  /**
-    
-  */
-  virtual vvoid SetInternalFormat(TextureFormat format) = 0;
+  virtual vvoid SetFormat(ImageFormat format) = 0;
 
   /**
   */
@@ -136,8 +129,6 @@ public:
     a Mesh or Quad. This is specified for coord R.
   */
   virtual vvoid SetWrapR(TextureWrapMode mode) = 0;
-
-  virtual vvoid SetDataTypeFormat(DataTypeFormat format) = 0;
 
   virtual vbool IsMultisampled() = 0;
 
@@ -170,14 +161,12 @@ public:
 protected:
 
   TextureTarget     m_target                    = vikr_TARGET_2D;
-  TextureFormat     m_format                    = vikr_FORMAT_RGBA;
-  TextureFormat     m_internal_format           = vikr_FORMAT_RGBA;
+  ImageFormat     m_format                    = vikr_FORMAT_R8G8B8A8_UINT;
   TextureFilterMode m_filter_min                = vikr_FILTER_LINEAR_MIPMAP_LINEAR;
   TextureFilterMode m_filter_max                = vikr_FILTER_LINEAR;
   TextureWrapMode   m_wrap_s                    = vikr_WRAP_REPEAT;
   TextureWrapMode   m_wrap_t                    = vikr_WRAP_REPEAT;
   TextureWrapMode   m_wrap_r                    = vikr_WRAP_REPEAT;
-  DataTypeFormat    m_datatype                  = vikr_DATATYPE_UNSIGNED_BYTE;
   vbool             m_mipmapping                = true;
   vbool             m_alpha                     = true;
   vbool             m_multisampled              = false;

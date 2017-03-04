@@ -1,6 +1,6 @@
 # Vikr Renderer
-Vikr is a smallscale renderer using OpenGL 4.3 and Vulkan API graphics. It is an academic graphics
-engine solely designed for researching computer graphics and testing shaders for academic use. Its
+Vikr is a smallscale renderer using OpenGL 4.3 and Vulkan API graphics. It is a high level, academic graphics
+renderer solely designed for researching computer graphics and testing shaders for academic use. Its
 capability does not stop in just mere research, as it can also be used for startup game engines and
 other possibilities involving physics and computer vision. It is still in current development, so use 
 this engine for hobbyist use, and not for professional work!

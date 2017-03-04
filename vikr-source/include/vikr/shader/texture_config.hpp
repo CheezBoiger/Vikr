@@ -52,14 +52,42 @@ enum TextureTarget {
 };
 
 
-enum TextureFormat {
-  vikr_FORMAT_RGB,
-  vikr_FORMAT_RGBA,
-  vikr_FORMAT_RGB16F,
-  vikr_FORMAT_RGB32F,
-  vikr_FORMAT_DEPTH,
-  vikr_FORMAT_ALPHA,
-  vikr_FORMAT_RED,
+enum ImageFormat {
+  // Garaunteed to be within Vulkan devices.
+  vikr_FORMAT_R8_SINT,
+  vikr_FORMAT_R8_UINT,
+  vikr_FORMAT_R8_UNORM,
+  vikr_FORMAT_R8_SNORM,
+  vikr_FORMAT_R16_SFLOAT,
+  vikr_FORMAT_R16_SINT,
+  vikr_FORMAT_R16_UINT,
+  vikr_FORMAT_R32_SFLOAT,
+  vikr_FORMAT_R32_SINT,
+  vikr_FORMAT_R32_UINT,
+  vikr_FORMAT_R8G8B8A8_SINT,
+  vikr_FORMAT_R8G8B8A8_UINT,
+  vikr_FORMAT_R8G8B8A8_UNORM,
+  vikr_FORMAT_R8G8B8A8_SNORM,
+  vikr_FORMAT_R8G8B8A8_SRGB,
+  vikr_FORMAT_R16G16B16A16_SFLOAT,
+  vikr_FORMAT_R16G16B16A16_SINT,
+  vikr_FORMAT_R16G16B16A16_UINT,
+  vikr_FORMAT_R32G32B32A32_SFLOAT,
+  vikr_FORMAT_R32G32B32A32_SINT,
+  vikr_FORMAT_R32G32B32A32_UINT,
+  // depth components.
+  vikr_FORMAT_D16_UNORM,
+  vikr_FORMAT_D32_SFLOAT,
+
+  // 50% or less, availability on vulkan devices.
+  vikr_FORMAT_R8G8B8_SINT,
+  vikr_FORMAT_R8G8B8_UINT,
+  vikr_FORMAT_R16G16B16_SFLOAT, 
+  vikr_FORMAT_R16G16B16_SINT,
+  vikr_FORMAT_R16G16B16_UINT,
+  vikr_FORMAT_R32G32B32_SFLOAT,
+  vikr_FORMAT_R32G32B32_SINT,
+  vikr_FORMAT_R32G32B32_UINT,
 };
 
 
