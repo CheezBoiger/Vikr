@@ -9,7 +9,7 @@
 #include <vikr/resources/resource_manager.hpp>
 #include <vikr/shader/material.hpp>
 #include <vikr/mesh/mesh.hpp>
-#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/graphics_pipeline_state.hpp>
 #include <vikr/math/geometry/quad.hpp>
 #include <vikr/renderer/renderer.hpp>
 #include <vikr/scene/camera.hpp>
@@ -102,7 +102,7 @@ vvoid FontPrinter::SetPrintln(std::string text, vreal32 x, vreal32 y, vreal32 sc
     };
     command.SetTexture(ch.texture, 0);
     command.SetBufferSubData(0, 30, vertices, true);
-    command.SetDraw(0, m_mesh->GetVertices().positions.size() / 3);
+    command.Draw(0, m_mesh->GetVertices().positions.size() / 3);
     //ctx->SetTexture(ch.texture, 0);
     //m_mesh->GetVertexBuffer()->BufferSubData(0, sizeof(vertices), &vertices);
     //ctx->Draw(0, m_mesh->GetVertices().positions.size() / 3);
@@ -117,7 +117,7 @@ vvoid FontPrinter::SetPrintln(std::string text, vreal32 x, vreal32 y, vreal32 sc
 
 
 
-vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
+vvoid FontPrinter::Init(RenderDevice *device, ResourceManager *mgr, std::string font) {
   if (!device) {
     return;
   }
@@ -140,7 +140,7 @@ vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
       VikrLog::DisplayMessage(VIKR_ERROR, "Unable to load glyph => " + c);
       continue;
     }
-    Texture *texture = device->GetResourceManager()->CreateTexture(
+    Texture *texture = device->CreateTexture(
       std::to_string(c),
       vikr_TARGET_2D,
       "",
@@ -170,19 +170,19 @@ vvoid FontPrinter::Init(RenderDevice *device, std::string font) {
 
   Quad quad;
   if (!m_mesh) {
-    m_mesh = device->GetResourceManager()->CreateMesh(
+    m_mesh = mgr->CreateMesh(
       quad.GetPositions(), std::vector<glm::vec3>(), quad.GetUVs());
     m_mesh->GetVertices().usage_type = vikr_DYNAMIC;  
     m_mesh->Build(device);
   }  
 
 
-  Shader *vert_font = device->GetResourceManager()->CreateShader("vert_font", vikr_VERTEX_SHADER);
+  Shader *vert_font = device->CreateShader("vert_font", vikr_VERTEX_SHADER);
   vert_font->Compile("../../../libs/shader/GLSL/font.vert");
-  Shader *frag_font = device->GetResourceManager()->CreateShader("frag_font", vikr_PIXEL_SHADER);
+  Shader *frag_font = device->CreateShader("frag_font", vikr_PIXEL_SHADER);
   frag_font->Compile("../../../libs/shader/GLSL/font.frag");
 
-  m_fontshader = device->GetResourceManager()->CreateShaderProgram();
+  m_fontshader = device->CreateShaderProgram();
   m_fontshader->LoadShader(vert_font);
   m_fontshader->LoadShader(frag_font);
   m_fontshader->Build();

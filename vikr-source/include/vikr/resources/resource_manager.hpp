@@ -22,7 +22,8 @@ namespace vikr {
 class Shader;
 class ShaderProgram;
 class Mesh;
-class PipelineState;
+class GraphicsPipelineState;
+class ComputePipelineState;
 class Material;
 class SceneNode;
 
@@ -36,26 +37,9 @@ class SceneNode;
 */
 class ResourceManager {
 public:
-  ResourceManager(GraphicsPipeline pipe = vikr_PIPELINE_OPENGL);
+  ResourceManager();
 
-  virtual ~ResourceManager() { }
-
-  /**
-    Create a shader, and store it into Resources, the id of the shader will 
-    be returned. Resources takes care of this.
-  */
-  virtual Shader *CreateShader(std::string name, ShaderStage stage) = 0;
-  virtual Shader *GetShader(guid_t id) = 0;
-  virtual vbool DestroyShader(guid_t id) = 0;
-
-  virtual PipelineState *CreatePipelineState(std::string name) = 0;
-  virtual PipelineState *GetPipelineState(guid_t id) = 0;
-  virtual vbool DestroyPipelineState(guid_t id) = 0;
-
-
-  virtual ShaderProgram *CreateShaderProgram() = 0;
-  virtual ShaderProgram *GetShaderProgram(guid_t id) = 0;
-  virtual vbool DestroyShaderProgram(guid_t id) = 0;
+  ~ResourceManager() { }
   
   /**
     Creates the mesh object that is handled by the ResourceManager.
@@ -76,11 +60,6 @@ public:
   Mesh *GetMesh(guid_t guid);
   vbool DestroyMesh(guid_t guid);
 
-  virtual Texture *CreateTexture(std::string name, TextureTarget target, 
-    std::string filepath, vbool alpha) = 0;
-  virtual Texture *GetTexture(guid_t id) = 0;
-  virtual vbool DestroyTexture(guid_t id) = 0;
-
   /**
     Much involves the interface design of ResourceManager, but this is common.
   */
@@ -98,16 +77,6 @@ public:
   Material *CreateMaterial(std::string mat_name);
   Material *GetMaterial(std::string name);
   vbool DestroyMaterial(std::string name);
-
-
-  GraphicsPipeline GetGraphicsPipeline() { return pipeline; }
-
-private:
-  /**
-    Graphics pipeline of the ResourceManager.
-  */
-  GraphicsPipeline pipeline;
-
 };
 
 

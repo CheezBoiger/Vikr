@@ -19,7 +19,8 @@ namespace vikr {
 class GLSLShader;
 class GL4Texture;
 class GLSLShaderProgram;
-class GL4PipelineState;
+class GL4GraphicsPipelineState;
+class GL4ComputePipelineState;
 
 
 /**
@@ -51,9 +52,13 @@ public:
 
   /**
   */
-  PipelineState *CreatePipelineState(std::string name) override;
-  PipelineState *GetPipelineState(guid_t id) override;
-  vbool DestroyPipelineState(guid_t id) override;
+  GraphicsPipelineState *CreateGraphicsPipelineState(std::string name) override;
+  GraphicsPipelineState *GetGraphicsPipelineState(guid_t id) override;
+  vbool DestroyGraphicsPipelineState(guid_t id) override;
+
+  ComputePipelineState *CreateComputePipelineState(std::string name) override;
+  ComputePipelineState *GetComputePipelineState(guid_t id) override;
+  vbool DestroyComputePipelineState(guid_t id) override;
 
   Texture *CreateTexture(std::string name, TextureTarget target, 
     std::string filepath, vbool alpha) override;
@@ -63,24 +68,6 @@ public:
   ShaderProgram *CreateShaderProgram() override;
   ShaderProgram *GetShaderProgram(guid_t id) override;
   vbool DestroyShaderProgram(guid_t id) override;
-};
-
-
-/**
-  OpenGL Specific Resources.
-*/
-class GLResources : public Resources {
-  static std::unordered_map<guid_t, std::unique_ptr<GLSLShader> > shaders;
-
-  /**
-  Contains material data.
-  */
-  static std::map<guid_t, std::unique_ptr<GL4Texture> > textures;
-
-  static std::map<guid_t, std::unique_ptr<GLSLShaderProgram> > shader_programs;
-  static std::map<guid_t, std::unique_ptr<GL4PipelineState> > pipelinestates; 
-
-  friend class GLResourceManager;
 };
 } // vikr
 #endif // __VIKR_OPENGL_RESOURCES_HPP

@@ -118,7 +118,7 @@ public:
     : program(pgrm) { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->GetPipelineState()->SetShaderProgram(program);
+    cx->GetGraphicsPipelineState()->SetShaderProgram(program);
   }
 
 private:
@@ -132,7 +132,7 @@ public:
     : enable(enable) { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->GetPipelineState()->SetBlendMode(enable);
+    cx->GetGraphicsPipelineState()->SetBlendMode(enable);
   }
 private:
   vbool enable;
@@ -145,7 +145,7 @@ public:
     : enable(enable) { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->GetPipelineState()->SetDepthMode(enable);
+    cx->GetGraphicsPipelineState()->SetDepthMode(enable);
   }
 
 private:
@@ -159,7 +159,7 @@ public:
     : enable(enable) { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->GetPipelineState()->SetCullMode(enable);
+    cx->GetGraphicsPipelineState()->SetCullMode(enable);
   }
 
 private:
@@ -173,7 +173,7 @@ public:
     : func(func) { }
 
   vvoid Execute(GL4RenderContext *cx) {
-    cx->GetPipelineState()->SetDepthFunc(func);
+    cx->GetGraphicsPipelineState()->SetDepthFunc(func);
   }
   
 private:
@@ -188,7 +188,7 @@ public:
     , dst(dst) { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->GetPipelineState()->SetBlendFunc(src, dst);
+    cx->GetGraphicsPipelineState()->SetBlendFunc(src, dst);
   }
 
 private:
@@ -203,7 +203,7 @@ public:
     : eq(eq) { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->GetPipelineState()->SetBlendEq(eq);
+    cx->GetGraphicsPipelineState()->SetBlendEq(eq);
   }
 private:
   BlendEq eq;
@@ -216,7 +216,7 @@ public:
     : face(face) { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->GetPipelineState()->SetFrontFace(face);
+    cx->GetGraphicsPipelineState()->SetFrontFace(face);
   }
   
 private:
@@ -230,7 +230,7 @@ public:
     : face(face) { }
   
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->GetPipelineState()->SetCullFace(face);
+    cx->GetGraphicsPipelineState()->SetCullFace(face);
   }
   
 private:
@@ -243,7 +243,7 @@ public:
   PipelineUpdateForcer() { }
 
   vvoid Execute(GL4RenderContext *cx) override {
-    cx->GetPipelineState()->Update();
+    cx->GetGraphicsPipelineState()->Update();
   } 
 };
 
@@ -373,13 +373,13 @@ vbool GL4Commandbuffer::IsRecording() {
 }
 
 
-vvoid GL4Commandbuffer::SetDraw(vuint32 start, vuint32 vertices) {
+vvoid GL4Commandbuffer::Draw(vuint32 start, vuint32 vertices) {
   CHECK_RECORDING();
   commands.push_back(std::make_unique<DrawSetter>(start, vertices));
 }
 
 
-vvoid GL4Commandbuffer::SetDrawIndexed(const vvoid *indices, vuint32 vertices) {
+vvoid GL4Commandbuffer::DrawIndexed(const vvoid *indices, vuint32 vertices) {
   CHECK_RECORDING();
   commands.push_back(std::make_unique<DrawIndexedSetter>(indices, vertices));
 }
@@ -413,7 +413,8 @@ vvoid GL4Commandbuffer::SetRenderPass(RenderPass *pass) {
 }
 
 
-vvoid GL4Commandbuffer::SetConfigurePipelineState(PipelineState *state) {
+vvoid GL4Commandbuffer::ApplyGraphicsPipelineState(GraphicsPipelineState *state) {
+  CHECK_RECORDING();
 }
 
 
@@ -429,18 +430,18 @@ vvoid GL4Commandbuffer::SetMaterial(Material *material) {
 }
 
 
-vvoid GL4Commandbuffer::SetChangeViewport(Viewport *viewport) {
+vvoid GL4Commandbuffer::ChangeViewport(Viewport *viewport) {
   CHECK_RECORDING();
 }
 
 
-vvoid GL4Commandbuffer::SetClear() {
+vvoid GL4Commandbuffer::Clear() {
   CHECK_RECORDING();
   commands.push_back(std::make_unique<ClearSetter>());
 }
 
 
-vvoid GL4Commandbuffer::SetClearWithColor(glm::vec4 color) {
+vvoid GL4Commandbuffer::ClearWithColor(glm::vec4 color) {
   CHECK_RECORDING();
   commands.push_back(std::make_unique<ClearWithColorSetter>(color));
 }
@@ -518,6 +519,10 @@ vvoid GL4Commandbuffer::SetBufferSubData(vint32 offset, vuint32 size,
   CHECK_RECORDING();
   commands.push_back(
     std::make_unique<VertexBufferSubDataSetter>(offset, size, data, heap_allocated));
+}
+
+
+vvoid GL4Commandbuffer::ApplyComputePipelineState(ComputePipelineState *pipeline) {
 }
 
 

@@ -13,7 +13,7 @@
 #include <vikr/shader/texture.hpp>
 #include <vikr/shader/shader_uniform_params.hpp>
 #include <vikr/shader/shader_program.hpp>
-#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/graphics_pipeline_state.hpp>
 #include <vikr/util/vikr_log.hpp>
 
 namespace vikr {

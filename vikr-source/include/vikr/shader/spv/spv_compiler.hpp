@@ -16,14 +16,14 @@
 namespace vikr {
 
 
-class VKDevice;
+class VKRenderDevice;
 
 /**
   SpirV Compiler
 */
 class SpvCompiler {
 public:
-  SpvCompiler(VKDevice *device, ShaderStage stage, std::string filepath);
+  SpvCompiler(VKRenderDevice *device, ShaderStage stage, std::string filepath);
 
   vvoid Compile();
 
@@ -56,7 +56,7 @@ private:
   GLSLPreprocessor preprocessor;
   
   // weak ref.
-  VKDevice *device = nullptr;
+  VKRenderDevice *device = nullptr;
 };
 } // vikr
 #endif // __VIKR_SPIRV_COMPILER_HP

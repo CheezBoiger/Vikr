@@ -36,7 +36,7 @@ public:
   /**
     Initialize the current Renderer plugin.
   */  
-  vint32 Init(RenderDevice *device) override;
+  vint32 Init(RenderDevice *device, ResourceManager *mgr) override;
 
   /**
     Define the current Renderer plugin, rendering scheme.

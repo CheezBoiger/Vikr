@@ -31,7 +31,7 @@ class RenderPass;
 struct Viewport;
 
 
-enum class BufferMode {
+enum BufferMode {
   BUFFER_NONE,
   BUFFER_FRONT_LEFT,
   BUFFER_FRONT_RIGHT,

@@ -14,7 +14,7 @@ namespace vikr {
 const char *std_entry_point = "main";
 
 
-SpvCompiler::SpvCompiler(VKDevice *device, ShaderStage stage, std::string filepath)
+SpvCompiler::SpvCompiler(VKRenderDevice *device, ShaderStage stage, std::string filepath)
   : filepath(filepath)
   , device(device)
   , shader_stage(stage)

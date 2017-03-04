@@ -11,7 +11,7 @@
 namespace vikr {
 
 
-SpvShader::SpvShader(VKDevice *device, ShaderStage stage)
+SpvShader::SpvShader(VKRenderDevice *device, ShaderStage stage)
   : device(device)
   , Shader(stage, vikr_SPIRV)
 {

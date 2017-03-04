@@ -75,6 +75,9 @@ private:
   GL4RenderPass *m_renderPass = nullptr;
 
   Viewport m_viewport;
+
+  BufferMode m_read;
+  BufferMode m_write;
 }; 
 } // vikr
 #endif // __VIKR_

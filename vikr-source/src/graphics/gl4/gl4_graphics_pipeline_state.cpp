@@ -1,7 +1,7 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
-#include <vikr/graphics/gl4/gl4_pipeline_state.hpp>
+#include <vikr/graphics/gl4/gl4_graphics_pipeline_state.hpp>
 #include <vikr/util/vikr_log.hpp>
 #include <vikr/util/vikr_assert.hpp>
 
@@ -57,7 +57,7 @@ GLenum GetGLBlendEq(BlendEq eq) {
 }
 
 
-GL4PipelineState::GL4PipelineState()
+GL4GraphicsPipelineState::GL4GraphicsPipelineState()
   : program(nullptr)
 {
   m_viewport = {
@@ -68,7 +68,7 @@ GL4PipelineState::GL4PipelineState()
   };
 }
 
-vvoid GL4PipelineState::Update() {
+vvoid GL4GraphicsPipelineState::Update() {
   if (!m_dirty) {
     VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, 
       "Nothing to configure for pipeline state, skipping...");

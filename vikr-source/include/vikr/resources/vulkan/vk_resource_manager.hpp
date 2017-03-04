@@ -22,10 +22,14 @@ public:
   Shader *GetShader(guid_t id) override;
   vbool DestroyShader(guid_t id) override;
 
-  PipelineState *CreatePipelineState(std::string name) override;
-  PipelineState *GetPipelineState(guid_t id) override;
-  vbool DestroyPipelineState(guid_t id) override;
-  
+  GraphicsPipelineState *CreateGraphicsPipelineState(std::string name) override;
+  GraphicsPipelineState *GetGraphicsPipelineState(guid_t id) override;
+  vbool DestroyGraphicsPipelineState(guid_t id) override;
+
+  ComputePipelineState *CreateComputePipelineState(std::string name) override;
+  ComputePipelineState *GetComputePipelineState(guid_t id) override;
+  vbool DestroyComputePipelineState(guid_t id) override;  
+
   ShaderProgram *CreateShaderProgram() override;
   ShaderProgram *GetShaderProgram(guid_t id) override;
   vbool DestroyShaderProgram(guid_t id) override;

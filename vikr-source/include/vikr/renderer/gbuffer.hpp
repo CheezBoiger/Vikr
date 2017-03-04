@@ -31,7 +31,7 @@ class GBuffer {
 public:
   GBuffer();
 
-  vvoid Init(RenderDevice *device = nullptr);
+  vvoid Init(RenderDevice *device);
 
   vvoid ExecutePass(CommandbufferList *buffer);
 
@@ -46,6 +46,7 @@ public:
 
 private:
   RenderDevice *m_device = nullptr;
+  
   RenderPass *m_renderpass;
   Framebuffer *m_framebuffer;
   ShaderProgram *m_prgm;

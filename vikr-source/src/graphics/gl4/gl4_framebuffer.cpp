@@ -32,6 +32,8 @@ vuint32 GL4Framebuffer::GetFramebufferMode(BufferMode mode) {
 
 
 GL4Framebuffer::GL4Framebuffer()
+  : m_read(BUFFER_NONE)
+  , m_write(BUFFER_BACK)
 {
 }
 
@@ -202,6 +204,7 @@ vvoid GL4Framebuffer::BlitTo(Framebuffer *framebuffer) {
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 
       static_cast<vuint32>(glFb->GetFramebufferId()));
     Viewport target = glFb->GetViewport();
+    glDrawBuffer(GetFramebufferMode(m_write));
     glBlitFramebuffer(
       m_viewport.win_x, 
       m_viewport.win_y,

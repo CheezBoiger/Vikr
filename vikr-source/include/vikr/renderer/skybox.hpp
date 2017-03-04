@@ -24,7 +24,7 @@ class Skybox {
 public:
   Skybox();
 
-  vvoid Init(RenderDevice *device);
+  vvoid Init(RenderDevice *device, ResourceManager *mgr);
 
   Cubemap *GetCubemap() { return cubemap; }
 
@@ -32,6 +32,7 @@ public:
 
 private:
   RenderDevice *m_device;
+  ResourceManager *m_mgr;
   CommandbufferList *list;
   PrimitiveCommand sky_cmd;
   CameraCommand cam_cmd;

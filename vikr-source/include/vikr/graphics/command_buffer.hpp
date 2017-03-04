@@ -61,7 +61,8 @@ class GraphicsCommand;
 class RenderContext;
 class RenderTarget;
 class RenderPass;
-class PipelineState;
+class GraphicsPipelineState;
+class ComputePipelineState;
 class Vertexbuffer;
 class ShaderProgram;
 class Material;
@@ -86,16 +87,17 @@ public:
 
   virtual vvoid BeginRecord() = 0;
   virtual vvoid EndRecord() = 0;
-  virtual vvoid SetDraw(vuint32 start, vuint32 vertices) = 0;
-  virtual vvoid SetDrawIndexed(const vvoid *indices, vuint32 vertices) = 0;
+  virtual vvoid Draw(vuint32 start, vuint32 vertices) = 0;
+  virtual vvoid DrawIndexed(const vvoid *indices, vuint32 vertices) = 0;
   virtual vvoid SetTopology(Topology topology) = 0;
   virtual vvoid SetRenderTarget(RenderTarget *target) = 0;
   virtual vvoid SetRenderPass(RenderPass *pass) = 0;
-  virtual vvoid SetClear() = 0;
-  virtual vvoid SetClearWithColor(glm::vec4 color) = 0;
-  virtual vvoid SetChangeViewport(Viewport *viewport) = 0;
+  virtual vvoid Clear() = 0;
+  virtual vvoid ClearWithColor(glm::vec4 color) = 0;
+  virtual vvoid ChangeViewport(Viewport *viewport) = 0;
   virtual vvoid SetShaderProgram(ShaderProgram *program) = 0;
-  virtual vvoid SetConfigurePipelineState(PipelineState *pipelinestate) = 0;
+  virtual vvoid ApplyGraphicsPipelineState(GraphicsPipelineState *pipelinestate) = 0;
+  virtual vvoid ApplyComputePipelineState(ComputePipelineState *pipelinestate) = 0;
   virtual vvoid SetShaderUniforms(ShaderUniformParams params) = 0;
   virtual vvoid SetQueryVertexbuffer(Vertexbuffer *buffer) = 0;
   virtual vvoid SetMaterial(Material *material) = 0;
@@ -116,6 +118,7 @@ public:
   virtual vvoid SetCulling(vbool enable) = 0;
   virtual vvoid SetCullFace(CullFace face) = 0;
   virtual vvoid ForcePipelineUpdate() = 0;
+
 
   virtual vvoid SetTexture(Texture *texture, vuint32 index) = 0;
 

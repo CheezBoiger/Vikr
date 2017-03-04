@@ -19,8 +19,7 @@ std::map<std::string, std::shared_ptr<Material> > Resources::materials;
 std::map<guid_t, std::unique_ptr<Mesh> > Resources::meshes;
 
 
-ResourceManager::ResourceManager(GraphicsPipeline pipe)
-  : pipeline(pipe)
+ResourceManager::ResourceManager()
 {
 }
 

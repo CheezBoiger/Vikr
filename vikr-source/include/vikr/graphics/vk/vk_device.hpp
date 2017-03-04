@@ -10,9 +10,8 @@
 #include <vikr/graphics/render_device.hpp>
 #include <vikr/graphics/vk/vk_context.hpp>
 #include <vikr/graphics/vk/vk_phydevice.hpp>
-#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/graphics_pipeline_state.hpp>
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
-#include <vikr/resources/vulkan/vk_resource_manager.hpp>
 #include <vikr/shader/cubemap.hpp>
 
 
@@ -28,17 +27,15 @@ namespace vikr {
 
   TODO(): This device is currently not usable, work is being done however.
 */
-class VKDevice : public RenderDevice {
+class VKRenderDevice : public RenderDevice {
 public:
-  VKDevice();
+  VKRenderDevice();
 
   std::string GetShaderLanguage() override;
 
   Framebuffer *CreateFramebuffer() override;
   
   Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) override;
-
-  ResourceManager *GetResourceManager() override;
 
   RenderContext *GetContext() override { return &context; }
 
@@ -59,6 +56,36 @@ public:
 
   CommandbufferList *CreateCommandbufferList() override;
 
+  vbool DestroyUniformbuffer(guid_t id) override;
+  Uniformbuffer *CreateUniformbuffer() override;
+  Uniformbuffer *GetUniformbuffer(guid_t id) override;
+
+  GraphicsPipelineState *CreateGraphicsPipelineState(std::string name) override;
+  GraphicsPipelineState *GetGraphicsPipelineState(guid_t id) override;
+  vbool DestroyGraphicsPipelineState(guid_t id) override;
+
+  ComputePipelineState *CreateComputePipelineState(std::string name) override;
+  ComputePipelineState *GetComputePipelineState(guid_t id) override;
+  vbool DestroyComputePipelineState(guid_t id) override;
+
+  /**
+  Create a shader, and store it into Resources, the id of the shader will
+  be returned. Resources takes care of this.
+  */
+  Shader *CreateShader(std::string name, ShaderStage stage) override;
+  Shader *GetShader(guid_t id) override;
+  vbool DestroyShader(guid_t id) override;
+
+
+  ShaderProgram *CreateShaderProgram() override;
+  ShaderProgram *GetShaderProgram(guid_t id) override;
+  vbool DestroyShaderProgram(guid_t id) override;
+
+  Texture *CreateTexture(std::string name, TextureTarget target,
+                         std::string filepath, vbool alpha) override;
+  Texture *GetTexture(guid_t id) override;
+  vbool DestroyTexture(guid_t id) override;
+
 private:
 
   vvoid Setup();
@@ -77,9 +104,7 @@ private:
   /**
     Vulkan Context.
   */
-  VKContext context;
-
-  VKResourceManager manager;
+  VKRenderContext context;
 
 public:
   static const vchar *kApplicationName;

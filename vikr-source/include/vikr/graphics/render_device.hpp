@@ -33,6 +33,7 @@ class ResourceManager;
 class RenderContext;
 class Vertexbuffer;
 class Cubemap;
+class Uniformbuffer;
 
 
 /**
@@ -61,11 +62,6 @@ public:
     Create vertex buffer id.
   */
   virtual Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) = 0;
-
-  /**
-    Get the Resource manager from this Rendering Device.
-  */
-  virtual ResourceManager *GetResourceManager() = 0;
 
   /**
     Get the contet of this Rendering Device.
@@ -117,6 +113,38 @@ public:
     Create Commandbuffer list to use for your Commandbuffers.
   */
   virtual CommandbufferList *CreateCommandbufferList() = 0;
+
+  virtual Uniformbuffer *CreateUniformbuffer() = 0;
+
+  virtual Uniformbuffer *GetUniformbuffer(guid_t id) = 0;
+
+  virtual vbool DestroyUniformbuffer(guid_t id) = 0;
+
+  virtual GraphicsPipelineState *CreateGraphicsPipelineState(std::string name) = 0;
+  virtual GraphicsPipelineState *GetGraphicsPipelineState(guid_t id) = 0;
+  virtual vbool DestroyGraphicsPipelineState(guid_t id) = 0;
+
+  virtual ComputePipelineState *CreateComputePipelineState(std::string name) = 0;
+  virtual ComputePipelineState *GetComputePipelineState(guid_t id) = 0;
+  virtual vbool DestroyComputePipelineState(guid_t id) = 0;
+
+  /**
+  Create a shader, and store it into Resources, the id of the shader will
+  be returned. Resources takes care of this.
+  */
+  virtual Shader *CreateShader(std::string name, ShaderStage stage) = 0;
+  virtual Shader *GetShader(guid_t id) = 0;
+  virtual vbool DestroyShader(guid_t id) = 0;
+
+
+  virtual ShaderProgram *CreateShaderProgram() = 0;
+  virtual ShaderProgram *GetShaderProgram(guid_t id) = 0;
+  virtual vbool DestroyShaderProgram(guid_t id) = 0;
+
+  virtual Texture *CreateTexture(std::string name, TextureTarget target, 
+    std::string filepath, vbool alpha) = 0;
+  virtual Texture *GetTexture(guid_t id) = 0;
+  virtual vbool DestroyTexture(guid_t id) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_DEVICE_HPP

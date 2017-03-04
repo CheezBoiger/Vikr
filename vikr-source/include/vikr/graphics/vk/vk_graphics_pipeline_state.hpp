@@ -4,7 +4,7 @@
 #ifndef __VIKR_VK_PIPELINE_STATE_HPP
 #define __VIKR_VK_PIPELINE_STATE_HPP
 
-#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/graphics_pipeline_state.hpp>
 #include <vikr/graphics/viewport.hpp>
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
 
@@ -20,9 +20,9 @@ class SpvShaderProgram;
 /**
   Vulkan Pipeline State 
 */
-class VKPipelineState : public PipelineState {
+class VKGraphicsPipelineState : public GraphicsPipelineState {
 public:
-  VKPipelineState();
+  VKGraphicsPipelineState();
 
   vvoid SetViewport(Viewport viewport) override;
   vvoid SetBlendFunc(BlendFunc src, BlendFunc dst) override;

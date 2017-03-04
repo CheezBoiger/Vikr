@@ -17,6 +17,7 @@
 #include <vikr/shader/material.hpp>
 #include <vikr/shader/texture.hpp>
 #include <vikr/mesh/mesh.hpp>
+#include <vikr/resources/resource_manager.hpp>
 #include <vikr/graphics/render_device.hpp>
 
 #include <vikr/util/vikr_log.hpp>
@@ -32,7 +33,8 @@ std::unordered_map<std::string, guid_t> loaded_textures;
 
 
 SceneNode *ModelLoader::ImportModel(
-  RenderDevice *device, 
+  RenderDevice *device,
+  ResourceManager *mgr, 
   std::string path, 
   std::string name, 
   vbool dynamic) 
@@ -50,7 +52,7 @@ SceneNode *ModelLoader::ImportModel(
     VikrLog::DisplayMessage(VIKR_ERROR, "Model Can not be loaded!");
   } else {
     std::string dir = path.substr(0, path.find_last_of('/'));
-    node = ProcessNode(device, scene->mRootNode, scene, dir, name, dynamic);
+    node = ProcessNode(device, mgr, scene->mRootNode, scene, dir, name, dynamic);
     node->Tag = name;
   }
   loaded_textures.clear();
@@ -75,21 +77,22 @@ SceneNode *ModelLoader::ImportModel(
   
 */
 SceneNode *ModelLoader::ProcessNode(
-  RenderDevice *device, 
+  RenderDevice *device,
+  ResourceManager *mgr, 
   aiNode *node, 
   const aiScene *scene, 
   std::string dir,
   std::string name,
   vbool dynamic) 
 {
-  SceneNode *scene_node = Scene::CreateSceneNode(device);
+  SceneNode *scene_node = Scene::CreateSceneNode(mgr);
   //scene_node->AddComponent<TransformComponent>();
   for (vuint32 i = 0; i < node->mNumMeshes; ++i) {
     aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
     aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-    Mesh *m_mesh = ProcessMesh(device, mesh, scene, dynamic);
-    Material *m_material = ParseMaterial(device, material, dir, name + std::to_string(i));
-    SceneNode *child = Scene::CreateSceneNode(device);
+    Mesh *m_mesh = ProcessMesh(device, mgr, mesh, scene, dynamic);
+    Material *m_material = ParseMaterial(device, mgr, material, dir, name + std::to_string(i));
+    SceneNode *child = Scene::CreateSceneNode(mgr);
     MeshComponent *mc = child->AddComponent<MeshComponent>();
     mc->mesh = m_mesh;
     if (m_material) {
@@ -106,7 +109,7 @@ SceneNode *ModelLoader::ProcessNode(
   }
   for (vuint32 i = 0; i < node->mNumChildren; ++i) {
     scene_node->AddChild(
-      ProcessNode(device, node->mChildren[i], scene, 
+      ProcessNode(device, mgr, node->mChildren[i], scene, 
         dir, name + "_" + std::to_string(i), dynamic));
   }
   //scene_node->Update();
@@ -115,7 +118,8 @@ SceneNode *ModelLoader::ProcessNode(
 
 
 Mesh *ModelLoader::ProcessMesh(
-  RenderDevice *device, 
+  RenderDevice *device,
+  ResourceManager *mgr, 
   aiMesh *mesh, 
   const aiScene *scene, 
   vbool dynamic) 
@@ -165,7 +169,7 @@ Mesh *ModelLoader::ProcessMesh(
   }
   // Create our mesh, the mesh is created, buffered, built, as well as properly stored,
   // so no need to do much.
-  m_mesh = device->GetResourceManager()->CreateMesh(vertices, indices);
+  m_mesh = mgr->CreateMesh(vertices, indices);
   if (dynamic) {
     m_mesh->GetVertices().usage_type = vikr_DYNAMIC;
   }
@@ -177,11 +181,12 @@ Mesh *ModelLoader::ProcessMesh(
 
 Material *ModelLoader::ParseMaterial(
   RenderDevice *device
+  , ResourceManager *mgr
   , aiMaterial *material
   , std::string dir
   , std::string name) 
 {
-  Material *m_material = device->GetResourceManager()->CreateMaterial(name);
+  Material *m_material = mgr->CreateMaterial(name);
   std::string texture_name;
   vbool mask = 0x0;
   if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
@@ -191,7 +196,7 @@ Material *ModelLoader::ParseMaterial(
     Texture *texture = nullptr;
     auto it = loaded_textures.find(filepath);
     if (it == loaded_textures.end()) { 
-      texture = device->GetResourceManager()->CreateTexture(
+      texture = device->CreateTexture(
         name,
         TextureTarget::vikr_TARGET_2D, 
         filepath, 
@@ -199,7 +204,7 @@ Material *ModelLoader::ParseMaterial(
       texture->Finalize();
       loaded_textures[filepath] = texture->GetUID();
     } else {
-      texture = device->GetResourceManager()->GetTexture(it->second);
+      texture = device->GetTexture(it->second);
     }
     if (texture) {
       texture_name = "vikr_TexAlbedo";
@@ -214,7 +219,7 @@ Material *ModelLoader::ParseMaterial(
     Texture *texture = nullptr;
     auto it = loaded_textures.find(filepath);
     if (it == loaded_textures.end()) {
-      texture = device->GetResourceManager()->CreateTexture(
+      texture = device->CreateTexture(
         name,
         vikr_TARGET_2D, 
         filepath, 
@@ -222,7 +227,7 @@ Material *ModelLoader::ParseMaterial(
       texture->Finalize();
       loaded_textures[filepath] = texture->GetUID();
     } else {
-      texture = device->GetResourceManager()->GetTexture(it->second);
+      texture = device->GetTexture(it->second);
     }
     if (texture) {
       texture_name = "vikr_TexNormal";
@@ -236,7 +241,7 @@ Material *ModelLoader::ParseMaterial(
     Texture *texture = nullptr;
     auto it = loaded_textures.find(filepath);
     if (it == loaded_textures.end()) {
-      texture = device->GetResourceManager()->CreateTexture(
+      texture = device->CreateTexture(
         name,
         vikr_TARGET_2D,
         filepath,
@@ -244,7 +249,7 @@ Material *ModelLoader::ParseMaterial(
       texture->Finalize();
       loaded_textures[filepath] = texture->GetUID();
     } else {
-      texture = device->GetResourceManager()->GetTexture(it->second);
+      texture = device->GetTexture(it->second);
     }
     if (texture) {
       m_material->SetTexture("vikr_TexNormal", texture, 1);
@@ -258,7 +263,7 @@ Material *ModelLoader::ParseMaterial(
     Texture *texture = nullptr;
     auto it = loaded_textures.find(filepath);
     if (it == loaded_textures.end()) { 
-      texture = device->GetResourceManager()->CreateTexture(
+      texture = device->CreateTexture(
         name,
         vikr_TARGET_2D, 
         filepath, 
@@ -266,7 +271,7 @@ Material *ModelLoader::ParseMaterial(
       texture->Finalize();
       loaded_textures[filepath] = texture->GetUID();
     } else {
-      texture = device->GetResourceManager()->GetTexture(it->second);
+      texture = device->GetTexture(it->second);
     }
     if (texture) {
       m_material->SetTexture("vikr_TexSpecular", texture, 2);
@@ -280,7 +285,7 @@ Material *ModelLoader::ParseMaterial(
     Texture *texture = nullptr;
     auto it = loaded_textures.find(filepath);
     if (it == loaded_textures.end()) {
-      texture = device->GetResourceManager()->CreateTexture(
+      texture = device->CreateTexture(
         name,
         vikr_TARGET_2D, 
         filepath, 
@@ -288,7 +293,7 @@ Material *ModelLoader::ParseMaterial(
       texture->Finalize();
       loaded_textures[filepath] = texture->GetUID();
     } else {
-      texture = device->GetResourceManager()->GetTexture(it->second);
+      texture = device->GetTexture(it->second);
     }
     if (texture) {
       m_material->SetTexture("vikr_TexRoughness", texture, 3);
@@ -302,7 +307,7 @@ Material *ModelLoader::ParseMaterial(
     Texture *texture = nullptr;
     auto it = loaded_textures.find(filepath);
     if (it == loaded_textures.end()) { 
-      texture = device->GetResourceManager()->CreateTexture(
+      texture = device->CreateTexture(
         name,
         vikr_TARGET_2D, 
         filepath, 
@@ -310,7 +315,7 @@ Material *ModelLoader::ParseMaterial(
       texture->Finalize();
       loaded_textures[filepath] = texture->GetUID();
     } else {
-      texture = device->GetResourceManager()->GetTexture(it->second);
+      texture = device->GetTexture(it->second);
     }
     if (texture) {
       m_material->SetTexture("vikr_TexAmbient", texture, 4);

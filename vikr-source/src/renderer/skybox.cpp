@@ -4,7 +4,7 @@
 #include <vikr/renderer/skybox.hpp>
 #include <vikr/resources/resource_manager.hpp>
 #include <vikr/math/geometry/cube.hpp>
-#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/graphics_pipeline_state.hpp>
 #include <vikr/renderer/renderer.hpp>
 #include <vikr/shader/material.hpp>
 #include <vikr/scene/camera.hpp>
@@ -19,8 +19,9 @@ Skybox::Skybox()
 }
 
 
-vvoid Skybox::Init(RenderDevice *device) {
+vvoid Skybox::Init(RenderDevice *device, ResourceManager *mgr) {
   m_device = device;
+  m_mgr = mgr;
 
   cubemap = device->CreateCubemap();
   skybox_input = {
@@ -33,12 +34,11 @@ vvoid Skybox::Init(RenderDevice *device) {
   };
   cubemap->Load(&skybox_input);
 
-  ResourceManager *mgr = device->GetResourceManager();
-  Shader *vert_skybox = mgr->CreateShader("vert_skybox", vikr_VERTEX_SHADER);
-  Shader *frag_skybox = mgr->CreateShader("frag_skybox", vikr_FRAGMENT_SHADER);
+  Shader *vert_skybox = device->CreateShader("vert_skybox", vikr_VERTEX_SHADER);
+  Shader *frag_skybox = device->CreateShader("frag_skybox", vikr_FRAGMENT_SHADER);
   vert_skybox->Compile("../../../libs/shader/GLSL/skybox.vert");
   frag_skybox->Compile("../../../libs/shader/GLSL/skybox.frag");
-  program = device->GetResourceManager()->CreateShaderProgram();
+  program = device->CreateShaderProgram();
   program->LoadShader(vert_skybox);
   program->LoadShader(frag_skybox);
   program->Build();
@@ -58,7 +58,7 @@ vvoid Skybox::Execute() {
   // Grab camera perspective and view.
   // Don't forget the pipelinestate!
   ICamera *cam = Renderer::GetRenderer()->GetCamera();
-  PipelineState *pipeline = m_device->GetContext()->GetPipelineState();
+  GraphicsPipelineState *pipeline = m_device->GetContext()->GetGraphicsPipelineState();
   Commandbuffer &buf = m_device->CreateCommandbuffer(list);
   sky_cmd.Record(buf);
   pipeline->SetShaderProgram(program);

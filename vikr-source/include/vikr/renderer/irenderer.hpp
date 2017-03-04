@@ -17,6 +17,7 @@ class RenderCommand;
 class RenderTarget;
 class SceneNode;
 class RenderDevice;
+class ResourceManager;
 class ICamera;
 
 /**
@@ -50,7 +51,7 @@ public:
   /**
     Initialize the Renderer with the given RenderDevice.
   */
-  virtual vint32 Init(RenderDevice *device) = 0;
+  virtual vint32 Init(RenderDevice *device, ResourceManager *mgr) = 0;
 
   /**
     Get the currently used camera from the renderer.

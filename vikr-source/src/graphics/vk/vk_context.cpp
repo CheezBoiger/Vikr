@@ -8,118 +8,126 @@
 namespace vikr {
 
 
-VKContext::VKContext()
+VKRenderContext::VKRenderContext()
 {
 }
 
 
-vvoid VKContext::Draw(vuint32 start, vuint32 vertices) {
+vvoid VKRenderContext::Draw(vuint32 start, vuint32 vertices) {
 }
 
 
-vvoid VKContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
+vvoid VKRenderContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
 }
 
 
-vvoid VKContext::SetTexture(Texture *texture, vuint32 index) {
+vvoid VKRenderContext::SetTexture(Texture *texture, vuint32 index) {
 }
 
 
-vvoid VKContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
+vvoid VKRenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
 }
 
 
-vvoid VKContext::SetBlendEq(BlendEq eq) {
+vvoid VKRenderContext::SetBlendEq(BlendEq eq) {
 }
 
 
-vvoid VKContext::SetBlendMode(BlendFunc src, BlendFunc dst) {
+vvoid VKRenderContext::SetBlendMode(BlendFunc src, BlendFunc dst) {
 }
 
 
-vvoid VKContext::SetDepthFunc(DepthFunc depth) {
+vvoid VKRenderContext::SetDepthFunc(DepthFunc depth) {
 }
 
 
-vvoid VKContext::EnableCullMode(vbool enable) {
+vvoid VKRenderContext::EnableCullMode(vbool enable) {
 }
 
 
-vvoid VKContext::EnableBlendMode(vbool enable) {
+vvoid VKRenderContext::EnableBlendMode(vbool enable) {
 }
 
 
-vvoid VKContext::EnableDepthMode(vbool enable) {
+vvoid VKRenderContext::EnableDepthMode(vbool enable) {
 }
 
 
-vvoid VKContext::SetCullFace(CullFace face) {
+vvoid VKRenderContext::SetCullFace(CullFace face) {
 }
 
 
-vvoid VKContext::SetFrontFace(FrontFace face) {
+vvoid VKRenderContext::SetFrontFace(FrontFace face) {
 }
 
 
-vvoid VKContext::Clear() {
+vvoid VKRenderContext::Clear() {
 }
 
 
-vvoid VKContext::ClearWithColor(glm::vec4 color) {
+vvoid VKRenderContext::ClearWithColor(glm::vec4 color) {
 }
 
 
-vvoid VKContext::ChangeViewport(Viewport *port) {
+vvoid VKRenderContext::ChangeViewport(Viewport *port) {
 }
 
 
-vvoid VKContext::ChangeTopology(Topology topology) {
+vvoid VKRenderContext::ChangeTopology(Topology topology) {
 }
 
 
-vvoid VKContext::ExecuteCommands(CommandbufferList *buffer) {
+vvoid VKRenderContext::ExecuteCommands(CommandbufferList *buffer) {
 }
 
 
-vvoid VKContext::SetShaderUniforms(ShaderUniformParams *params) {
+vvoid VKRenderContext::SetShaderUniforms(ShaderUniformParams *params) {
 }
 
 
-vvoid VKContext::QueryVertexbuffer(Vertexbuffer *buffer) {
+vvoid VKRenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
 }
 
 
-vvoid VKContext::Present() {
+vvoid VKRenderContext::Present() {
 }
 
 
-vvoid VKContext::SetFramebuffer(Framebuffer *framebuffer) {
+vvoid VKRenderContext::SetFramebuffer(Framebuffer *framebuffer) {
 
 }
 
 
-vvoid VKContext::BeginRecord(Commandbuffer *buf) {
+vvoid VKRenderContext::BeginRecord(Commandbuffer *buf) {
 }
 
 
-vvoid VKContext::EndRecord() {
+vvoid VKRenderContext::EndRecord() {
 }
 
 
-Framebuffer *VKContext::GetFramebuffer() {
+Framebuffer *VKRenderContext::GetFramebuffer() {
   return nullptr;
 }
 
 
-PipelineState *VKContext::GetPipelineState() {
+GraphicsPipelineState *VKRenderContext::GetGraphicsPipelineState() {
   return nullptr;
 }
 
 
-vvoid VKContext::ApplyPipelineState(PipelineState *pipeline) {
+vvoid VKRenderContext::ApplyGraphicsPipelineState(GraphicsPipelineState *pipeline) {
 }
 
 
-vvoid VKContext::SetMaterial(Material *material) {
+vvoid VKRenderContext::SetMaterial(Material *material) {
+}
+
+
+vvoid VKRenderContext::Dispatch(vuint32 x, vuint32 y, vuint32 z) {
+}
+
+
+vvoid VKRenderContext::SetRenderPass(RenderPass *pass) {
 }
 } // vikr

@@ -1,7 +1,7 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 // 
-#include <vikr/graphics/vk/vk_pipeline_state.hpp>
+#include <vikr/graphics/vk/vk_graphics_pipeline_state.hpp>
 
 namespace vikr {
 
@@ -52,7 +52,7 @@ VkCompareOp GetNativeDepthFunc(DepthFunc func) {
 }
 
 
-VKPipelineState::VKPipelineState()
+VKGraphicsPipelineState::VKGraphicsPipelineState()
 {
   m_viewport.win_x = 0;
   m_viewport.win_y = 0;
@@ -63,7 +63,7 @@ VKPipelineState::VKPipelineState()
 }
 
 
-vvoid VKPipelineState::UpdateNativeViewport()
+vvoid VKGraphicsPipelineState::UpdateNativeViewport()
 { 
   // Getting more precise, are we?
   m_native_viewport.x = static_cast<float> (m_viewport.win_x);
@@ -78,7 +78,7 @@ vvoid VKPipelineState::UpdateNativeViewport()
 }
 
 
-vvoid VKPipelineState::Setup()
+vvoid VKGraphicsPipelineState::Setup()
 {
   // Set up Vertex Input.
   VkPipelineVertexInputStateCreateInfo vertex_input_info;

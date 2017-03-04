@@ -7,7 +7,7 @@
 #include <vikr/util/vikr_log.hpp>
 #include <vikr/shader/cubemap.hpp>
 #include <vikr/scene/icamera.hpp>
-#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/graphics_pipeline_state.hpp>
 #include <vikr/math/geometry/cube.hpp>
 
 
@@ -19,14 +19,15 @@ ScreenQuad::ScreenQuad()
 }
 
 
-vvoid ScreenQuad::Init(RenderDevice *device) {
+vvoid ScreenQuad::Init(RenderDevice *device, ResourceManager *mgr) {
   if (!device) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Device was null! Cannot init ScreenQuad!");
     return;
   }
   Quad quad;
   m_device = device;
-  m_quad = device->GetResourceManager()->CreateMesh(
+  m_mgr = mgr;
+  m_quad = mgr->CreateMesh(
     quad.GetPositions(), quad.GetNormals(), quad.GetUVs());
   m_quad->Build(device);
 

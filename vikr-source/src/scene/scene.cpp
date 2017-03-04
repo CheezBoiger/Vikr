@@ -9,8 +9,8 @@
 namespace vikr {
 
 
-SceneNode *Scene::CreateSceneNode(RenderDevice *device) {
-  return device->GetResourceManager()->CreateSceneNode();
+SceneNode *Scene::CreateSceneNode(ResourceManager *mgr) {
+  return mgr->CreateSceneNode();
 }
 
 

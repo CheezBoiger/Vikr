@@ -5,7 +5,7 @@
 #define __VIKR_GL4_PIPELINE_STATE_HPP
 
 
-#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/graphics_pipeline_state.hpp>
 #include <vikr/graphics/viewport.hpp>
 #include <vikr/graphics/topology.hpp>
 
@@ -24,9 +24,9 @@ namespace vikr {
 /**
   The GL4 Pipeline state for the rendering pipeline.
 */
-class GL4PipelineState : public PipelineState {
+class GL4GraphicsPipelineState : public GraphicsPipelineState {
 public:
-  GL4PipelineState();
+  GL4GraphicsPipelineState();
 
   vvoid SetViewport(Viewport viewport) override { 
     SetDirty();

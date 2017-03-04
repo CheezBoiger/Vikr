@@ -7,7 +7,7 @@
 
 #include <vikr/graphics/render_context.hpp>
 #include <vikr/graphics/command_buffer.hpp>
-#include <vikr/graphics/gl4/gl4_pipeline_state.hpp>
+#include <vikr/graphics/gl4/gl4_graphics_pipeline_state.hpp>
 #include <vikr/shader/shader_config.hpp>
 
 
@@ -18,7 +18,7 @@ class Framebuffer;
 class GL4RenderPass;
 class GL4Framebuffer;
 class GL4Commandbuffer;
-class GL4PipelineState;
+class GL4GraphicsPipelineState;
 class GL4Vertexbuffer;
 struct TextureSampler;
 
@@ -66,22 +66,25 @@ public:
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
 
   vvoid SetFramebuffer(Framebuffer *framebuffer) override;
+  vvoid SetRenderPass(RenderPass *renderpass) override;
   vvoid BeginRecord(Commandbuffer *buf) override; 
   vvoid EndRecord() override;
 
   Framebuffer *GetFramebuffer() override;
-  PipelineState *GetPipelineState() override;
-  vvoid ApplyPipelineState(PipelineState *pipelinestate) override;
+  GraphicsPipelineState *GetGraphicsPipelineState() override;
+  vvoid ApplyGraphicsPipelineState(GraphicsPipelineState *pipelinestate) override;
   vvoid SetMaterial(Material *material) override;
 
   GL4Vertexbuffer *GetCurrentVertexbuffer() { return m_queriedVertexbuffer; }
 
   vvoid Present() override;
 
+  vvoid Dispatch(vuint32 x, vuint32 y, vuint32 z) override;
+
 private:
 
   vvoid ClearTextures();
-  GL4PipelineState *m_currPipeline                = nullptr;
+  GL4GraphicsPipelineState *m_currPipeline                = nullptr;
 
   std::vector<TextureSampler> m_currTextures;
   GL4Commandbuffer *m_recordCommandbuffer         = nullptr;

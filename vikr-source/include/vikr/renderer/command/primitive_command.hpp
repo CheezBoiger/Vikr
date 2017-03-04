@@ -28,9 +28,9 @@ public:
     buffer.BeginRecord();
     buffer.SetQueryVertexbuffer(m_mesh->GetVertexBuffer());
     if (m_mesh->GetVertices().indices.empty()) {
-      buffer.SetDraw(0, m_mesh->GetVertices().size);
+      buffer.Draw(0, m_mesh->GetVertices().size);
     } else {
-      buffer.SetDrawIndexed(nullptr, m_mesh->GetVertices().indices.size());
+      buffer.DrawIndexed(nullptr, m_mesh->GetVertices().indices.size());
     }
     buffer.EndRecord();
   }

@@ -6,6 +6,7 @@
 #include <vikr/renderer/deferred_renderer.hpp>
 #include <vikr/input/window.hpp>
 #include <vikr/scene/first_person_camera.hpp>
+#include <vikr/resources/resource_manager.hpp>
 
 
 using namespace vikr;
@@ -21,11 +22,12 @@ int main(int argc, char *argv[]) {
   Window::SetMainWindow(&main_window);
 
   // Initialize the Rendering device.
-  VKDevice device;
+  VKRenderDevice device;
   // Initialize the Renderer.
   DeferredRenderer renderer;
+  ResourceManager mgr;
 
-  renderer.Init(&device);
+  renderer.Init(&device, &mgr);
 
   while (!Window::GetMainWindow()->IsClosed()) {
     CalculateDeltaTime();  

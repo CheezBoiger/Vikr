@@ -6,7 +6,6 @@
 
 
 #include <vikr/graphics/render_device.hpp>
-#include <vikr/resources/opengl/gl_resource_manager.hpp>
 #include <vikr/graphics/gl4/gl4_context.hpp>
 
 #include <map>
@@ -29,8 +28,6 @@ public:
 
   Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) override;
 
-  ResourceManager *GetResourceManager() override { return &manager; }
-
   /**
     Get the context of this device.
   */
@@ -50,14 +47,38 @@ public:
 
   CommandbufferList *CreateCommandbufferList() override;
 
+  vbool DestroyUniformbuffer(guid_t id) override;
+  Uniformbuffer *GetUniformbuffer(guid_t id) override;
+  Uniformbuffer *CreateUniformbuffer() override;
+
+  GraphicsPipelineState *CreateGraphicsPipelineState(std::string name) override;
+  GraphicsPipelineState *GetGraphicsPipelineState(guid_t id) override;
+  vbool DestroyGraphicsPipelineState(guid_t id) override;
+
+  ComputePipelineState *CreateComputePipelineState(std::string name) override;
+  ComputePipelineState *GetComputePipelineState(guid_t id) override;
+  vbool DestroyComputePipelineState(guid_t id) override;
+
+  /**
+  Create a shader, and store it into Resources, the id of the shader will
+  be returned. Resources takes care of this.
+  */
+  Shader *CreateShader(std::string name, ShaderStage stage) override;
+  Shader *GetShader(guid_t id) override;
+  vbool DestroyShader(guid_t id) override;
+
+
+  ShaderProgram *CreateShaderProgram() override;
+  ShaderProgram *GetShaderProgram(guid_t id) override;
+  vbool DestroyShaderProgram(guid_t id) override;
+
+  Texture *CreateTexture(std::string name, TextureTarget target,
+                                 std::string filepath, vbool alpha) override;
+  Texture *GetTexture(guid_t id) override;
+  vbool DestroyTexture(guid_t id) override;
+
 
 private:
-  
-  /**
-    Resource manager.
-  */
-  GLResourceManager manager;
-
   /**
     Rendering context that this device uses.
   */

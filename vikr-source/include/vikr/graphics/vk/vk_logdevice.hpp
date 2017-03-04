@@ -5,7 +5,6 @@
 #define __VIKR_VK_LOGICAL_DEVICE_HPP
 
 
-#include <vikr/resources/vulkan/vk_resource_manager.hpp>
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
 
 

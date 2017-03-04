@@ -32,7 +32,7 @@
 
 #include <vikr/shader/shader_program.hpp>
 #include <vikr/shader/cubemap.hpp>
-#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/graphics_pipeline_state.hpp>
 #include <vikr/resources/resource_manager.hpp>
 #include <vikr/scene/first_person_camera.hpp>
 
@@ -157,7 +157,7 @@ vvoid DeferredRenderer::Render() {
   context->SetFramebuffer(DEFAULT_FRAMEBUFFER);
   
   // Set back to the default RenderPass.
-  context->GetPipelineState()->SetShaderProgram(lightShader);
+  context->GetGraphicsPipelineState()->SetShaderProgram(lightShader);
   for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);
   }
@@ -190,14 +190,14 @@ vvoid DeferredRenderer::Render() {
 }
 
 
-vint32 DeferredRenderer::Init(RenderDevice *device) {
+vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   if (!Renderer::GetRenderer()) {
     Renderer::SetRenderer(this);
   }
   m_renderDevice = device;
-  PipelineState *pipeline = 
-    device->GetResourceManager()->CreatePipelineState("renderer_pipeline");
-  m_renderDevice->GetContext()->ApplyPipelineState(pipeline);
+  GraphicsPipelineState *pipeline = 
+    device->CreateGraphicsPipelineState("renderer_pipeline");
+  m_renderDevice->GetContext()->ApplyGraphicsPipelineState(pipeline);
   m_renderQueue.RegisterBatchComparator([&] (RenderCommand *a, RenderCommand *b) -> vint32 {
     vint32 greater = false;
     //if (a->GetDrawOrder() > b->GetDrawOrder()) {
@@ -213,18 +213,17 @@ vint32 DeferredRenderer::Init(RenderDevice *device) {
 
   Window *window = Window::GetMainWindow();
   // Create the ScreenQuad.
-  m_screenquad.Init(m_renderDevice);
+  m_screenquad.Init(m_renderDevice, mgr);
 
   m_gbuffer.Init(m_renderDevice);
   /*
     Light shader.
   */
-  ResourceManager *mgr = m_renderDevice->GetResourceManager();
-  Shader *v_lightpass = mgr->CreateShader("lightpass_v", vikr_VERTEX_SHADER);
-  Shader *f_lightpass = mgr->CreateShader("lightpass_f", vikr_FRAGMENT_SHADER);
+  Shader *v_lightpass = device->CreateShader("lightpass_v", vikr_VERTEX_SHADER);
+  Shader *f_lightpass = device->CreateShader("lightpass_f", vikr_FRAGMENT_SHADER);
   v_lightpass->Compile("../../../libs/shader/GLSL/deferred/lightpass.vert");
   f_lightpass->Compile("../../../libs/shader/GLSL/deferred/lightpass.frag");
-  lightShader = mgr->CreateShaderProgram();
+  lightShader = device->CreateShaderProgram();
   lightShader->LoadShader(v_lightpass);
   lightShader->LoadShader(f_lightpass);
   lightShader->Build();
@@ -261,9 +260,9 @@ vint32 DeferredRenderer::Init(RenderDevice *device) {
   port.win_width = window->GetWidth();
   port.win_height = window->GetHeight();
   printer.SetViewport(port);
-  printer.Init(m_renderDevice, "c:/windows/fonts/arial.ttf");
+  printer.Init(m_renderDevice, mgr, "c:/windows/fonts/arial.ttf");
 
-  skybox.Init(m_renderDevice);
+  skybox.Init(m_renderDevice, mgr);
   
 
   return 1;

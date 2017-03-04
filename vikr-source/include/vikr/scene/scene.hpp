@@ -13,7 +13,7 @@ namespace vikr {
 
 
 class SceneNode;
-class RenderDevice;
+class ResourceManager;
 
 
 /**
@@ -24,7 +24,7 @@ class RenderDevice;
 class Scene {
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Scene);
-  static SceneNode *CreateSceneNode(RenderDevice *device);
+  static SceneNode *CreateSceneNode(ResourceManager *mgr);
 
   Scene(SceneNode *root = nullptr);
 

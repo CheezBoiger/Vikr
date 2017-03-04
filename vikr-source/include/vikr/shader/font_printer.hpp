@@ -19,6 +19,7 @@ class ShaderProgram;
 class RenderDevice;
 class Shader;
 class Mesh;
+class ResourceManager;
 
 
 /**
@@ -35,7 +36,7 @@ public:
 
   vvoid SetPrintln(std::string text, vreal32 x, vreal32 y, vreal32 scale, glm::vec3 color);
 
-  vvoid Init(RenderDevice *device, std::string font);
+  vvoid Init(RenderDevice *device, ResourceManager *mgr, std::string font);
   
   vvoid Reset(RenderDevice *device, std::string font);
 

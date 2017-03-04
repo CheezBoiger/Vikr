@@ -36,12 +36,12 @@ struct Viewport;
   Pipeline state defines the current state of the Renderer API.
   This is an interface for both Vulkan and OpenGL use.
 */
-class PipelineState : public GUID {
-  VIKR_DISALLOW_COPY_AND_ASSIGN(PipelineState);
+class GraphicsPipelineState : public GUID {
+  VIKR_DISALLOW_COPY_AND_ASSIGN(GraphicsPipelineState);
 public:
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(PipelineState);
-  PipelineState() { }
-  virtual ~PipelineState() { }
+  VIKR_DEFAULT_MOVE_AND_ASSIGN(GraphicsPipelineState);
+  GraphicsPipelineState() { }
+  virtual ~GraphicsPipelineState() { }
 
   /**
     Set the viewport for the context.

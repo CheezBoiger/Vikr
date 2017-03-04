@@ -15,12 +15,12 @@
 namespace vikr {
 
 
-class VKDevice;
+class VKRenderDevice;
 
 
 class SpvShader : public Shader {
 public:
- SpvShader(VKDevice *device, ShaderStage stage);
+ SpvShader(VKRenderDevice *device, ShaderStage stage);
   
   vvoid Compile(std::string path) override;
   vvoid Cleanup() override;
@@ -36,7 +36,7 @@ private:
   /**
     Weak ref.
   */
-  VKDevice *device = nullptr;
+  VKRenderDevice *device = nullptr;
 };
 } // vikr
 #endif // __VIKR_SPV_SHADER_HPP

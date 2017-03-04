@@ -7,8 +7,16 @@
 #include <vikr/graphics/gl4/gl4_vertexbuffer.hpp>
 #include <vikr/graphics/gl4/gl4_renderpass.hpp>
 #include <vikr/graphics/gl4/gl4_commandbuffer.hpp>
-#include <vikr/graphics/gl4/gl4_pipeline_state.hpp>
+#include <vikr/graphics/gl4/gl4_graphics_pipeline_state.hpp>
 #include <vikr/shader/glsl/gl4_cubemap.hpp>
+#include <vikr/shader/glsl/glsl_shader.hpp>
+#include <vikr/shader/material.hpp>
+#include <vikr/mesh/mesh.hpp>
+#include <vikr/shader/glsl/gl4_texture1d.hpp>
+#include <vikr/shader/glsl/gl4_texture2d.hpp>
+#include <vikr/shader/glsl/gl4_texture3d.hpp>
+#include <vikr/shader/glsl/glsl_program.hpp>
+#include <vikr/shader/stb/stb_image.h>
 
 #include <vikr/util/vikr_log.hpp>
 #include <cstddef>
@@ -37,8 +45,25 @@ Storage for framebuffer within this device.
 */
 std::map<guid_t, std::unique_ptr<GL4Framebuffer> > m_framebuffers;
 
-
+/**
+*/
 std::map<guid_t, std::unique_ptr<GL4CommandbufferList> > m_commandbufferlists;
+
+/**
+*/
+std::map<guid_t, std::unique_ptr<GLSLShader> > shaders;
+
+/**
+*/
+std::map<guid_t, std::unique_ptr<GL4Texture> > textures;
+
+/**
+*/
+std::map<guid_t, std::unique_ptr<GLSLShaderProgram> > shader_programs;
+
+/**
+*/
+std::map<guid_t, std::unique_ptr<GL4GraphicsPipelineState> > graphicspipelinestates;
 
 
 const std::string GL4RenderDevice::kGLSLShaderLanguage = "glsl";
@@ -258,6 +283,179 @@ vbool GL4RenderDevice::DestroyFramebuffer(guid_t id) {
     m_framebuffers.erase(found);
     return true;  
   }
+  return false;
+}
+
+
+
+Shader *GL4RenderDevice::CreateShader(std::string name, ShaderStage stage) {
+  std::unique_ptr<GLSLShader> shader = std::make_unique<GLSLShader>(stage);
+  shader->SetName(name);
+
+  guid_t id = shader->GetUID();
+  shaders[shader->GetUID()] = std::move(shader);
+  return static_cast<Shader *>(shaders[id].get());
+}
+
+
+Shader *GL4RenderDevice::GetShader(guid_t id) {
+  if (shaders.find(id) != shaders.end()) {
+    return static_cast<Shader *>(shaders[id].get());
+  }
+  return nullptr;
+}
+
+
+vbool GL4RenderDevice::DestroyShader(guid_t id) {
+  vbool success = false;
+  auto it = shaders.find(id);
+  if (it != shaders.end()) {
+    // cleanup first. Make sure the shader is not leaked.
+    it->second->Cleanup();
+    shaders.erase(it);
+    VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, "Shader id => " 
+      + std::to_string(id) + " removed.");
+    success = true;
+  } 
+  return success;
+}
+
+
+Texture *GL4RenderDevice::CreateTexture(
+  std::string name, 
+  TextureTarget target, 
+  std::string filepath, 
+  vbool alpha) 
+{
+  std::unique_ptr<GL4Texture> texture = nullptr;
+  vint32 width = 0;
+  vint32 height = 0;
+  vint32 depth = 0;
+  vbyte *bytecode = stbi_load(filepath.c_str(), &width, &height, &depth,
+                              alpha ? STBI_rgb_alpha : STBI_rgb);
+  switch(target) {
+  case vikr_TARGET_1D: texture = std::make_unique<GL4Texture1D>(width); break;
+  case vikr_TARGET_2D: texture = std::make_unique<GL4Texture2D>(width, height); break;
+  case vikr_TARGET_3D: texture = std::make_unique<GL4Texture3D>(width, height, depth); break;
+  case vikr_TARGET_CUBEMAP: // not implemented yet.
+  default: break;
+  }
+  guid_t id = texture->GetUID();
+  if (texture) {
+    texture->SetByteCode(bytecode);
+    //texture->Finalize(); // No need to tell the resource manager to finalize for us.
+    texture->SetPath(filepath);
+    texture->SetName(name);
+    textures[texture->GetUID()] = std::move(texture);
+  }
+  return textures[id].get();
+}
+
+
+Texture *GL4RenderDevice::GetTexture(guid_t id) {
+  return textures[id].get();
+}
+
+
+vbool GL4RenderDevice::DestroyTexture(guid_t id) {
+  auto it = textures.find(id);
+  vbool success = false;
+  if (it != textures.end()) {
+    // Cleanup first.
+    it->second->Cleanup();
+    textures.erase(it);
+    success = true;
+  }
+  return success;
+}
+
+
+GraphicsPipelineState *GL4RenderDevice::CreateGraphicsPipelineState(std::string name) {
+  std::unique_ptr<GL4GraphicsPipelineState> gl_pipeline =
+    std::make_unique<GL4GraphicsPipelineState>();
+  gl_pipeline->SetName(name);
+  guid_t id = gl_pipeline->GetUID();
+  graphicspipelinestates[gl_pipeline->GetUID()] = std::move(gl_pipeline);
+  return static_cast<GraphicsPipelineState *>(graphicspipelinestates[id].get());
+}
+
+
+GraphicsPipelineState *GL4RenderDevice::GetGraphicsPipelineState(guid_t id) {
+  auto it = graphicspipelinestates.find(id);
+  if (it != graphicspipelinestates.end()) {
+    return graphicspipelinestates[id].get();
+  }
+  return nullptr;
+}
+
+
+vbool GL4RenderDevice::DestroyGraphicsPipelineState(guid_t id) {
+  vbool success = false;
+  auto it = graphicspipelinestates.find(id);
+  if (it != graphicspipelinestates.end()) {
+    graphicspipelinestates.erase(it);
+    success = true;
+  }
+  return success;
+}
+
+
+ShaderProgram *GL4RenderDevice::CreateShaderProgram() {
+  std::unique_ptr<GLSLShaderProgram> prgm =
+    std::make_unique<GLSLShaderProgram>();
+  guid_t id = prgm->GetUID();
+  shader_programs[prgm->GetUID()] = std::move(prgm);
+  return shader_programs[id].get();
+}
+
+
+ShaderProgram *GL4RenderDevice::GetShaderProgram(guid_t uid) {
+  auto it = shader_programs.find(uid);
+  if (it != shader_programs.end()) {
+    return shader_programs[uid].get();
+  }
+  return nullptr;
+}
+
+
+vbool GL4RenderDevice::DestroyShaderProgram(guid_t id) {
+  vbool success = false;
+  auto it = shader_programs.find(id);
+  if (it != shader_programs.end()) {
+    it->second->Cleanup();
+    shader_programs.erase(it);
+    success = true;
+  }
+  return success;
+}
+
+
+vbool GL4RenderDevice::DestroyUniformbuffer(guid_t id) {
+  return false;
+}
+
+
+Uniformbuffer *GL4RenderDevice::GetUniformbuffer(guid_t id) {
+  return nullptr;
+}
+
+
+Uniformbuffer *GL4RenderDevice::CreateUniformbuffer() {
+  return nullptr;
+}
+
+
+ComputePipelineState *GL4RenderDevice::CreateComputePipelineState(std::string name) {
+  return nullptr;
+}
+
+
+ComputePipelineState *GL4RenderDevice::GetComputePipelineState(guid_t id) {
+  return nullptr;
+}
+
+
+vbool GL4RenderDevice::DestroyComputePipelineState(guid_t id) {
   return false;
 }
 } // vikr 

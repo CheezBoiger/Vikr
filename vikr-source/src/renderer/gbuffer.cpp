@@ -6,7 +6,7 @@
 #include <vikr/resources/resource_manager.hpp>
 #include <vikr/graphics/render_context.hpp>
 #include <vikr/shader/shader_program.hpp>
-#include <vikr/graphics/pipeline_state.hpp>
+#include <vikr/graphics/graphics_pipeline_state.hpp>
 
 namespace vikr {
 
@@ -25,9 +25,8 @@ vvoid GBuffer::Init(RenderDevice *device) {
   viewport.win_y = 0;
   viewport.win_width = Window::GetMainWindow()->GetWidth();
   viewport.win_height = Window::GetMainWindow()->GetHeight();
-  ResourceManager *mgr = device->GetResourceManager();
   
-  m_rendertargets[0] = mgr->CreateTexture("gPosition", vikr_TARGET_2D, "", false);
+  m_rendertargets[0] = device->CreateTexture("gPosition", vikr_TARGET_2D, "", false);
   m_rendertargets[0]->SetWidth(window->GetWidth());
   m_rendertargets[0]->SetHeight(window->GetHeight());
   m_rendertargets[0]->SetMipmapping(false);
@@ -40,7 +39,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[0]->SetByteCode(nullptr);
   m_rendertargets[0]->Finalize();
 
-  m_rendertargets[1] = mgr->CreateTexture("gNormal", vikr_TARGET_2D, "", false);
+  m_rendertargets[1] = device->CreateTexture("gNormal", vikr_TARGET_2D, "", false);
   m_rendertargets[1]->SetWidth(window->GetWidth());
   m_rendertargets[1]->SetHeight(window->GetHeight());
   m_rendertargets[1]->SetMipmapping(false);
@@ -53,7 +52,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[1]->SetByteCode(nullptr);
   m_rendertargets[1]->Finalize();
 
-  m_rendertargets[2] = mgr->CreateTexture("gAlbedo", vikr_TARGET_2D, "", false);
+  m_rendertargets[2] = device->CreateTexture("gAlbedo", vikr_TARGET_2D, "", false);
   m_rendertargets[2]->SetWidth(window->GetWidth());
   m_rendertargets[2]->SetHeight(window->GetHeight());
   m_rendertargets[2]->SetMipmapping(false);
@@ -66,7 +65,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[2]->SetByteCode(nullptr);
   m_rendertargets[2]->Finalize();
 
-  m_rendertargets[3] = mgr->CreateTexture("gSpecular", vikr_TARGET_2D, "", false);
+  m_rendertargets[3] = device->CreateTexture("gSpecular", vikr_TARGET_2D, "", false);
   m_rendertargets[3]->SetWidth(window->GetWidth());
   m_rendertargets[3]->SetHeight(window->GetHeight());
   m_rendertargets[3]->SetMipmapping(false);
@@ -79,7 +78,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[3]->SetByteCode(nullptr);
   m_rendertargets[3]->Finalize();
 
-  m_rendertargets[4] = mgr->CreateTexture("gAmbient", vikr_TARGET_2D, "", false);
+  m_rendertargets[4] = device->CreateTexture("gAmbient", vikr_TARGET_2D, "", false);
   m_rendertargets[4]->SetWidth(window->GetWidth());
   m_rendertargets[4]->SetHeight(window->GetHeight());
   m_rendertargets[4]->SetMipmapping(false);
@@ -92,7 +91,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[4]->SetByteCode(nullptr);
   m_rendertargets[4]->Finalize();
 
-  m_rendertargets[5] = mgr->CreateTexture("gTangent", vikr_TARGET_2D, "", false);
+  m_rendertargets[5] = device->CreateTexture("gTangent", vikr_TARGET_2D, "", false);
   m_rendertargets[5]->SetWidth(window->GetWidth());
   m_rendertargets[5]->SetHeight(window->GetHeight());
   m_rendertargets[5]->SetMipmapping(false);
@@ -105,7 +104,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[5]->SetByteCode(nullptr);
   m_rendertargets[5]->Finalize();
 
-  m_rendertargets[6] = mgr->CreateTexture("gBitangent", vikr_TARGET_2D, "", false);
+  m_rendertargets[6] = device->CreateTexture("gBitangent", vikr_TARGET_2D, "", false);
   m_rendertargets[6]->SetWidth(window->GetWidth());
   m_rendertargets[6]->SetHeight(window->GetHeight());
   m_rendertargets[6]->SetMipmapping(false);
@@ -118,7 +117,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[6]->SetByteCode(nullptr);
   m_rendertargets[6]->Finalize();
 
-  m_rendertargets[7] = mgr->CreateTexture("gNorm", vikr_TARGET_2D, "", false);
+  m_rendertargets[7] = device->CreateTexture("gNorm", vikr_TARGET_2D, "", false);
   m_rendertargets[7]->SetWidth(window->GetWidth());
   m_rendertargets[7]->SetHeight(window->GetHeight());
   m_rendertargets[7]->SetMipmapping(false);
@@ -131,7 +130,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[7]->SetByteCode(nullptr);
   m_rendertargets[7]->Finalize();
 
-  m_rendertargets[8] = mgr->CreateTexture("gDepth", vikr_TARGET_2D, "", false);
+  m_rendertargets[8] = device->CreateTexture("gDepth", vikr_TARGET_2D, "", false);
   m_rendertargets[8]->SetWidth(window->GetWidth());
   m_rendertargets[8]->SetHeight(window->GetHeight());
   m_rendertargets[8]->SetMipmapping(false);
@@ -158,12 +157,11 @@ vvoid GBuffer::Init(RenderDevice *device) {
   /*
     Gbuffer shader. This needs to NOT be a fixed length.
   */
-  ResourceManager *manager = device->GetResourceManager();
-  Shader *vert = manager->CreateShader("vert_gbuffer", vikr_VERTEX_SHADER);
+  Shader *vert = device->CreateShader("vert_gbuffer", vikr_VERTEX_SHADER);
   vert->Compile("../../../libs/shader/GLSL/deferred/gbuffer.vert");
-  Shader *frag = manager->CreateShader("frag_gbuffer", vikr_PIXEL_SHADER);
+  Shader *frag = device->CreateShader("frag_gbuffer", vikr_PIXEL_SHADER);
   frag->Compile("../../../libs/shader/GLSL/deferred/gbuffer.frag");
-  m_prgm = manager->CreateShaderProgram();
+  m_prgm = device->CreateShaderProgram();
   m_prgm->LoadShader(vert);
   m_prgm->LoadShader(frag);
   m_prgm->Build();
@@ -183,7 +181,7 @@ vvoid GBuffer::ExecutePass(CommandbufferList *buffer) {
   if (m_device) {
     Commandbuffer &command = m_device->CreateCommandbuffer(bufferlist);
     command.BeginRecord();
-    command.SetClear();
+    command.Clear();
     command.SetFramebuffer(m_framebuffer);
     command.SetShaderProgram(m_prgm);
     command.EndRecord();

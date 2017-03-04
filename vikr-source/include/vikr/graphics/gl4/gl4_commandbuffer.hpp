@@ -32,10 +32,10 @@ public:
   vvoid EndRecord() override;
 
 
-  vvoid SetDraw(vuint32 start, vuint32 vertices) override;
+  vvoid Draw(vuint32 start, vuint32 vertices) override;
 
 
-  vvoid SetDrawIndexed(const vvoid *indices, vuint32 vertices) override;
+  vvoid DrawIndexed(const vvoid *indices, vuint32 vertices) override;
 
 
   vvoid SetTopology(Topology topology) override;
@@ -47,13 +47,13 @@ public:
   vvoid SetRenderPass(RenderPass *pass) override;
 
 
-  vvoid SetClear() override;
+  vvoid Clear() override;
 
 
-  vvoid SetClearWithColor(glm::vec4 color) override;
+  vvoid ClearWithColor(glm::vec4 color) override;
 
 
-  vvoid SetChangeViewport(Viewport *viewport) override;
+  vvoid ChangeViewport(Viewport *viewport) override;
 
 
   vvoid SetShaderProgram(ShaderProgram *program) override;
@@ -65,8 +65,9 @@ public:
   vvoid SetTexture(Texture *texture, vuint32 index) override;
 
 
-  vvoid SetConfigurePipelineState(PipelineState *pipelinestate) override;
+  vvoid ApplyGraphicsPipelineState(GraphicsPipelineState *pipelinestate) override;
 
+  vvoid ApplyComputePipelineState(ComputePipelineState *pipelinestate) override;
 
   vvoid SetBufferSubData(vint32 offset, vuint32 size, 
     vreal32 *data, vbool heap_allocated = false) override;

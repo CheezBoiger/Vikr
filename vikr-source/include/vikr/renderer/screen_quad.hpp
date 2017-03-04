@@ -30,7 +30,7 @@ public:
   /**
     Initialize the ScreenQuad.
   */
-  vvoid Init(RenderDevice *device);
+  vvoid Init(RenderDevice *device, ResourceManager *m_mgr);
 
   vvoid Execute();
 
@@ -40,6 +40,7 @@ public:
 
 private:
   RenderDevice *m_device = nullptr;
+  ResourceManager *m_mgr = nullptr;
   CommandbufferList *list;
   PrimitiveCommand command;
   Mesh *m_quad = nullptr;

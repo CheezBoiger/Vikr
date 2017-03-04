@@ -16,18 +16,18 @@
 namespace vikr {
 
 
-const vchar *VKDevice::kApplicationName = "Vikr Software Application";
-const vchar *VKDevice::kEngineName = "Vikr Powered Graphics Engine";
+const vchar *VKRenderDevice::kApplicationName = "Vikr Software Application";
+const vchar *VKRenderDevice::kEngineName = "Vikr Powered Graphics Engine";
 const std::string kShaderLanguage = "Spir-V";
 
 
-VKDevice::VKDevice()
+VKRenderDevice::VKRenderDevice()
 {
   Setup();
 }
 
 // Pipeline setup.
-vvoid VKDevice::Setup() {
+vvoid VKRenderDevice::Setup() {
   VKInstance::CreateInstance();
   VKSurface::CreateSurface();
   DeterminePhysicalDevice();
@@ -35,13 +35,13 @@ vvoid VKDevice::Setup() {
 }
 
 
-vvoid VKDevice::DeterminePhysicalDevice() {
+vvoid VKRenderDevice::DeterminePhysicalDevice() {
   m_physicalDevice.CheckSuitableDevices(VKInstance::instance.Get());
   m_physicalDevice.SelectPhysicalDevice();
 }
 
 
-vvoid VKDevice::CreateLogicalDevices() {
+vvoid VKRenderDevice::CreateLogicalDevices() {
   VKQueueFamily indices = 
     VKQueueFamily::FindQueueFamilies(m_physicalDevice.GetCurrentDevice());
   VkPhysicalDeviceFeatures device_features = { };
@@ -81,66 +81,156 @@ vvoid VKDevice::CreateLogicalDevices() {
 }
 
 
-std::string VKDevice::GetShaderLanguage() {
+std::string VKRenderDevice::GetShaderLanguage() {
   return kShaderLanguage;
 }
 
 
-Framebuffer *VKDevice::CreateFramebuffer() {
+Framebuffer *VKRenderDevice::CreateFramebuffer() {
   return nullptr;
 }
 
 
-Vertexbuffer *VKDevice::CreateVertexbuffer(VertexContainer &vertices) {
+Vertexbuffer *VKRenderDevice::CreateVertexbuffer(VertexContainer &vertices) {
   return nullptr;
 }
 
 
-ResourceManager *VKDevice::GetResourceManager() {
+Cubemap *VKRenderDevice::CreateCubemap() {
   return nullptr;
 }
 
 
-Cubemap *VKDevice::CreateCubemap() {
+RenderPass *VKRenderDevice::CreateRenderPass() {
   return nullptr;
 }
 
 
-RenderPass *VKDevice::CreateRenderPass() {
-  return nullptr;
-}
-
-
-Commandbuffer &VKDevice::CreateCommandbuffer(CommandbufferList *list) {
+Commandbuffer &VKRenderDevice::CreateCommandbuffer(CommandbufferList *list) {
   throw new std::bad_alloc();
 }
 
 
-CommandbufferList *VKDevice::CreateCommandbufferList() {
+CommandbufferList *VKRenderDevice::CreateCommandbufferList() {
   return nullptr;
 }
 
-vbool VKDevice::DestroyVertexbuffer(guid_t id) {
+vbool VKRenderDevice::DestroyVertexbuffer(guid_t id) {
   return false;
 }
 
 
-vbool VKDevice::DestroyCubemap(guid_t id) {
+vbool VKRenderDevice::DestroyCubemap(guid_t id) {
   return false;
 }
 
 
-vbool VKDevice::DestroyRenderPass(guid_t id) {
+vbool VKRenderDevice::DestroyRenderPass(guid_t id) {
   return false;
 }
 
 
-vbool VKDevice::DestroyCommandbufferList(guid_t id) {
+vbool VKRenderDevice::DestroyCommandbufferList(guid_t id) {
   return false;
 }
 
 
-vbool VKDevice::DestroyFramebuffer(guid_t id) {
+vbool VKRenderDevice::DestroyFramebuffer(guid_t id) {
+  return false;
+}
+
+
+Shader *VKRenderDevice::CreateShader(std::string name, ShaderStage stage) {
+  return nullptr;
+}
+
+
+Shader *VKRenderDevice::GetShader(guid_t id) {
+  return nullptr;
+}
+
+
+vbool VKRenderDevice::DestroyShader(guid_t id) {
+  return false;
+}
+
+
+GraphicsPipelineState *VKRenderDevice::CreateGraphicsPipelineState(std::string name) {
+  return nullptr;
+}
+
+
+GraphicsPipelineState *VKRenderDevice::GetGraphicsPipelineState(guid_t id) {
+  return nullptr;
+}
+
+
+vbool VKRenderDevice::DestroyGraphicsPipelineState(guid_t id) {
+  return false;
+}
+
+
+ShaderProgram *VKRenderDevice::CreateShaderProgram() {
+  return nullptr;
+}
+
+
+ShaderProgram *VKRenderDevice::GetShaderProgram(guid_t id) {
+  return nullptr;
+}
+
+
+vbool VKRenderDevice::DestroyShaderProgram(guid_t id) {
+  return false;
+}
+
+
+Texture *VKRenderDevice::CreateTexture(
+  std::string name,
+  TextureTarget target,
+  std::string img_path,
+  vbool alpha)
+{
+  return nullptr;
+}
+
+
+Texture *VKRenderDevice::GetTexture(guid_t id) {
+  return nullptr;
+}
+
+
+vbool VKRenderDevice::DestroyTexture(guid_t id) {
+  return false;
+}
+
+
+vbool VKRenderDevice::DestroyUniformbuffer(guid_t id) {
+  return false;
+}
+
+
+Uniformbuffer *VKRenderDevice::GetUniformbuffer(guid_t id) {
+  return nullptr;
+}
+
+
+Uniformbuffer *VKRenderDevice::CreateUniformbuffer() {
+  return nullptr;
+}
+
+
+ComputePipelineState *VKRenderDevice::CreateComputePipelineState(std::string name) {
+  return nullptr;
+}
+
+
+ComputePipelineState *VKRenderDevice::GetComputePipelineState(guid_t id) {
+  return nullptr;
+}
+
+
+vbool VKRenderDevice::DestroyComputePipelineState(guid_t id) {
   return false;
 }
 } // vikr

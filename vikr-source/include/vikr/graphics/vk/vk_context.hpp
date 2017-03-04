@@ -14,9 +14,9 @@ namespace vikr {
 class VKPipelineState;
 
 
-class VKContext : public RenderContext {
+class VKRenderContext : public RenderContext {
 public:
-  VKContext();
+  VKRenderContext();
 
   vvoid Draw(vuint32 start, vuint32 vertices) override;
 
@@ -61,11 +61,14 @@ public:
   vvoid BeginRecord(Commandbuffer *buf) override;
   vvoid EndRecord() override;
   Framebuffer *GetFramebuffer() override;
-  PipelineState *GetPipelineState() override;
-  vvoid ApplyPipelineState(PipelineState *pipeline) override;
+  GraphicsPipelineState *GetGraphicsPipelineState() override;
+  vvoid ApplyGraphicsPipelineState(GraphicsPipelineState *pipeline) override;
 
   vvoid Present() override;
 
+  vvoid Dispatch(vuint32 x, vuint32 y, vuint32 z) override;
+
+  vvoid SetRenderPass(RenderPass *pass) override;
   vvoid SetMaterial(Material *material) override;
 
   Vertexbuffer *GetCurrentVertexbuffer() { return nullptr; }

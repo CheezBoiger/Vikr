@@ -20,6 +20,7 @@ namespace vikr {
 
 class SceneNode;
 class SceneComponent;
+class ResourceManager;
 class RenderDevice;
 
 
@@ -35,14 +36,17 @@ public:
     Creates a scene node.
   */
   static SceneNode *ImportModel(
-    RenderDevice *device, 
+    RenderDevice *device,
+    ResourceManager *mgr, 
     std::string path, 
     std::string name, 
     vbool dynamic
   );
 
 private:
-  static SceneNode *ProcessNode(RenderDevice *device
+  static SceneNode *ProcessNode(
+    RenderDevice *device,
+    ResourceManager *mgr
     , aiNode *node
     , const aiScene *scene
     , std::string dir
@@ -51,13 +55,16 @@ private:
   );
 
   static Mesh *ProcessMesh(
-    RenderDevice *device, 
+    RenderDevice *device,
+    ResourceManager *mgr, 
     aiMesh *mesh, 
     const aiScene *scene, 
     vbool dynamic
   );
 
-  static Material *ParseMaterial(RenderDevice *device
+  static Material *ParseMaterial(
+    RenderDevice *device
+    , ResourceManager *mgr
     , aiMaterial *material
     , std::string dir
     , std::string name);

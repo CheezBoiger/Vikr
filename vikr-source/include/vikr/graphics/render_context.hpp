@@ -38,10 +38,11 @@ class RenderDevice;
 class Shader;
 class Commandbuffer;
 class CommandbufferList;
-class PipelineState;
 class Vertexbuffer;
 class Framebuffer;
 class Material;
+class GraphicsPipelineState;
+class ComputePipelineState;
 
 struct ShaderUniformParams;
 struct Viewport;
@@ -79,6 +80,8 @@ public:
     Set texture function.
   */
   virtual vvoid SetTexture(Texture *texture, vuint32 index) = 0;
+
+  virtual vvoid SetRenderPass(RenderPass *renderpass) = 0;
     
   /**
     Set Rendertarget.
@@ -186,12 +189,12 @@ public:
   /**
     Grab the current pipeline state
   */
-  virtual PipelineState *GetPipelineState() = 0;
+  virtual GraphicsPipelineState *GetGraphicsPipelineState() = 0;
 
   /**
     Set the pipeline state.
   */
-  virtual vvoid ApplyPipelineState(PipelineState *pipeline) = 0;
+  virtual vvoid ApplyGraphicsPipelineState(GraphicsPipelineState *pipeline) = 0;
 
   /**
     Present the Image onto the screen.
@@ -200,6 +203,9 @@ public:
 
 
   virtual Framebuffer *GetFramebuffer() = 0;
+
+
+  virtual vvoid Dispatch(vuint32 x, vuint32 y, vuint32 z) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP
