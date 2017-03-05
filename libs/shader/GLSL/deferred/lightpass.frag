@@ -96,7 +96,7 @@ vec3 CalculatePointLight(PointLight light, vec3 Normal, vec3 FragPos,
 
 void main() {
   vec4 result = vec4(0.0f);
-  for (int sampledIndex = 0; sampledIndex < 8; ++sampledIndex) {
+  for (int sampledIndex = 0; sampledIndex < 4; ++sampledIndex) {
     vec3 FragPos = texelFetch(gPosition, ivec2(gl_FragCoord.xy), sampledIndex).rgb;
     vec4 Diffuse = texelFetch(gAlbedo, ivec2(gl_FragCoord.xy), sampledIndex);
     vec4 Specular = texelFetch(gSpecular, ivec2(gl_FragCoord.xy), sampledIndex);
@@ -117,9 +117,9 @@ void main() {
     //result = Diffuse * 0.01;
   
     for (int i = 0; i < MAX_DIRECTIONALLIGHTS; ++i) {
-      if ( vikr_directionalLights[i].enabled) {
-        //result += vec4(CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
-        //  TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN), 0.0f);
+      if (vikr_directionalLights[i].enabled) {
+        result += vec4(CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
+          TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN), 0.0f);
       }
     }
     for (int i = 0; i < MAX_POINTLIGHTS; ++i) {
