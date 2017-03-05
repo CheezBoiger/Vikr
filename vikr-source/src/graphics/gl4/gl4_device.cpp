@@ -335,6 +335,7 @@ Texture *GL4RenderDevice::CreateTexture(
                               alpha ? STBI_rgb_alpha : STBI_rgb);
   switch(target) {
   case vikr_TARGET_1D: texture = std::make_unique<GL4Texture1D>(width); break;
+  case vikr_TARGET_2D_MULTISAMPLE:
   case vikr_TARGET_2D: texture = std::make_unique<GL4Texture2D>(width, height); break;
   case vikr_TARGET_3D: texture = std::make_unique<GL4Texture3D>(width, height, depth); break;
   case vikr_TARGET_CUBEMAP: // not implemented yet.
@@ -342,6 +343,9 @@ Texture *GL4RenderDevice::CreateTexture(
   }
   guid_t id = texture->GetUID();
   if (texture) {
+    if (target == vikr_TARGET_2D_MULTISAMPLE) {
+      texture->SetMultisampled(true);
+    }
     texture->SetByteCode(bytecode);
     //texture->Finalize(); // No need to tell the resource manager to finalize for us.
     texture->SetPath(filepath);

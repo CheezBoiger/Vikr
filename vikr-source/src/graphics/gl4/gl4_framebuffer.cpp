@@ -51,11 +51,12 @@ vvoid GL4Framebuffer::Generate() {
 vint32 GL4Framebuffer::IsComplete() {
   vint32 err = 1;
   // glCheckNamedFramebufferStatus is an OpenGL 4.5 API function.
-  if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+  GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+  if (status != GL_FRAMEBUFFER_COMPLETE) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Framebuffer is not complete!");
-    VikrLog::DisplayMessage(VIKR_ERROR, "GL error: " + std::to_string(glGetError()));
+    VikrLog::DisplayMessage(VIKR_ERROR, "Framebuffer error: " + std::to_string(status));
     std::cin.ignore();
-    err = 0;
+    err = 0; GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT;
   }
   return err;
 }
@@ -82,6 +83,7 @@ vvoid GL4Framebuffer::Unbind() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
   }
 }
+
 
 
 vvoid GL4Framebuffer::Update() {

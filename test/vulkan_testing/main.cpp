@@ -25,6 +25,8 @@ int main(int argc, char *argv[]) {
   VKRenderDevice device;
   // Initialize the Renderer.
   DeferredRenderer renderer;
+  // Set this to be the global renderer.
+  Renderer::SetRenderer(&renderer);
   ResourceManager mgr;
 
   renderer.Init(&device, &mgr);

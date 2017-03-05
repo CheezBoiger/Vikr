@@ -152,11 +152,12 @@ vvoid DeferredRenderer::Render() {
 
   // Set the Gbuffer pass.
   m_gbuffer.ExecutePass(m_commandBufferList);
-
+  
   // Deferred Shading pass.
   context->SetFramebuffer(DEFAULT_FRAMEBUFFER);
   
   // Set back to the default RenderPass.
+  // Needs to be recorded!!
   context->GetGraphicsPipelineState()->SetShaderProgram(lightShader);
   for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);
@@ -196,7 +197,7 @@ vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   }
   m_renderDevice = device;
   GraphicsPipelineState *pipeline = 
-    device->CreateGraphicsPipelineState("renderer_pipeline");
+    device->CreateGraphicsPipelineState("deferred_pipeline");
   m_renderDevice->GetContext()->ApplyGraphicsPipelineState(pipeline);
   m_renderQueue.RegisterBatchComparator([&] (RenderCommand *a, RenderCommand *b) -> vint32 {
     vint32 greater = false;
@@ -214,7 +215,6 @@ vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   Window *window = Window::GetMainWindow();
   // Create the ScreenQuad.
   m_screenquad.Init(m_renderDevice, mgr);
-
   m_gbuffer.Init(m_renderDevice);
   /*
     Light shader.
@@ -263,8 +263,7 @@ vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   printer.Init(m_renderDevice, mgr, "c:/windows/fonts/arial.ttf");
 
   skybox.Init(m_renderDevice, mgr);
-  
-
+ 
   return 1;
 }
 

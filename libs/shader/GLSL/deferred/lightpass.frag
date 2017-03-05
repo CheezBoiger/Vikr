@@ -7,14 +7,14 @@ out vec4 FragColor;
 in vec2 TexCoords;
 in mat3 TBN;
 
-uniform sampler2D gPosition;
-uniform sampler2D gNormal;
-uniform sampler2D gAlbedo;
-uniform sampler2D gSpecular;
-uniform sampler2D gAmbient;
-uniform sampler2D gTangent;
-uniform sampler2D gBitangent;
-uniform sampler2D gNorm;
+uniform sampler2DMS gPosition;
+uniform sampler2DMS gNormal;
+uniform sampler2DMS gAlbedo;
+uniform sampler2DMS gSpecular;
+uniform sampler2DMS gAmbient;
+uniform sampler2DMS gTangent;
+uniform sampler2DMS gBitangent;
+uniform sampler2DMS gNorm;
 
 
 /**
@@ -95,15 +95,15 @@ vec3 CalculatePointLight(PointLight light, vec3 Normal, vec3 FragPos,
 
 
 void main() {
-  vec3 FragPos = texture(gPosition, TexCoords).rgb;
-  vec4 Diffuse = texture(gAlbedo, TexCoords);
-  vec4 Specular = texture(gSpecular, TexCoords);
-  vec4 Ambient = texture(gAmbient, TexCoords);
-  vec3 Normal = texture(gNormal, TexCoords).rgb;
+  vec3 FragPos = texelFetch(gPosition, ivec2(gl_FragCoord.xy), 0).rgb;
+  vec4 Diffuse = texelFetch(gAlbedo, ivec2(gl_FragCoord.xy), 0);
+  vec4 Specular = texelFetch(gSpecular, ivec2(gl_FragCoord.xy), 0);
+  vec4 Ambient = texelFetch(gAmbient, ivec2(gl_FragCoord.xy), 0);
+  vec3 Normal = texelFetch(gNormal, ivec2(gl_FragCoord.xy), 0).rgb;
   
-  vec3 Norm = texture(gNorm, TexCoords).rgb;
-  vec3 Tangent = texture(gTangent, TexCoords).rgb;
-  vec3 Bitangent = texture(gBitangent, TexCoords).rgb;
+  vec3 Norm = texelFetch(gNorm, ivec2(gl_FragCoord.xy), 0).rgb;
+  vec3 Tangent = texelFetch(gTangent, ivec2(gl_FragCoord.xy), 0).rgb;
+  vec3 Bitangent = texelFetch(gBitangent, ivec2(gl_FragCoord.xy), 0).rgb;
   
   mat3 TBN = transpose(mat3(Tangent, Bitangent, Norm));
   

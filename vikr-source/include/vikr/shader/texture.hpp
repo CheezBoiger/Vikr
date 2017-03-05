@@ -161,7 +161,7 @@ public:
 protected:
 
   TextureTarget     m_target                    = vikr_TARGET_2D;
-  ImageFormat     m_format                    = vikr_FORMAT_R8G8B8A8_UINT;
+  ImageFormat     m_format                      = vikr_FORMAT_R8G8B8A8_UINT;
   TextureFilterMode m_filter_min                = vikr_FILTER_LINEAR_MIPMAP_LINEAR;
   TextureFilterMode m_filter_max                = vikr_FILTER_LINEAR;
   TextureWrapMode   m_wrap_s                    = vikr_WRAP_REPEAT;

@@ -64,7 +64,6 @@ public:
   vvoid BlitTo(Framebuffer *framebuffer) override;
 
 private:
-
   /**
     Get the clear color for this framebuffer.
   */
