@@ -233,4 +233,18 @@ ComputePipelineState *VKRenderDevice::GetComputePipelineState(guid_t id) {
 vbool VKRenderDevice::DestroyComputePipelineState(guid_t id) {
   return false;
 }
+
+
+GraphicsHardwareInfo VKRenderDevice::GetHardwareInformation() {
+  GraphicsHardwareInfo info;
+
+  return info;
+}
+
+
+GraphicsPerformanceInfo VKRenderDevice::GetPerformanceInformation() {
+  GraphicsPerformanceInfo info;
+
+  return info;
+}
 } // vikr

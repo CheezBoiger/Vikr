@@ -157,6 +157,7 @@ vvoid GBuffer::ExecutePass(CommandbufferList *buffer) {
     command.Clear();
     command.SetFramebuffer(m_framebuffer);
     command.SetShaderProgram(m_prgm);
+    command.ForcePipelineUpdate();
     command.EndRecord();
 
     m_device->GetContext()->ExecuteCommands(bufferlist);

@@ -2,7 +2,6 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #version 430 core
-out vec4 FragColor;
 
 in vec2 TexCoords;
 in mat3 TBN;
@@ -81,7 +80,7 @@ vec3 CalculatePointLight(PointLight light, vec3 Normal, vec3 FragPos,
   float diff = max(dot(light_dir, Normal), 0.0f);
   float spec = 0.0f;
   vec3 halfway_dir = normalize(light_dir + view_dir);
-  spec = pow(max(dot(Normal, halfway_dir), 0.0f), 32.0f);
+  spec = pow(max(dot(Normal, halfway_dir), 0.0f), 16.0f);
   float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
   vec3 ambient = light.ambient * vec3(Diffuse);
   vec3 diffuse = light.diffuse * diff * vec3(Diffuse);
@@ -96,40 +95,43 @@ vec3 CalculatePointLight(PointLight light, vec3 Normal, vec3 FragPos,
 
 
 void main() {
-  vec3 FragPos = texelFetch(gPosition, ivec2(gl_FragCoord.xy), 0).rgb;
-  vec4 Diffuse = texelFetch(gAlbedo, ivec2(gl_FragCoord.xy), 0);
-  vec4 Specular = texelFetch(gSpecular, ivec2(gl_FragCoord.xy), 0);
-  vec4 Ambient = texelFetch(gAmbient, ivec2(gl_FragCoord.xy), 0);
-  vec3 Normal = texelFetch(gNormal, ivec2(gl_FragCoord.xy), 0).rgb;
+  vec4 result = vec4(0.0f);
+  for (int sampledIndex = 0; sampledIndex < 8; ++sampledIndex) {
+    vec3 FragPos = texelFetch(gPosition, ivec2(gl_FragCoord.xy), sampledIndex).rgb;
+    vec4 Diffuse = texelFetch(gAlbedo, ivec2(gl_FragCoord.xy), sampledIndex);
+    vec4 Specular = texelFetch(gSpecular, ivec2(gl_FragCoord.xy), sampledIndex);
+    vec4 Ambient = texelFetch(gAmbient, ivec2(gl_FragCoord.xy), sampledIndex);
+    vec3 Normal = texelFetch(gNormal, ivec2(gl_FragCoord.xy), sampledIndex).rgb;
   
-  vec3 Norm = texelFetch(gNorm, ivec2(gl_FragCoord.xy), 0).rgb;
-  vec3 Tangent = texelFetch(gTangent, ivec2(gl_FragCoord.xy), 0).rgb;
-  vec3 Bitangent = texelFetch(gBitangent, ivec2(gl_FragCoord.xy), 0).rgb;
+    vec3 Norm = texelFetch(gNorm, ivec2(gl_FragCoord.xy), sampledIndex).rgb;
+    vec3 Tangent = texelFetch(gTangent, ivec2(gl_FragCoord.xy), sampledIndex).rgb;
+    vec3 Bitangent = texelFetch(gBitangent, ivec2(gl_FragCoord.xy), sampledIndex).rgb;
   
-  mat3 TBN = transpose(mat3(Tangent, Bitangent, Norm));
+    mat3 TBN = transpose(mat3(Tangent, Bitangent, Norm));
   
-  Normal = normalize(Normal * 2.0 - 1.0); // tangent space normal map
+    Normal = normalize(Normal * 2.0 - 1.0); // tangent space normal map
   
-  vec3 ViewDir = TBN * normalize(vikr_CamPosition - FragPos);
-  vec3 TangentFragPos = TBN * FragPos;
+    vec3 ViewDir = TBN * normalize(vikr_CamPosition - FragPos);
+    vec3 TangentFragPos = TBN * FragPos;
   
-  vec4 result = Diffuse * 0.01;
+    //result = Diffuse * 0.01;
   
-  for (int i = 0; i < MAX_DIRECTIONALLIGHTS; ++i) {
-    if ( vikr_directionalLights[i].enabled) {
-      result += vec4(CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
-        TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN), 0.0f);
+    for (int i = 0; i < MAX_DIRECTIONALLIGHTS; ++i) {
+      if ( vikr_directionalLights[i].enabled) {
+        //result += vec4(CalculateDirectionalLight(vikr_directionalLights[i], Normal, 
+        //  TangentFragPos, ViewDir, Diffuse, Specular, Ambient, TBN), 0.0f);
+      }
     }
-  }
-  for (int i = 0; i < MAX_POINTLIGHTS; ++i) {
-    if (vikr_pointLights[i].enabled) {
-      result += vec4(CalculatePointLight(vikr_pointLights[i], Normal, TangentFragPos,
-        ViewDir, Diffuse, Specular, Ambient, TBN), 0.0f);
+    for (int i = 0; i < MAX_POINTLIGHTS; ++i) {
+      if (vikr_pointLights[i].enabled) {
+        result += vec4(CalculatePointLight(vikr_pointLights[i], Normal, TangentFragPos,
+          ViewDir, Diffuse, Specular, Ambient, TBN), 0.0f);
+      }
     }
+    //result = vec4(pow(result.rgb, vec3(1.0/2.2)), 1.0f);
+    gl_FragColor = result; 
   }
-
-  result = vec4(pow(result.rgb, vec3(1.0/2.2)), result.a);
-  FragColor = vec4(result);
+  //result = vec4(1.0f, 0.0f, 0.0f, 1.0f);
   
   //FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }

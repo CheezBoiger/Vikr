@@ -32,7 +32,7 @@ enum GraphicsPipeline {
 };
 
 
-struct GraphicsInfo {
+struct GraphicsHardwareInfo {
   const char *vendor;
   const char *renderer;
   const char *extensions;
@@ -40,6 +40,11 @@ struct GraphicsInfo {
   const char *shader_language;
 };
 
+
+struct GraphicsPerformanceInfo {
+  int total_mem_kb;
+  int curr_available_mem_kb;
+};
 
 VIKR_FORCEINLINE int VikrInit() { return glfwInit(); }
 VIKR_FORCEINLINE void VikrWindowHint(int hint, int value) { glfwWindowHint(hint, value); }

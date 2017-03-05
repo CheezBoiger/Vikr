@@ -145,6 +145,10 @@ public:
     std::string filepath, vbool alpha) = 0;
   virtual Texture *GetTexture(guid_t id) = 0;
   virtual vbool DestroyTexture(guid_t id) = 0;
+
+  virtual GraphicsHardwareInfo GetHardwareInformation() = 0;
+
+  virtual GraphicsPerformanceInfo GetPerformanceInformation() = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_DEVICE_HPP

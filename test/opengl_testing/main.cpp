@@ -90,7 +90,9 @@ int main(int c, char* args[]) {
   Mesh *cube_mesh = 
     mgr.CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
   Mesh *light_mesh =
-    mgr.CreateMesh(sphere.GetPositions(), sphere.GetNormals(), sphere.GetUVs(), sphere.GetIndices());
+    //mgr.CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
+    mgr.CreateMesh(sphere.GetPositions(), sphere.GetNormals(), sphere.GetUVs(), sphere.GetIndices(),
+      sphere.GetTangents());
   cube_mesh->Build(renderer.GetDevice());
   light_mesh->Build(renderer.GetDevice());
 
@@ -103,16 +105,30 @@ int main(int c, char* args[]) {
   PointLight plight2;
 
   DirectionalLight dlight1;
+  Material light_mtl;
+  Texture *light_albedo = device.CreateTexture("light_albedo", vikr_TARGET_2D, 
+    "../../../libs/models/nanosuit/glass_dif.png", true);
+  Texture *light_normal = device.CreateTexture("light_normal", vikr_TARGET_2D,
+    "../../../libs/models/nanosuit/glass_ddn.png", true);
+  Texture *light_amb = device.CreateTexture("light_amb", vikr_TARGET_2D,
+    "../../../libs/models/nanosuit/glass_dif.png", true);
+  light_albedo->Finalize(); 
+  light_normal->Finalize();
+  light_amb->Finalize();
+  light_mtl.SetTexture("vikr_TexAlbedo", light_albedo, 0);
+  light_mtl.SetTexture("vikr_TexNormal", light_normal, 1);
+  light_mtl.SetTexture("vikr_TexAmbient", light_amb, 4);
   SceneNode *light_object = mgr.CreateSceneNode();
-  MeshComponent *mc = light_object->AddComponent<MeshComponent>();
-  mc->mesh = light_mesh;
   TransformComponent *light_c = light_object->AddComponent<TransformComponent>();
   light_c->transform.Position = glm::vec3(5.0f, 5.0f, 5.0f);
-
+  RendererComponent *lrc = light_object->AddComponent<RendererComponent>();
+  lrc->material = &light_mtl;
+  MeshComponent *mc = light_object->AddComponent<MeshComponent>();
+  mc->mesh = light_mesh;
   SceneNode *light_node = mgr.CreateSceneNode();
   LightComponent *lc = light_node->AddComponent<LightComponent>();
   lc->light = &plight;
-  plight.SetDiffuse(glm::vec3(0.0f, 1.0f, 0.0f));
+  plight.SetDiffuse(glm::vec3(0.5f, 0.5f, 0.5f));
 
   SceneNode *light_node2 = mgr.CreateSceneNode();
   LightComponent *lc2 = light_node2->AddComponent<LightComponent>();
@@ -126,7 +142,6 @@ int main(int c, char* args[]) {
   LightComponent *dc1 = dlight_node1->AddComponent<LightComponent>();
   dc1->light = &dlight1;
   dlight1.SetDirection(glm::vec3(1.0f, -1.0f, 1.0f));
-  dlight1.SetDiffuse(glm::vec3(1.0f, 1.0f, 1.0f));
   dc1->Update();
 
   light_object->AddChild(light_node);
@@ -141,8 +156,8 @@ int main(int c, char* args[]) {
     camera.Update(static_cast<vreal32>(GetDeltaTime()));
 
     lc->light->SetPos(glm::vec3(std::sin(GetTime()) * 50.0f, 5.0f, 5.0f));
-    lc->light->SetDiffuse(glm::vec3(0.0f, -std::sin(GetTime()), std::sin(GetTime()))); 
-    lc->light->SetSpecular(lc->light->GetDiffuse());
+    //lc->light->SetDiffuse(glm::vec3(0.0f, -std::sin(GetTime()), std::sin(GetTime()))); 
+    //lc->light->SetSpecular(lc->light->GetDiffuse());
     light_c->transform.Position = lc->light->GetPos();
     light_c->Update();
     renderer.PushBack(light_object);

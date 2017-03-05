@@ -86,6 +86,9 @@ public:
   Texture *GetTexture(guid_t id) override;
   vbool DestroyTexture(guid_t id) override;
 
+  GraphicsHardwareInfo GetHardwareInformation() override;
+  GraphicsPerformanceInfo GetPerformanceInformation() override;
+
 private:
 
   vvoid Setup();

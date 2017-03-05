@@ -32,7 +32,7 @@ vint32 GL4Texture2D::Finalize() {
   glGenTextures(1, &id);
   Bind();
   if (m_multisampled) {
-    glTexImage2DMultisample(native_target, 4, native_internal_format, m_width, m_height, GL_TRUE);
+    glTexImage2DMultisample(native_target, 8, native_internal_format, m_width, m_height, GL_TRUE);
   } else {
     glTexImage2D(native_target, 0, native_internal_format, m_width, m_height, 0, native_format, native_datatype, m_bytecode);
     VIKR_ASSERT(glGetError() == 0);

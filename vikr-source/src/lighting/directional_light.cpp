@@ -16,8 +16,8 @@ DirectionalLight::DirectionalLight()
   : Light(vikr_DIRECTIONLIGHT
     , glm::vec3(0.0f, 0.0f, 0.0f)
     , directionlight_count
-    , glm::vec3(0.8f, 0.8f, 0.8f)
-    , glm::vec3(0.05f, 0.05f, 0.05f)
+    , glm::vec3(0.2f, 0.2f, 0.2f)
+    , glm::vec3(0.01f, 0.01f, 0.01f)
     , glm::vec3(1.0f, 1.0f, 1.0f))
 {
   directionlight_count++;

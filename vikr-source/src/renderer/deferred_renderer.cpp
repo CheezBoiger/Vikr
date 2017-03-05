@@ -45,6 +45,8 @@
 namespace vikr {
 
 CameraCommand cam;
+GraphicsHardwareInfo gpu_info;
+GraphicsPerformanceInfo mem_info;
 
 
 DeferredRenderer::DeferredRenderer()
@@ -172,12 +174,12 @@ vvoid DeferredRenderer::Render() {
   // Draw the Screen Quad.
   m_screenquad.Execute();
 
- m_gbuffer.GetFramebuffer()->BlitTo(DEFAULT_FRAMEBUFFER);
+  m_gbuffer.GetFramebuffer()->BlitTo(DEFAULT_FRAMEBUFFER);
 
   skybox.Execute();
 
   // Printing stuff. 
-  
+  mem_info = m_renderDevice->GetPerformanceInformation();
   printer.SetPrintln("Vikr v0.5", 25.0, 75.0, 2.0f, glm::vec3(1.0f, 1.0f, 1.0f));
   printer.SetPrintln("Copyright (c) Mario Garcia, Under the MIT License.", 25.0f,
     25.0f, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -186,8 +188,13 @@ vvoid DeferredRenderer::Render() {
   printer.SetPrintln("Shader Lang: " + m_renderDevice->GetShaderLanguage(), 
     25.0f, 750.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
   printer.SetPrintln("Camera pitch: " + std::to_string(static_cast<FPSCamera *>(camera)->GetPitch()) +
-    " Rads",
-    25.0f, 650.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    " Rads", 25.0f, 650.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+  printer.SetPrintln("GPU: " + std::string(gpu_info.renderer), 25.0f, 625, 0.75f, glm::vec3(1.0, 1.0, 1.0));
+  printer.SetPrintln("Vendor: " + std::string(gpu_info.vendor), 25.0f, 600, 0.75f, glm::vec3(1.0, 1.0, 1.0));
+  printer.SetPrintln("Total GPU memory: " + std::to_string(mem_info.total_mem_kb / 1000) + " MB", 
+    25.0f, 575, 0.75f, glm::vec3(1.0, 1.0, 1.0));
+  printer.SetPrintln("Available GPU memory: " + std::to_string(mem_info.curr_available_mem_kb / 1000) + " MB", 
+    25.0f, 550, 0.75f, glm::vec3(1.0, 1.0, 1.0));
 }
 
 
@@ -264,6 +271,8 @@ vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   printer.Init(m_renderDevice, mgr, "c:/windows/fonts/arial.ttf");
 
   skybox.Init(m_renderDevice, mgr);
+
+  gpu_info = m_renderDevice->GetHardwareInformation();
  
   return 1;
 }

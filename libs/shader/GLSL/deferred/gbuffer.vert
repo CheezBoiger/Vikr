@@ -29,8 +29,9 @@ void main() {
   
   mat3 normalMat = transpose(inverse(mat3(vikr_Model)));
   vec3 T = normalize(vec3(vikr_Model * vec4(tangent, 0.0f)));
-  vec3 B = normalize(vec3(vikr_Model * vec4(bitangent, 0.0f)));
   vec3 N = normalize(vec3(vikr_Model * vec4(normal, 0.0)));
+  //vec3 B = normalize(vec3(vikr_Model * vec4(bitangent, 0.0f)));
+  vec3 B = cross(N, T);
   T = normalize(T - dot(T, N) * N);
   vs_out.Tangent = T;
   vs_out.Normal = N;

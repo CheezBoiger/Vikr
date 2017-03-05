@@ -32,6 +32,7 @@ public:
   std::vector<glm::vec2> &GetUVs() { return uvs; }
 
   std::vector<vuint32> &GetIndices() { return indices; }
+  std::vector<glm::vec3> &GetTangents() { return tangents; }
 
 private:
 

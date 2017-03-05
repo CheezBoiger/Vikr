@@ -462,4 +462,24 @@ ComputePipelineState *GL4RenderDevice::GetComputePipelineState(guid_t id) {
 vbool GL4RenderDevice::DestroyComputePipelineState(guid_t id) {
   return false;
 }
+
+
+GraphicsHardwareInfo GL4RenderDevice::GetHardwareInformation() {
+  GraphicsHardwareInfo info;
+  info.shader_language = (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION);
+  info.renderer = (const char *)glGetString(GL_RENDERER);
+  info.vendor = (const char *)glGetString(GL_VENDOR);
+  info.version = (const char *)glGetString(GL_VERSION); 
+  info.extensions = "none";//(const char *)glGetString(GL_EXTENSIONS);
+  return info;
+}
+
+
+GraphicsPerformanceInfo GL4RenderDevice::GetPerformanceInformation() {
+  GraphicsPerformanceInfo info;
+  // Currently only way for nvidia, need to check for Intel and AMD.
+  glGetIntegerv(GL_TOTAL_MEM_AVAILABLE_NVX, &info.total_mem_kb);
+  glGetIntegerv(GL_CURRENT_MEM_AVAILABLE_NVX, &info.curr_available_mem_kb);
+  return info;
+}
 } // vikr 
