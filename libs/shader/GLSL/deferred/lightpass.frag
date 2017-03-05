@@ -15,6 +15,7 @@ uniform sampler2DMS gAmbient;
 uniform sampler2DMS gTangent;
 uniform sampler2DMS gBitangent;
 uniform sampler2DMS gNorm;
+uniform sampler2DMS gColor;
 
 
 /**

@@ -9,7 +9,7 @@
 
 
 // Jes try it manggg
-#define OCTOHEDRON 0
+#define OCTAHEDRON 0
 
 
 namespace vikr {
@@ -40,7 +40,7 @@ Sphere::Sphere(vreal32 radius, vuint32 num_subdivisions) {
   const vreal32 Z = 0.850651f;
 
   glm::vec3 pos[] = { 
-#if OCTOHEDRON
+#if OCTAHEDRON
     glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(-1.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f),
     glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, -1.0f),
     glm::vec3(1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 1.0f),
@@ -61,7 +61,7 @@ Sphere::Sphere(vreal32 radius, vuint32 num_subdivisions) {
   };
 
   vuint32 k[] = {
-#if OCTOHEDRON 
+#if OCTAHEDRON 
     1,2,3,  3,4,5,  6,7,8,  9,10,11,
     1,3,13, 3,5,13, 6,8,13, 9,11,13 
 #else

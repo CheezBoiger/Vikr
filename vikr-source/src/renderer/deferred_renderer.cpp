@@ -245,6 +245,7 @@ vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   setup.SetInt("gTangent", 5);
   setup.SetInt("gBitangent", 6);
   setup.SetInt("gNorm", 7);
+  setup.SetInt("gColor", 8);
   ShaderUniformParams param;
   param.uniforms = setup.GetMaterialValues();
   commandbuffer.SetShaderUniforms(param);

@@ -323,7 +323,7 @@ Material *ModelLoader::ParseMaterial(
     }
   }
 
-  m_material->SetInt("vikr_mask", mask);
+  m_material->SetInt("vikr_Mask", mask);
   return m_material;
 }
 

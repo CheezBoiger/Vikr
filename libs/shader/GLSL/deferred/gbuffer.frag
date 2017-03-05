@@ -18,7 +18,7 @@ uniform sampler2D vikr_TexRoughness;
 uniform sampler2D vikr_TexAmbient;
 
 
-uniform int vikr_mask;
+uniform int vikr_Mask;
 
 
 in VERT_OUT {
