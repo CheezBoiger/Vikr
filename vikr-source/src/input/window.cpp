@@ -4,6 +4,8 @@
 #include <vikr/input/window.hpp>
 #include <vikr/vikr.hpp>
 
+#include <vikr/graphics/graphics.hpp>
+
 
 namespace vikr {
 

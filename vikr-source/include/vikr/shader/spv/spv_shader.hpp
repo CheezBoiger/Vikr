@@ -9,6 +9,7 @@
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/shader/shader.hpp>
 
+#include <vikr/graphics/graphics.hpp>
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
 
 

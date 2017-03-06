@@ -9,6 +9,7 @@
 
 
 #if defined(VIKR_WINDOWS)
+ #include <Windows.h>
  #if defined(_MSC_VER)
   #define VIKR_FORCEINLINE __forceinline
   #define VIKR_ALIGN(x) __declspec(align(x))

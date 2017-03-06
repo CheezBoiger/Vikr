@@ -9,6 +9,7 @@
 #include <vikr/shader/shader_config.hpp>
 #include <vikr/scene/guid_generator.hpp>
 #include <vikr/graphics/blendmode.hpp>
+#include <vikr/graphics/graphics_config.hpp>
 #include <vikr/graphics/cullmode.hpp>
 #include <vikr/graphics/depthmode.hpp>
 #include <glm/glm.hpp>

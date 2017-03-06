@@ -6,6 +6,9 @@
 
 #include <vikr/shader/shader.hpp>
 
+#include <vikr/graphics/graphics.hpp>
+
+
 namespace vikr {
 
 

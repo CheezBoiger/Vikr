@@ -12,6 +12,9 @@
 #include <vikr/platform/vikr_time.hpp>
 #include <vikr/renderer/renderer.hpp>
 
+#include <vikr/graphics/graphics.hpp>
+
+
 namespace vikr {
 namespace detail {
 

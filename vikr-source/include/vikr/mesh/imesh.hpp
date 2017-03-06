@@ -7,6 +7,7 @@
 
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
+#include <vikr/graphics/graphics_config.hpp>
 #include <vikr/scene/guid_generator.hpp>
 #include <vikr/mesh/vertex.hpp>
 #include <glm/glm.hpp>

@@ -5,6 +5,7 @@
 #define __VIKR_GLTEXTURE_HPP
 
 #include <vikr/shader/texture.hpp>
+#include <vikr/graphics/graphics.hpp>
 
 
 namespace vikr {

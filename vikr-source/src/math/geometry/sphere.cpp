@@ -8,6 +8,9 @@
 #include <vikr/mesh/vertex.hpp>
 
 
+#include <algorithm>
+
+
 // Jes try it manggg
 #define OCTAHEDRON 0
 
@@ -34,7 +37,7 @@ vreal32 AngleFromXY(vreal32 x, vreal32 y) {
   code.
 */
 Sphere::Sphere(vreal32 radius, vuint32 num_subdivisions) {
-  num_subdivisions = std::min(num_subdivisions, 5u);
+  num_subdivisions = (std::min)(num_subdivisions, 5u);
   
   const vreal32 X = 0.525731f;
   const vreal32 Z = 0.850651f;

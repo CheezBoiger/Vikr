@@ -10,10 +10,17 @@
 #include <unordered_map>
 
 
+
+#define VIKR_CURSOR_NORMAL          0x00034001
+#define VIKR_CURSOR_HIDDEN          0x00034002
+#define VIKR_CURSOR_DISABLED        0x00034003
+
+
+
 namespace vikr {
 
 
-using MouseCallback = GLFWcursorposfun;
+typedef void (*MouseCallback)(VikrWindow *, double, double);
 /**
   Mouse handle.
 */
@@ -21,9 +28,9 @@ class Mouse {
 public:
 
   enum Mode {
-    MOUSE_CURSOR_NORMAL = GLFW_CURSOR_NORMAL,
-    MOUSE_CURSOR_HIDDEN = GLFW_CURSOR_HIDDEN,
-    MOUSE_CURSOR_DISABLED = GLFW_CURSOR_DISABLED
+    MOUSE_CURSOR_NORMAL = VIKR_CURSOR_NORMAL,
+    MOUSE_CURSOR_HIDDEN = VIKR_CURSOR_HIDDEN,
+    MOUSE_CURSOR_DISABLED = VIKR_CURSOR_DISABLED
   };
 
   static vint32 RegisterMouseCallback(MouseCallback callback);

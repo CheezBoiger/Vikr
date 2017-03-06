@@ -4,6 +4,10 @@
 #include <vikr/input/keyboard.hpp>
 #include <vikr/input/window.hpp>
 
+
+#include <vikr/graphics/graphics.hpp>
+
+
 namespace vikr {
 
 

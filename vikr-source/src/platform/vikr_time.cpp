@@ -4,6 +4,9 @@
 #include <vikr/platform/vikr_time.hpp>
 
 
+#include <vikr/graphics/graphics.hpp>
+
+
 namespace vikr {
 
 
@@ -13,4 +16,10 @@ vreal64 VikrTime::delta_time = 0;
 vreal64 VikrTime::fpms = 0;
 vuint64 VikrTime::fps = 0;
 vuint64 VikrTime::nb_frames = 0;
+
+
+vreal64 GetTime() 
+{
+  return glfwGetTime();
+}
 } // vikr

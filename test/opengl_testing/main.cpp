@@ -21,7 +21,6 @@
 #include <vikr/input/mouse.hpp>
 #include <vikr/input/keyboard.hpp>
 #include <vikr/graphics/gl4/gl4_device.hpp>
-#include <vikr/graphics/vk/vk_device.hpp>
 #include <vikr/math/geometry/sphere.hpp>
 
 

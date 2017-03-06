@@ -6,6 +6,9 @@
 #include <vikr/graphics/render_target.hpp>
 
 
+#include <algorithm>
+
+
 namespace vikr {
 
 

@@ -6,6 +6,8 @@
 
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
+
+#include <vikr/graphics/graphics.hpp>
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
 
 namespace vikr {

@@ -9,6 +9,9 @@
 #include <vikr/util/vikr_assert.hpp>
 
 
+#include <vikr/graphics/graphics.hpp>
+
+
 namespace vikr {
 
 

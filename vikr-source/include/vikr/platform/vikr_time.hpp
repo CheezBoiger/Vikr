@@ -5,6 +5,7 @@
 #define __VIKR_TIME_HPP
 
 #include "vikr_types.hpp"
+#include "vikr_api.hpp"
 
 
 namespace vikr {
@@ -28,7 +29,7 @@ struct VikrTime {
 VIKR_FORCEINLINE vreal64 GetDeltaTime() { return VikrTime::delta_time; }
 
 // Takes the current time at the exact moment.
-VIKR_FORCEINLINE vreal64 GetTime() { return glfwGetTime(); }
+vreal64 GetTime();
 
 
 VIKR_FORCEINLINE vreal64 GetLastFrameTime() { return VikrTime::last_frame; }

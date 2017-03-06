@@ -7,6 +7,7 @@
 
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/platform/vikr_types.hpp>
+#include <vikr/graphics/graphics_config.hpp>
 #include <vikr/graphics/vertexbuffer.hpp>
 #include <vikr/graphics/render_target.hpp>
 #include <vikr/graphics/render_pass.hpp>

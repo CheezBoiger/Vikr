@@ -11,6 +11,9 @@
 #include <string>
 
 
+struct GLFWwindow;
+
+
 namespace vikr {
 
 

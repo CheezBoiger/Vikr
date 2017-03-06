@@ -7,6 +7,8 @@
 
 #include <vikr/graphics/render_context.hpp>
 
+#include <vikr/graphics/graphics.hpp>
+
 
 namespace vikr {
 

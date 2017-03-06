@@ -7,6 +7,8 @@
 
 #include <vikr/shader/shader.hpp>
 #include <vikr/shader/shader_config.hpp>
+
+#include <vikr/graphics/graphics.hpp>
 #include <vikr/shader/glsl/glsl_preprocessor.hpp>
 
 //

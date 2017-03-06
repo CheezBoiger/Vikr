@@ -14,6 +14,8 @@
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
 #include <vikr/shader/cubemap.hpp>
 
+#include <vikr/graphics/graphics.hpp>
+
 
 namespace vikr {
 

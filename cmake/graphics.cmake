@@ -34,6 +34,7 @@ if (vulkan)
 
   set(VIKR_GLOB
     ${VIKR_GLOB}
+    ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_renderpass.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_device.hpp
     ${VIKR_GRAPHICS_VK_INCLUDE_DIR}/vk_graphics_pipeline_state.hpp
@@ -71,6 +72,7 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_GRAPHICS_GL4_INCLUDE_DIR}/opengl.hpp
   ${VIKR_GRAPHICS_GL4_INCLUDE_DIR}/gl4_rendertarget.hpp
   ${VIKR_GRAPHICS_GL4_INCLUDE_DIR}/gl4_graphics_command.hpp
   ${VIKR_GRAPHICS_GL4_INCLUDE_DIR}/gl4_framebuffer.hpp
@@ -89,6 +91,8 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
+  ${VIKR_GRAPHICS_INCLUDE_DIR}/graphics_config.hpp
+  ${VIKR_GRAPHICS_INCLUDE_DIR}/graphics.hpp
   ${VIKR_GRAPHICS_INCLUDE_DIR}/blendmode.hpp
   ${VIKR_GRAPHICS_INCLUDE_DIR}/cullmode.hpp
   ${VIKR_GRAPHICS_INCLUDE_DIR}/depthmode.hpp

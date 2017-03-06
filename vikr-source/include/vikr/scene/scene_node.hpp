@@ -12,6 +12,8 @@
 #include <vikr/scene/components/scene_component.hpp>
 #include <unordered_map>
 #include <string>
+#include <map>
+#include <memory>
 
 
 namespace vikr {

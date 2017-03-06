@@ -232,7 +232,7 @@ vvoid GL4Framebuffer::BlitTo(Framebuffer *framebuffer) {
       GL_DEPTH_BUFFER_BIT, GL_NEAREST
     );
     GLenum err = glGetError();
-    VikrLog::DisplayMessage(VIKR_ERROR, std::to_string(err));
+    VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, std::to_string(err));
     VIKR_ASSERT(err == 0);
   }
 }

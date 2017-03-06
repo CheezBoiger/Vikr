@@ -7,6 +7,8 @@
 
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
 
+#include <vikr/graphics/graphics.hpp>
+
 
 namespace vikr {
 

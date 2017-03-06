@@ -6,7 +6,7 @@
 
 
 #include <vikr/shader/shader_program.hpp>
-
+#include <vikr/graphics/graphics.hpp>
 #include <map>
 
 

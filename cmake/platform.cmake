@@ -36,7 +36,4 @@ set(VIKR_GLOB
 
 set(VIKR_GLOB
   ${VIKR_GLOB}
-  ${VIKR_PLATFORM_GRAPHICS_DIR}/opengl.hpp
-  ${VIKR_PLATFORM_GRAPHICS_DIR}/vk.hpp
-  ${VIKR_PLATFORM_GRAPHICS_DIR}/graphics.hpp
 )
