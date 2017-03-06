@@ -23,6 +23,9 @@ class Framebuffer;
 /**
   Controls passes that are sent to the Renderer. These RenderPasses
   are what render within a framebuffer for offscreen rendering.
+
+  TODO(): RenderPass Needs to hold ONLY Attachments References, used by the Framebuffer
+          to determine which Textures (Images) attach to where (color, depth, stencil, etc).
 */
 class RenderPass : public GUID {
 public:

@@ -14,6 +14,7 @@
 #include <vikr/shader/shader.hpp>
 #include <vikr/shader/cubemap.hpp>
 #include <vikr/shader/font_printer.hpp>
+#include <vikr/renderer/shadowmap.hpp>
 #include <vikr/mesh/mesh.hpp>
 #include <vikr/renderer/gbuffer.hpp>
 #include <vikr/renderer/screen_quad.hpp>
@@ -98,6 +99,8 @@ private:
   */
   ScreenQuad m_screenquad;
 
+  DirectionalShadowMap directional_shadowmap;
+
   /**
     shadow pass.
   */
@@ -110,6 +113,8 @@ private:
 
   CommandbufferList *m_commandBufferList;
   CommandbufferList *m_deferredBufferList;
+
+  std::vector<DirectionalLight *> m_directionalLights;
 
   FontPrinter printer;
 

@@ -52,6 +52,8 @@ public:
 
   vvoid Update() override;
 
+  vvoid Init(RenderDevice *device) override { }
+
 protected:
 
   vreal32 m_range         = 15.0f;

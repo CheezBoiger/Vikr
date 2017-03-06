@@ -140,6 +140,8 @@ int main(int c, char* args[]) {
   SceneNode *dlight_node1 = mgr.CreateSceneNode();
   LightComponent *dc1 = dlight_node1->AddComponent<LightComponent>();
   dc1->light = &dlight1;
+  dlight1.SetPos(glm::vec3(10, -10, 10));
+  dlight1.Init(&device);
   dlight1.SetDirection(glm::vec3(1.0f, -1.0f, 1.0f));
   dc1->Update();
 

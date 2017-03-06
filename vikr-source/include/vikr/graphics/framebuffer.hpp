@@ -52,6 +52,9 @@ enum BufferMode {
   Allowing Multi RenderPasses requires that we blit a src Framebuffer with a 
   destination Framebuffer, this can cause some performance penalties.
 
+  TODO(): Framebuffer needs to hold textures (images), or RenderTargets, RenderPAss only holds 
+          Attachment References.
+
   OpenGL: Associates GLFramebuffer
   Vulkan: Associates VKFramebuffer
 */

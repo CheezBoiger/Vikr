@@ -50,6 +50,7 @@ public:
         Material dir_mat;
         std::string id = std::to_string(dlight->GetLightId());
         m_material.SetVector3fv("vikr_directionalLights[" + id + "].direction", dlight->GetDirection());
+        m_material.SetVector3fv("vikr_directionalLights[" + id + "].position", dlight->GetPos());
         m_material.SetVector3fv("vikr_directionalLights[" + id + "].ambient", dlight->GetAmbient());
         m_material.SetVector3fv("vikr_directionalLights[" + id + "].diffuse", dlight->GetDiffuse());
         m_material.SetVector3fv("vikr_directionalLights[" + id + "].specular", dlight->GetSpecular());

@@ -15,11 +15,13 @@ out VERT_OUT {
   vec3 Tangent;
   vec3 Bitangent;
   vec3 Color;
+  vec4 FragPosLightSpace;
 } vs_out;
 
 uniform mat4 vikr_Model;
 uniform mat4 vikr_View;
 uniform mat4 vikr_Projection;
+uniform mat4 lightSpaceMatrix;
 
 void main() {
   vec4 worldPosition = vikr_Model * vec4(position, 1.0f);
@@ -36,4 +38,5 @@ void main() {
   vs_out.Tangent = T;
   vs_out.Normal = N;
   vs_out.Bitangent = B;
+  vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0f);
 }

@@ -32,8 +32,8 @@ vuint32 GL4Framebuffer::GetFramebufferMode(BufferMode mode) {
 
 
 GL4Framebuffer::GL4Framebuffer()
-  : m_read(BUFFER_NONE)
-  , m_write(BUFFER_BACK)
+  : m_read(GetFramebufferMode(BUFFER_NONE))
+  , m_write(GetFramebufferMode(BUFFER_BACK))
 {
 }
 
@@ -65,12 +65,7 @@ vint32 GL4Framebuffer::IsComplete() {
 vvoid GL4Framebuffer::Bind() {
   if (m_fbo) {
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-    glViewport(
-      m_viewport.win_x,
-      m_viewport.win_y,
-      m_viewport.win_width,
-      m_viewport.win_height
-    );
+    VIKR_ASSERT(glGetError() == 0);
   } else {
     VikrLog::DisplayMessage(VIKR_ERROR, 
       "No framebuffer to bind to. Be sure to generate one...");
@@ -81,12 +76,22 @@ vvoid GL4Framebuffer::Bind() {
 vvoid GL4Framebuffer::Unbind() {
   if (m_fbo) {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    VIKR_ASSERT(glGetError() == 0);
   }
 }
 
 
 
 vvoid GL4Framebuffer::Update() {
+  if (!m_renderPass) {
+    VikrLog::DisplayMessage(VIKR_WARNING, "Null Renderpass for this framebuffer. Skipping update.");
+    return;
+  }
+
+  if (m_renderPass->GetRenderTargets().empty()) {
+    VikrLog::DisplayMessage(VIKR_WARNING, "Empty Renderpass for this framebuffer. Skipping update.");
+    return;
+  }
   glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
   // Renderbuffer binding.
   ClearAttachments();
@@ -112,43 +117,51 @@ vvoid GL4Framebuffer::Update() {
     }
     VIKR_ASSERT(glGetError() == 0);
   }
-  glDrawBuffers(count, attachments);
-
   VIKR_ASSERT(glGetError() == 0);
 
+  glReadBuffer(m_read);
+  VIKR_ASSERT(glGetError() == 0);
+
+  glDrawBuffers(count, attachments);
+  VIKR_ASSERT(glGetError() == 0);
   IsComplete();
   glBindFramebuffer(GL_FRAMEBUFFER, 0);}
 
 
 vvoid GL4Framebuffer::Readbuffer(BufferMode mode) {
-  glReadBuffer(GL4Framebuffer::GetFramebufferMode(mode));
+  m_read = GL4Framebuffer::GetFramebufferMode(mode);
 }
 
 
 vvoid GL4Framebuffer::Writebuffer(BufferMode mode) {
-  glDrawBuffer(GL4Framebuffer::GetFramebufferMode(mode));
+  m_write = GL4Framebuffer::GetFramebufferMode(mode);
 }
 
 
 vvoid GL4Framebuffer::ClearAttachments() {
-  auto structure = m_renderPass->GetRenderTargets();
-  for (auto i = structure.begin();
-       i != structure.end();
-        ++i)
-  {
-    GL4Texture *texture = static_cast<GL4Texture *>(i->second.GetTexture());
-    if (texture->GetNativeFormat() == GL_DEPTH_COMPONENT) {
-      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
-    } else {
-      if (texture->IsMultisampled()) {
-        glFramebufferTexture2D(GL_FRAMEBUFFER,
-          GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D_MULTISAMPLE, 0, 0);
+  // Logic is a bit strange... Need to keep track of only attachement references.
+  if (m_renderPass) {
+    auto structure = m_renderPass->GetRenderTargets();
+    for (auto i = structure.begin();
+         i != structure.end();
+         ++i)
+    {
+      GL4Texture *texture = static_cast<GL4Texture *>(i->second.GetTexture());
+      if (texture->GetNativeFormat() == GL_DEPTH_COMPONENT) {
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
       } else {
-        glFramebufferTexture2D(GL_FRAMEBUFFER, 
-          GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D, 0, 0);
+        if (texture->IsMultisampled()) {
+          glFramebufferTexture2D(GL_FRAMEBUFFER,
+            GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D_MULTISAMPLE, 0, 0);
+        } else {
+          glFramebufferTexture2D(GL_FRAMEBUFFER, 
+            GL_COLOR_ATTACHMENT0 + i->first, GL_TEXTURE_2D, 0, 0);
+        }
       }
+      VIKR_ASSERT(glGetError() == 0);
     }
-    VIKR_ASSERT(glGetError() == 0);
+  } else {
+    VikrLog::DisplayMessage(VIKR_WARNING, "No attachments in this framebuffer, skipping clear.");
   }
 }
 
@@ -210,7 +223,7 @@ vvoid GL4Framebuffer::BlitTo(Framebuffer *framebuffer) {
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 
       static_cast<vuint32>(glFb->GetFramebufferId()));
     Viewport target = glFb->GetViewport();
-    glDrawBuffer(GetFramebufferMode(m_write));
+    glDrawBuffer(m_write);
     glBlitFramebuffer(
       m_viewport.win_x, 
       m_viewport.win_y,

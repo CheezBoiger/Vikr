@@ -19,7 +19,7 @@ endif()
 
 
 # Name version
-set(VIKR_VERSION "v0.5")
+set(VIKR_VERSION "v0.6")
 option(vulkan "Build Vikr with Vulkan extension." OFF)
 option(debug "debug the software." OFF)
 option(build64 "Build the Vikr Library for 64-bit applications" OFF)
@@ -89,6 +89,8 @@ if (vulkan AND VULKAN_FOUND)
 else()
  message("No vulkan libraries were linked.")
 endif()
+
+target_compile_definitions(${VIKR_NAME} PUBLIC -DVIKR_CURRENT_VERSION=0x00006000)
 
 target_link_libraries(${VIKR_NAME} assimp)
 target_link_libraries(${VIKR_NAME} ${OPENGL_LIBRARIES})

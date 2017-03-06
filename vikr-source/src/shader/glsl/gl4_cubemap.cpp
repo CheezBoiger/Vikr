@@ -74,7 +74,7 @@ vint32 GL4Cubemap::Finalize() {
       image
     ); 
     GLenum err = glGetError();
-    VikrLog::DisplayMessage(VIKR_ERROR, std::to_string(err));
+    VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, "Cubemap Error Status: " + std::to_string(err));
     VIKR_ASSERT(err == 0);
   }
   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, native_filter_min);

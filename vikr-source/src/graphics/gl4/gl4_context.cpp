@@ -191,6 +191,12 @@ vvoid GL4RenderContext::SetFramebuffer(Framebuffer *framebuffer) {
   if (framebuffer) {
     GL4Framebuffer *glFb = static_cast<GL4Framebuffer *>(framebuffer);
     glFb->Bind();
+    glViewport(
+      glFb->GetViewport().win_x,
+      glFb->GetViewport().win_y,
+      glFb->GetViewport().win_width,
+      glFb->GetViewport().win_height
+    );
     Clear();
   } else {
     // Set back to default.

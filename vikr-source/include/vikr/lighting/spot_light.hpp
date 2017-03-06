@@ -31,7 +31,8 @@ public:
   vvoid SetDirection(glm::vec3 direction) { m_direction = direction; }
   glm::vec3 GetDirection() { return m_direction; }
 
-  vvoid Update() override;
+  vvoid Update() override { }
+  vvoid Init(RenderDevice *device) override { }
 
 private:
   vreal32 m_cutoff;

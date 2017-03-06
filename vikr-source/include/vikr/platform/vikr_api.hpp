@@ -39,8 +39,8 @@
 #define VIKR_ABSTRACT_CLASS class
 #define VIKR_INTERFACE_CLASS class
 
-namespace vikr {
 
+namespace vikr {
 
 
 } // vikr

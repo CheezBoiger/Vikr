@@ -14,6 +14,7 @@ namespace vikr {
 
 
 class Mesh;
+class RenderDevice;
 
 
 enum LightType {
@@ -127,6 +128,8 @@ public:
     Update the light, depending on what needs to update.
   */
   virtual vvoid Update() = 0;
+
+  virtual vvoid Init(RenderDevice *device) = 0;
   
 protected:
   /**

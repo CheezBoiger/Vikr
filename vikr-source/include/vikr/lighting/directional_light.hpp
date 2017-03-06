@@ -36,6 +36,9 @@ public:
   */
   vvoid Update() override;
 
+
+  vvoid Init(RenderDevice *device) override;
+
   /**
     Get the light space matrix.
   */

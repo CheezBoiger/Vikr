@@ -6,6 +6,7 @@
 
 
 #include <vikr/graphics/framebuffer.hpp>
+#include <vikr/graphics/graphics.hpp>
 
 #include <map>
 
@@ -32,7 +33,7 @@ public:
   glm::vec3 GetClearColor() override { return m_clearcolor; }
   vvoid SetClearColor(glm::vec3 color) override { m_clearcolor = color; }
 
-  vuint32 GetFramebufferId() { return m_fbo; }
+  GLuint GetFramebufferId() { return m_fbo; }
   
   /**
     Check if the framebuffer is complete.
@@ -69,14 +70,14 @@ private:
   */
   glm::vec3 m_clearcolor            = glm::vec3(0.1f, 0.1f, 0.1f);
 
-  vuint32 m_fbo                     = 0;
+  GLuint m_fbo                     = 0;
 
   GL4RenderPass *m_renderPass = nullptr;
 
   Viewport m_viewport;
 
-  BufferMode m_read;
-  BufferMode m_write;
+  GLint m_read;
+  GLint m_write;
 }; 
 } // vikr
 #endif // __VIKR_

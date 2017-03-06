@@ -33,7 +33,3 @@ set(VIKR_GLOB
   ${VIKR_GLOB}
   ${VIKR_PLATFORM_SRC_DIR}/vikr_time.cpp
 )
-
-set(VIKR_GLOB
-  ${VIKR_GLOB}
-)

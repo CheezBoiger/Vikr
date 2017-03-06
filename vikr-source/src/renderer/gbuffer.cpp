@@ -7,6 +7,8 @@
 #include <vikr/graphics/render_context.hpp>
 #include <vikr/shader/shader_program.hpp>
 #include <vikr/graphics/graphics_pipeline_state.hpp>
+#include <vikr/lighting/directional_light.hpp>
+#include <vikr/shader/material.hpp>
 
 namespace vikr {
 
@@ -66,7 +68,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[3]->SetByteCode(nullptr);
   m_rendertargets[3]->Finalize();
 
-  m_rendertargets[4] = device->CreateTexture("gAmbient", vikr_TARGET_2D_MULTISAMPLE, "", false);
+  m_rendertargets[4] = device->CreateTexture("gShadowMap", vikr_TARGET_2D_MULTISAMPLE, "", false);
   m_rendertargets[4]->SetWidth(window->GetWidth());
   m_rendertargets[4]->SetHeight(window->GetHeight());
   m_rendertargets[4]->SetMipmapping(false);
@@ -150,14 +152,19 @@ vvoid GBuffer::Init(RenderDevice *device) {
 }
 
 
-vvoid GBuffer::ExecutePass(CommandbufferList *buffer) {
+vvoid GBuffer::ExecutePass(CommandbufferList *buffer, DirectionalLight *light) {
   if (m_device) {
     Commandbuffer &command = m_device->CreateCommandbuffer(bufferlist);
+    Material mtl;
     command.BeginRecord();
     command.Clear();
     command.SetFramebuffer(m_framebuffer);
     command.SetShaderProgram(m_prgm);
     command.ForcePipelineUpdate();
+    if (light) {
+      mtl.SetMat4("lightSpaceMatrix", light->GetLightSpace());
+      command.SetMaterial(&mtl);
+    }
     command.EndRecord();
 
     m_device->GetContext()->ExecuteCommands(bufferlist);

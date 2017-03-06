@@ -49,6 +49,8 @@ public:
   */
   vvoid SetTexture(std::string name, Texture *texture, vuint32 i);
   vvoid SetCubemap(std::string name, Cubemap *cubemap, vuint32 i);
+
+  vvoid Clear() { m_uniform_samplers.clear(); m_material_values.clear(); }
   /**
     Primitive uniform defines.
   */

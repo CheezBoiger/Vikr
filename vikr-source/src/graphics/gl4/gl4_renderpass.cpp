@@ -20,7 +20,7 @@ vbool GL4RenderPass::AddRenderTarget(RenderTarget target, vuint32 attachment) {
 
 
 vbool GL4RenderPass::RemoveRenderTarget(vuint32 attachment) {
-  if (m_rendertargets.find(attachment) == m_rendertargets.end()) {
+  if (m_rendertargets.find(attachment) != m_rendertargets.end()) {
     m_rendertargets.erase(attachment);
     return true;
   }

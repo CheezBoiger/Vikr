@@ -2,6 +2,7 @@
 // Copyright (c) Mario Gacia, Under the MIT License.
 //
 #include <vikr/lighting/directional_light.hpp>
+#include <vikr/graphics/render_device.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
 
@@ -21,6 +22,20 @@ DirectionalLight::DirectionalLight()
     , glm::vec3(1.0f, 1.0f, 1.0f))
 {
   directionlight_count++;
+}
+
+
+vvoid DirectionalLight::Init(RenderDevice *device) {
+  m_depthTexture = device->CreateTexture("directional_depth" + std::to_string(m_lightId),
+    vikr_TARGET_2D_MULTISAMPLE, "", false);
+  m_depthTexture->SetFormat(vikr_FORMAT_D32_SFLOAT);
+  m_depthTexture->SetWidth(1024);
+  m_depthTexture->SetHeight(1200);
+  m_depthTexture->SetFilterMin(vikr_FILTER_NEAREST);
+  m_depthTexture->SetFilterMax(vikr_FILTER_NEAREST);
+  m_depthTexture->SetWrapS(vikr_WRAP_REPEAT);
+  m_depthTexture->SetWrapT(vikr_WRAP_REPEAT);
+  m_depthTexture->Finalize();
 }
 
 

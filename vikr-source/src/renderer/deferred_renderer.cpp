@@ -7,6 +7,7 @@
 #include <vikr/renderer/command/primitive_command.hpp>
 #include <vikr/renderer/command/transform_command.hpp>
 #include <vikr/renderer/command/camera_command.hpp>
+#include <vikr/renderer/command/light_command.hpp>
 
 #include <vikr/scene/camera.hpp>
 #include <vikr/scene/scene_node.hpp>
@@ -106,6 +107,15 @@ vvoid DeferredRenderer::PushBack(SceneNode *obj) {
             c.second->SetDrawOrder(static_cast<vint32>(glm::length(location)));
           }
           if (c.second->GetCommandType() == RenderCommandType::COMMAND_LIGHT) {
+            LightCommand *light = static_cast<LightCommand *>(c.second);
+            switch (light->light->GetLightType()) {
+              case vikr_DIRECTIONLIGHT: 
+                m_directionalLights.push_back(static_cast<DirectionalLight *>(light->light));
+                break;
+              case vikr_POINTLIGHT:
+              case vikr_SPOTLIGHT:
+              default: break;
+            }
             m_renderQueue.PushBackDeferred(c.second);
           } else {
             m_renderQueue.PushBack(c.second);
@@ -152,8 +162,16 @@ vvoid DeferredRenderer::Render() {
     command->Record(buf);
   }
 
+  for (auto it = m_directionalLights.begin();
+        it != m_directionalLights.end();
+        ++it)
+  {
+    directional_shadowmap.Execute(*it, m_commandBufferList);
+  }
+
   // Set the Gbuffer pass.
-  m_gbuffer.ExecutePass(m_commandBufferList);
+  m_gbuffer.ExecutePass(m_commandBufferList, 
+    (m_directionalLights.empty() ? nullptr : m_directionalLights[0]));
   
   // Deferred Shading pass.
   context->SetFramebuffer(DEFAULT_FRAMEBUFFER);
@@ -164,14 +182,17 @@ vvoid DeferredRenderer::Render() {
   for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);
   }
+  context->SetRenderTarget(directional_shadowmap.GetRenderPass()->GetRenderTarget(0), 9);
   context->ExecuteCommands(m_deferredBufferList);
   
 
   m_renderQueue.Clear();
   m_commandBufferList->Clear();
   m_deferredBufferList->Clear();
+  m_directionalLights.clear();
 
   // Draw the Screen Quad.
+  
   m_screenquad.Execute();
 
   m_gbuffer.GetFramebuffer()->BlitTo(DEFAULT_FRAMEBUFFER);
@@ -180,7 +201,7 @@ vvoid DeferredRenderer::Render() {
 
   // Printing stuff. 
   mem_info = m_renderDevice->GetPerformanceInformation();
-  printer.SetPrintln("Vikr v0.5", 25.0, 75.0, 2.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+  printer.SetPrintln("Vikr v0.6", 25.0, 75.0, 2.0f, glm::vec3(1.0f, 1.0f, 1.0f));
   printer.SetPrintln("Copyright (c) Mario Garcia, Under the MIT License.", 25.0f,
     25.0f, 0.75f, glm::vec3(1.0f, 1.0f, 1.0f));
   printer.SetPrintln("ms per frame: " + std::to_string(GetFPMS()) + " ms", 
@@ -248,11 +269,12 @@ vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   setup.SetInt("gNormal", 1);
   setup.SetInt("gAlbedo", 2);
   setup.SetInt("gSpecular", 3);
-  setup.SetInt("gAmbient", 4);
+  setup.SetInt("gShadowMap", 4);
   setup.SetInt("gTangent", 5);
   setup.SetInt("gBitangent", 6);
   setup.SetInt("gNorm", 7);
   setup.SetInt("gColor", 8);
+  setup.SetInt("depthMap", 9);
   ShaderUniformParams param;
   param.uniforms = setup.GetMaterialValues();
   commandbuffer.SetShaderUniforms(param);
@@ -273,6 +295,9 @@ vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   skybox.Init(m_renderDevice, mgr);
 
   gpu_info = m_renderDevice->GetHardwareInformation();
+
+
+  directional_shadowmap.Init(device, mgr);
  
   return 1;
 }
