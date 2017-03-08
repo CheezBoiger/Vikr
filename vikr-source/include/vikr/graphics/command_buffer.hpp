@@ -118,6 +118,7 @@ public:
   virtual vvoid SetCulling(vbool enable) = 0;
   virtual vvoid SetCullFace(CullFace face) = 0;
   virtual vvoid ForcePipelineUpdate() = 0;
+  virtual vvoid ClearTextures() = 0;
 
 
   virtual vvoid SetTexture(Texture *texture, vuint32 index) = 0;

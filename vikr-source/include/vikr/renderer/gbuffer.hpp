@@ -21,9 +21,8 @@
 namespace vikr {
 
 
-const vuint32 GBUFFER_SIZE = 9;
+const vuint32 GBUFFER_SIZE = 8;
 class ShaderProgram;
-class DirectionalLight;
 
 /**
   Standard G buffer object. Still needs to be fixed.
@@ -34,7 +33,7 @@ public:
 
   vvoid Init(RenderDevice *device);
 
-  vvoid ExecutePass(CommandbufferList *buffer, DirectionalLight *light);
+  vvoid ExecutePass(CommandbufferList *buffer);
 
   RenderTarget *GetRenderTarget(vuint32 index) {
     return m_renderpass->GetRenderTarget(index);

@@ -49,6 +49,7 @@ public:
         DirectionalLight *dlight = static_cast<DirectionalLight *>(light);
         Material dir_mat;
         std::string id = std::to_string(dlight->GetLightId());
+        m_material.SetMat4("vikr_directionalLights[" + id + "].lightSpaceMatrix", dlight->GetLightSpace());
         m_material.SetVector3fv("vikr_directionalLights[" + id + "].direction", dlight->GetDirection());
         m_material.SetVector3fv("vikr_directionalLights[" + id + "].position", dlight->GetPos());
         m_material.SetVector3fv("vikr_directionalLights[" + id + "].ambient", dlight->GetAmbient());

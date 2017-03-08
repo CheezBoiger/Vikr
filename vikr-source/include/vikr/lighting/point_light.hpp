@@ -52,7 +52,9 @@ public:
 
   vvoid Update() override;
 
-  vvoid Init(RenderDevice *device) override { }
+  vvoid Init(RenderDevice *device, ShaderProgram *shadowprogram) override;
+
+  vvoid Execute(CommandbufferList *bufferlist) override;
 
 protected:
 

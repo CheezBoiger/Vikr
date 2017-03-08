@@ -12,7 +12,7 @@
 
 
 // Jes try it manggg
-#define OCTAHEDRON 0
+#define OCTAHEDRON 1
 
 
 namespace vikr {
@@ -24,10 +24,10 @@ vreal32 AngleFromXY(vreal32 x, vreal32 y) {
     theta = std::atanf(y / x);
     if (theta < 0.0f) {
       theta += static_cast<vreal32>(2.0f * VIKR_PI);
-    } else {
-      theta = std::atanf(y / x) + static_cast<vreal32>(VIKR_PI);
     }
-  } 
+  } else {
+    theta = std::atanf(y / x) + static_cast<vreal32>(VIKR_PI);
+  }
   return theta; 
 }
 
@@ -37,7 +37,7 @@ vreal32 AngleFromXY(vreal32 x, vreal32 y) {
   code.
 */
 Sphere::Sphere(vreal32 radius, vuint32 num_subdivisions) {
-  num_subdivisions = (std::min)(num_subdivisions, 5u);
+  //num_subdivisions = (std::min)(num_subdivisions, 5u);
   
   const vreal32 X = 0.525731f;
   const vreal32 Z = 0.850651f;
@@ -99,17 +99,17 @@ Sphere::Sphere(vreal32 radius, vuint32 num_subdivisions) {
     positions[i] = p;
     normals.push_back(normal);
 
-    vreal32 theta = AngleFromXY(positions[i].x, positions[i].y);
+    vreal32 theta = AngleFromXY(positions[i].x, positions[i].z);
     vreal32 phi = std::acosf(positions[i].y / radius);
 
     glm::vec2 uv(
-      static_cast<vreal32>(theta / VIKR_PI_2), 
+      static_cast<vreal32>(theta / (VIKR_PI * 2)), 
       static_cast<vreal32>(phi / VIKR_PI)
     );
     glm::vec3 tangent(
       -radius * std::sinf(phi) * std::sinf(theta),
       0.0f,
-      radius * std::sinf(phi) * std::cosf(theta)
+      +radius * std::sinf(phi) * std::cosf(theta)
     );
     tangent = glm::normalize(tangent);
     

@@ -197,6 +197,7 @@ vvoid GL4RenderContext::SetFramebuffer(Framebuffer *framebuffer) {
       glFb->GetViewport().win_width,
       glFb->GetViewport().win_height
     );
+    m_currPipeline->SetViewport(glFb->GetViewport());
     Clear();
   } else {
     // Set back to default.
@@ -294,7 +295,6 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     }
   }
 
-  ClearTextures();
   // Bind all texture that was given.
   if (params->samplers) {
     m_currTextures.reserve(params->samplers->size());

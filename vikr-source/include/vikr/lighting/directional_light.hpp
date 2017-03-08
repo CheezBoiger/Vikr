@@ -14,6 +14,10 @@
 namespace vikr {
 
 
+class Framebuffer;
+class RenderPass;
+
+
 /**
   Directional light mimicks light at an infinite point. 
   It is not necessarily an inifinite point where light is emitted
@@ -24,20 +28,22 @@ class DirectionalLight : public Light {
 public:
   DirectionalLight();
 
-  vvoid SetDirection(glm::vec3 direction) { m_direction = direction; }
   glm::vec3 GetDirection() { return m_direction; }
 
 
   vvoid SetNear(vreal32 f) { near_plane = f; }
   vvoid SetFar(vreal32 f) { far_plane = f; }
 
+  vvoid SetPos(glm::vec3 position) override;
+
   /**
     Updates the light-space matrix to use for shadows.
   */
   vvoid Update() override;
 
+  vvoid Execute(CommandbufferList *bufferlist) override;
 
-  vvoid Init(RenderDevice *device) override;
+  vvoid Init(RenderDevice *device, ShaderProgram *program) override;
 
   /**
     Get the light space matrix.
@@ -76,7 +82,8 @@ protected:
   vreal32 far_plane;
 
   Texture *m_depthTexture;
-  
+  Framebuffer *m_fbo; 
+  RenderPass *m_renderpass;
 };
 } // vikr
 #endif // __VIKR_DIRECTIONAL_LIGHT_HPP

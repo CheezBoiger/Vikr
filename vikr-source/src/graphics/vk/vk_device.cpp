@@ -236,7 +236,7 @@ vbool VKRenderDevice::DestroyComputePipelineState(guid_t id) {
 
 
 GraphicsHardwareInfo VKRenderDevice::GetHardwareInformation() {
-  GraphicsHardwareInfo info;
+  GraphicsHardwareInfo info = { };
 
   return info;
 }

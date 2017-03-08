@@ -333,6 +333,14 @@ private:
 };
 
 
+class ClearTexturesSetter : public GL4GraphicsCommand {
+public:
+  vvoid Execute(GL4RenderContext *cx) override {
+    cx->ClearTextures();
+  }
+};
+
+
 GL4CommandbufferList::GL4CommandbufferList()
   : m_commandbuffers(0)
   , m_raw(0)
@@ -530,5 +538,11 @@ vvoid GL4Commandbuffer::Execute(GL4RenderContext * context) {
   for (auto &command : commands) {
     command->Execute(context);
   }
+}
+
+
+vvoid GL4Commandbuffer::ClearTextures() {
+  CHECK_RECORDING();
+  commands.push_back(std::make_unique<ClearTexturesSetter>());
 }
 } // vikr

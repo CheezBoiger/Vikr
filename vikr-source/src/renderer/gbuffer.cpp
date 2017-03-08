@@ -68,7 +68,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[3]->SetByteCode(nullptr);
   m_rendertargets[3]->Finalize();
 
-  m_rendertargets[4] = device->CreateTexture("gShadowMap", vikr_TARGET_2D_MULTISAMPLE, "", false);
+  m_rendertargets[4] = device->CreateTexture("gTangent", vikr_TARGET_2D_MULTISAMPLE, "", false);
   m_rendertargets[4]->SetWidth(window->GetWidth());
   m_rendertargets[4]->SetHeight(window->GetHeight());
   m_rendertargets[4]->SetMipmapping(false);
@@ -78,7 +78,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[4]->SetByteCode(nullptr);
   m_rendertargets[4]->Finalize();
 
-  m_rendertargets[5] = device->CreateTexture("gTangent", vikr_TARGET_2D_MULTISAMPLE, "", false);
+  m_rendertargets[5] = device->CreateTexture("gBitangent", vikr_TARGET_2D_MULTISAMPLE, "", false);
   m_rendertargets[5]->SetWidth(window->GetWidth());
   m_rendertargets[5]->SetHeight(window->GetHeight());
   m_rendertargets[5]->SetMipmapping(false);
@@ -88,7 +88,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[5]->SetByteCode(nullptr);
   m_rendertargets[5]->Finalize();
 
-  m_rendertargets[6] = device->CreateTexture("gBitangent", vikr_TARGET_2D_MULTISAMPLE, "", false);
+  m_rendertargets[6] = device->CreateTexture("gNorm", vikr_TARGET_2D_MULTISAMPLE, "", false);
   m_rendertargets[6]->SetWidth(window->GetWidth());
   m_rendertargets[6]->SetHeight(window->GetHeight());
   m_rendertargets[6]->SetMipmapping(false);
@@ -98,26 +98,16 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[6]->SetByteCode(nullptr);
   m_rendertargets[6]->Finalize();
 
-  m_rendertargets[7] = device->CreateTexture("gNorm", vikr_TARGET_2D_MULTISAMPLE, "", false);
+  m_rendertargets[7] = device->CreateTexture("gDepth", vikr_TARGET_2D_MULTISAMPLE, "", false);
   m_rendertargets[7]->SetWidth(window->GetWidth());
   m_rendertargets[7]->SetHeight(window->GetHeight());
   m_rendertargets[7]->SetMipmapping(false);
-  m_rendertargets[7]->SetFormat(vikr_FORMAT_R16G16B16_SFLOAT);
+  m_rendertargets[7]->SetFormat(vikr_FORMAT_D32_SFLOAT);
   m_rendertargets[7]->SetFilterMin(vikr_FILTER_NEAREST);
   m_rendertargets[7]->SetFilterMax(vikr_FILTER_NEAREST);
-  m_rendertargets[7]->SetByteCode(nullptr);
+  m_rendertargets[7]->SetWrapS(vikr_WRAP_REPEAT);
+  m_rendertargets[7]->SetWrapT(vikr_WRAP_REPEAT);
   m_rendertargets[7]->Finalize();
-
-  m_rendertargets[8] = device->CreateTexture("gDepth", vikr_TARGET_2D_MULTISAMPLE, "", false);
-  m_rendertargets[8]->SetWidth(window->GetWidth());
-  m_rendertargets[8]->SetHeight(window->GetHeight());
-  m_rendertargets[8]->SetMipmapping(false);
-  m_rendertargets[8]->SetFormat(vikr_FORMAT_D32_SFLOAT);
-  m_rendertargets[8]->SetFilterMin(vikr_FILTER_NEAREST);
-  m_rendertargets[8]->SetFilterMax(vikr_FILTER_NEAREST);
-  m_rendertargets[8]->SetWrapS(vikr_WRAP_REPEAT);
-  m_rendertargets[8]->SetWrapT(vikr_WRAP_REPEAT);
-  m_rendertargets[8]->Finalize();
 
   
   for (vuint32 i = 0; i < m_rendertargets.size(); ++i) {
@@ -152,19 +142,14 @@ vvoid GBuffer::Init(RenderDevice *device) {
 }
 
 
-vvoid GBuffer::ExecutePass(CommandbufferList *buffer, DirectionalLight *light) {
+vvoid GBuffer::ExecutePass(CommandbufferList *buffer) {
   if (m_device) {
     Commandbuffer &command = m_device->CreateCommandbuffer(bufferlist);
-    Material mtl;
     command.BeginRecord();
-    command.Clear();
-    command.SetFramebuffer(m_framebuffer);
     command.SetShaderProgram(m_prgm);
+    command.SetFramebuffer(m_framebuffer);
+    command.Clear();
     command.ForcePipelineUpdate();
-    if (light) {
-      mtl.SetMat4("lightSpaceMatrix", light->GetLightSpace());
-      command.SetMaterial(&mtl);
-    }
     command.EndRecord();
 
     m_device->GetContext()->ExecuteCommands(bufferlist);

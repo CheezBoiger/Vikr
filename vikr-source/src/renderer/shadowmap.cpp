@@ -47,7 +47,7 @@ vvoid DirectionalShadowMap::Init(RenderDevice *device, ResourceManager *mgr)
   port.win_width = Window::GetMainWindow()->GetWidth();
   port.win_height = Window::GetMainWindow()->GetHeight();
   m_shadowmapFbo->SetViewport(port);
-  m_shadowmapFbo->Update();
+  //m_shadowmapFbo->Update();
 
   m_device = device;
 }
@@ -62,13 +62,16 @@ vvoid DirectionalShadowMap::Execute(DirectionalLight *light, CommandbufferList *
   }
   m_shadowmapRenderPass->RemoveRenderTarget(0);
   m_shadowmapRenderPass->AddRenderTarget(RenderTarget(light->GetDepthMap()), 0);
- 
+  m_shadowmapFbo->SetViewport({ 0, 0, 
+    static_cast<vuint32>(light->GetDepthMap()->GetWidth()), 
+    static_cast<vuint32>(light->GetDepthMap()->GetHeight()) 
+  });
   m_shadowmapFbo->Update();
   RenderContext *ctx = m_device->GetContext();
   ctx->SetFramebuffer(m_shadowmapFbo);
   ctx->Clear();
   ctx->GetGraphicsPipelineState()->SetShaderProgram(m_shadowProgram);
-  ctx->GetGraphicsPipelineState()->Update();
+ // ctx->Clear();
   Material mtl;
   mtl.SetMat4("lightSpaceMatrix", light->GetLightSpace());
   ctx->SetMaterial(&mtl);

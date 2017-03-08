@@ -31,4 +31,13 @@ vvoid PointLight::SetQuadratic(vreal32 quadratic) {
 vvoid PointLight::Update() {
   
 }
+
+
+vvoid PointLight::Init(RenderDevice *device, ShaderProgram *shadowprogram) {
+}
+
+
+vvoid PointLight::Execute(CommandbufferList * bufferlist) {
+
+} 
 } // vikr

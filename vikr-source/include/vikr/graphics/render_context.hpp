@@ -206,6 +206,8 @@ public:
 
 
   virtual vvoid Dispatch(vuint32 x, vuint32 y, vuint32 z) = 0;
+
+  virtual vvoid ClearTextures() = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_CONTEXT_HPP

@@ -15,7 +15,9 @@ namespace vikr {
 
 class Mesh;
 class RenderDevice;
-
+class ShaderProgram;
+class CommandbufferList;
+class Commandbuffer;
 
 enum LightType {
   vikr_DIRECTIONLIGHT,
@@ -53,7 +55,7 @@ public:
   /**
     Set the position of the light.
   */
-  vvoid SetPos(glm::vec3 position) { m_position = position; }
+  virtual vvoid SetPos(glm::vec3 position) { m_position = position; }
   /**
     Set the light ambients (the color at it's most darkest).
   */
@@ -129,7 +131,18 @@ public:
   */
   virtual vvoid Update() = 0;
 
-  virtual vvoid Init(RenderDevice *device) = 0;
+  virtual vvoid Execute(CommandbufferList *bufferlist) = 0;
+
+  /**
+    Initialize this light with the provided shaderprogram and render device.
+  */
+  virtual vvoid Init(RenderDevice *device, ShaderProgram *shadow_program) = 0;
+
+  vvoid SetShadowProgram(ShaderProgram *program) { m_depthProgram = program; }
+
+  ShaderProgram *GetShadowProgram() { return m_depthProgram; }
+
+  RenderDevice *GetRenderDevice() { return m_renderDevice; }
   
 protected:
   /**
@@ -182,6 +195,10 @@ protected:
     The range of the light.
   */
   vuint32 range;
+
+
+  ShaderProgram *m_depthProgram = nullptr;
+  RenderDevice *m_renderDevice = nullptr;
 };
 }
 #endif // __VIKR_LIGHT_HPP

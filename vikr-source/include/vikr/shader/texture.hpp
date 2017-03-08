@@ -158,6 +158,9 @@ public:
 
   virtual vvoid Cleanup() = 0;
 
+  vvoid SetSamples(vint32 samples) { m_samples = samples; }
+  vint32 GetSamples() { return m_samples; }
+
 protected:
 
   TextureTarget     m_target                    = vikr_TARGET_2D;
@@ -171,6 +174,7 @@ protected:
   vbool             m_alpha                     = true;
   vbool             m_multisampled              = false;
   vint32            m_width                     = 0;
+  vint32            m_samples                   = 4;
   std::string       m_path                      = "";
   std::string       m_name                      = "noname";
   vbyte             *m_bytecode                 = nullptr;

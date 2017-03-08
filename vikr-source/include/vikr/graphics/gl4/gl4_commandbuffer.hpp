@@ -108,6 +108,7 @@ public:
   
   vvoid ForcePipelineUpdate() override;
 
+  vvoid ClearTextures() override;  
 
   vbool IsRecording() override;
   

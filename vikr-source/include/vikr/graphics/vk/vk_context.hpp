@@ -69,6 +69,7 @@ public:
   vvoid Present() override;
 
   vvoid Dispatch(vuint32 x, vuint32 y, vuint32 z) override;
+  vvoid ClearTextures() override;
 
   vvoid SetRenderPass(RenderPass *pass) override;
   vvoid SetMaterial(Material *material) override;

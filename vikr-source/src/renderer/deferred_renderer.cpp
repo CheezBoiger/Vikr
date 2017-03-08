@@ -166,12 +166,11 @@ vvoid DeferredRenderer::Render() {
         it != m_directionalLights.end();
         ++it)
   {
-    directional_shadowmap.Execute(*it, m_commandBufferList);
+    (*it)->Execute(m_commandBufferList);
   }
 
   // Set the Gbuffer pass.
-  m_gbuffer.ExecutePass(m_commandBufferList, 
-    (m_directionalLights.empty() ? nullptr : m_directionalLights[0]));
+  m_gbuffer.ExecutePass(m_commandBufferList);
   
   // Deferred Shading pass.
   context->SetFramebuffer(DEFAULT_FRAMEBUFFER);
@@ -179,10 +178,12 @@ vvoid DeferredRenderer::Render() {
   // Set back to the default RenderPass.
   // Needs to be recorded!!
   context->GetGraphicsPipelineState()->SetShaderProgram(lightShader);
-  for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets(); ++i) {
+  for(vuint32 i = 0; i < m_gbuffer.GetNumOfRenderTargets() - 1; ++i) {
     context->SetRenderTarget(m_gbuffer.GetRenderTarget(i), i);
   }
-  context->SetRenderTarget(directional_shadowmap.GetRenderPass()->GetRenderTarget(0), 9);
+  Material mtl;
+  mtl.SetTexture("Shadowmap", m_directionalLights[0]->GetDepthMap(), 7);
+  context->SetMaterial(&mtl);
   context->ExecuteCommands(m_deferredBufferList);
   
 
@@ -269,12 +270,10 @@ vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   setup.SetInt("gNormal", 1);
   setup.SetInt("gAlbedo", 2);
   setup.SetInt("gSpecular", 3);
-  setup.SetInt("gShadowMap", 4);
-  setup.SetInt("gTangent", 5);
-  setup.SetInt("gBitangent", 6);
-  setup.SetInt("gNorm", 7);
-  setup.SetInt("gColor", 8);
-  setup.SetInt("depthMap", 9);
+  setup.SetInt("gTangent", 4);
+  setup.SetInt("gBitangent", 5);
+  setup.SetInt("gNorm", 6);
+  setup.SetInt("Shadowmap", 7);
   ShaderUniformParams param;
   param.uniforms = setup.GetMaterialValues();
   commandbuffer.SetShaderUniforms(param);
@@ -295,9 +294,6 @@ vint32 DeferredRenderer::Init(RenderDevice *device, ResourceManager *mgr) {
   skybox.Init(m_renderDevice, mgr);
 
   gpu_info = m_renderDevice->GetHardwareInformation();
-
-
-  directional_shadowmap.Init(device, mgr);
  
   return 1;
 }

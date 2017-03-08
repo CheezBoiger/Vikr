@@ -130,4 +130,8 @@ vvoid VKRenderContext::Dispatch(vuint32 x, vuint32 y, vuint32 z) {
 
 vvoid VKRenderContext::SetRenderPass(RenderPass *pass) {
 }
+
+
+vvoid VKRenderContext::ClearTextures() {
+}
 } // vikr

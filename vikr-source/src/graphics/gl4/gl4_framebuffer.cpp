@@ -117,15 +117,17 @@ vvoid GL4Framebuffer::Update() {
     }
     VIKR_ASSERT(glGetError() == 0);
   }
+  if (count == 0) {
+    glDrawBuffer(m_write);
+  } else {
+    glDrawBuffers(count, attachments);
+  }
   VIKR_ASSERT(glGetError() == 0);
-
   glReadBuffer(m_read);
   VIKR_ASSERT(glGetError() == 0);
-
-  glDrawBuffers(count, attachments);
-  VIKR_ASSERT(glGetError() == 0);
   IsComplete();
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);}
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
 
 
 vvoid GL4Framebuffer::Readbuffer(BufferMode mode) {

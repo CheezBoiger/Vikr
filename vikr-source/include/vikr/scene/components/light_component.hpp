@@ -23,6 +23,9 @@ public:
   vvoid Update() override {
     m_command.light = light;
     // updating?
+    if (light) {
+      m_command.light->Update();
+    }
   }
 
   RenderCommand *GetCommand() override { return &m_command; }

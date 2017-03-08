@@ -32,7 +32,8 @@ public:
   glm::vec3 GetDirection() { return m_direction; }
 
   vvoid Update() override { }
-  vvoid Init(RenderDevice *device) override { }
+  vvoid Execute(CommandbufferList *bufferlist) override { }
+  vvoid Init(RenderDevice *device, ShaderProgram *shadowprogram) override { }
 
 private:
   vreal32 m_cutoff;

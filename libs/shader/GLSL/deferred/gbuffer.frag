@@ -6,10 +6,9 @@ layout (location = 0) out vec3 gPosition;
 layout (location = 1) out vec4 gNormal;
 layout (location = 2) out vec4 gAlbedo;
 layout (location = 3) out vec4 gSpecular;
-layout (location = 4) out vec4 gShadowMap;
-layout (location = 5) out vec3 gTangent;
-layout (location = 6) out vec3 gBitangent;
-layout (location = 7) out vec3 gNorm;
+layout (location = 4) out vec3 gTangent;
+layout (location = 5) out vec3 gBitangent;
+layout (location = 6) out vec3 gNorm;
 
 uniform sampler2D vikr_TexAlbedo;
 uniform sampler2D vikr_TexNormal;
@@ -27,8 +26,6 @@ in VERT_OUT {
   vec3 Normal;
   vec3 Tangent;
   vec3 Bitangent;
-  vec3 Color;
-  vec4 FragPosLightSpace;
 } vs_in;
 
 
@@ -38,7 +35,6 @@ void main() {
   gNormal =  texture(vikr_TexNormal, vs_in.TexCoords);
   gAlbedo = texture(vikr_TexAlbedo, vs_in.TexCoords);
   gSpecular = texture(vikr_TexSpecular, vs_in.TexCoords);
-  gShadowMap = vs_in.FragPosLightSpace;
   gTangent = vs_in.Tangent;
   gBitangent = vs_in.Bitangent;
   gNorm = vs_in.Normal;

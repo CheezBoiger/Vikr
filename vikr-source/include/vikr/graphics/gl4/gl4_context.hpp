@@ -80,10 +80,10 @@ public:
   vvoid Present() override;
 
   vvoid Dispatch(vuint32 x, vuint32 y, vuint32 z) override;
+  vvoid ClearTextures() override;
 
 private:
 
-  vvoid ClearTextures();
   GL4GraphicsPipelineState *m_currPipeline                = nullptr;
 
   std::vector<TextureSampler> m_currTextures;

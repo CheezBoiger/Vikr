@@ -22,6 +22,8 @@
 #include <vikr/input/keyboard.hpp>
 #include <vikr/graphics/gl4/gl4_device.hpp>
 #include <vikr/math/geometry/sphere.hpp>
+#include <vikr/shader/shader.hpp>
+#include <vikr/shader/shader_program.hpp>
 
 
 using namespace vikr;
@@ -85,7 +87,7 @@ int main(int c, char* args[]) {
 #endif
   // Light components
   Cube cube;
-  Sphere sphere(1.0f, 5);
+  Sphere sphere(1.0f, 6);
   Mesh *cube_mesh = 
     mgr.CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
   Mesh *light_mesh =
@@ -100,23 +102,35 @@ int main(int c, char* args[]) {
   cube1->AddComponent<TransformComponent>();
   //cube1->AddComponent<RendererComponent>()->material = default_mat;
   cube1->Update();
+
+
+  // Directional light program...
+  ShaderProgram *directional_depthProgram = device.CreateShaderProgram();
+  Shader *directional_vert = device.CreateShader("directional_vert", vikr_VERTEX_SHADER);
+  Shader *directional_frag = device.CreateShader("directional_frag", vikr_FRAGMENT_SHADER);
+  directional_vert->Compile("../../../libs/shader/GLSL/directional_shadowdepth.vert");
+  directional_frag->Compile("../../../libs/shader/GLSL/directional_shadowdepth.frag");
+  directional_depthProgram->LoadShader(directional_vert);
+  directional_depthProgram->LoadShader(directional_frag);
+  directional_depthProgram->Build();
+
   PointLight plight;
   PointLight plight2;
 
   DirectionalLight dlight1;
   Material light_mtl;
   Texture *light_albedo = device.CreateTexture("light_albedo", vikr_TARGET_2D, 
-    "../../../libs/models/nanosuit/glass_dif.png", true);
+    "../../../samples/sphere.png", true);
   Texture *light_normal = device.CreateTexture("light_normal", vikr_TARGET_2D,
-    "../../../libs/models/nanosuit/glass_ddn.png", true);
-  Texture *light_amb = device.CreateTexture("light_amb", vikr_TARGET_2D,
-    "../../../libs/models/nanosuit/glass_dif.png", true);
+    "../../../samples/sphere_norm.png", true);
+  Texture *light_spec = device.CreateTexture("light_amb", vikr_TARGET_2D,
+    "../../../samples/sphere_spec.png", true);
   light_albedo->Finalize(); 
   light_normal->Finalize();
-  light_amb->Finalize();
+  light_spec->Finalize();
   light_mtl.SetTexture("vikr_TexAlbedo", light_albedo, 0);
   light_mtl.SetTexture("vikr_TexNormal", light_normal, 1);
-  light_mtl.SetTexture("vikr_TexAmbient", light_amb, 4);
+  light_mtl.SetTexture("vikr_TexSpecular", light_spec, 2);
   SceneNode *light_object = mgr.CreateSceneNode();
   TransformComponent *light_c = light_object->AddComponent<TransformComponent>();
   light_c->transform.Position = glm::vec3(5.0f, 5.0f, 5.0f);
@@ -137,17 +151,25 @@ int main(int c, char* args[]) {
   plight2.SetSpecular(glm::vec3(1.0f, 0.0f, 0.0f));
   light_node2->Update();
 
+  SceneNode *dlight_obj = mgr.CreateSceneNode();
+  MeshComponent *dmesh = dlight_obj->AddComponent<MeshComponent>();
+  dmesh->mesh = light_mesh;
+  TransformComponent *dlight_t = dlight_obj->AddComponent<TransformComponent>();
+  
+
   SceneNode *dlight_node1 = mgr.CreateSceneNode();
   LightComponent *dc1 = dlight_node1->AddComponent<LightComponent>();
   dc1->light = &dlight1;
-  dlight1.SetPos(glm::vec3(10, -10, 10));
-  dlight1.Init(&device);
-  dlight1.SetDirection(glm::vec3(1.0f, -1.0f, 1.0f));
+  dlight1.Init(&device, directional_depthProgram);
+  dlight1.SetPos(glm::vec3(-10.0f, 90.0f, -10.0f));
+  dlight1.Update();
   dc1->Update();
 
   light_object->AddChild(light_node);
   light_object->Update();
 
+  dlight_obj->AddChild(dlight_node1);
+  dlight_obj->Update();
 
   while (!Window::GetMainWindow()->IsClosed()) {
     CalculateDeltaTime();
@@ -157,13 +179,17 @@ int main(int c, char* args[]) {
     camera.Update(static_cast<vreal32>(GetDeltaTime()));
 
     lc->light->SetPos(glm::vec3(std::sin(GetTime()) * 50.0f, 5.0f, 5.0f));
+    dlight1.SetPos(glm::vec3(-50.0f * std::sin(GetTime()), dlight1.GetPos().y, dlight1.GetPos().z));
     //lc->light->SetDiffuse(glm::vec3(0.0f, -std::sin(GetTime()), std::sin(GetTime()))); 
     //lc->light->SetSpecular(lc->light->GetDiffuse());
     light_c->transform.Position = lc->light->GetPos();
-    light_c->Update();
+    light_c->Update(); 
+
+    dlight_t->transform.Position = dlight1.GetPos();
+    dlight_obj->Update();
     renderer.PushBack(light_object);
     renderer.PushBack(light_node2);
-    renderer.PushBack(dlight_node1);
+    renderer.PushBack(dlight_obj);
 #if SPONZA
     renderer.PushBack(node);
     renderer.PushBack(nano);

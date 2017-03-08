@@ -14,14 +14,12 @@ out VERT_OUT {
   vec3 Normal;
   vec3 Tangent;
   vec3 Bitangent;
-  vec3 Color;
-  vec4 FragPosLightSpace;
 } vs_out;
 
 uniform mat4 vikr_Model;
 uniform mat4 vikr_View;
 uniform mat4 vikr_Projection;
-uniform mat4 lightSpaceMatrix;
+
 
 void main() {
   vec4 worldPosition = vikr_Model * vec4(position, 1.0f);
@@ -29,14 +27,12 @@ void main() {
   gl_Position = vikr_Projection * vikr_View * worldPosition;
   vs_out.TexCoords = texCoords;
   
-  mat3 normalMat = transpose(inverse(mat3(vikr_Model)));
   vec3 T = normalize(vec3(vikr_Model * vec4(tangent, 0.0f)));
-  vec3 N = normalize(vec3(vikr_Model * vec4(normal, 0.0)));
+  vec3 N = normalize(vec3(transpose(inverse(mat3(vikr_Model))) * normal));
   //vec3 B = normalize(vec3(vikr_Model * vec4(bitangent, 0.0f)));
   vec3 B = cross(N, T);
   T = normalize(T - dot(T, N) * N);
   vs_out.Tangent = T;
   vs_out.Normal = N;
   vs_out.Bitangent = B;
-  vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0f);
 }

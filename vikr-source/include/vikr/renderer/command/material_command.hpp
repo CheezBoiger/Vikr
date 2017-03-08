@@ -40,6 +40,7 @@ public:
     if (prgm) {
       buffer.SetShaderProgram(prgm);
     }
+    buffer.ClearTextures();
     buffer.SetMaterial(m_material);
 
     buffer.EndRecord();
