@@ -46,8 +46,8 @@ vvoid Skybox::Init(RenderDevice *device, ResourceManager *mgr) {
   
 
   Cube cube;
-  skybox = mgr->CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
-  skybox->Build(device);
+  skybox = mgr->CreateMesh();
+  skybox->Build(device, vikr_STATIC, cube.GetVertices(), cube.GetIndices());
   sky_cmd.m_mesh = skybox;
 
   list = device->CreateCommandbufferList();

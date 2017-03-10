@@ -37,11 +37,10 @@ class Cubemap;
 class Uniformbuffer;
 
 
-/**
-  Render Device is an interface, with a driver type format.
-  Creates our buffers to use, as well as our textures, shaders, and 
-  framebuffers.
-*/
+///
+///  Render Device is an interface, with a driver type format.
+///  Creates our buffers to use, as well as our textures, shaders, and 
+///  framebuffers.
 class RenderDevice {
   VIKR_DISALLOW_COPY_AND_ASSIGN(RenderDevice);
 public:
@@ -49,78 +48,74 @@ public:
   RenderDevice() { }
   virtual ~RenderDevice() { }
 
-  /**
-    Get the Shader language used by this Render Device.
-  */
+  ///
+  ///  Get the Shader language used by this Render Device.
   virtual std::string GetShaderLanguage() = 0;
 
-  /**
-    Generate a framebuffer.
-  */
+  ///
+  ///  Generate a framebuffer.
   virtual Framebuffer *CreateFramebuffer() = 0;
 
-  /**
-    Create vertex buffer id.
-  */
-  virtual Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) = 0;
+  ///
+  ///  Create vertex buffer id.
+  virtual Vertexbuffer *CreateVertexbuffer(VertexUsageType type, 
+    std::vector<Vertex> &vertices, std::vector<vuint32> &indices = std::vector<vuint32>()) = 0;
 
-  /**
-    Get the contet of this Rendering Device.
-  */
+  ///
+  ///  Get the contet of this Rendering Device.
   virtual RenderContext *GetContext() = 0;
 
-  /**
-    Create a cubemap object.
-  */
+  ///
+  ///  Create a cubemap object.
   virtual Cubemap *CreateCubemap() = 0;
 
-  /**
-    Generate RenderPass.
-  */
+  ///
+  ///  Generate RenderPass.
   virtual RenderPass *CreateRenderPass() = 0;
 
-  /**
-    Destroys the Renderpass in the device.
-  */
+  ///
+  ///  Destroys the Renderpass in the device.
   virtual vbool DestroyRenderPass(guid_t id) = 0;
 
-  /**
-    Destroys the Vertexbuffer stored inside the device.
-  */
+  ///
+  ///  Destroys the Vertexbuffer stored inside the device.
   virtual vbool DestroyVertexbuffer(guid_t id) = 0;
   
-  /**
-    Destorys the cubemap stored by the device.
-  */
+  ///
+  ///  Destorys the cubemap stored by the device.
   virtual vbool DestroyCubemap(guid_t id) = 0;
 
-  /**
-    Destroys the Framebuffer inside the device.
-  */
+  ///
+  ///  Destroys the Framebuffer inside the device.
   virtual vbool DestroyFramebuffer(guid_t id) = 0;
 
-  /**
-    Destroy the commandbuffer list.
-  */
+  ///
+  ///  Destroy the commandbuffer list.
   virtual vbool DestroyCommandbufferList(guid_t id) = 0;
 
-  /**
-    Create a command buffer to handle recording commands into an organized batch,
-      which will then be stored inside the specified CommandbufferList.
-  */
+  ///
+  ///  Create a command buffer to handle recording commands into an organized batch,
+  ///    which will then be stored inside the specified CommandbufferList.
   virtual Commandbuffer &CreateCommandbuffer(CommandbufferList *list) = 0;
 
-  /**
-    Create Commandbuffer list to use for your Commandbuffers.
-  */
+  ///
+  ///  Create Commandbuffer list to use for your Commandbuffers.
   virtual CommandbufferList *CreateCommandbufferList() = 0;
 
+  ///
+  /// Create a Uniformbuffer object.
   virtual Uniformbuffer *CreateUniformbuffer() = 0;
 
+  ///
+  /// Get the uniform buffer object created.
   virtual Uniformbuffer *GetUniformbuffer(guid_t id) = 0;
 
+  ///
+  /// Destroy the uniform buffer object, provided it's guid_t.
   virtual vbool DestroyUniformbuffer(guid_t id) = 0;
 
+  ///
+  /// Create a Graphics pipeline state for the Rendering device to use.
   virtual GraphicsPipelineState *CreateGraphicsPipelineState(std::string name) = 0;
   virtual GraphicsPipelineState *GetGraphicsPipelineState(guid_t id) = 0;
   virtual vbool DestroyGraphicsPipelineState(guid_t id) = 0;
@@ -129,10 +124,9 @@ public:
   virtual ComputePipelineState *GetComputePipelineState(guid_t id) = 0;
   virtual vbool DestroyComputePipelineState(guid_t id) = 0;
 
-  /**
-  Create a shader, and store it into Resources, the id of the shader will
-  be returned. Resources takes care of this.
-  */
+  ///
+  /// Create a shader, and store it into Resources, the id of the shader will
+  /// be returned. Resources takes care of this.
   virtual Shader *CreateShader(std::string name, ShaderStage stage) = 0;
   virtual Shader *GetShader(guid_t id) = 0;
   virtual vbool DestroyShader(guid_t id) = 0;

@@ -8,6 +8,7 @@
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/scene/guid_generator.hpp>
+#include <vikr/mesh/vertex.hpp>
 
 
 namespace vikr {
@@ -53,7 +54,7 @@ public:
   /**
     For meshes that require text.
   */
-  virtual vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) = 0;
+  virtual vvoid BufferData(VertexUsageType type, vuint32 size, vvoid *data) = 0;
 
   virtual vvoid Cleanup() = 0;
 };

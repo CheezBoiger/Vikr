@@ -91,7 +91,9 @@ Framebuffer *VKRenderDevice::CreateFramebuffer() {
 }
 
 
-Vertexbuffer *VKRenderDevice::CreateVertexbuffer(VertexContainer &vertices) {
+Vertexbuffer *VKRenderDevice::CreateVertexbuffer(VertexUsageType type, 
+  std::vector<Vertex> &vertices, std::vector<vuint32> &indices) 
+{
   return nullptr;
 }
 

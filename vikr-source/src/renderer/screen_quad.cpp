@@ -27,9 +27,8 @@ vvoid ScreenQuad::Init(RenderDevice *device, ResourceManager *mgr) {
   Quad quad;
   m_device = device;
   m_mgr = mgr;
-  m_quad = mgr->CreateMesh(
-    quad.GetPositions(), quad.GetNormals(), quad.GetUVs());
-  m_quad->Build(device);
+  m_quad = mgr->CreateMesh();
+  m_quad->Build(device, vikr_STATIC, quad.GetVertices());
 
   list = device->CreateCommandbufferList();
   Commandbuffer &buffer = device->CreateCommandbuffer(list);

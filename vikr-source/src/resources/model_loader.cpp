@@ -152,13 +152,6 @@ Mesh *ModelLoader::ProcessMesh(
         mesh->mTangents[i].y,
         mesh->mTangents[i].z);
     }
-    if (mesh->mBitangents > 0) {
-      vertex.bitangent = glm::vec3(mesh->mBitangents[i].x,
-        mesh->mBitangents[i].y,
-        mesh->mBitangents[i].z);
-    } else {
-      vertex.bitangent = glm::vec3(0);
-    }
     vertices[i] = vertex;
   }
   for (vuint32 i = 0; i < mesh->mNumFaces; ++i) {
@@ -169,12 +162,13 @@ Mesh *ModelLoader::ProcessMesh(
   }
   // Create our mesh, the mesh is created, buffered, built, as well as properly stored,
   // so no need to do much.
-  m_mesh = mgr->CreateMesh(vertices, indices);
+  m_mesh = mgr->CreateMesh();
   if (dynamic) {
-    m_mesh->GetVertices().usage_type = vikr_DYNAMIC;
+    m_mesh->Build(device, vikr_DYNAMIC, vertices, indices);
+  } else {
+    m_mesh->Build(device, vikr_STATIC, vertices, indices);
   }
   m_mesh->SetName(mesh->mName.C_Str());
-  m_mesh->Build(device);
   return m_mesh;
 }
 

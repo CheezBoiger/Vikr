@@ -301,35 +301,28 @@ private:
 };
 
 
-class VertexBufferSubDataSetter : public GL4GraphicsCommand {
+class VertexBufferDataSetter : public GL4GraphicsCommand {
 public:
-  VertexBufferSubDataSetter(vint32 offset, vuint32 size, vreal32 *data, vbool heap_allocated)
-    : offset(offset)
-    , size(size)
-    , data(data)
-    , heap_allocated(heap_allocated)
+  VertexBufferDataSetter(VertexUsageType type, std::unique_ptr<std::vector<Vertex> > &data)
+    : type(type)
+    , ptr(std::move(data))
     { 
     }
 
-  ~VertexBufferSubDataSetter()
+  ~VertexBufferDataSetter()
   {
-    if (data && heap_allocated) {
-      delete[] data;
-    }
   }
 
   vvoid Execute(GL4RenderContext *cx) override {
     GL4Vertexbuffer *buffer = cx->GetCurrentVertexbuffer();
-    if (buffer && data) {
-      buffer->BufferSubData(offset, (size * sizeof(vreal32)), (vvoid *)data);
+    if (buffer && ptr) {
+      buffer->BufferData(type, ptr->size() * sizeof(Vertex), ptr->data());
     }
   }
 
 private:
-  vint32 offset; 
-  vuint32 size; 
-  vreal32 *data;
-  const vbool heap_allocated;
+  std::unique_ptr<std::vector<Vertex> > ptr;
+  VertexUsageType type;
 };
 
 
@@ -521,12 +514,11 @@ vvoid GL4Commandbuffer::SetTexture(Texture *texture, vuint32 index) {
 }
 
 
-vvoid GL4Commandbuffer::SetBufferSubData(vint32 offset, vuint32 size, 
-  vreal32 *data, vbool heap_allocated) 
+vvoid GL4Commandbuffer::SetBufferData(VertexUsageType type, std::unique_ptr<std::vector<Vertex> > data) 
 {
   CHECK_RECORDING();
   commands.push_back(
-    std::make_unique<VertexBufferSubDataSetter>(offset, size, data, heap_allocated));
+    std::make_unique<VertexBufferDataSetter>(type, data));
 }
 
 

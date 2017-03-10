@@ -7,46 +7,56 @@
 
 #include <vikr/graphics/vertexbuffer.hpp>
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
+#include <vikr/mesh/vertex.hpp>
 
+#include <array>
 #include <vikr/graphics/graphics.hpp>
 
 namespace vikr {
 
 
+const vuint32 kNumVertexDescriptions = 6;
+
+
+///
+/// Vulkan specific vertex buffer for Vulkan rendering.
 class VKVertexbuffer : public Vertexbuffer {
 public:
 
-  vvoid BufferSubData(vint32 offset, vuint32 size, vvoid *data) override;
+  ///
+  /// Subdata buffering.
+  vvoid BufferData(VertexUsageType type, vuint32 size, vvoid *data) override;
 
+  ///
+  /// Cleanup this Vkbuffer object.
   vvoid Cleanup() override {
-    m_vbo.Replace();
-    id = -1;
+    m_vbo.Replace();  
   }
 
+  ///
+  /// Store the vk buffer.
   vvoid StoreVkBuffer(VkBuffer &buf);
 
-  
-  /**
-    Get the Binding Description.
-  */
+  ///
+  /// Get the Binding Description.
   static VkVertexInputBindingDescription GetBindingDescription() {
     VkVertexInputBindingDescription binding_description;
     binding_description.binding = 0;
     // Set No stride, as our vertices will be packed as a batch. 
-    binding_description.stride = 0; 
+    binding_description.stride = sizeof(Vertex); 
     binding_description.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+    return binding_description;
   }
 
+  /// 
+  /// Get Attribute descrptions, or the descriptions associated with vertex input
+  /// buffers.
+  static std::array<VkVertexInputAttributeDescription, kNumVertexDescriptions> GetAttributeDescriptions();
+
 private:
-
-  /**
-    Essentually a VkBuffer id.
-  */
-  vuint64 id;
-
-  /**
-    vbo buffer.
-  */ 
+  //
+  //  vbo buffer.
   VkMemoryManager<VkBuffer> m_vbo;
  
 };

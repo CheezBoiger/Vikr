@@ -37,7 +37,8 @@ public:
 
   Framebuffer *CreateFramebuffer() override;
   
-  Vertexbuffer *CreateVertexbuffer(VertexContainer &vertices) override;
+  Vertexbuffer *CreateVertexbuffer(VertexUsageType type, 
+    std::vector<Vertex> &vertices, std::vector<vuint32> &indices= std::vector<vuint32>()) override;
 
   RenderContext *GetContext() override { return &context; }
 

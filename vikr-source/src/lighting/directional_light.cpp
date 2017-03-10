@@ -39,7 +39,7 @@ vvoid DirectionalLight::Init(RenderDevice *device, ShaderProgram *shadowprogram)
   m_depthProgram = shadowprogram;
   m_renderDevice = device;
   m_depthTexture = device->CreateTexture("directional_depth_" + std::to_string(m_lightId),
-    vikr_TARGET_2D_MULTISAMPLE, "", false);
+    vikr_TARGET_2D, "", false);
   m_depthTexture->SetMipmapping(false);
   m_depthTexture->SetFormat(vikr_FORMAT_D32_SFLOAT);
   m_depthTexture->SetWidth(1200);

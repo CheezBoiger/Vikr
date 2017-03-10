@@ -6,6 +6,7 @@
 
 
 #include <vikr/platform/vikr_types.hpp>
+#include <vikr/mesh/vertex.hpp>
 #include <vector>
 #include <glm/glm.hpp>
 
@@ -27,22 +28,15 @@ public:
   Sphere(vreal32 radius, vuint32 num_subdivisions);
 
 
-  std::vector<glm::vec3> &GetPositions() { return positions; }
-  std::vector<glm::vec3> &GetNormals() { return normals; }
-  std::vector<glm::vec2> &GetUVs() { return uvs; }
+  std::vector<Vertex> &GetVertices() { return m_vertices; }
 
   std::vector<vuint32> &GetIndices() { return indices; }
-  std::vector<glm::vec3> &GetTangents() { return tangents; }
 
 private:
 
   vvoid Subdivide();
 
-  std::vector<glm::vec3> positions;
-  std::vector<glm::vec3> normals;
-  std::vector<glm::vec3> tangents;
-  std::vector<glm::vec2> uvs;
-
+  std::vector<Vertex> m_vertices;
   std::vector<vuint32> indices;
 };
 } // vikr

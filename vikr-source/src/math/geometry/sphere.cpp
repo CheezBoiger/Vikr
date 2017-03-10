@@ -76,11 +76,11 @@ Sphere::Sphere(vreal32 radius, vuint32 num_subdivisions) {
   };
 
   // Depending on the machine, this can be problematic...
-  positions.resize(sizeof(pos) / 12);
+  m_vertices.resize(sizeof(pos) / 12);
   indices.resize(sizeof(k) / 4);
 
   for (vuint32 i = 0; i < (sizeof(pos) / 12); ++i) {
-    positions[i] = pos[i];
+    m_vertices[i].position = pos[i];
   }
 
   for (vuint32 i = 0; i < (sizeof(k) / 4); ++i) {
@@ -91,16 +91,16 @@ Sphere::Sphere(vreal32 radius, vuint32 num_subdivisions) {
     Subdivide();  
   }
 
-  for (vuint32 i = 0; i < positions.size(); ++i) {
-    glm::vec3 normal = glm::normalize(positions[i]);
+  for (vuint32 i = 0; i < m_vertices.size(); ++i) {
+    glm::vec3 normal = glm::normalize(m_vertices[i].position);
     // project onto sphere.
     glm::vec3 p = radius * normal;
     
-    positions[i] = p;
-    normals.push_back(normal);
+    m_vertices[i].position = p;
+    m_vertices[i].normal = normal;
 
-    vreal32 theta = AngleFromXY(positions[i].x, positions[i].z);
-    vreal32 phi = std::acosf(positions[i].y / radius);
+    vreal32 theta = AngleFromXY(m_vertices[i].position.x, m_vertices[i].position.z);
+    vreal32 phi = std::acosf(m_vertices[i].position.y / radius);
 
     glm::vec2 uv(
       static_cast<vreal32>(theta / (VIKR_PI * 2)), 
@@ -113,47 +113,47 @@ Sphere::Sphere(vreal32 radius, vuint32 num_subdivisions) {
     );
     tangent = glm::normalize(tangent);
     
-    tangents.push_back(tangent);
-    uvs.push_back(uv);
+    m_vertices[i].tangent = tangent;
+    m_vertices[i].uv = uv;
   }
 }
 
 
 vvoid Sphere::Subdivide() {
   // save a copy of the positions and indices.
-  std::vector<glm::vec3> copy_pos = positions;
+  std::vector<Vertex> copy_data = m_vertices;
   std::vector<vuint32> copy_ind = indices;
 
   // rebuild with subdivisions.
-  positions.resize(0);
+  m_vertices.resize(0);
   indices.resize(0);
 
   vuint32 num_tris = copy_ind.size() / 3;
   for (vuint32 i = 0; i < num_tris; ++i) {
-    glm::vec3 t_pos0 = copy_pos[copy_ind[i * 3 + 0] ];
-    glm::vec3 t_pos1 = copy_pos[copy_ind[i * 3 + 1] ];
-    glm::vec3 t_pos2 = copy_pos[copy_ind[i * 3 + 2] ];
+    Vertex t_pos0 = copy_data[copy_ind[i * 3 + 0] ];
+    Vertex t_pos1 = copy_data[copy_ind[i * 3 + 1] ];
+    Vertex t_pos2 = copy_data[copy_ind[i * 3 + 2] ];
 
     // midpoints.
-    glm::vec3 m0, m1, m2;
-    m0.x = 0.5f * (t_pos0.x + t_pos1.x);
-    m0.y = 0.5f * (t_pos0.y + t_pos1.y);
-    m0.z = 0.5f * (t_pos0.z + t_pos1.z);
+    Vertex m0, m1, m2;
+    m0.position.x = 0.5f * (t_pos0.position.x + t_pos1.position.x);
+    m0.position.y = 0.5f * (t_pos0.position.y + t_pos1.position.y);
+    m0.position.z = 0.5f * (t_pos0.position.z + t_pos1.position.z);
 
-    m1.x = 0.5f * (t_pos1.x + t_pos2.x);
-    m1.y = 0.5f * (t_pos1.y + t_pos2.y);
-    m1.z = 0.5f * (t_pos1.z + t_pos2.z);
+    m1.position.x = 0.5f * (t_pos1.position.x + t_pos2.position.x);
+    m1.position.y = 0.5f * (t_pos1.position.y + t_pos2.position.y);
+    m1.position.z = 0.5f * (t_pos1.position.z + t_pos2.position.z);
 
-    m2.x = 0.5f * (t_pos0.x + t_pos2.x);
-    m2.y = 0.5f * (t_pos0.y + t_pos2.y);
-    m2.z = 0.5f * (t_pos0.z + t_pos2.z);
+    m2.position.x = 0.5f * (t_pos0.position.x + t_pos2.position.x);
+    m2.position.y = 0.5f * (t_pos0.position.y + t_pos2.position.y);
+    m2.position.z = 0.5f * (t_pos0.position.z + t_pos2.position.z);
 
-    positions.push_back(t_pos0);
-    positions.push_back(t_pos1);
-    positions.push_back(t_pos2);
-    positions.push_back(m0);
-    positions.push_back(m1);
-    positions.push_back(m2);
+    m_vertices.push_back(t_pos0);
+    m_vertices.push_back(t_pos1);
+    m_vertices.push_back(t_pos2);
+    m_vertices.push_back(m0);
+    m_vertices.push_back(m1);
+    m_vertices.push_back(m2);
 
     indices.push_back(i * 6 + 0);
     indices.push_back(i * 6 + 3);

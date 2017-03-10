@@ -27,10 +27,10 @@ public:
   vvoid Record(Commandbuffer &buffer) override {
     buffer.BeginRecord();
     buffer.SetQueryVertexbuffer(m_mesh->GetVertexBuffer());
-    if (m_mesh->GetVertices().indices.empty()) {
-      buffer.Draw(0, m_mesh->GetVertices().size);
+    if (m_mesh->GetNumOfIndices() <= 0) {
+      buffer.Draw(0, m_mesh->GetNumOfVertices());
     } else {
-      buffer.DrawIndexed(nullptr, m_mesh->GetVertices().indices.size());
+      buffer.DrawIndexed(nullptr, m_mesh->GetNumOfIndices());
     }
     buffer.EndRecord();
   }

@@ -47,31 +47,10 @@ vbool ResourceManager::DestroySceneNode(guid_t guid, vbool destroy_subtree) {
 }
 
 
-Mesh *ResourceManager::CreateMesh(
-  std::vector<glm::vec3> &positions,
-  std::vector<glm::vec3> &normals,
-  std::vector<glm::vec2> &uvs,
-  std::vector<vuint32> &indices,
-  std::vector<glm::vec3> &tangents,
-  std::vector<glm::vec3> &bitangents,
-  std::vector<glm::vec3> &colors)
+Mesh *ResourceManager::CreateMesh()
 {
   std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
-  mesh->Buffer(positions, normals, uvs, indices, tangents, bitangents, colors);
   // mesh->Create();
-  guid_t id = mesh->GetUID();
-  Resources::meshes[mesh->GetUID()] = std::move(mesh);
-  return Resources::meshes[id].get();
-}
-
-
-Mesh *ResourceManager::CreateMesh(
-  std::vector<Vertex> &vertices,
-  std::vector<vuint32> &indices)
-{
-  std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
-  mesh->Buffer(vertices, indices);
-  //mesh->Create();
   guid_t id = mesh->GetUID();
   Resources::meshes[mesh->GetUID()] = std::move(mesh);
   return Resources::meshes[id].get();

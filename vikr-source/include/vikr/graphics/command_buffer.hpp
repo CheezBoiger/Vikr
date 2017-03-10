@@ -46,6 +46,8 @@
 #include <vikr/graphics/depthmode.hpp>
 #include <vikr/graphics/cullmode.hpp>
 #include <vikr/graphics/stencildepth.hpp>
+
+#include <vikr/mesh/vertex.hpp>
 #include <glm/glm.hpp>
 
 #include <vector>
@@ -104,8 +106,8 @@ public:
   /**
     TODO(): This requires new in order to subdata with text! Need better optimization.
   */
-  virtual vvoid SetBufferSubData(vint32 offset, vuint32 size, 
-    vreal32 *data, vbool heap_allocated = false) = 0;
+  virtual vvoid SetBufferData(VertexUsageType type, 
+    std::unique_ptr<std::vector<Vertex> > data) = 0;
 
   // New Commands!
   virtual vvoid SetFramebuffer(Framebuffer *framebuffer) = 0;

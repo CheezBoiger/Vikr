@@ -69,8 +69,8 @@ public:
 
   vvoid ApplyComputePipelineState(ComputePipelineState *pipelinestate) override;
 
-  vvoid SetBufferSubData(vint32 offset, vuint32 size, 
-    vreal32 *data, vbool heap_allocated = false) override;
+  vvoid SetBufferData(VertexUsageType type, 
+    std::unique_ptr<std::vector<Vertex> > data) override;
 
 
   vvoid SetShaderUniforms(ShaderUniformParams params) override;

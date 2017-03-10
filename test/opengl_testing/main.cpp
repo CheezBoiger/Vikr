@@ -89,13 +89,12 @@ int main(int c, char* args[]) {
   Cube cube;
   Sphere sphere(1.0f, 6);
   Mesh *cube_mesh = 
-    mgr.CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
+    mgr.CreateMesh();
+  cube_mesh->Build(&device, vikr_STATIC, cube.GetVertices(), cube.GetIndices());
   Mesh *light_mesh =
     //mgr.CreateMesh(cube.GetVertices(), cube.GetNormals(), cube.GetUVs(), cube.GetIndices());
-    mgr.CreateMesh(sphere.GetPositions(), sphere.GetNormals(), sphere.GetUVs(), sphere.GetIndices(),
-      sphere.GetTangents());
-  cube_mesh->Build(renderer.GetDevice());
-  light_mesh->Build(renderer.GetDevice());
+    mgr.CreateMesh();
+  light_mesh->Build(renderer.GetDevice(), vikr_STATIC, sphere.GetVertices(), sphere.GetIndices());
 
   SceneNode *cube1 = mgr.CreateSceneNode();
   cube1->AddComponent<MeshComponent>()->mesh = cube_mesh;
@@ -161,7 +160,7 @@ int main(int c, char* args[]) {
   LightComponent *dc1 = dlight_node1->AddComponent<LightComponent>();
   dc1->light = &dlight1;
   dlight1.Init(&device, directional_depthProgram);
-  dlight1.SetPos(glm::vec3(-10.0f, 90.0f, -10.0f));
+  dlight1.SetPos(glm::vec3(-10.0f, 40.0f, -10.0f));
   dlight1.Update();
   dc1->Update();
 

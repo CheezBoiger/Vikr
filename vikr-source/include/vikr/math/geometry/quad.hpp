@@ -7,6 +7,7 @@
 
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
+#include <vikr/mesh/vertex.hpp>
 #include <glm/glm.hpp>
 
 #include <vector>
@@ -18,13 +19,9 @@ class Quad {
 public:
   Quad();
 
-  std::vector<glm::vec3>& GetPositions() { return positions; }
-  std::vector<glm::vec3>& GetNormals() { return normals; }
-  std::vector<glm::vec2>& GetUVs() { return uvs; }
+  std::vector<Vertex>& GetVertices() { return m_vertices; }
 private:
-  std::vector<glm::vec3> positions;
-  std::vector<glm::vec3> normals;
-  std::vector<glm::vec2> uvs;
+  std::vector<Vertex> m_vertices;
 };
 } // vikr
 #endif // __VIKR_QUAD_HPP

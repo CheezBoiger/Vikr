@@ -5,6 +5,7 @@
 #define __VIKR_CUBE_HPP
 
 #include <vikr/platform/vikr_types.hpp>
+#include <vikr/mesh/vertex.hpp>
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -19,16 +20,12 @@ class Cube {
 public:
   Cube();
 
-  std::vector<glm::vec3> GetVertices() { return m_vertices; }
-  std::vector<glm::vec3> GetNormals() { return m_normals; }
-  std::vector<glm::vec2> GetUVs() { return m_uvs; }
+  std::vector<Vertex> &GetVertices() { return m_vertices; }
 
-  std::vector<vuint32> GetIndices() { return m_indices; }
+  std::vector<vuint32> &GetIndices() { return m_indices; }
 
 private:
-  std::vector<glm::vec3> m_vertices;
-  std::vector<glm::vec3> m_normals;
-  std::vector<glm::vec2> m_uvs;
+  std::vector<Vertex> m_vertices;
   std::vector<vuint32> m_indices;
 };
 } // vikr
