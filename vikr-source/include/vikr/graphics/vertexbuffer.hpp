@@ -54,7 +54,7 @@ public:
   /**
     For meshes that require text.
   */
-  virtual vvoid BufferData(VertexUsageType type, vuint32 size, vvoid *data) = 0;
+  virtual vvoid BufferData(VertexUsageType type, vuint32 size, Vertex *data) = 0;
 
   virtual vvoid Cleanup() = 0;
 };

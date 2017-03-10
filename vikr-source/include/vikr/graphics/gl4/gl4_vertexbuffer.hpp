@@ -33,10 +33,10 @@ public:
   vuint32 GetElementBufferId() { return m_ibo; }
   vvoid StoreElementBufferId(vuint32 ibo) { m_ibo = ibo; }
 
-  vvoid BufferData(VertexUsageType type, vuint32 size, vvoid *data) override {
+  vvoid BufferData(VertexUsageType type, vuint32 size, Vertex *data) override {
     // subdata for dynamic stuff.
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, size, data, (type == vikr_DYNAMIC ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW)); 
+    glBufferData(GL_ARRAY_BUFFER, size, data, (type == vikr_DYNAMIC ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW));
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     VIKR_ASSERT(glGetError() == 0);
   }

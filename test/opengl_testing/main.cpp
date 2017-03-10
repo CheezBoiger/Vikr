@@ -160,7 +160,7 @@ int main(int c, char* args[]) {
   LightComponent *dc1 = dlight_node1->AddComponent<LightComponent>();
   dc1->light = &dlight1;
   dlight1.Init(&device, directional_depthProgram);
-  dlight1.SetPos(glm::vec3(-10.0f, 40.0f, -10.0f));
+  dlight1.SetPos(glm::vec3(-10.0f, 80.0f, -10.0f));
   dlight1.Update();
   dc1->Update();
 

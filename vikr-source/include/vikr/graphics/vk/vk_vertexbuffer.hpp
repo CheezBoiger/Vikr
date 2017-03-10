@@ -25,7 +25,7 @@ public:
 
   ///
   /// Subdata buffering.
-  vvoid BufferData(VertexUsageType type, vuint32 size, vvoid *data) override;
+  vvoid BufferData(VertexUsageType type, vuint32 size, Vertex *data) override;
 
   ///
   /// Cleanup this Vkbuffer object.
