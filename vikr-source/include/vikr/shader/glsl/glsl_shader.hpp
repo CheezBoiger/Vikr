@@ -22,11 +22,11 @@ public:
   vvoid Compile(std::string path) override;
   vvoid Cleanup() override { glDeleteShader(shader_id); }
 
-  vuint32 GetNativeId() { return shader_id; }
+  GLuint GetNativeId() { return shader_id; }
   
 private:
 
-  vuint32 shader_id;
+  GLuint shader_id;
 
 };
 } // vikr

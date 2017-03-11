@@ -178,9 +178,9 @@ vvoid GL4RenderContext::ExecuteCommands(CommandbufferList *commandbuffer) {
   CLEAN_PIPELINE();
   if (commandbuffer) {
     GL4CommandbufferList *list = static_cast<GL4CommandbufferList *>(commandbuffer);
-    for (Commandbuffer *command : list->Raw()) {
+    for (GL4Commandbuffer &command : list->GetList()) {
       VIKR_ASSERT(command);
-      static_cast<GL4Commandbuffer *>(command)->Execute(this);
+     command.Execute(this);
     }
   }
 }
@@ -342,21 +342,25 @@ vvoid GL4RenderContext::Present() {
 }
 
 
-GraphicsPipelineState *GL4RenderContext::GetGraphicsPipelineState() {
+GraphicsPipelineState *GL4RenderContext::GetGraphicsPipelineState() 
+{
   return static_cast<GraphicsPipelineState *>(m_currPipeline);
 }
 
 
-vvoid GL4RenderContext::BeginRecord(Commandbuffer *buf) {
+vvoid GL4RenderContext::BeginRecord(Commandbuffer *buf) 
+{
   m_recordCommandbuffer = static_cast<GL4Commandbuffer *>(buf);
 }
 
 
-vvoid GL4RenderContext::EndRecord() {
+vvoid GL4RenderContext::EndRecord() 
+{
   m_recordCommandbuffer = nullptr;
 }
 
-vvoid GL4RenderContext::ApplyGraphicsPipelineState(GraphicsPipelineState *pipelinestate) {
+vvoid GL4RenderContext::ApplyGraphicsPipelineState(GraphicsPipelineState *pipelinestate) 
+{
   if (pipelinestate == m_currPipeline) {
     return;
   }
@@ -365,12 +369,14 @@ vvoid GL4RenderContext::ApplyGraphicsPipelineState(GraphicsPipelineState *pipeli
 }
 
 
-Framebuffer *GL4RenderContext::GetFramebuffer() {
+Framebuffer *GL4RenderContext::GetFramebuffer() 
+{
   return static_cast<Framebuffer *>(m_currFramebuffer);
 }
 
 
-vvoid GL4RenderContext::SetMaterial(Material *material) {
+vvoid GL4RenderContext::SetMaterial(Material *material) 
+{
   ShaderUniformParams params;
   params.uniforms = material->GetMaterialValues();
   params.samplers = material->GetUniformSamplers();
@@ -378,10 +384,12 @@ vvoid GL4RenderContext::SetMaterial(Material *material) {
 }
 
 
-vvoid GL4RenderContext::Dispatch(vuint32 x, vuint32 y, vuint32 z) {
+vvoid GL4RenderContext::Dispatch(vuint32 x, vuint32 y, vuint32 z) 
+{
 }
 
 
-vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) {
+vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) 
+{
 }
 } // vikr

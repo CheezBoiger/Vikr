@@ -27,10 +27,9 @@ enum RenderTargetType {
 };
 
 
-/**
-  Render Target for post processing. This is a container for Textures to
-  Be added into RenderPasses. 
-*/
+
+/// Render Target for post processing. This is a container for Textures to
+/// Be added into RenderPasses. 
 class RenderTarget {
   /*
     TODO(Garcia): Redesign RenderTargets to NOT bind to 

@@ -336,26 +336,26 @@ public:
 
 GL4CommandbufferList::GL4CommandbufferList()
   : m_commandbuffers(0)
-  , m_raw(0)
 {
 }
 
 
-vvoid GL4CommandbufferList::PushBack(Commandbuffer &buffer) {
+vvoid GL4CommandbufferList::Enqueue(Commandbuffer &buffer) 
+{
   GL4Commandbuffer &b = static_cast<GL4Commandbuffer &>(buffer);
   m_commandbuffers.push_back(std::move(b));
-  m_raw.push_back(&m_commandbuffers.back());
 }
 
 
-std::list<Commandbuffer *> &GL4CommandbufferList::Raw() {
-  return m_raw;
+vvoid GL4CommandbufferList::Reserve(vuint32 size)
+{
+  m_commandbuffers.reserve(size);
 }
 
 
-vvoid GL4CommandbufferList::Clear() {
+vvoid GL4CommandbufferList::Clear() 
+{
   m_commandbuffers.clear();
-  m_raw.clear();
 }
 
 

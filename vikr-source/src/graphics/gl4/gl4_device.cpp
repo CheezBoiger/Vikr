@@ -202,8 +202,8 @@ RenderPass *GL4RenderDevice::CreateRenderPass() {
 Commandbuffer &GL4RenderDevice::CreateCommandbuffer(CommandbufferList *list) {
   GL4CommandbufferList *glist = static_cast<GL4CommandbufferList *>(list);
   GL4Commandbuffer buffer;
-  glist->PushBack(buffer);
-  return (*glist->Raw().back());
+  glist->Enqueue(buffer);
+  return glist->GetList().back();
 }
 
 

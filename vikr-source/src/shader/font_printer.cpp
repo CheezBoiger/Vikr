@@ -85,24 +85,24 @@ vvoid FontPrinter::SetPrintln(std::string text, vreal32 x, vreal32 y, vreal32 sc
 
     vreal32 w = (ch.size.x * scale) / m_viewport.win_width;
     vreal32 h = ch.size.y * scale / m_viewport.win_height;
-    std::vector<Vertex> verts(6);
-    verts[0].position = glm::vec3(xpos, ypos + h, 0.0);
-    verts[0].uv = glm::vec2(0.0, 0.0);
+    std::unique_ptr<std::vector<Vertex> > verts = std::make_unique<std::vector<Vertex> >(6);
+    (*verts)[0].position = glm::vec3(xpos, ypos + h, 0.0);
+    (*verts)[0].uv = glm::vec2(0.0, 0.0);
 
-    verts[1].position = glm::vec3(xpos, ypos, 0.0f);
-    verts[1].uv = glm::vec2(0.0f, 1.0f);
+    (*verts)[1].position = glm::vec3(xpos, ypos, 0.0f);
+    (*verts)[1].uv = glm::vec2(0.0f, 1.0f);
 
-    verts[2].position = glm::vec3(xpos + w, ypos, 0.0f);
-    verts[2].uv = glm::vec2(1.0f, 1.0f);
+    (*verts)[2].position = glm::vec3(xpos + w, ypos, 0.0f);
+    (*verts)[2].uv = glm::vec2(1.0f, 1.0f);
 
-    verts[3].position = glm::vec3(xpos, ypos + h, 0.0f);
-    verts[3].uv = glm::vec2(0.0f, 0.0f);
+    (*verts)[3].position = glm::vec3(xpos, ypos + h, 0.0f);
+    (*verts)[3].uv = glm::vec2(0.0f, 0.0f);
 
-    verts[4].position = glm::vec3(xpos + w, ypos, 0.0f);
-    verts[4].uv = glm::vec2(1.0f, 1.0f);
+    (*verts)[4].position = glm::vec3(xpos + w, ypos, 0.0f);
+    (*verts)[4].uv = glm::vec2(1.0f, 1.0f);
     
-    verts[5].position = glm::vec3(xpos + w, ypos + h, 0.0f);
-    verts[5].uv = glm::vec2(1.0f, 0.0f);
+    (*verts)[5].position = glm::vec3(xpos + w, ypos + h, 0.0f);
+    (*verts)[5].uv = glm::vec2(1.0f, 0.0f);
 
 /*
     vreal32 *vertices = new vreal32[30] {
@@ -123,7 +123,7 @@ vvoid FontPrinter::SetPrintln(std::string text, vreal32 x, vreal32 y, vreal32 sc
     };
 */
     command.SetTexture(ch.texture, 0);
-    command.SetBufferData(vikr_DYNAMIC, std::make_unique<std::vector<Vertex> >(verts));
+    command.SetBufferData(vikr_DYNAMIC, std::move(verts));
     command.Draw(0, m_mesh->GetNumOfVertices());
     //ctx->SetTexture(ch.texture, 0);
     //m_mesh->GetVertexBuffer()->BufferSubData(0, sizeof(vertices), &vertices);

@@ -25,7 +25,7 @@ public:
   */
   vvoid Compile();
   vvoid Cleanup() { DeleteShader(shader_id); shader_id = -1; }
-  vuint32 GetShaderId() { return shader_id; }
+  GLuint GetShaderId() { return shader_id; }
   vbool IsCompiled() { return compiled; }
 
   GLSLPreprocessor *GetPreprocessor() { return &preprocessor; }
@@ -40,7 +40,7 @@ private:
   std::string filepath;
   ShaderStage shader_stage;
   
-  vuint32 shader_id;
+  GLuint shader_id;
   vbool compiled;
   GLSLPreprocessor preprocessor;
 };

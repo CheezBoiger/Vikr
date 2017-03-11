@@ -16,14 +16,11 @@
 namespace vikr {
 
 
-/**
-  For now it only works with OpenGL, Spir-V not yet implemented!
-*/
+
+/// For now it only works with OpenGL, Spir-V not yet implemented!
 class Shader : public GUID {
 protected:
-  /**
-    Must not be instantiated by the user.
-  */
+  /// Must not be instantiated by the user.
   Shader(ShaderStage stage = vikr_VERTEX_SHADER, ShaderLanguage lang = vikr_NOLANG);
 
 public:
@@ -31,61 +28,41 @@ public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Shader);
   virtual ~Shader() { }
 
-  /**
-    Compile the Shader for the Program to use.
-  */
+  /// Compile the Shader for the Program to use.
   virtual vvoid Compile(std::string path) = 0;
 
-  /**
-    Set the include search path for the file. This is for macro use of the #include.
-  */
+  /// Set the include search path for the file. This is for macro use of the #include.
   vvoid IncludeSearchPath(std::string path) { include_searchpath = path; }
 
-  /**
-    Clean up the shader.
-  */
+  /// Clean up the shader.
   virtual vvoid Cleanup() = 0;
 
-  /**
-    Get the Shader language.
-   */
+  
+  /// Get the Shader language.
   ShaderLanguage GetShaderLanguage() { return shader_lang; }
 
   ShaderStage GetShaderStage() { return shader_stage; }
-  /**
-    Sets the name of the shader.
-  */
+
+  /// Sets the name of the shader.
   vvoid SetName(std::string name) { shader_name = name; }
 
-  /**
-    Grab the name of the shader.
-  */
+  /// Grab the name of the shader.
   std::string GetName() { return shader_name; }
 
-  /**
-    Check if the shader is compiled.
-  */
+  /// Check if the shader is compiled.
   vbool IsCompiled() { return is_compiled; }
 
 protected:
-  /**
-    Shader stage of this shader object.
-  */
+  /// Shader stage of this shader object.
   ShaderStage shader_stage              = vikr_VERTEX_SHADER;
 
-  /**
-    Shader Language.
-  */
+  /// Shader Language.
   ShaderLanguage shader_lang            = vikr_NOLANG;
 
-  /**
-    The search path to use for including.
-  */
+  /// The search path to use for including.
   std::string include_searchpath        = ".";
 
-  /**
-    The shader name.
-  */
+  /// The shader name.
   std::string shader_name               = "noname";
 
   vbool is_compiled                     = false;

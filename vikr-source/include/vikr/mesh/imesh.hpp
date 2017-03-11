@@ -22,9 +22,8 @@ class Vertexbuffer;
 
 
 
-/**
-  Mesh Interface. Used for abstracting meshes if new meshes need to be created.
-*/
+
+///  Mesh Interface. Used for abstracting meshes if new meshes need to be created.
 class IMesh : public GUID {
 public:
   IMesh() { }

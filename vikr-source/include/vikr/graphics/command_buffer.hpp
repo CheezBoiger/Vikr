@@ -1,34 +1,33 @@
 //
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
-/**
-  Commandbuffers handle commands that must be sent to the gpu for execution. Think of them
-  as an audio recorder, you say what you want the listener to do, with the exact instructions,
-  and the listener can replay the instuctions over and over if need be, to do what you want them
-  to do.
-
-  To clarify how this works we do this:
-  
-      1. Create Commandbuffer. (Different RenderContext's have different Commandbuffers).
-      2. Begin recording.
-      3. Record your commands.
-      4. End recording.
-      5. Store into a list along with other Commandbuffers.
-      6. Execute the list of Commandbuffers.
-
-
-  Where these command buffers are stored, is called a CommandbufferList. This object
-  holds all commandbuffers that are to be sent to the gpu RenderAPI:
-
-  |--------------------CommandbufferList---------------------|
-  |                                                          |
-  [Commandbuffer][Commandbuffer][Commandbuffer][Commandbuffer]
-
-  What goes on is that the Render Context reads (or replays the commandbuffers). Once 
-  the RenderContext is done, the programmer would be able to reuse the same CommandbufferList 
-  to execute again and again. This can be beneficial if a renderer needs to render a scene 
-  more than once for different renderpasses, skyboxes, reflections, and whatnot.
-*/
+//
+//  Commandbuffers handle commands that must be sent to the gpu for execution. Think of them
+//  as an audio recorder, you say what you want the listener to do, with the exact instructions,
+//  and the listener can replay the instuctions over and over if need be, to do what you want them
+//  to do.
+//
+//  To clarify how this works we do this:
+//  
+//      1. Create Commandbuffer. (Different RenderContext's have different Commandbuffers).
+//      2. Begin recording.
+//      3. Record your commands.
+//      4. End recording.
+//      5. Store into a list along with other Commandbuffers.
+//      6. Execute the list of Commandbuffers.
+//
+//
+//  Where these command buffers are stored, is called a CommandbufferList. This object
+//  holds all commandbuffers that are to be sent to the gpu RenderAPI:
+//
+//  |--------------------CommandbufferList---------------------|
+//  |                                                          |
+//  [Commandbuffer][Commandbuffer][Commandbuffer][Commandbuffer]
+//
+//  What goes on is that the Render Context reads (or replays the commandbuffers). Once 
+//  the RenderContext is done, the programmer would be able to reuse the same CommandbufferList 
+//  to execute again and again. This can be beneficial if a renderer needs to render a scene 
+//  more than once for different renderpasses, skyboxes, reflections, and whatnot.
 #ifndef __VIKR_COMMAND_BUFFER_HPP
 #define __VIKR_COMMAND_BUFFER_HPP
 
@@ -75,13 +74,12 @@ struct ShaderUniformParams;
 struct Viewport;
 
 
-/**
-  A Commandbuffer is an object that holds the recordings of commands for the RenderContext.
-  It is not sorted, so be sure that whatever you list in the commands, the RenderContext will
-  read and execute it the exact same way (think of it as filling a queue).
 
-  NOTE: Be sure to use BeginRecord to begin recording your command, otherwise it won't record!
-*/
+///  A Commandbuffer is an object that holds the recordings of commands for the RenderContext.
+///  It is not sorted, so be sure that whatever you list in the commands, the RenderContext will
+///  read and execute it the exact same way (think of it as filling a queue).
+///
+///  NOTE: Be sure to use BeginRecord to begin recording your command, otherwise it won't record!
 class Commandbuffer {
 public:
   Commandbuffer() { }
@@ -103,9 +101,8 @@ public:
   virtual vvoid SetShaderUniforms(ShaderUniformParams params) = 0;
   virtual vvoid SetQueryVertexbuffer(Vertexbuffer *buffer) = 0;
   virtual vvoid SetMaterial(Material *material) = 0;
-  /**
-    TODO(): This requires new in order to subdata with text! Need better optimization.
-  */
+
+  ///  TODO(): This requires new in order to subdata with text! Need better optimization.
   virtual vvoid SetBufferData(VertexUsageType type, 
     std::unique_ptr<std::vector<Vertex> > data) = 0;
 
@@ -129,18 +126,18 @@ public:
 };
 
 
-/**
-  commandbuffer list to allocate to.
-*/
+
+///  commandbuffer list to allocate Commandbuffers onto.
 class CommandbufferList : public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(CommandbufferList);
 public:
   CommandbufferList() { }
   VIKR_DEFAULT_MOVE_AND_ASSIGN(CommandbufferList);
-  virtual vvoid PushBack(Commandbuffer &buffer) = 0;
+  virtual vvoid Enqueue(Commandbuffer &buffer) = 0;
+
+  virtual vvoid Reserve(vuint32 size) = 0;
 
   virtual vvoid Clear() = 0;
-  virtual std::list<Commandbuffer *> &Raw() = 0;
 };
 } // vikr
 #endif // __VIKR_COMMAND_BUFFER_HPP

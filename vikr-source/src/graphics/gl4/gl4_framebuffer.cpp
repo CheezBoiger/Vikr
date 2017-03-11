@@ -89,7 +89,10 @@ vvoid GL4Framebuffer::Update() {
   }
 
   if (m_renderPass->GetRenderTargets().empty()) {
-    VikrLog::DisplayMessage(VIKR_WARNING, "Empty Renderpass for this framebuffer. Skipping update.");
+    VikrLog::DisplayMessage(VIKR_WARNING, R"VIKR(
+      Empty Renderpass for this framebuffer. Skipping update. 
+      Be sure to check glGetError() for the specific error.
+    )VIKR");
     return;
   }
   glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);

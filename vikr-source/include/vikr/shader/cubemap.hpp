@@ -16,37 +16,24 @@
 namespace vikr {
 
 
-/**
-  Render a cubemap 
-*/
+
+/// Render a cubemap 
 class Cubemap {
 public:
   Cubemap() { }
   virtual ~Cubemap() { }
 
-  /**
-    Path to faces is optional.
-  */
+  /// Path to faces is optional.
   virtual vvoid Load(std::vector<const vchar *> *face_paths) = 0;
-
   virtual vvoid SetMagFilter(TextureFilterMode mode) = 0;
-
   virtual vvoid SetMinFilter(TextureFilterMode mode) = 0;
-
   virtual vvoid SetWrapS(TextureWrapMode mode) = 0;
-
   virtual vvoid SetWrapT(TextureWrapMode mode) = 0;
-
   virtual vvoid SetWrapR(TextureWrapMode mode) = 0;
-
   virtual vvoid OverrideFaceWidth(vuint32 val) = 0;
-  
   virtual vvoid OverrideFaceHeight(vuint32 val) = 0;
-
   virtual vvoid ClearSizeOverride() = 0;
-  
   virtual vvoid Cleanup() = 0;
-
   virtual guid_t GetUID() = 0;
 };
 } // vikr

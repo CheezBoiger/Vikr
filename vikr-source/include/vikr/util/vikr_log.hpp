@@ -25,39 +25,32 @@ enum VikrMessage {
 };
 
 
-/**
-  VikrLog handles runtime message logging and history, in order to display onto the 
-  renderer system of the notifications and whatnot that go on in the program. This 
-  will not display the message to console, it just stores.
-*/
+
+/// VikrLog handles runtime message logging and history, in order to display onto the 
+/// renderer system of the notifications and whatnot that go on in the program. This 
+/// will not display the message to console, it just stores.
 class VikrLog {
 public:
-  /**
-    Store the message into a logger to save the message history.
-  */
+  
+  /// Store the message into a logger to save the message history.
   static void Store(VikrMessage type, std::string message);
-  /**
-    Dump all messages into the console, this will display everything that is stored in the
-    message history.
-  */
+  
+  /// Dump all messages into the console, this will display everything that is stored in the
+  /// message history.
   static void Dump();
-  /**
-    Display a message onto the console without storing into history.
-  */
+  
+  /// Display a message onto the console without storing into history.
   static void DisplayMessage(VikrMessage type, std::string message);
-  /**
-    Suppress messages that are displayed by the given type. This will suppress any
-    messages of the given type. 
-  */
+  
+  /// Suppress messages that are displayed by the given type. This will suppress any
+  /// messages of the given type. 
   static void Suppress(VikrMessage type);
-  /**
-    Any message types that were previously suppressed, can be unsupressed to be displayed
-    once again.
-  */
+  
+  /// Any message types that were previously suppressed, can be unsupressed to be displayed
+  /// once again.
   static void UnSupress(VikrMessage type);
-  /**
-    Clears all of the history in the log history queue.
-  */
+
+  /// Clears all of the history in the log history queue.
   static void ClearHistory();
 private:
   static char unsuppressed;

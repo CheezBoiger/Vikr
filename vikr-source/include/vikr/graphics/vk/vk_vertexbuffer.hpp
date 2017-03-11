@@ -18,38 +18,24 @@ namespace vikr {
 const vuint32 kNumVertexDescriptions = 6;
 
 
-///
 /// Vulkan specific vertex buffer for Vulkan rendering.
 class VKVertexbuffer : public Vertexbuffer {
 public:
 
-  ///
   /// Subdata buffering.
   vvoid BufferData(VertexUsageType type, vuint32 size, Vertex *data) override;
 
-  ///
   /// Cleanup this Vkbuffer object.
   vvoid Cleanup() override {
     m_vbo.Replace();  
   }
 
-  ///
   /// Store the vk buffer.
   vvoid StoreVkBuffer(VkBuffer &buf);
 
-  ///
   /// Get the Binding Description.
-  static VkVertexInputBindingDescription GetBindingDescription() {
-    VkVertexInputBindingDescription binding_description;
-    binding_description.binding = 0;
-    // Set No stride, as our vertices will be packed as a batch. 
-    binding_description.stride = sizeof(Vertex); 
-    binding_description.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+  static VkVertexInputBindingDescription GetBindingDescription();
 
-    return binding_description;
-  }
-
-  /// 
   /// Get Attribute descrptions, or the descriptions associated with vertex input
   /// buffers.
   static std::array<VkVertexInputAttributeDescription, kNumVertexDescriptions> GetAttributeDescriptions();
