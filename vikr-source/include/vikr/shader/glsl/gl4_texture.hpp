@@ -34,6 +34,20 @@ public:
   vvoid SetWrapT(TextureWrapMode mode) override;
   vvoid SetWrapR(TextureWrapMode mode) override;
   vvoid SetTarget(TextureTarget target) override;
+  TextureWrapMode GetWrapS() override;
+  TextureWrapMode GetWrapT() override;
+  TextureWrapMode GetWrapR() override;
+  TextureTarget GetTargetFormat() override;
+  ImageFormat GetFormat() override;
+  TextureFilterMode GetFilterMin() override;
+  TextureFilterMode GetFilterMax() override;
+  vvoid SetName(std::string name) override;
+  vvoid SetBytecode(vbyte *bytecode, vbool is_stbi = true) override;
+  vbyte *GetBytecode() override;
+  vbool IsMipmapping() override;
+  vvoid SetSamples(vint32 samples) override;
+  vint32 GetSamples() override;
+  
   vuint32 GetNativeId() { return id; }
 
   vuint32 GetNativeFormat() { return native_format; }
@@ -45,7 +59,8 @@ public:
   vuint32 GetNativeWrapT() { return native_wrap_t; }
   vuint32 GetNativeWrapR() { return native_wrap_r; }
   vuint32 GetNativeDataType() { return native_datatype; }
-
+  std::string GetPath() override { return m_path; }
+  std::string GetName() override { return m_name; }
   vvoid SetMultisampled(vbool enable) override { m_multisampled = enable; }
   vbool IsMultisampled() override { return m_multisampled; }
 
@@ -53,7 +68,7 @@ public:
   virtual vvoid SetDepth(vint32 depth) override = 0;
   virtual vint32 GetHeight() override = 0;
   virtual vint32 GetDepth() override = 0;
-
+  vint32 GetWidth() override { return m_width; }
   /**
     Cleanup the Texture value if needed.
   */
@@ -63,6 +78,7 @@ protected:
   vvoid SetPixelStore();
   vuint32 id                          = 0;
 
+  vint32  m_width                     = 0;
   vuint32 native_target               = GL_TEXTURE_2D;
   vuint32 native_format               = GL_RGBA;
   vuint32 native_internal_format      = GL_RGBA32UI;
@@ -73,10 +89,18 @@ protected:
   vuint32 native_wrap_t               = GL_REPEAT;
   vuint32 native_wrap_r               = GL_REPEAT;
 
+  vbool mipmapping                    = true;
+  vbool m_alpha                       = true;
+  vbool m_multisampled                = false;
+  vuint32 m_samples                   = 1;
+
   /**
     Clean the Shader params.
   */
   vvoid CleanParams();
+
+  std::string   m_name;
+  std::string    m_path;
 };
 } // vikr
 #endif // __VIKR_GLTEXTURE_HPP

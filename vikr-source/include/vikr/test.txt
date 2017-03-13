@@ -1,0 +1,13 @@
+/*
+*/
+//
+//
+
+uniform VERT (binding = 0) sampler2D depth;
+uniform VERT (binding = 0) sampler2D normal;
+
+uniform (binding = 0) VERT {
+  sampler2D s;
+};
+
+layout (location = 0) in vec2 texCoords;

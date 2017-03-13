@@ -44,16 +44,14 @@ enum BufferMode {
 
 
 ///  Framebuffer abstract. Used to be derived specifically for our Renderers.
-///  Alittle scary, Vulkan already contains a Framebuffer object for us to use.
-///  We will use this class to wrap it...
 ///
 ///  Allowing Multi RenderPasses requires that we blit a src Framebuffer with a 
 ///  destination Framebuffer, this can cause some performance penalties.
 ///
-///  TODO(): Framebuffer needs to hold textures (images), or RenderTargets, RenderPAss only holds 
-///          Attachment References.
+///  TODO(): Framebuffer needs to hold RenderTargets (images), RenderPass only holds 
+///          Attachments and Attachment References.
 ///
-///  OpenGL: Associates GLFramebuffer
+///  OpenGL: Associates GL4Framebuffer
 ///  Vulkan: Associates VKFramebuffer
 class Framebuffer : public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(vikr::Framebuffer);
@@ -74,20 +72,16 @@ public:
   /// Check if this framebuffer is completely structure for use.
   virtual vint32 IsComplete() = 0;
 
-  /// Bind the framebuffer.
-  virtual vvoid Bind() = 0;
-
-  /// Unbind the framebuffer.
-  virtual vvoid Unbind() = 0;
-
   /// Clear all attachments.
-  virtual vvoid ClearAttachments() = 0;
+  virtual vvoid ClearRenderTargets() = 0;
 
   /// Validates the Framebuffer, or Revalidates if color attachements have been reassigned.
   virtual vvoid Update() = 0;
 
   /// Check if this framebuffer has depth and stencil.
   virtual vbool HasDepthStencil() = 0;
+
+  /// Check if the Framebuffer is multisampled.
   virtual vbool IsMultisampled() = 0;
 
   /// Readbuffer.
@@ -114,6 +108,10 @@ public:
 
   /// Blits this Framebuffer to the specified destination framebuffer.
   virtual vvoid BlitTo(Framebuffer *framebuffer) = 0;
+
+  virtual vvoid AddRenderTarget(RenderTarget *target, vuint32 point) = 0;
+  virtual RenderTarget *GetRenderTarget(vuint32 point) = 0;
+  virtual vbool RemoveRenderTarget(vuint32 point) = 0;
 };
 } // vikr
 #endif // __VIKR_FRAMEBUFFER_HPP

@@ -46,18 +46,14 @@ public:
 
   RenderPass *CreateRenderPass() override;
 
-  Commandbuffer &CreateCommandbuffer(CommandbufferList *list) override;
+  Commandbuffer &CreateCommandbuffer() override;
 
   VkDevice GetVkDevice() { return m_logicDevice.Get(); }
 
   vbool DestroyVertexbuffer(guid_t id) override;
   vbool DestroyCubemap(guid_t id) override;
   vbool DestroyRenderPass(guid_t id) override;
-  vbool DestroyCommandbufferList(guid_t id) override;
   vbool DestroyFramebuffer(guid_t id) override;
-
-
-  CommandbufferList *CreateCommandbufferList() override;
 
   vbool DestroyUniformbuffer(guid_t id) override;
   Uniformbuffer *CreateUniformbuffer() override;

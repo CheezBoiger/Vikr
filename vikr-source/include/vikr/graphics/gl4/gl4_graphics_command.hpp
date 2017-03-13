@@ -9,6 +9,8 @@
 #include <vikr/platform/vikr_types.hpp>
 
 
+#include <functional>
+
 
 namespace vikr {
 
@@ -16,14 +18,6 @@ namespace vikr {
 class GL4RenderContext;
 
 
-class GL4GraphicsCommand {
-  VIKR_DISALLOW_COPY_AND_ASSIGN(GL4GraphicsCommand);
-public:
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(GL4GraphicsCommand);
-  GL4GraphicsCommand() { }
-  virtual ~GL4GraphicsCommand() { }
-
-  virtual vvoid Execute(GL4RenderContext *) = 0;
-};
+using GL4GraphicsCommand = std::function<vvoid()>;
 } // vikr
 #endif // __VIKR_GL4_GRAPHICS_COMMAND_HPP

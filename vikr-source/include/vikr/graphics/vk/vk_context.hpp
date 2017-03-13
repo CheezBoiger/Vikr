@@ -40,7 +40,7 @@ public:
   vvoid ClearWithColor(glm::vec4 color) override;
   vvoid ChangeViewport(Viewport *port) override;
   vvoid ChangeTopology(Topology topology) override;
-  vvoid ExecuteCommands(CommandbufferList *buffer) override;
+  vvoid ExecuteCommandbuffer(Commandbuffer *buffer) override;
   vvoid SetShaderUniforms(ShaderUniformParams *params) override;
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
   vvoid BeginRecord(Commandbuffer *buf) override;

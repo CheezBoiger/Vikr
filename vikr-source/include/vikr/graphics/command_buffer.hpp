@@ -89,55 +89,24 @@ public:
   virtual vvoid EndRecord() = 0;
   virtual vvoid Draw(vuint32 start, vuint32 vertices) = 0;
   virtual vvoid DrawIndexed(const vvoid *indices, vuint32 vertices) = 0;
-  virtual vvoid SetTopology(Topology topology) = 0;
-  virtual vvoid SetRenderTarget(RenderTarget *target) = 0;
-  virtual vvoid SetRenderPass(RenderPass *pass) = 0;
+  virtual vvoid BindRenderPass(RenderPass *pass) = 0;
+  virtual vvoid UnbindRenderPass() = 0;
   virtual vvoid Clear() = 0;
   virtual vvoid ClearWithColor(glm::vec4 color) = 0;
-  virtual vvoid ChangeViewport(Viewport *viewport) = 0;
-  virtual vvoid SetShaderProgram(ShaderProgram *program) = 0;
-  virtual vvoid ApplyGraphicsPipelineState(GraphicsPipelineState *pipelinestate) = 0;
-  virtual vvoid ApplyComputePipelineState(ComputePipelineState *pipelinestate) = 0;
-  virtual vvoid SetShaderUniforms(ShaderUniformParams params) = 0;
-  virtual vvoid SetQueryVertexbuffer(Vertexbuffer *buffer) = 0;
-  virtual vvoid SetMaterial(Material *material) = 0;
+  virtual vvoid SetViewport(Viewport *viewport) = 0;
+  virtual vvoid SetScissor(Scissor2D *scissor) = 0;
+  virtual vvoid BindGraphicsPipelineState(GraphicsPipelineState *pipelinestate) = 0;
+  virtual vvoid BindComputePipelineState(ComputePipelineState *pipelinestate) = 0;
+  virtual vvoid BindVertexbuffer(Vertexbuffer *buffer) = 0;
+  virtual vvoid BindMaterial(Material *material) = 0;
 
   ///  TODO(): This requires new in order to subdata with text! Need better optimization.
   virtual vvoid SetBufferData(VertexUsageType type, 
     std::unique_ptr<std::vector<Vertex> > data) = 0;
 
   // New Commands!
-  virtual vvoid SetFramebuffer(Framebuffer *framebuffer) = 0;
-  virtual vvoid SetBlending(vbool enable) = 0;
-  virtual vvoid SetDepthMode(vbool enable) = 0;
-  virtual vvoid SetDepthFunc(DepthFunc func) = 0;
-  virtual vvoid SetBlendEq(BlendEq eq) = 0;
-  virtual vvoid SetBlendFunc(BlendFunc src, BlendFunc dst) = 0;
-  virtual vvoid SetFrontFace(FrontFace face) = 0;
-  virtual vvoid SetCulling(vbool enable) = 0;
-  virtual vvoid SetCullFace(CullFace face) = 0;
-  virtual vvoid ForcePipelineUpdate() = 0;
-  virtual vvoid ClearTextures() = 0;
-
-
-  virtual vvoid SetTexture(Texture *texture, vuint32 index) = 0;
 
   virtual vbool IsRecording() = 0;
-};
-
-
-
-///  commandbuffer list to allocate Commandbuffers onto.
-class CommandbufferList : public GUID {
-  VIKR_DISALLOW_COPY_AND_ASSIGN(CommandbufferList);
-public:
-  CommandbufferList() { }
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(CommandbufferList);
-  virtual vvoid Enqueue(Commandbuffer &buffer) = 0;
-
-  virtual vvoid Reserve(vuint32 size) = 0;
-
-  virtual vvoid Clear() = 0;
 };
 } // vikr
 #endif // __VIKR_COMMAND_BUFFER_HPP

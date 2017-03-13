@@ -21,67 +21,42 @@ namespace vikr {
 
 
 class ShaderProgram;
-struct Uniform;
+struct Uniformbuffer;
 struct VertexAttrib;
 class Texture;
 class Cubemap;
 
 
-/**
-  Material defines the textures, cull, and blend of the Mesh.
-*/
+
+/// Material defines the textures, cull, and blend of the Mesh.
+/// NOTE(): Vulkan can only use uniform buffers, no standalone 
+///         uniforms should be implemented in glsl code.
+///         Need to redesign Material so that it adheres to vulkan.
 class Material : public GUID {
   static const std::string kDefaultName;
 public:
   Material();
-  Material(ShaderProgram *program, std::string name);
-  Material(ShaderProgram *program);
-  ShaderProgram *GetShaderProgram() { return m_program; }
-  vvoid SetShaderProgram(ShaderProgram *program) { m_program = program; }
 
+  /// Get the name of this material. The name isn't much of a concern,
+  /// It does not hold any unique values.
   std::string GetName() { return m_name; }
+  
+  /// Set the name of this material.
   vvoid SetName(std::string name) { m_name = name; }
 
-
-  GraphicsPipeline GetPipeline() { return pipeline; }
-  /**
-    Sets the texture for a sampler in the shader.
-  */
-  vvoid SetTexture(std::string name, Texture *texture, vuint32 i);
-  vvoid SetCubemap(std::string name, Cubemap *cubemap, vuint32 i);
-
-  vvoid Clear() { m_uniform_samplers.clear(); m_material_values.clear(); }
-  /**
-    Primitive uniform defines.
-  */
-  vvoid SetInt(std::string name, vint32 value);
-  vvoid SetBool(std::string name, vbool value);
-  vvoid SetVector4fv(std::string name, glm::vec4 value);
-  vvoid SetVector3fv(std::string name, glm::vec3 value);
-  vvoid SetVector2fv(std::string name, glm::vec2 value);
-  vvoid SetFloat(std::string name, vreal32 value);
-  vvoid SetDouble(std::string name, vreal64 value);
-  vvoid SetMat4(std::string name, glm::mat4 value);
-  vvoid SetMat3(std::string name, glm::mat3 value);
-  vvoid SetMat2(std::string name, glm::mat2 value);
+  /// Sets the texture for a sampler in the shader.
+  vvoid SetTexture(vuint32 bind, Texture *texture);
+  vvoid SetCubemap(vuint32 bind, Cubemap *cubemap);
+  vvoid Clear() { m_tex_samplers.clear(); }
   
-  std::map<std::string, TextureSampler> *GetUniformSamplers() { return &m_uniform_samplers; }
-  std::map<std::string, MaterialValue> *GetMaterialValues() { return &m_material_values; } 
+  std::map<std::string, TextureSampler> *GetUniformSamplers() { return &m_tex_samplers; }
 
 protected:
-
   std::string m_name;
-  ShaderProgram *m_program = nullptr; // weak ref
-  /**
-    Current Render Pipeline. 
-  */
-  GraphicsPipeline pipeline;
-  /**
-    Keep track of the uniforms and samplers of the shader. These values get called by the renderer
-    to render textures and materials.
-  */
-  std::map<std::string, TextureSampler> m_uniform_samplers;
-  std::map<std::string, MaterialValue> m_material_values;
+
+  /// Keep track of the uniforms and samplers of the shader. These values get called by the renderer
+  /// to render textures and materials.
+  std::map<std::string, TextureSampler> m_tex_samplers;
 }; 
 } // vikr
 #endif // __VIKR_MATERIAL_HPP

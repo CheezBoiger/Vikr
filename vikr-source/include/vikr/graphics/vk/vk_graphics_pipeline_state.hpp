@@ -16,78 +16,55 @@ namespace vikr {
 class Shader;
 class SpvShader;
 class SpvShaderProgram;
+class VKRenderDevice;
 
 
-/**
-  Vulkan Pipeline State 
-*/
+/// Vulkan Graphics Pipeline State.
+/// This pipeline is designed to bake in the pipeline
+/// for use in rendering. OpenGL deals with a dynamic 
+/// pipeline state, which is rather easy to use, but
+/// doesn't offer the optimizations and power that Vulkan
+/// offers in it's implementation.  
 class VKGraphicsPipelineState : public GraphicsPipelineState {
 public:
-  VKGraphicsPipelineState();
-
-  vvoid SetViewport(Viewport viewport) override;
-  vvoid SetBlendFunc(BlendFunc src, BlendFunc dst) override;
-  vvoid SetBlendEq(BlendEq eq) override;
-  vvoid SetBlendMode(vbool enable) override;
-  vvoid SetDepthMode(vbool enable) override;
-  vvoid SetDepthFunc(DepthFunc func) override;
-  vvoid SetCullMode(vbool enable) override;
-  vvoid SetCullFace(CullFace face) override;
-  vvoid SetFrontFace(FrontFace face) override;
-  vvoid SetTopology(Topology topology) override;
-  
+  VKGraphicsPipelineState(VKRenderDevice *device);
   Viewport GetViewport() const override;
-  vvoid Update() override;
-  
-  vbool NeedsUpdate() const override;
-
+  Scissor2D GetScissor() const override;
   vbool IsCulling() const override;
   vbool IsBlending() const override;
   vbool HasDepth() const override;
-  
   DepthFunc GetDepthFunc() const override;
   BlendEq GetBlendEquation() const override;
   BlendFunc GetBlendFunctionSrc() const override;
   BlendFunc GetBlendFunctionDst() const override;
   Topology GetTopology() const override;
-
-  ShaderProgram *GetShaderProgram() const override;
-  
   std::string GetName() const override;
   vvoid SetName(std::string name) override;
-
+  vvoid Bake(GraphicsPipelineDescription &description) override;
   vvoid Setup();
+  VkPipelineLayout GetPipelineLayout() { return m_pipelinelayout.Get(); }
+  VkPipeline GetNativePipeline() { return m_pipeline; };
 
 private:
-
   vvoid UpdateNativeViewport();
   vvoid UpdateNativeScissors();
+  VKRenderDevice *device;
+  VkFrontFace m_frontface         = VK_FRONT_FACE_COUNTER_CLOCKWISE;
+  VkCullModeFlagBits m_cullface   = VK_CULL_MODE_BACK_BIT;
+  VkPrimitiveTopology m_topology  = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 
-  FrontFace m_frontface       = FrontFace::vikr_COUNTER_CLOCKWISE;
-  CullFace m_cullface         = CullFace::vikr_BACK_FACE;
-  Topology m_topology         = Topology::VIKR_TRIANGLES;
-
-  /**
-    Current Viewport State.
-  */
+  /// Current Viewport State.
   Viewport m_viewport;
-
   VkViewport m_native_viewport;
   VkRect2D m_native_scissor;
-
-  vbool m_blend                 = false;
-  BlendFunc m_blendsrc          = BlendFunc::vikr_BLEND_ONE;
-  BlendFunc m_blenddst          = BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA;
-  BlendEq m_blendeq             = BlendEq::vikr_BLEND_ADD;
-
-  vbool m_depth                 = true;
-  DepthFunc m_depthfunc         = DepthFunc::vikr_DEPTH_LESS;
-  
-  SpvShaderProgram *m_currProgram  = nullptr;
-
+  vbool m_blend                     = false;
+  VkBlendFactor m_blendsrc          = VK_BLEND_FACTOR_SRC_ALPHA;
+  VkBlendFactor m_blenddst          = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+  VkBlendOp m_blendeq               = VK_BLEND_OP_ADD;
+  vbool m_depth                     = true;
+  VkCompareOp m_depthfunc           = VK_COMPARE_OP_LESS;
   VkMemoryManager<VkPipeline> m_pipeline;
   VkMemoryManager<VkPipelineLayout> m_pipelinelayout;
-
 }; 
 } // vikr
 #endif // __VIKR_VK_PIPELINE_STATE_HPP

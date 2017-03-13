@@ -34,6 +34,8 @@ private:
   */
   VkMemoryManager<VkShaderModule> module;
 
+  
+
   /**
     Weak ref.
   */

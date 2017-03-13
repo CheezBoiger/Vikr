@@ -31,34 +31,34 @@ public:
 
   /// Target format, intends to be the type of format that the texture is going to be.
   /// This can be a 1D, 2D, 3D, or cubemap.
-  TextureTarget GetTargetFormat() { return m_target; }
-  ImageFormat GetFormat() { return m_format; }
-  TextureFilterMode GetFilterMin() { return m_filter_min; }
-  TextureFilterMode GetFilterMax() {  return m_filter_max; }
+  virtual TextureTarget GetTargetFormat() = 0;
+  virtual ImageFormat GetFormat() = 0;
+  virtual TextureFilterMode GetFilterMin() = 0;
+  virtual TextureFilterMode GetFilterMax() = 0;
 
   /// Texture coordinate wrapping for coord S. 
-  TextureWrapMode GetWrapS() { return m_wrap_s; }
+  virtual TextureWrapMode GetWrapS() = 0;
 
   /// Texture coordinate wrapping for coord t.
-  TextureWrapMode GetWrapT() { return m_wrap_t; }
+  virtual TextureWrapMode GetWrapT() = 0;
 
   /// Texture coordinate wrapping for coord r.
-  TextureWrapMode GetWrapR() { return m_wrap_r; }
+  virtual TextureWrapMode GetWrapR() = 0;
 
   /// Determines if the Texture is mipmapped.
-  vbool IsMipmapping() { return m_mipmapping; }
+  virtual vbool IsMipmapping() = 0;
 
   /// Get the width of the texture image.
-  vint32 GetWidth() { return m_width; }
+  virtual vint32 GetWidth() = 0;
 
   virtual vint32 GetHeight() = 0;
   virtual vint32 GetDepth() = 0;
 
   /// Get the path to the source image file of this texture.
-  std::string GetPath() { return m_path; }
+  virtual std::string GetPath() = 0;
 
   /// Get the name of this texture.
-  std::string GetName() { return m_name; }
+  virtual std::string GetName() = 0;
 
   /// Create the Texture object.
   virtual vint32 Finalize() = 0;
@@ -92,39 +92,22 @@ public:
   virtual vvoid SetMultisampled(vbool enable) = 0;
 
   /// Set whether this texture needs to generate a mipmap for itself.
-  vvoid SetMipmapping(vbool mipmap) { m_mipmapping = mipmap; }
+  virtual vvoid SetMipmapping(vbool mipmap) = 0;
 
   /// Grab the path of the image file that this texture is going to load.
-  vvoid SetPath(std::string path) { m_path = path; }
+  virtual vvoid SetPath(std::string path) = 0;
 
   /// Width size of the texture object.
-  vvoid SetWidth(vint32 width) { m_width = width; }
+  virtual vvoid SetWidth(vint32 width) = 0;
 
   virtual vvoid SetHeight(vint32 height) = 0;
   virtual vvoid SetDepth(vint32 depth) = 0;
-  vvoid SetName(std::string name) { m_name = name; }
-  vvoid SetByteCode(vbyte *bytecode, vbool is_stbi = true);
-  vbyte *GetBytecode() { return m_bytecode; }
+  virtual vvoid SetName(std::string name) = 0;
+  virtual vvoid SetBytecode(vbyte *bytecode, vbool is_stbi = true) = 0;
+  virtual vbyte *GetBytecode() = 0;
   virtual vvoid Cleanup() = 0;
-  vvoid SetSamples(vint32 samples) { m_samples = samples; }
-  vint32 GetSamples() { return m_samples; }
-
-protected:
-  TextureTarget     m_target                    = vikr_TARGET_2D;
-  ImageFormat     m_format                      = vikr_FORMAT_R8G8B8A8_UINT;
-  TextureFilterMode m_filter_min                = vikr_FILTER_LINEAR_MIPMAP_LINEAR;
-  TextureFilterMode m_filter_max                = vikr_FILTER_LINEAR;
-  TextureWrapMode   m_wrap_s                    = vikr_WRAP_REPEAT;
-  TextureWrapMode   m_wrap_t                    = vikr_WRAP_REPEAT;
-  TextureWrapMode   m_wrap_r                    = vikr_WRAP_REPEAT;
-  vbool             m_mipmapping                = true;
-  vbool             m_alpha                     = true;
-  vbool             m_multisampled              = false;
-  vint32            m_width                     = 0;
-  vint32            m_samples                   = 4;
-  std::string       m_path                      = "";
-  std::string       m_name                      = "noname";
-  vbyte             *m_bytecode                 = nullptr;
+  virtual vvoid SetSamples(vint32 samples) = 0;
+  virtual vint32 GetSamples() = 0;
 
 private:
   VIKR_DISALLOW_COPY_AND_ASSIGN(Texture);

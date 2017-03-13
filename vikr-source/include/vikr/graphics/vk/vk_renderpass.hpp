@@ -17,23 +17,21 @@
 namespace vikr {
 
 
+class VKRenderDevice;
+
+
 /*
   Vulkan RenderPass implementation.
 */
 class VKRenderPass : public RenderPass {
 public:
-  VKRenderPass();
+  VKRenderPass(VKRenderDevice *device);
 
-  vbool AddRenderTarget(RenderTarget target, vuint32 attachment) override;
-
-  vbool RemoveRenderTarget(vuint32 attachment) override;
-
-  RenderTarget *GetRenderTarget(vuint32 attachment) override;
 
   VkRenderPass GetNativePass() {return m_renderpass.Get(); }
 
 private:
-  
+  VKRenderDevice *device; 
   VkMemoryManager<VkRenderPass> m_renderpass;
 
   std::map<vuint32, RenderTarget> m_rendertargets;

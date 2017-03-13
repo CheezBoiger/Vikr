@@ -29,6 +29,7 @@ public:
   vvoid Generate(vuint32 bytes) override;
   vvoid StoreShaderProgram(ShaderProgram *program) override;
   ShaderProgram *GetShaderProgram(vuint32 i) override;
+  vbool RemoveShaderProgram(vuint32 i) override;
 
   vvoid Bind();
   vvoid Unbind();

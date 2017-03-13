@@ -14,12 +14,12 @@
 namespace vikr {
 
 
-/**
-  Compute pipeline state, for computing of course!
-*/
+/// Compute pipeline state, for computing of course!
+/// Should only contain one Compute shader and nothing else!
 class ComputePipelineState : public GUID {
 public:
 
+  
 private:
 
 };

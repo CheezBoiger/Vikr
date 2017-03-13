@@ -36,7 +36,6 @@ class RenderPass;
 class RenderDevice;
 class Shader;
 class Commandbuffer;
-class CommandbufferList;
 class Vertexbuffer;
 class Framebuffer;
 class Material;
@@ -54,6 +53,7 @@ struct Viewport;
 ///
 ///  You can see her work here! 
 ///  https://github.com/mogemimi/pomdog
+///  NOTE(): This RenderContext is going to be deprecated!
 class RenderContext {
   VIKR_DISALLOW_COPY_AND_ASSIGN(RenderContext);
 public:
@@ -124,7 +124,7 @@ public:
   virtual vvoid ChangeTopology(Topology topology) = 0;
 
   /// Digest, or execute commands immediately.
-  virtual vvoid ExecuteCommands(CommandbufferList *command_buffer) = 0;
+  virtual vvoid ExecuteCommandbuffer(Commandbuffer *commandbuffer) = 0;
 
   /// Sets the Shader uniforms when needed.
   virtual vvoid SetShaderUniforms(ShaderUniformParams *params) = 0;

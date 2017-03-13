@@ -166,5 +166,8 @@ vvoid VKGraphicsPipelineState::Setup()
   colorblendstate_info.blendConstants[1] = 0.0f;
   colorblendstate_info.blendConstants[2] = 0.0f;
   colorblendstate_info.blendConstants[3] = 0.0f;
+
+  VkPipelineDynamicStateCreateInfo dynamicstate_info = { };
+  
 }
 } // vikr

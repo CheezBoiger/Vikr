@@ -15,6 +15,12 @@ out VERT_OUT {
   vec3 Bitangent;
 } vs_out;
 
+
+layout (std140) uniform VikrBlock {
+  mat4 Projection;
+  mat4 View;
+};
+
 uniform mat4 vikr_Model;
 uniform mat4 vikr_View;
 uniform mat4 vikr_Projection;

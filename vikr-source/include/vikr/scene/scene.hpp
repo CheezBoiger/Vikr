@@ -16,11 +16,10 @@ class SceneNode;
 class ResourceManager;
 
 
-/**
-  Scene graph (built as a Direct Acyclic Graph) that contains all SceneNodes within the 
-  rendering scene. this is used to determine all scenes and their associated nodes for easy
-  storage, along with quick rendering set up.
-*/
+
+/// Scene graph (built as a Direct Acyclic Graph) that contains all SceneNodes within the 
+/// rendering scene. this is used to determine all scenes and their associated nodes for easy
+/// storage, along with quick rendering set up.
 class Scene {
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Scene);
@@ -32,14 +31,11 @@ public:
 
   vvoid SetRoot(SceneNode *n_root) { m_root = n_root; }
 
-  /**
-    Update the graph data structure, starting from root.
-  */
+  /// Update the graph data structure, starting from root.
   vvoid Update();
+
 private:
-  /**
-    Root SceneObject.
-  */
+  /// Root SceneObject.
   SceneNode *m_root = nullptr;
 
   VIKR_DISALLOW_COPY_AND_ASSIGN(Scene);

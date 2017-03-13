@@ -21,57 +21,25 @@ namespace vikr {
 
 
 enum RenderTargetType {
-  render_RENDERBUFFER,
-  render_TEXTURE,
-  render_TEXTURE_MULTISAMPLE,
+  vikr_RENDERTARGET_COLOR,
+  vikr_RENDERTARGET_DEPTH
 };
 
 
 
-/// Render Target for post processing. This is a container for Textures to
-/// Be added into RenderPasses. 
+/// Render Target for offscreen rendering, or even 
+/// post processing. OpenGL Identifies them as textures,
+/// yet we have the situation in which Vulkan has us 
+/// use the same, but without too much of the overhead
+/// that is used by textures in general, therefore RenderTargets
+/// are going to be different in this case.
 class RenderTarget {
-  /*
-    TODO(Garcia): Redesign RenderTargets to NOT bind to 
-    a Frame buffer object until we reach our RenderPasses.
-  */
 public:
-  RenderTarget(Texture *texture = nullptr)
-    : m_texture(texture) 
-  {
-    DetermineRenderType();
-  }
+  RenderTarget();
 
-  ~RenderTarget() { }
+  virtual ~RenderTarget() { }
 
-  Texture *GetTexture() 
-    { return m_texture; }
-
-  vvoid SetTexture(Texture *texture)
-    { m_texture = texture; DetermineRenderType(); }
-
-  RenderTargetType GetRenderType()
-    { return m_renderType; }
-
-private:
-
-  vvoid DetermineRenderType() {
-    if (m_texture) {
-      switch (m_texture->GetTargetFormat()) {
-        case vikr_TARGET_3D:
-        case vikr_TARGET_2D:
-        case vikr_TARGET_1D: 
-          m_renderType = render_TEXTURE; break;
-        case vikr_TARGET_2D_MULTISAMPLE: 
-          m_renderType = render_TEXTURE_MULTISAMPLE; break;
-        default: 
-          m_renderType = render_TEXTURE; break;
-      }
-    } 
-  }
-  
-  Texture *m_texture = nullptr;
-  RenderTargetType m_renderType;
+  virtual RenderTargetType GetTargetType() = 0;
 };
 } // vikr
 #endif // __VIKR_RENDER_TARGET_HPP

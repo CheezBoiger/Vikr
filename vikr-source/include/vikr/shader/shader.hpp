@@ -37,7 +37,6 @@ public:
   /// Clean up the shader.
   virtual vvoid Cleanup() = 0;
 
-  
   /// Get the Shader language.
   ShaderLanguage GetShaderLanguage() { return shader_lang; }
 

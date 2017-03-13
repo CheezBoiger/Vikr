@@ -33,12 +33,12 @@ Material::Material()
 
 vvoid Material::SetTexture(std::string name, Texture *texture, vuint32 i) {
   if (texture) {
-    m_uniform_samplers[name].texture = texture;
-    m_uniform_samplers[name].i = i;
+    m_tex_samplers[name].texture = texture;
+    m_tex_samplers[name].i = i;
     switch (texture->GetTargetFormat()) {
-      case vikr_TARGET_2D:       m_uniform_samplers[name].type = vikr_UNIFORM_SAMPLER2D;    break;
-      case vikr_TARGET_3D:       m_uniform_samplers[name].type = vikr_UNIFORM_SAMPLER3D;    break;
-      default:                    m_uniform_samplers[name].type = vikr_UNIFORM_SAMPLER2D;    break;
+      case vikr_TARGET_2D:       m_tex_samplers[name].type = vikr_UNIFORM_SAMPLER2D;    break;
+      case vikr_TARGET_3D:       m_tex_samplers[name].type = vikr_UNIFORM_SAMPLER3D;    break;
+      default:                   m_tex_samplers[name].type = vikr_UNIFORM_SAMPLER2D;    break;
     }
   }
 
@@ -49,9 +49,9 @@ vvoid Material::SetTexture(std::string name, Texture *texture, vuint32 i) {
 
 vvoid Material::SetCubemap(std::string name, Cubemap *cubemap, vuint32 i) {
   if (cubemap) {
-    m_uniform_samplers[name].cubemap = cubemap;
-    m_uniform_samplers[name].i = i;
-    m_uniform_samplers[name].type = vikr_UNIFORM_SAMPLERCUBE;
+    m_tex_samplers[name].cubemap = cubemap;
+    m_tex_samplers[name].i = i;
+    m_tex_samplers[name].type = vikr_UNIFORM_SAMPLERCUBE;
   }
 
   m_material_values[name].m_integer = i;

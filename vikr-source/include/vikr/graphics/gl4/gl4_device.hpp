@@ -38,15 +38,12 @@ public:
 
   RenderPass *CreateRenderPass() override;
 
-  Commandbuffer &CreateCommandbuffer(CommandbufferList *list) override;
+  Commandbuffer &CreateCommandbuffer() override;
 
   vbool DestroyRenderPass(guid_t id) override;
   vbool DestroyVertexbuffer(guid_t id) override;
   vbool DestroyCubemap(guid_t id) override;
   vbool DestroyFramebuffer(guid_t id) override;
-  vbool DestroyCommandbufferList(guid_t id) override;
-
-  CommandbufferList *CreateCommandbufferList() override;
 
   vbool DestroyUniformbuffer(guid_t id) override;
   Uniformbuffer *GetUniformbuffer(guid_t id) override;

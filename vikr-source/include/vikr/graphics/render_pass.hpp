@@ -21,6 +21,50 @@ class Framebuffer;
 
 
 
+enum AttachmentRefType {
+  vikr_ATTACHMENT_COLOR,
+  vikr_ATTACHMENT_DEPTH,
+  vikr_ATTACHMENT_DEPTH_STENCIL
+};
+
+
+/// Aliasing sampling.
+enum SampleCount {
+  vikr_SAMPLE_1_BIT,
+  vikr_SAMPLE_2_BIT,
+  vikr_SAMPLE_4_BIT,
+  vikr_SAMPLE_8_BIT,
+  vikr_SAMPLE_16_BIT,
+  vikr_SAMPLE_32_BIT
+};
+
+
+struct AttachmentDescription {
+  AttachmentRefType ref;
+  ImageFormat       format;
+  SampleCount       samples;
+  vuint32           attachment;
+};
+
+
+class Subpass {
+public:
+  /// Add an attachment reference to the RenderPass. Attachment references tell
+  /// the Framebuffer which attachments are which (color, depth, stencil, etc).
+  vvoid AddAttachmentDescription(AttachmentRefType ref, vuint32 pAttachment);
+
+  /// Remove an Attachment reference. Returns true if an attachment reference
+  /// was successfully removed. False if no attachment was found.
+  vbool RemoveAttachmentDescription(vuint32 pAttachment);
+
+  /// Get an attachment reference from the specified index.
+  AttachmentRefType GetAttachmentDescription(vuint32 pAttachment);
+  
+private:
+  std::vector<AttachmentRefType> attachmentsRefs;
+};
+
+
 /// Controls passes that are sent to the Renderer. These RenderPasses
 /// are what render within a framebuffer for offscreen rendering.
 ///
@@ -31,18 +75,16 @@ public:
   /// Polymorphic Renderpass destructor.
   virtual ~RenderPass() { }
 
-  /// Add a render target. Returns true if the render target
-  /// successfully attaches. Returns false if rendertarget failed to attach.
-  virtual vbool AddRenderTarget(RenderTarget target, vuint32 attachment) = 0;
+  virtual vvoid SetSubpass(Subpass &subpass) = 0;
 
-  /// Remove a render target.
-  virtual vbool RemoveRenderTarget(vuint32 attachment) = 0;
+  /// Generate the RenderPass object. This is inclined toward Vulkan, and is
+  /// meant to provide descriptions that will aid the Framebuffer in figuring
+  /// out how to handle the Texture/ImageViews upon rendering.
+  virtual vvoid Generate() = 0;
 
-  /// Get a render target from this renderpass. null returned if no attachment by that name.
-  virtual RenderTarget *GetRenderTarget(vuint32 attachment) = 0;
 
-  /// Number of rendertargets in this RenderPass.
-  virtual vuint32 GetNumOfRenderTargets() = 0;
+  /// Update the RenderPass.
+  virtual vvoid Update() = 0;
 };
 } // vikr
 #endif // __VIKR_RENDERPASS_HPP

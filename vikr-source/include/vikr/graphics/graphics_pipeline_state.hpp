@@ -30,12 +30,60 @@ namespace vikr {
 
 class Shader;
 struct Viewport;
+class Uniformbuffer;
+class Texture;
+
+enum DynamicStateInfo {
+  vikr_DYNAMIC_STATE_VIEWPORT,
+  vikr_DYNAMIC_STATE_SCISSOR
+};
 
 
-/**
-  Pipeline state defines the current state of the Renderer API.
-  This is an interface for both Vulkan and OpenGL use.
-*/
+/// Graphics Pipeline description. Since we are going the way of 
+/// Vulkan, we want to keep the paradigm similar, so as to 
+/// give the most performance for the programmer.
+struct GraphicsPipelineDescription {
+  /// Describe the viewport for the Graphics Pipeline.
+  Viewport viewport;
+  
+  /// Describe the scissor cutoff for the Viewport.
+  Scissor2D scissor;
+
+  /// Describe the Blending functionality to use for
+  /// this Graphics Pipelinestate. 
+  BlendFunc bsrc, bdst;
+
+  /// The Blend equation for this Graphics pipelinestate.
+  /// This value is normally kept to vikr_BLEND_ADD, as it
+  /// is the default blending equation.
+  BlendEq beq;
+
+  /// The Depth function used to compare Renderables in the 
+  /// zbuffer. 
+  DepthFunc dfunct;
+  CullFace cull;
+  FrontFace front;
+  Topology topology;
+  vbool blend;
+  vbool depth;
+  vbool culling;
+  std::vector<Shader *> m_shaders;
+   
+  /// Dynamic states describe dynamic values to be 
+  /// manually defined by the program for every
+  /// Pipeline binding within a command buffer.
+  /// An empty dynamic static buffer will prevent 
+  /// having to manually input values for every bind,
+  /// but it will also prevent the availablility of 
+  /// a dynamic pipeline state, which will require 
+  /// having to create another pipeline state to 
+  /// deal with, say, blend/depth operations.
+  std::vector<DynamicStateInfo> m_dynamicstates;
+};
+
+
+/// Pipeline state defines the current state of the Renderer API.
+/// This is an interface for both Vulkan and OpenGL use.
 class GraphicsPipelineState : public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(GraphicsPipelineState);
 public:
@@ -43,67 +91,14 @@ public:
   GraphicsPipelineState() { }
   virtual ~GraphicsPipelineState() { }
 
-  /**
-    Set the viewport for the context.
-  */
-  virtual vvoid SetViewport(Viewport viewport) = 0;
-
-  /**
-    Set the blending function.
-  */
-  virtual vvoid SetBlendFunc(BlendFunc src, BlendFunc dst) = 0;
-
-  /**
-    Set the Blend equation.
-  */
-  virtual vvoid SetBlendEq(BlendEq eq) = 0;
-  
-  /**
-    Set the Blend Mode.
-  */
-  virtual vvoid SetBlendMode(vbool enable) = 0;
-
-  /**
-    Set the Depth mode.
-  */
-  virtual vvoid SetDepthMode(vbool enable) = 0;
-
-  /**
-    Set the Depth function.
-  */
-  virtual vvoid SetDepthFunc(DepthFunc func) = 0;
-  
-  /**
-    Set the Cull mode.
-  */
-  virtual vvoid SetCullMode(vbool enable) = 0;
-
-  /**
-    Set the Cull Face.
-  */
-  virtual vvoid SetCullFace(CullFace face) = 0;
-
-  /**
-    Set the Front Face.
-  */
-  virtual vvoid SetFrontFace(FrontFace face) = 0;
-
-  virtual vvoid SetTopology(Topology topology) = 0;
-
-  /**
-    Viewport stuff.
-  */
+  /// Get the Viewport for this pipeline state. 
+  /// This viewport defines the layout resolution of 
+  /// the screen, depending on what these values are, in 
+  /// pixels.
   virtual Viewport GetViewport() const = 0;
 
-  /*
-    Update the Pipeline State
-  */
-  virtual vvoid Update() = 0;
-
-  /*
-    Check if the PipelineState needs to be updated.
-  */
-  virtual vbool NeedsUpdate() const = 0;
+  /// Get the Scissor viewport of this pipeline state.
+  virtual Scissor2D GetScissor() const = 0;
 
   virtual vbool IsCulling() const = 0;
   virtual vbool IsBlending() const = 0;
@@ -114,10 +109,8 @@ public:
   virtual BlendFunc GetBlendFunctionDst() const = 0;
   virtual Topology GetTopology() const = 0;
 
-  virtual vvoid SetShaderProgram(ShaderProgram *prgm) = 0;
-
-  virtual ShaderProgram *GetShaderProgram() const = 0;
-
+  virtual vvoid Bake(GraphicsPipelineDescription &description) = 0;
+  
   virtual std::string GetName() const = 0;
   virtual vvoid SetName(std::string name) = 0;
 };

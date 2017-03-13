@@ -60,7 +60,7 @@ public:
   vvoid ChangeViewport(Viewport *port) override;
   vvoid ChangeTopology(Topology topology) override;
 
-  vvoid ExecuteCommands(CommandbufferList *command_buffer) override;
+  vvoid ExecuteCommandbuffer(Commandbuffer *commandbuffer) override;
 
   vvoid SetShaderUniforms(ShaderUniformParams *params) override;
   vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
