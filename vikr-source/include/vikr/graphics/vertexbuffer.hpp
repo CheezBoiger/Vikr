@@ -7,7 +7,7 @@
 
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
-#include <vikr/scene/guid_generator.hpp>
+#include <vikr/graphics/render_device.hpp>
 #include <vikr/mesh/vertex.hpp>
 
 
@@ -43,11 +43,12 @@ namespace vikr {
 ///
 ///  This does depend on the manufacturer though. AMD gpus are differently
 ///  implemented than Nvidia gpus.  
-class Vertexbuffer : public GUID {
+class Vertexbuffer : public RenderDeviceObject, public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Vertexbuffer);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Vertexbuffer);
-  Vertexbuffer() { }
+  Vertexbuffer(GraphicsAPIType type) 
+    : RenderDeviceObject(type) { }
   virtual ~Vertexbuffer() { }
 
   /// For meshes that require text.

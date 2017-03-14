@@ -47,7 +47,7 @@ void Do_Movement()
 
 
 int main(int c, char* args[]) {
-  InitVikr(vikr_PIPELINE_OPENGL);
+  InitVikr(vikr_API_OPENGL);
   Window win = Window::CreateVikrWindow(screen_width, screen_height, "Vikr OpenGL");
   Window::SetMainWindow(&win);
   // Options.

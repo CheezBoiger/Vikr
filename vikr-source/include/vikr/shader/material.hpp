@@ -10,6 +10,7 @@
 #include <vikr/scene/guid_generator.hpp>
 #include <vikr/graphics/blendmode.hpp>
 #include <vikr/graphics/graphics_config.hpp>
+#include <vikr/graphics/render_device.hpp>
 #include <vikr/graphics/cullmode.hpp>
 #include <vikr/graphics/depthmode.hpp>
 #include <glm/glm.hpp>
@@ -28,14 +29,18 @@ class Cubemap;
 
 
 
-/// Material defines the textures, cull, and blend of the Mesh.
+/// Material defines the textures, samplers, and descriptor
+/// sets to bind to graphic pipelines. this is ultimately 
+/// created by the RenderDevice, so create them sparingly.
 /// NOTE(): Vulkan can only use uniform buffers, no standalone 
 ///         uniforms should be implemented in glsl code.
 ///         Need to redesign Material so that it adheres to vulkan.
-class Material : public GUID {
+class Material : public RenderDeviceObject {
   static const std::string kDefaultName;
 public:
-  Material();
+  Material(GraphicsAPIType type);
+
+  virtual ~Material() { }
 
   /// Get the name of this material. The name isn't much of a concern,
   /// It does not hold any unique values.

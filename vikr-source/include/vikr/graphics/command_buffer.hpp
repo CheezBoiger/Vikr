@@ -39,6 +39,7 @@
 
 #include <vikr/graphics/topology.hpp>
 #include <vikr/graphics/graphics_command.hpp>
+#include <vikr/graphics/render_device.hpp>
 #include <vikr/scene/guid_generator.hpp>
 
 #include <vikr/graphics/blendmode.hpp>
@@ -72,7 +73,7 @@ class Texture;
 
 struct ShaderUniformParams;
 struct Viewport;
-
+struct Scissor2D;
 
 
 ///  A Commandbuffer is an object that holds the recordings of commands for the RenderContext.
@@ -80,9 +81,11 @@ struct Viewport;
 ///  read and execute it the exact same way (think of it as filling a queue).
 ///
 ///  NOTE: Be sure to use BeginRecord to begin recording your command, otherwise it won't record!
-class Commandbuffer {
+class Commandbuffer : public RenderDeviceObject {
 public:
-  Commandbuffer() { }
+  Commandbuffer(GraphicsAPIType type)
+    : RenderDeviceObject(type) { }
+
   virtual ~Commandbuffer() { }
 
   virtual vvoid BeginRecord() = 0;
@@ -97,7 +100,7 @@ public:
   virtual vvoid SetScissor(Scissor2D *scissor) = 0;
   virtual vvoid BindGraphicsPipelineState(GraphicsPipelineState *pipelinestate) = 0;
   virtual vvoid BindComputePipelineState(ComputePipelineState *pipelinestate) = 0;
-  virtual vvoid BindVertexbuffer(Vertexbuffer *buffer) = 0;
+  virtual vvoid BindVertexbuffers(vuint32 instances, Vertexbuffer *buffer) = 0;
   virtual vvoid BindMaterial(Material *material) = 0;
 
   ///  TODO(): This requires new in order to subdata with text! Need better optimization.

@@ -20,5 +20,12 @@ enum Topology {
   VIKR_TRIANGLES,
   VIKR_TRIANGLE_STRIP_ADJACENCY
 };
+
+
+enum PolygonMode {
+  vikr_POLYGON_MODE_FILL,
+  vikr_POLYGON_MODE_POINT,
+  vikr_POLYGON_MODE_LINES
+};
 } // vikr
 #endif // __VIKR_TOPOLOGY_HPP

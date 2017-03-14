@@ -163,7 +163,7 @@ vvoid GL4RenderContext::SetBlendMode(BlendFunc src, BlendFunc dst) {
 }
 
 
-vvoid GL4RenderContext::SetDepthFunc(DepthFunc func) {
+vvoid GL4RenderContext::SetDepthFunc(DepthCompare func) {
   m_currPipeline->SetDepthFunc(func);
 }
 

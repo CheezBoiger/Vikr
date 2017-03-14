@@ -32,7 +32,7 @@ public:
   /**
     Get the context of this device.
   */
-  RenderContext *GetContext() override { return &context; }
+  GL4RenderContext &GetContext() { return context; }
 
   Cubemap *CreateCubemap() override;
 
@@ -49,7 +49,7 @@ public:
   Uniformbuffer *GetUniformbuffer(guid_t id) override;
   Uniformbuffer *CreateUniformbuffer() override;
 
-  GraphicsPipelineState *CreateGraphicsPipelineState(std::string name) override;
+  GraphicsPipelineState *CreateGraphicsPipelineState(vbool derivative) override;
   GraphicsPipelineState *GetGraphicsPipelineState(guid_t id) override;
   vbool DestroyGraphicsPipelineState(guid_t id) override;
 
@@ -65,13 +65,9 @@ public:
   Shader *GetShader(guid_t id) override;
   vbool DestroyShader(guid_t id) override;
 
-
-  ShaderProgram *CreateShaderProgram() override;
-  ShaderProgram *GetShaderProgram(guid_t id) override;
-  vbool DestroyShaderProgram(guid_t id) override;
-
   Texture *CreateTexture(std::string name, TextureTarget target,
-                                 std::string filepath, vbool alpha) override;
+    std::string filepath, vbool alpha) override;
+
   Texture *GetTexture(guid_t id) override;
   vbool DestroyTexture(guid_t id) override;
 

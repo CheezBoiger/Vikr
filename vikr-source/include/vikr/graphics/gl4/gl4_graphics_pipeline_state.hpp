@@ -29,7 +29,7 @@ public:
   vbool IsCulling() const override { return m_cull; }
   vbool IsBlending() const override { return m_blend; }
   vbool HasDepth() const override { return m_depth; }
-  DepthFunc GetDepthFunc() const override;
+  DepthCompare GetDepthFunc() const override;
   BlendEq GetBlendEquation() const override;
   BlendFunc GetBlendFunctionSrc() const override;
   BlendFunc GetBlendFunctionDst() const override;

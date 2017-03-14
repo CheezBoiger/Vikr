@@ -34,6 +34,7 @@ vuint32 GL4Framebuffer::GetFramebufferMode(BufferMode mode) {
 GL4Framebuffer::GL4Framebuffer()
   : m_read(GetFramebufferMode(BUFFER_NONE))
   , m_write(GetFramebufferMode(BUFFER_BACK))
+  , Framebuffer(vikr_API_OPENGL)
 {
 }
 

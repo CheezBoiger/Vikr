@@ -84,7 +84,7 @@ public:
   virtual vvoid SetBlendMode(BlendFunc src, BlendFunc dst) = 0;
 
   /// Set the Depth function, this is mainly kept in default.
-  virtual vvoid SetDepthFunc(DepthFunc depth) = 0;
+  virtual vvoid SetDepthFunc(DepthCompare depth) = 0;
 
   /// Enable culling mode if necessary.
   virtual vvoid EnableCullMode(vbool enable) = 0;

@@ -7,7 +7,7 @@
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/shader/texture_config.hpp>
-#include <vikr/scene/guid_generator.hpp>
+#include <vikr/graphics/render_device.hpp>
 #include <string>
 
 namespace vikr {
@@ -15,12 +15,15 @@ namespace vikr {
 
 /// Texture object, abstraction. This is the texture that is associated with 
 /// Materials, Meshes, RenderTargets, Cubemaps, and SceneObjects.
-class Texture : public GUID {
+class Texture : public RenderDeviceObject, public GUID {
 protected:
   static const std::string kDefaultName;
 public:
+
+  /// Defines a texture 
   static const vuint32 kNoTextureId;
-  Texture() { }
+  Texture(GraphicsAPIType type) 
+    : RenderDeviceObject(type) { }
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Texture);
 
   virtual ~Texture();

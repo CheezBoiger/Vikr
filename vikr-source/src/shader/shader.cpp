@@ -10,9 +10,10 @@ namespace vikr {
 const vuint32 Shader::kNoShaderId = -1;
 
 
-Shader::Shader(ShaderStage stage, ShaderLanguage lang)
+Shader::Shader(GraphicsAPIType type, ShaderStage stage, ShaderLanguage lang)
   : shader_lang(lang)
   , shader_stage(stage)
+  , RenderDeviceObject(type)
 {
 }
 } // vikr

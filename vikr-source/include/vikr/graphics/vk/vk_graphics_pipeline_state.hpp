@@ -33,7 +33,7 @@ public:
   vbool IsCulling() const override;
   vbool IsBlending() const override;
   vbool HasDepth() const override;
-  DepthFunc GetDepthFunc() const override;
+  DepthCompare GetDepthFunc() const override;
   BlendEq GetBlendEquation() const override;
   BlendFunc GetBlendFunctionSrc() const override;
   BlendFunc GetBlendFunctionDst() const override;
@@ -61,6 +61,7 @@ private:
   VkBlendFactor m_blendsrc          = VK_BLEND_FACTOR_SRC_ALPHA;
   VkBlendFactor m_blenddst          = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
   VkBlendOp m_blendeq               = VK_BLEND_OP_ADD;
+  VkPolygonMode m_polygon           = VK_POLYGON_MODE_FILL;
   vbool m_depth                     = true;
   VkCompareOp m_depthfunc           = VK_COMPARE_OP_LESS;
   VkMemoryManager<VkPipeline> m_pipeline;

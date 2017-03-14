@@ -17,7 +17,7 @@ FPSCamera camera(89.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
 
 int main(int argc, char *argv[]) {
-  InitVikr(vikr_PIPELINE_VULKAN);
+  InitVikr(vikr_API_VULKAN);
   Window main_window = Window::CreateVikrWindow(screen_width, screen_height, "Vikr Vulkan");
   Window::SetMainWindow(&main_window);
 

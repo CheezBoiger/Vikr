@@ -30,7 +30,7 @@ public:
   vvoid SetFramebuffer(Framebuffer *framebuffer) override;
   vvoid SetBlendEq(BlendEq eq) override;
   vvoid SetBlendMode(BlendFunc src, BlendFunc dst) override;
-  vvoid SetDepthFunc(DepthFunc depth) override;
+  vvoid SetDepthFunc(DepthCompare depth) override;
   vvoid EnableCullMode(vbool enable) override;
   vvoid EnableBlendMode(vbool enable) override;
   vvoid EnableDepthMode(vbool enable) override;

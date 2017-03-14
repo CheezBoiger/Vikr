@@ -26,7 +26,7 @@ struct TextureSampler;
 /**
   OpenGL 4.3 Render Context.
 */
-class GL4RenderContext : public RenderContext {
+class GL4RenderContext {
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(GL4RenderContext);
   GL4RenderContext();
@@ -35,51 +35,48 @@ public:
     You are using the OpenGL context, which makes it easier to 
     understand.
   */
-  vvoid Draw(vuint32 start, vuint32 vertices) override;
-  vvoid DrawIndexed(const vvoid *indices, vuint32 elements) override;
-  vvoid SetTexture(Texture *texture, vuint32 index) override;
+  vvoid Draw(GL4Commandbuffer *buffer, vuint32 start, vuint32 vertices);
+  vvoid DrawIndexed(GL4Commandbuffer *buffer, const vvoid *indices, vuint32 elements);
+  vvoid SetTexture(Texture *texture, vuint32 index);
   
-  vvoid SetRenderTarget(RenderTarget *target, vuint32 index) override;
+  vvoid SetRenderTarget(RenderTarget *target, vuint32 index);
 
   /**
     These functions might need to hit the PipelineState instead. They involve
     mostly rasterization.
   */
-  vvoid SetBlendEq(BlendEq eq) override;
-  vvoid SetBlendMode(BlendFunc src, BlendFunc dst) override;
-  vvoid SetDepthFunc(DepthFunc depth) override;
-  vvoid EnableCullMode(vbool enable) override;
-  vvoid EnableBlendMode(vbool enable) override;
-  vvoid EnableDepthMode(vbool enable) override;
-  vvoid SetCullFace(CullFace face) override;
-  vvoid SetFrontFace(FrontFace face) override;
+  vvoid SetBlendEq(BlendEq eq);
+  vvoid SetBlendMode(BlendFunc src, BlendFunc dst);
+  vvoid SetDepthFunc(DepthCompare depth);
+  vvoid EnableCullMode(vbool enable);
+  vvoid EnableBlendMode(vbool enable);
+  vvoid EnableDepthMode(vbool enable);
+  vvoid SetCullFace(CullFace face);
+  vvoid SetFrontFace(FrontFace face);
 
   
-  vvoid Clear() override;
-  vvoid ClearWithColor(glm::vec4 color) override;
-  vvoid ChangeViewport(Viewport *port) override;
-  vvoid ChangeTopology(Topology topology) override;
+  vvoid Clear(GL4Commandbuffer *buffer);
+  vvoid ClearWithColor(GL4Commandbuffer *buffer, glm::vec4 color);
+  vvoid ChangeViewport(GL4Commandbuffer *buffer, Viewport *port);
+  vvoid ChangeTopology(Topology topology);
 
-  vvoid ExecuteCommandbuffer(Commandbuffer *commandbuffer) override;
+  vvoid SetShaderUniforms(ShaderUniformParams *params);
+  vvoid QueryVertexbuffer(GL4Commandbuffer *buffer, Vertexbuffer *vertexbuffer);
 
-  vvoid SetShaderUniforms(ShaderUniformParams *params) override;
-  vvoid QueryVertexbuffer(Vertexbuffer *buffer) override;
+  vvoid SetFramebuffer(Framebuffer *framebuffer);
+  vvoid SetRenderPass(GL4Commandbuffer *buffer, RenderPass *renderpass);
+  vvoid BeginRecord(GL4Commandbuffer *buf); 
+  vvoid EndRecord();
 
-  vvoid SetFramebuffer(Framebuffer *framebuffer) override;
-  vvoid SetRenderPass(RenderPass *renderpass) override;
-  vvoid BeginRecord(Commandbuffer *buf) override; 
-  vvoid EndRecord() override;
-
-  Framebuffer *GetFramebuffer() override;
-  GraphicsPipelineState *GetGraphicsPipelineState() override;
-  vvoid ApplyGraphicsPipelineState(GraphicsPipelineState *pipelinestate) override;
-  vvoid SetMaterial(Material *material) override;
+  Framebuffer *GetFramebuffer();
+  GraphicsPipelineState *GetGraphicsPipelineState();
+  vvoid ApplyGraphicsPipelineState(GL4Commandbuffer *buffer, GraphicsPipelineState *pipelinestate);
+  vvoid SetMaterial(GL4Commandbuffer *buffer, Material *material);
+  vvoid QueryVertexbuffer(GL4Commandbuffer *buffer, vuint32 instances, Vertexbuffer *vertexbuffer);
 
   GL4Vertexbuffer *GetCurrentVertexbuffer() { return m_queriedVertexbuffer; }
 
-  vvoid Present() override;
-
-  vvoid Dispatch(vuint32 x, vuint32 y, vuint32 z) override;
+  vvoid Dispatch(GL4Commandbuffer *buffer, vuint32 x, vuint32 y, vuint32 z) override;
   vvoid ClearTextures() override;
 
 private:

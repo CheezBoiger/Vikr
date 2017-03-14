@@ -8,6 +8,7 @@
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/graphics/framebuffer.hpp>
 #include <vikr/graphics/render_target.hpp>
+#include <vikr/graphics/render_device.hpp>
 #include <vikr/graphics/viewport.hpp>
 #include <vikr/util/vikr_log.hpp>
 
@@ -70,8 +71,10 @@ private:
 ///
 /// TODO(): RenderPass Needs to hold ONLY Attachments References, used by the Framebuffer
 ///         to determine which Textures (Images) attach to where (color, depth, stencil, etc).
-class RenderPass : public GUID {
+class RenderPass : public RenderDeviceObject, public GUID {
 public:
+  RenderPass(GraphicsAPIType type)  
+    : RenderDeviceObject(type) { }
   /// Polymorphic Renderpass destructor.
   virtual ~RenderPass() { }
 
@@ -85,6 +88,9 @@ public:
 
   /// Update the RenderPass.
   virtual vvoid Update() = 0;
+
+  virtual Framebuffer *GetFramebuffer() = 0;
+  virtual vvoid SetFramebuffer(Framebuffer *buffer) = 0;
 };
 } // vikr
 #endif // __VIKR_RENDERPASS_HPP

@@ -9,7 +9,7 @@
 namespace vikr {
 
 
-enum class DepthFunc {
+enum class DepthCompare {
   vikr_DEPTH_ALWAYS,
   vikr_DEPTH_NEVER,
   vikr_DEPTH_LESS, // default

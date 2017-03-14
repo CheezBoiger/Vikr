@@ -59,7 +59,7 @@ public:
   Uniformbuffer *CreateUniformbuffer() override;
   Uniformbuffer *GetUniformbuffer(guid_t id) override;
 
-  GraphicsPipelineState *CreateGraphicsPipelineState(std::string name) override;
+  GraphicsPipelineState *CreateGraphicsPipelineState(vbool derivative) override;
   GraphicsPipelineState *GetGraphicsPipelineState(guid_t id) override;
   vbool DestroyGraphicsPipelineState(guid_t id) override;
 
@@ -74,11 +74,6 @@ public:
   Shader *CreateShader(std::string name, ShaderStage stage) override;
   Shader *GetShader(guid_t id) override;
   vbool DestroyShader(guid_t id) override;
-
-
-  ShaderProgram *CreateShaderProgram() override;
-  ShaderProgram *GetShaderProgram(guid_t id) override;
-  vbool DestroyShaderProgram(guid_t id) override;
 
   Texture *CreateTexture(std::string name, TextureTarget target,
                          std::string filepath, vbool alpha) override;

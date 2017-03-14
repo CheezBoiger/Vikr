@@ -39,6 +39,8 @@ public:
 
   virtual ~RenderTarget() { }
 
+  virtual vvoid Generate(RenderTargetType type) = 0;
+
   virtual RenderTargetType GetTargetType() = 0;
 };
 } // vikr

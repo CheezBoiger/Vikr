@@ -62,7 +62,7 @@ vvoid Skybox::Execute() {
   Commandbuffer &buf = m_device->CreateCommandbuffer(list);
   sky_cmd.Record(buf);
   pipeline->SetShaderProgram(program);
-  pipeline->SetDepthFunc(DepthFunc::vikr_DEPTH_LEQUAL);
+  pipeline->SetDepthFunc(DepthCompare::vikr_DEPTH_LEQUAL);
   pipeline->SetCullMode(false);
   pipeline->Update();
   Material mat;
@@ -75,7 +75,7 @@ vvoid Skybox::Execute() {
   m_device->GetContext()->SetShaderUniforms(&params);
   m_device->GetContext()->ExecuteCommands(list);
   pipeline->SetCullMode(true);
-  pipeline->SetDepthFunc(DepthFunc::vikr_DEPTH_LESS);
+  pipeline->SetDepthFunc(DepthCompare::vikr_DEPTH_LESS);
   list->Clear();
 }
 } // vikr

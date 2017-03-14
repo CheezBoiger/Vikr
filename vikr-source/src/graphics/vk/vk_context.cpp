@@ -37,7 +37,7 @@ vvoid VKRenderContext::SetBlendMode(BlendFunc src, BlendFunc dst) {
 }
 
 
-vvoid VKRenderContext::SetDepthFunc(DepthFunc depth) {
+vvoid VKRenderContext::SetDepthFunc(DepthCompare depth) {
 }
 
 

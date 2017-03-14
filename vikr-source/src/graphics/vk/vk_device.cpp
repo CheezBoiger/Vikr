@@ -22,6 +22,7 @@ const std::string kShaderLanguage = "Spir-V";
 
 
 VKRenderDevice::VKRenderDevice()
+  : RenderDevice(vikr_API_VULKAN)
 {
   Setup();
 }
@@ -108,14 +109,10 @@ RenderPass *VKRenderDevice::CreateRenderPass() {
 }
 
 
-Commandbuffer &VKRenderDevice::CreateCommandbuffer(CommandbufferList *list) {
+Commandbuffer &VKRenderDevice::CreateCommandbuffer() {
   throw new std::bad_alloc();
 }
 
-
-CommandbufferList *VKRenderDevice::CreateCommandbufferList() {
-  return nullptr;
-}
 
 vbool VKRenderDevice::DestroyVertexbuffer(guid_t id) {
   return false;
@@ -128,11 +125,6 @@ vbool VKRenderDevice::DestroyCubemap(guid_t id) {
 
 
 vbool VKRenderDevice::DestroyRenderPass(guid_t id) {
-  return false;
-}
-
-
-vbool VKRenderDevice::DestroyCommandbufferList(guid_t id) {
   return false;
 }
 
@@ -157,7 +149,7 @@ vbool VKRenderDevice::DestroyShader(guid_t id) {
 }
 
 
-GraphicsPipelineState *VKRenderDevice::CreateGraphicsPipelineState(std::string name) {
+GraphicsPipelineState *VKRenderDevice::CreateGraphicsPipelineState(vbool derivative) {
   return nullptr;
 }
 
@@ -168,21 +160,6 @@ GraphicsPipelineState *VKRenderDevice::GetGraphicsPipelineState(guid_t id) {
 
 
 vbool VKRenderDevice::DestroyGraphicsPipelineState(guid_t id) {
-  return false;
-}
-
-
-ShaderProgram *VKRenderDevice::CreateShaderProgram() {
-  return nullptr;
-}
-
-
-ShaderProgram *VKRenderDevice::GetShaderProgram(guid_t id) {
-  return nullptr;
-}
-
-
-vbool VKRenderDevice::DestroyShaderProgram(guid_t id) {
   return false;
 }
 

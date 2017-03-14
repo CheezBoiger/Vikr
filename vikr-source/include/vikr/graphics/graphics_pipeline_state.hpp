@@ -32,10 +32,15 @@ class Shader;
 struct Viewport;
 class Uniformbuffer;
 class Texture;
+class RenderDevice;
 
+
+/// Dynamic state information.
 enum DynamicStateInfo {
   vikr_DYNAMIC_STATE_VIEWPORT,
-  vikr_DYNAMIC_STATE_SCISSOR
+  vikr_DYNAMIC_STATE_SCISSOR,
+  vikr_DYNAMIC_STATE_BLEND_CONSTANTS,
+  vikr_DYNAMIC_STATE_DEPTH_BIAS
 };
 
 
@@ -60,10 +65,11 @@ struct GraphicsPipelineDescription {
 
   /// The Depth function used to compare Renderables in the 
   /// zbuffer. 
-  DepthFunc dfunct;
+  DepthCompare dfunct;
   CullFace cull;
   FrontFace front;
   Topology topology;
+  PolygonMode polygon;
   vbool blend;
   vbool depth;
   vbool culling;
@@ -84,11 +90,12 @@ struct GraphicsPipelineDescription {
 
 /// Pipeline state defines the current state of the Renderer API.
 /// This is an interface for both Vulkan and OpenGL use.
-class GraphicsPipelineState : public GUID {
+class GraphicsPipelineState : public RenderDeviceObject, public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(GraphicsPipelineState);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(GraphicsPipelineState);
-  GraphicsPipelineState() { }
+  GraphicsPipelineState(GraphicsAPIType type) 
+    : RenderDeviceObject(type) { }
   virtual ~GraphicsPipelineState() { }
 
   /// Get the Viewport for this pipeline state. 
@@ -103,13 +110,15 @@ public:
   virtual vbool IsCulling() const = 0;
   virtual vbool IsBlending() const = 0;
   virtual vbool HasDepth() const = 0;
-  virtual DepthFunc GetDepthFunc() const = 0;
+  virtual DepthCompare GetDepthFunc() const = 0;
   virtual BlendEq GetBlendEquation() const = 0;
   virtual BlendFunc GetBlendFunctionSrc() const = 0;
   virtual BlendFunc GetBlendFunctionDst() const = 0;
   virtual Topology GetTopology() const = 0;
 
   virtual vvoid Bake(GraphicsPipelineDescription &description) = 0;
+
+  virtual GraphicsPipelineState *CreateChild() = 0;
   
   virtual std::string GetName() const = 0;
   virtual vvoid SetName(std::string name) = 0;

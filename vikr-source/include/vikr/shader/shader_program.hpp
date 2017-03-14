@@ -17,6 +17,7 @@ namespace vikr {
 
 /**
   ShaderProgram is the program used for the pipeline state of our rendering device.
+  This class is deprecated.
 */
 class ShaderProgram : public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(ShaderProgram);

@@ -6,6 +6,7 @@
 
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/platform/vikr_types.hpp>
+#include <vikr/graphics/render_device.hpp>
 
 #include <string>
 
@@ -27,11 +28,12 @@ class ShaderProgram;
 /// uniform buffer object, to which we then pass on offsets to Vulkan upon
 /// execution of the MVP matrix, to which each Renderable will have their 
 /// own unique model matrix.
-class Uniformbuffer : public GUID {
+class Uniformbuffer : public RenderDeviceObject, public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Uniformbuffer);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Uniformbuffer);
-  Uniformbuffer() { }
+  Uniformbuffer(GraphicsAPIType type) 
+    : RenderDeviceObject(type) { }
 
   virtual ~Uniformbuffer() { }
 

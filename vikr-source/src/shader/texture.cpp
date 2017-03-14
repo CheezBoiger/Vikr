@@ -34,12 +34,4 @@ vbyte *Texture::CreateImageByteCode(
   }
   return image;
 }
-
-
-vvoid Texture::SetByteCode(vbyte *bytecode, vbool is_stbi) {
-  if (m_bytecode && is_stbi) {
-    stbi_image_free(m_bytecode);
-  }
-  m_bytecode = bytecode; 
-}
 } // vikr

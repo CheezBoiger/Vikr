@@ -12,12 +12,12 @@ namespace vikr {
 /**
 Graphics Pipeline to implement.
 */
-enum GraphicsPipeline {
-  vikr_PIPELINE_UNKNOWN,
-  vikr_PIPELINE_OPENGL,
-  vikr_PIPELINE_VULKAN,
-  vikr_PIPELINE_D3D,
-  vikr_PIPELINE_METAL
+enum GraphicsAPIType {
+  vikr_API_UNKNOWN,
+  vikr_API_OPENGL,
+  vikr_API_VULKAN,
+  vikr_API_D3D,
+  vikr_API_METAL
 };
 
 

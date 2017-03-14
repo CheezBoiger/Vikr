@@ -26,15 +26,21 @@ class GL4Commandbuffer : public Commandbuffer {
   VIKR_DISALLOW_COPY_AND_ASSIGN(GL4Commandbuffer);
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(GL4Commandbuffer);
-  GL4Commandbuffer() : commands(0), recording(false) { }
+  GL4Commandbuffer() 
+    : commands(0)
+    , recording(false)
+    , Commandbuffer(vikr_API_OPENGL) { }
+  
   ~GL4Commandbuffer() { }
 
   vvoid BeginRecord() override;
   vvoid EndRecord() override;
   vvoid Draw(vuint32 start, vuint32 vertices) override;
   vvoid DrawIndexed(const vvoid *indices, vuint32 vertices) override;
+  vvoid BindVertexbuffers(vuint32 instances, Vertexbuffer *buffer) override;
   vvoid BindRenderPass(RenderPass *pass) override;
   vvoid Clear() override;
+  vvoid BindMaterial(Material *material) override;
   vvoid ClearWithColor(glm::vec4 color) override;
   vvoid SetViewport(Viewport *viewport) override;
   vvoid BindGraphicsPipelineState(GraphicsPipelineState *pipelinestate) override;

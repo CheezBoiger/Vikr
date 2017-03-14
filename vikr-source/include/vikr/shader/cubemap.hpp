@@ -16,6 +16,8 @@
 namespace vikr {
 
 
+class RenderDevice;
+
 
 /// Render a cubemap 
 class Cubemap {
@@ -35,6 +37,9 @@ public:
   virtual vvoid ClearSizeOverride() = 0;
   virtual vvoid Cleanup() = 0;
   virtual guid_t GetUID() = 0;
+  virtual RenderDevice *GetRenderDevice() = 0;
+  virtual vvoid SetRenderDevice(RenderDevice *device) = 0;
 };
+
 } // vikr
 #endif // __VIKR_CUBEMAP_HPP

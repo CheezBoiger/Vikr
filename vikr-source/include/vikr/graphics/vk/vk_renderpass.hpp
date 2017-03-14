@@ -25,7 +25,7 @@ class VKRenderDevice;
 */
 class VKRenderPass : public RenderPass {
 public:
-  VKRenderPass(VKRenderDevice *device);
+  VKRenderPass();
 
 
   VkRenderPass GetNativePass() {return m_renderpass.Get(); }

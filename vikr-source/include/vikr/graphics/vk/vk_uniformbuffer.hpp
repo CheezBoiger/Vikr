@@ -16,7 +16,7 @@ namespace vikr {
 
 class VKUniformbuffer {
 public:
-  VKUniformbuffer(VKRenderDevice *device);
+  VKUniformbuffer();
 
 private:
   VkMemoryManager<VkBuffer> stagingBuffer;

@@ -8,7 +8,7 @@
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/platform/vikr_api.hpp>
 
-#include <vikr/scene/guid_generator.hpp>
+#include <vikr/graphics/render_device.hpp>
 
 
 namespace vikr {
@@ -16,9 +16,10 @@ namespace vikr {
 
 /// Compute pipeline state, for computing of course!
 /// Should only contain one Compute shader and nothing else!
-class ComputePipelineState : public GUID {
+class ComputePipelineState : public RenderDeviceObject, public GUID {
 public:
-
+  ComputePipelineState(GraphicsAPIType type)
+    : RenderDeviceObject(type) { }
   
 private:
 

@@ -17,7 +17,7 @@ GLenum GetGLBlendMode(BlendFunc func) {
     case BlendFunc::vikr_BLEND_CONSTANT_COLOR: return GL_CONSTANT_COLOR;
     case BlendFunc::vikr_BLEND_DST_ALPHA: return GL_DST_ALPHA;
     case BlendFunc::vikr_BLEND_DST_COLOR: return GL_DST_COLOR;
-    case BlendFunc::vikr_BLEND_GL_ONE_MINUS_CONSTANT_ALPHA: return GL_ONE_MINUS_CONSTANT_ALPHA;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_ALPHA: return GL_ONE_MINUS_CONSTANT_ALPHA;
     case BlendFunc::vikr_BLEND_ONE: return GL_ONE;
     case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR: return GL_ONE_MINUS_CONSTANT_COLOR;
     case BlendFunc::vikr_BLEND_ONE_MINUS_DST_ALPHA: return GL_ONE_MINUS_DST_ALPHA;  
@@ -32,16 +32,16 @@ GLenum GetGLBlendMode(BlendFunc func) {
 }
 
 
-GLenum GetGLDepthFunc(DepthFunc mode) {
+GLenum GetGLDepthFunc(DepthCompare mode) {
   switch (mode) {
-    case DepthFunc::vikr_DEPTH_ALWAYS: return GL_ALWAYS;
-    case DepthFunc::vikr_DEPTH_EQUAL: return GL_EQUAL;
-    case DepthFunc::vikr_DEPTH_GEQUAL: return GL_GEQUAL;
-    case DepthFunc::vikr_DEPTH_GREATER: return GL_GREATER;
-    case DepthFunc::vikr_DEPTH_LEQUAL: return GL_LEQUAL;
-    case DepthFunc::vikr_DEPTH_LESS: return GL_LESS;
-    case DepthFunc::vikr_DEPTH_NEVER: return GL_NEVER;
-    case DepthFunc::vikr_DEPTH_NOTEQUAL: return GL_NOTEQUAL;
+    case DepthCompare::vikr_DEPTH_ALWAYS: return GL_ALWAYS;
+    case DepthCompare::vikr_DEPTH_EQUAL: return GL_EQUAL;
+    case DepthCompare::vikr_DEPTH_GEQUAL: return GL_GEQUAL;
+    case DepthCompare::vikr_DEPTH_GREATER: return GL_GREATER;
+    case DepthCompare::vikr_DEPTH_LEQUAL: return GL_LEQUAL;
+    case DepthCompare::vikr_DEPTH_LESS: return GL_LESS;
+    case DepthCompare::vikr_DEPTH_NEVER: return GL_NEVER;
+    case DepthCompare::vikr_DEPTH_NOTEQUAL: return GL_NOTEQUAL;
     default: return GL_LESS;  
   }
 }

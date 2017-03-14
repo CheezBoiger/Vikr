@@ -21,7 +21,9 @@ namespace vikr {
 /// RenderPass for OpenGL.
 class GL4RenderPass : public RenderPass {
 public:
-  
+  GL4RenderPass()
+    : RenderPass(vikr_API_OPENGL) { }  
+
   vvoid Generate() override;
   /// Add a rendertarget, this is most likely going to be a render texture.
   vbool AddAttachment(AttachmentRefType ref, SampleCount samples, vuint32 pAttachment) override;

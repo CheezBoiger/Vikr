@@ -12,21 +12,9 @@ namespace vikr {
 const std::string Material::kDefaultName = "default";
 
 
-Material::Material(ShaderProgram *program, std::string name)
-  : m_name(name)
-  , m_program(program)
-{
-}
 
-Material::Material(ShaderProgram *program)
-  : m_name(kDefaultName)
-  , m_program(program)
-{
-}
-
-
-Material::Material()
-  : Material(nullptr)
+Material::Material(GraphicsAPIType type)
+  : RenderDeviceObject(type)
 {
 }
 

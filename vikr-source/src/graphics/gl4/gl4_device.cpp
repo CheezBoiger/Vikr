@@ -45,9 +45,6 @@ Storage for framebuffer within this device.
 */
 std::map<guid_t, std::unique_ptr<GL4Framebuffer> > m_framebuffers;
 
-/**
-*/
-std::map<guid_t, std::unique_ptr<GL4CommandbufferList> > m_commandbufferlists;
 
 /**
 */
@@ -70,6 +67,7 @@ const std::string GL4RenderDevice::kGLSLShaderLanguage = "glsl";
 
 
 GL4RenderDevice::GL4RenderDevice()
+  : RenderDevice(vikr_API_OPENGL)
 {
 }
 
@@ -167,6 +165,7 @@ GL4RenderDevice::CreateVertexbuffer(VertexUsageType type,
     VIKR_ASSERT(glGetError() == 0);
   }
   guid_t uid = gbo->GetUID();
+  gbo->SetRenderDevice(this);
   m_vertexbuffers[uid] = std::move(gbo);
   return m_vertexbuffers[uid].get();
 }
@@ -176,6 +175,7 @@ Framebuffer *GL4RenderDevice::CreateFramebuffer() {
   std::unique_ptr<GL4Framebuffer> framebuffer = 
     std::make_unique<GL4Framebuffer>();
   guid_t uid = framebuffer->GetUID();
+  framebuffer->SetRenderDevice(this);
   m_framebuffers[uid] = std::move(framebuffer);
   return m_framebuffers[uid].get();
 }
@@ -185,6 +185,7 @@ Cubemap *GL4RenderDevice::CreateCubemap() {
   std::unique_ptr<GL4Cubemap> cubemap =
     std::make_unique<GL4Cubemap>();
   guid_t uid = cubemap->GetUID();
+  cubemap->SetRenderDevice(this);
   m_cubemaps[uid] = std::move(cubemap);
   return m_cubemaps[uid].get();
 }
@@ -194,25 +195,16 @@ RenderPass *GL4RenderDevice::CreateRenderPass() {
   std::unique_ptr<GL4RenderPass> renderpass =
     std::make_unique<GL4RenderPass>();
   guid_t uid = renderpass->GetUID();
+  renderpass->SetRenderDevice(this);
   m_renderpasses[uid] = std::move(renderpass);
   return m_renderpasses[uid].get();
 }
 
 
-Commandbuffer &GL4RenderDevice::CreateCommandbuffer(CommandbufferList *list) {
-  GL4CommandbufferList *glist = static_cast<GL4CommandbufferList *>(list);
+Commandbuffer &GL4RenderDevice::CreateCommandbuffer() {
   GL4Commandbuffer buffer;
-  glist->Enqueue(buffer);
-  return glist->GetList().back();
-}
-
-
-CommandbufferList *GL4RenderDevice::CreateCommandbufferList() {
-  std::unique_ptr<GL4CommandbufferList> list = 
-    std::make_unique<GL4CommandbufferList>();
-  guid_t uid = list->GetUID();
-  m_commandbufferlists[uid] = std::move(list);
-  return m_commandbufferlists[uid].get();
+  buffer.SetRenderDevice(this);
+  return std::move(buffer);
 }
 
 
@@ -220,16 +212,6 @@ vbool GL4RenderDevice::DestroyRenderPass(guid_t id) {
   auto found = m_renderpasses.find(id);
   if (found != m_renderpasses.end()) {
     m_renderpasses.erase(found);
-    return true;
-  }
-  return false;
-}
-
-
-vbool GL4RenderDevice::DestroyCommandbufferList(guid_t id) {
-  auto found = m_commandbufferlists.find(id);
-  if (found != m_commandbufferlists.end()) {
-    m_commandbufferlists.erase(found);
     return true;
   }
   return false;
@@ -275,6 +257,7 @@ Shader *GL4RenderDevice::CreateShader(std::string name, ShaderStage stage) {
   shader->SetName(name);
 
   guid_t id = shader->GetUID();
+  shader->SetRenderDevice(this);
   shaders[shader->GetUID()] = std::move(shader);
   return static_cast<Shader *>(shaders[id].get());
 }
@@ -328,10 +311,11 @@ Texture *GL4RenderDevice::CreateTexture(
     if (target == vikr_TARGET_2D_MULTISAMPLE) {
       texture->SetMultisampled(true);
     }
-    texture->SetByteCode(bytecode);
+    texture->SetBytecode(bytecode);
     //texture->Finalize(); // No need to tell the resource manager to finalize for us.
     texture->SetPath(filepath);
     texture->SetName(name);
+    texture->SetRenderDevice(this);
     textures[texture->GetUID()] = std::move(texture);
   }
   return textures[id].get();
@@ -356,11 +340,11 @@ vbool GL4RenderDevice::DestroyTexture(guid_t id) {
 }
 
 
-GraphicsPipelineState *GL4RenderDevice::CreateGraphicsPipelineState(std::string name) {
+GraphicsPipelineState *GL4RenderDevice::CreateGraphicsPipelineState(vbool derivative) {
   std::unique_ptr<GL4GraphicsPipelineState> gl_pipeline =
     std::make_unique<GL4GraphicsPipelineState>();
-  gl_pipeline->SetName(name);
   guid_t id = gl_pipeline->GetUID();
+  gl_pipeline->SetRenderDevice(this);
   graphicspipelinestates[gl_pipeline->GetUID()] = std::move(gl_pipeline);
   return static_cast<GraphicsPipelineState *>(graphicspipelinestates[id].get());
 }
@@ -380,36 +364,6 @@ vbool GL4RenderDevice::DestroyGraphicsPipelineState(guid_t id) {
   auto it = graphicspipelinestates.find(id);
   if (it != graphicspipelinestates.end()) {
     graphicspipelinestates.erase(it);
-    success = true;
-  }
-  return success;
-}
-
-
-ShaderProgram *GL4RenderDevice::CreateShaderProgram() {
-  std::unique_ptr<GLSLShaderProgram> prgm =
-    std::make_unique<GLSLShaderProgram>();
-  guid_t id = prgm->GetUID();
-  shader_programs[prgm->GetUID()] = std::move(prgm);
-  return shader_programs[id].get();
-}
-
-
-ShaderProgram *GL4RenderDevice::GetShaderProgram(guid_t uid) {
-  auto it = shader_programs.find(uid);
-  if (it != shader_programs.end()) {
-    return shader_programs[uid].get();
-  }
-  return nullptr;
-}
-
-
-vbool GL4RenderDevice::DestroyShaderProgram(guid_t id) {
-  vbool success = false;
-  auto it = shader_programs.find(id);
-  if (it != shader_programs.end()) {
-    it->second->Cleanup();
-    shader_programs.erase(it);
     success = true;
   }
   return success;

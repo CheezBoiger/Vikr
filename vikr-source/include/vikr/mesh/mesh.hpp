@@ -25,7 +25,7 @@ class Mesh : public IMesh {
 
 public:
   /// Mesh Constructor.
-  Mesh(GraphicsPipeline pipeline = vikr_PIPELINE_OPENGL);
+  Mesh(GraphicsPipeline pipeline = vikr_API_OPENGL);
 
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Mesh);
 

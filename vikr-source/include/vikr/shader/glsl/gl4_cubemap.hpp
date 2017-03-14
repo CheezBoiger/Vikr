@@ -64,6 +64,12 @@ public:
   guid_t GetUID() override 
     { return GL4Texture::GetUID(); }
 
+  RenderDevice *GetRenderDevice() override 
+    { return GL4Texture::GetRenderDevice(); }
+
+  vvoid SetRenderDevice(RenderDevice *device) override
+    { GL4Texture::SetRenderDevice(device); }
+
 private:
   std::vector<const vchar *> *m_faces = nullptr;
   

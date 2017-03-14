@@ -33,53 +33,104 @@ VkFrontFace GetNativeFrontFace(FrontFace face) {
   switch (face) {
     case FrontFace::vikr_CLOCKWISE: return VK_FRONT_FACE_CLOCKWISE;
     case FrontFace::vikr_COUNTER_CLOCKWISE: return VK_FRONT_FACE_COUNTER_CLOCKWISE;
-    default: return VK_FRONT_FACE_CLOCKWISE;
+    default: return VK_FRONT_FACE_COUNTER_CLOCKWISE;
   }
 }
 
 
-VkCompareOp GetNativeDepthFunc(DepthFunc func) {
+VkCompareOp GetNativeDepthFunc(DepthCompare func) {
   switch (func) {
-    case DepthFunc::vikr_DEPTH_LESS: return VK_COMPARE_OP_LESS;
-    case DepthFunc::vikr_DEPTH_EQUAL: return VK_COMPARE_OP_EQUAL;
-    case DepthFunc::vikr_DEPTH_GEQUAL: return VK_COMPARE_OP_GREATER_OR_EQUAL;
-    case DepthFunc::vikr_DEPTH_GREATER: return VK_COMPARE_OP_GREATER;
-    case DepthFunc::vikr_DEPTH_LEQUAL: return VK_COMPARE_OP_LESS_OR_EQUAL;
-    case DepthFunc::vikr_DEPTH_NEVER: return VK_COMPARE_OP_NEVER;
-    case DepthFunc::vikr_DEPTH_NOTEQUAL: return VK_COMPARE_OP_NOT_EQUAL;
+    case DepthCompare::vikr_DEPTH_LESS: return VK_COMPARE_OP_LESS;
+    case DepthCompare::vikr_DEPTH_EQUAL: return VK_COMPARE_OP_EQUAL;
+    case DepthCompare::vikr_DEPTH_GEQUAL: return VK_COMPARE_OP_GREATER_OR_EQUAL;
+    case DepthCompare::vikr_DEPTH_GREATER: return VK_COMPARE_OP_GREATER;
+    case DepthCompare::vikr_DEPTH_LEQUAL: return VK_COMPARE_OP_LESS_OR_EQUAL;
+    case DepthCompare::vikr_DEPTH_NEVER: return VK_COMPARE_OP_NEVER;
+    case DepthCompare::vikr_DEPTH_NOTEQUAL: return VK_COMPARE_OP_NOT_EQUAL;
     default: return VK_COMPARE_OP_LESS;
   }
 }
 
 
-VKGraphicsPipelineState::VKGraphicsPipelineState()
+VkBlendFactor GetNativeBlendFactor(BlendFunc func)
 {
-  m_viewport.win_x = 0;
-  m_viewport.win_y = 0;
-  // Must be obtained from the swapchain instead.
-  m_viewport.win_width;
-  m_viewport.win_height; 
-  UpdateNativeViewport();
+  switch (func) {
+    case BlendFunc::vikr_BLEND_ZERO: return VK_BLEND_FACTOR_ZERO;
+    case BlendFunc::vikr_BLEND_SRC_COLOR: return VK_BLEND_FACTOR_SRC_COLOR;
+    case BlendFunc::vikr_BLEND_SRC_ALPHA: return VK_BLEND_FACTOR_SRC_ALPHA;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_COLOR: return VK_BLEND_FACTOR_ONE_MINUS_SRC_COLOR;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA: return VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_COLOR: return VK_BLEND_FACTOR_ONE_MINUS_DST_COLOR;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_ALPHA: return VK_BLEND_FACTOR_ONE_MINUS_DST_ALPHA;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR: return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_COLOR;
+    case BlendFunc::vikr_BLEND_ONE: return VK_BLEND_FACTOR_ONE;
+    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_ALPHA: return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_ALPHA;
+    case BlendFunc::vikr_BLEND_DST_COLOR: return VK_BLEND_FACTOR_DST_COLOR;
+    case BlendFunc::vikr_BLEND_DST_ALPHA: return VK_BLEND_FACTOR_DST_ALPHA;
+    case BlendFunc::vikr_BLEND_CONSTANT_COLOR: return VK_BLEND_FACTOR_CONSTANT_COLOR;
+    case BlendFunc::vikr_BLEND_CONSTANT_ALPHA: return VK_BLEND_FACTOR_CONSTANT_ALPHA;
+    default: return VK_BLEND_FACTOR_ONE;
+  }
 }
 
 
-vvoid VKGraphicsPipelineState::UpdateNativeViewport()
-{ 
-  // Getting more precise, are we?
-  m_native_viewport.x = static_cast<float> (m_viewport.win_x);
-  m_native_viewport.y = static_cast<float> (m_viewport.win_y);
-  
-  // Filled with native swapchain width and height.
-  m_native_viewport.width;
-  m_native_viewport.height;
-  // Stick to default/standard depth values [0.0f, 1.0f].
-  m_native_viewport.minDepth = 0.0f;
-  m_native_viewport.maxDepth = 1.0f;
+VkBlendOp GetNativeBlendOperation(BlendEq eq)
+{
+  switch (eq) {
+    case BlendEq::vikr_BLEND_ADD: return VK_BLEND_OP_ADD;
+    case BlendEq::vikr_BLEND_REVERSE_SUBTRACT: return VK_BLEND_OP_REVERSE_SUBTRACT;
+    case BlendEq::vikr_BLEND_SUBTRACT: return VK_BLEND_OP_SUBTRACT;
+    default: return VK_BLEND_OP_ADD;
+  }
 }
 
 
-vvoid VKGraphicsPipelineState::Setup()
+VkViewport GetNativeViewport(Viewport &viewport) 
 {
+  VkViewport native = { };
+  native.x = viewport.win_x;
+  native.y = viewport.win_y;
+  native.width = viewport.win_width;
+  native.height = viewport.win_height;
+  native.minDepth = 0.0f;
+  native.maxDepth = 1.0f;
+  return native;
+}
+
+
+VkRect2D GetNativeScissor(Scissor2D &scissor) 
+{
+  VkRect2D native = { };
+  native.offset.x = scissor.offsetx;
+  native.offset.y = scissor.offsety;
+  native.extent.width = scissor.width;  
+  native.extent.height = scissor.height;
+  return native;
+}
+
+
+VkPolygonMode GetNativePolygonMode(PolygonMode mode) 
+{
+  switch(mode) {
+    case vikr_POLYGON_MODE_FILL: return VK_POLYGON_MODE_FILL;
+    case vikr_POLYGON_MODE_LINES: return VK_POLYGON_MODE_LINE;
+    case vikr_POLYGON_MODE_POINT: return VK_POLYGON_MODE_POINT;
+    default: return VK_POLYGON_MODE_FILL;
+  }
+}
+
+
+VKGraphicsPipelineState::VKGraphicsPipelineState(VKRenderDevice *device)
+  : device(device)
+{
+}
+
+
+vvoid VKGraphicsPipelineState::Bake(GraphicsPipelineDescription &description)
+{
+  if (!device) {
+    return;
+  }
   // Set up Vertex Input.
   VkPipelineVertexInputStateCreateInfo vertex_input_info;
   vertex_input_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -91,26 +142,31 @@ vvoid VKGraphicsPipelineState::Setup()
   // Set up Vertex Assembly
   VkPipelineInputAssemblyStateCreateInfo input_assembly_info;
   input_assembly_info.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-  input_assembly_info.topology = GetNativeTopology(m_topology);
+  input_assembly_info.topology = GetNativeTopology(description.topology);
   input_assembly_info.primitiveRestartEnable = VK_FALSE;
 
   // Set up Viewport Create
   VkPipelineViewportStateCreateInfo viewportstate_info;
   viewportstate_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
   viewportstate_info.viewportCount = 1;
-  viewportstate_info.pViewports = &m_native_viewport;
+  viewportstate_info.pViewports = &GetNativeViewport(description.viewport);
   viewportstate_info.scissorCount = 1;
-  viewportstate_info.pScissors = &m_native_scissor;
+  viewportstate_info.pScissors = &GetNativeScissor(description.scissor);
+
+  VkPipelineTessellationStateCreateInfo tesselation_info;
+  tesselation_info.patchControlPoints = 3;
+  tesselation_info.flags = 0;
+  tesselation_info.pNext = nullptr;
   
   // Set up Rasterizer State
   VkPipelineRasterizationStateCreateInfo rasterizer_info;
   rasterizer_info.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
   rasterizer_info.depthClampEnable = VK_FALSE;
   rasterizer_info.rasterizerDiscardEnable = VK_FALSE;
-  rasterizer_info.polygonMode = VK_POLYGON_MODE_FILL; // We will use a debugger to handle this.
+  rasterizer_info.polygonMode = GetNativePolygonMode(description.polygon); // We will use a debugger to handle this.
   rasterizer_info.lineWidth = 1.0f;
-  rasterizer_info.cullMode = GetNativeCullMode(m_cullface);
-  rasterizer_info.frontFace = GetNativeFrontFace(m_frontface);
+  rasterizer_info.cullMode = GetNativeCullMode(description.cull);
+  rasterizer_info.frontFace = GetNativeFrontFace(description.front);
   // We may need to adjust these for shadow mapping, but for now just default
   rasterizer_info.depthBiasEnable = VK_FALSE;
   rasterizer_info.depthBiasConstantFactor = 0.0f;
@@ -132,7 +188,7 @@ vvoid VKGraphicsPipelineState::Setup()
   depthstencil_info.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
   depthstencil_info.depthTestEnable = (m_depth ? VK_TRUE : VK_FALSE);
   depthstencil_info.depthWriteEnable = (m_depth ? VK_TRUE : VK_FALSE);
-  depthstencil_info.depthCompareOp = GetNativeDepthFunc(m_depthfunc);
+  depthstencil_info.depthCompareOp = GetNativeDepthFunc(description.dfunct);
   depthstencil_info.depthBoundsTestEnable = VK_FALSE;
   depthstencil_info.minDepthBounds = 0.0f;
   depthstencil_info.maxDepthBounds = 1.0f;
@@ -147,13 +203,13 @@ vvoid VKGraphicsPipelineState::Setup()
     VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
     VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
   colorblend_attachment.blendEnable = (m_blend ? VK_TRUE : VK_FALSE);  
-  colorblend_attachment.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA; 
+  colorblend_attachment.srcColorBlendFactor = GetNativeBlendFactor(description.bsrc); 
   // Equations needed from Pipelinestate
-  colorblend_attachment.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-  colorblend_attachment.colorBlendOp = VK_BLEND_OP_ADD;
+  colorblend_attachment.dstColorBlendFactor = GetNativeBlendFactor(description.bdst);
+  colorblend_attachment.colorBlendOp = GetNativeBlendOperation(description.beq);
   colorblend_attachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
   colorblend_attachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
-  colorblend_attachment.alphaBlendOp = VK_BLEND_OP_ADD;
+  colorblend_attachment.alphaBlendOp = GetNativeBlendOperation(description.beq);
 
   // Color Blend state info.
   VkPipelineColorBlendStateCreateInfo colorblendstate_info;
@@ -168,6 +224,13 @@ vvoid VKGraphicsPipelineState::Setup()
   colorblendstate_info.blendConstants[3] = 0.0f;
 
   VkPipelineDynamicStateCreateInfo dynamicstate_info = { };
-  
+  // none yet.
+
+  // Graphics pipeline info.
+  VkGraphicsPipelineCreateInfo graphics_pipeline_info = { };
+  graphics_pipeline_info.pVertexInputState = &vertex_input_info;
+  graphics_pipeline_info.pInputAssemblyState = &input_assembly_info;
+  graphics_pipeline_info.pMultisampleState = &multisample_info;
+  graphics_pipeline_info.pRasterizationState = &rasterizer_info;
 }
 } // vikr

@@ -21,6 +21,7 @@ class GL4Vertexbuffer : public Vertexbuffer {
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(GL4Vertexbuffer);
   GL4Vertexbuffer()
+    : Vertexbuffer(vikr_API_OPENGL)
   { }
 
   GLuint GetVertexBufferId() { return m_vbo; }

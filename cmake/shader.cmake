@@ -20,8 +20,8 @@ if(vulkan)
     ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_shader_module.cpp
     ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_validator.cpp
     ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_compiler.cpp
-    ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_program.cpp
     ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_texture.cpp
+    ${VIKR_SHADER_SPIRV_SRC_DIR}/spv_descriptor.cpp
   )
 
   set(VIKR_GLOB
@@ -31,8 +31,8 @@ if(vulkan)
     ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_shader_module.hpp
     ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_shader.hpp
     ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_linker.hpp
-    ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_program.hpp
     ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_texture.hpp
+    ${VIKR_SHADER_SPIRV_INCLUDE_DIR}/spv_descriptor.hpp
   )
 endif()
 
@@ -48,7 +48,7 @@ set(VIKR_GLOB
   ${VIKR_SHADER_GLSL_SRC_DIR}/glsl_compiler.cpp
   ${VIKR_SHADER_GLSL_SRC_DIR}/glsl_linker.cpp
   ${VIKR_SHADER_GLSL_SRC_DIR}/glsl_shader.cpp
-  ${VIKR_SHADER_GLSL_SRC_DIR}/glsl_program.cpp
+  ${VIKR_SHADER_GLSL_SRC_DIR}/glsl_material.cpp
 )
 
 set(VIKR_GLOB
@@ -62,7 +62,7 @@ set(VIKR_GLOB
   ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl4_texture.hpp
   ${VIKR_SHADER_GLSL_INCLUDE_DIR}/glsl_preprocessor.hpp
   ${VIKR_SHADER_GLSL_INCLUDE_DIR}/gl4_cubemap.hpp
-  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/glsl_program.hpp
+  ${VIKR_SHADER_GLSL_INCLUDE_DIR}/glsl_material.hpp
 )
 
 set(VIKR_GLOB
@@ -84,7 +84,6 @@ set(VIKR_GLOB
   ${VIKR_SHADER_INCLUDE_DIR}/shader_config.hpp
   ${VIKR_SHADER_INCLUDE_DIR}/shader.hpp
   ${VIKR_SHADER_INCLUDE_DIR}/font_printer.hpp
-  ${VIKR_SHADER_INCLUDE_DIR}/shader_program.hpp
 )
 
 set(VIKR_GLOB

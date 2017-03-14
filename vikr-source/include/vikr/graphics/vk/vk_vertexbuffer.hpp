@@ -21,7 +21,7 @@ class VKRenderDevice;
 /// Vulkan specific vertex buffer for Vulkan rendering.
 class VKVertexbuffer : public Vertexbuffer {
 public:
-  VKVertexbuffer(VKRenderDevice *device);
+  VKVertexbuffer();
 
   /// Subdata buffering.
   vvoid BufferData(VertexUsageType type, vuint32 size, Vertex *data) override;
@@ -45,9 +45,6 @@ private:
   //
   //  vbo buffer.
   VkMemoryManager<VkBuffer> m_vbo;
- 
-  
-  VKRenderDevice *device;
 };
 } // vikr
 #endif // __VIKR_VK_VERTEXBUFFER_HPP

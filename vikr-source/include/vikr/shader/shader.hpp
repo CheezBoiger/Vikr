@@ -8,7 +8,7 @@
 #include <vikr/platform/vikr_api.hpp>
 
 #include <vikr/shader/shader_config.hpp>
-#include <vikr/scene/guid_generator.hpp>
+#include <vikr/graphics/render_device.hpp>
 
 #include <glm/glm.hpp>
 #include <string>
@@ -18,10 +18,10 @@ namespace vikr {
 
 
 /// For now it only works with OpenGL, Spir-V not yet implemented!
-class Shader : public GUID {
+class Shader : public RenderDeviceObject, public GUID {
 protected:
   /// Must not be instantiated by the user.
-  Shader(ShaderStage stage = vikr_VERTEX_SHADER, ShaderLanguage lang = vikr_NOLANG);
+  Shader(GraphicsAPIType type, ShaderStage stage = vikr_VERTEX_SHADER, ShaderLanguage lang = vikr_NOLANG);
 
 public:
   static const vuint32 kNoShaderId;

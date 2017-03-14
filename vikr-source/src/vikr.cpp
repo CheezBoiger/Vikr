@@ -11,7 +11,7 @@ vint32 InitVikr(GraphicsPipeline graphicsAPI) {
     glfwInit();
   }
   switch (graphicsAPI) {
-    case vikr_PIPELINE_OPENGL:
+    case vikr_API_OPENGL:
     {
       VikrWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
       VikrWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -19,23 +19,23 @@ vint32 InitVikr(GraphicsPipeline graphicsAPI) {
       VikrWindowHint(GLFW_RESIZABLE, GL_FALSE);
     }
     break;
-    case vikr_PIPELINE_VULKAN:
+    case vikr_API_VULKAN:
     {
       glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
       glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     }
     break;
-    case vikr_PIPELINE_D3D:
+    case vikr_API_D3D:
     {
       VikrLog::DisplayMessage(VIKR_ERROR, "Direct X is not implemented yet!");
     }
     break;
-    case vikr_PIPELINE_METAL:
+    case vikr_API_METAL:
     {
       VikrLog::DisplayMessage(VIKR_ERROR, "Metal is not implemented yet!");
     }
     break;
-    case vikr_PIPELINE_UNKNOWN:
+    case vikr_API_UNKNOWN:
     default: success = 0; break;
   }
   return success;
