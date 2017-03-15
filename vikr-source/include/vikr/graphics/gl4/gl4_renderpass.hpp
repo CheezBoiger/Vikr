@@ -25,16 +25,6 @@ public:
     : RenderPass(vikr_API_OPENGL) { }  
 
   vvoid Generate() override;
-  /// Add a rendertarget, this is most likely going to be a render texture.
-  vbool AddAttachment(AttachmentRefType ref, SampleCount samples, vuint32 pAttachment) override;
-  
-  /// Remove the render target at the attachment point. This is the index that the render
-  /// target was bound to.
-  vbool RemoveRenderTarget(vuint32 attachment) override;
-
-  RenderTarget *GetRenderTarget(vuint32 attachment) override;
-  vuint32 GetNumOfRenderTargets() override 
-    { return m_rendertargets.size(); }
 
   /// Get the RenderTargets
   std::map<vuint32, RenderTarget> &GetRenderTargets() 

@@ -29,7 +29,7 @@ public:
   vvoid SetRenderTarget(RenderTarget *target, vuint32 index) override;
   vvoid SetFramebuffer(Framebuffer *framebuffer) override;
   vvoid SetBlendEq(BlendEq eq) override;
-  vvoid SetBlendMode(BlendFunc src, BlendFunc dst) override;
+  vvoid SetBlendMode(BlendFactor src, BlendFactor dst) override;
   vvoid SetDepthFunc(DepthCompare depth) override;
   vvoid EnableCullMode(vbool enable) override;
   vvoid EnableBlendMode(vbool enable) override;

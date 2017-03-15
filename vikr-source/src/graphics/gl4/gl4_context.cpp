@@ -8,6 +8,7 @@
 #include <vikr/graphics/gl4/gl4_vertexbuffer.hpp>
 #include <vikr/graphics/gl4/gl4_framebuffer.hpp>
 #include <vikr/shader/glsl/gl4_cubemap.hpp>
+#include <vikr/shader/glsl/glsl_material.hpp>
 #include <vikr/graphics/command_buffer.hpp>
 #include <vikr/graphics/graphics_command.hpp>
 #include <vikr/graphics/render_pass.hpp>
@@ -58,31 +59,53 @@ GL4RenderContext::GL4RenderContext()
 }
 
 
-vvoid GL4RenderContext::Draw(vuint32 start, vuint32 vertices) {
-  CLEAN_PIPELINE();
-  glDrawArrays(
-    GetGLTopology(m_currPipeline->GetTopology()), 
-    start, 
-    vertices
-  );
-  VIKR_ASSERT(glGetError() == 0);
+vvoid GL4RenderContext::Draw(GL4Commandbuffer *buffer, vuint32 start, vuint32 vertices, vuint32 instances) {
+  auto execute = [=] (vuint32 start, vuint32 vertices, vuint32 instances) -> vvoid {
+    if (instances == 0) {
+      glDrawArrays(
+        GetGLTopology(m_currPipeline->GetTopology()),
+        start,
+        vertices
+      );
+    } else {
+      glDrawArraysInstanced(
+        GetGLTopology(m_currPipeline->GetTopology()),
+        start, 
+        vertices,
+        instances
+      );
+    }
+    VIKR_ASSERT(glGetError() == 0);
+  };
+  buffer->AddCommand([=] () -> vvoid { execute(start, vertices, instances); });
 }
 
 
-vvoid GL4RenderContext::DrawIndexed(const vvoid *indices, vuint32 elements) {
-  CLEAN_PIPELINE();
-  glDrawElements(
-    GetGLTopology(m_currPipeline->GetTopology()),
-    elements,
-    GL_UNSIGNED_INT,
-    indices
-  );
-  VIKR_ASSERT(glGetError() == 0);
+vvoid GL4RenderContext::DrawIndexed(GL4Commandbuffer *buffer, const vvoid *indices, vuint32 elements, vuint32 instances) {
+  auto execute = [=] (const vvoid *indices, vuint32 elements, vuint32 instances) -> vvoid {
+    if (instances == 0) {
+      glDrawElements(
+        GetGLTopology(m_currPipeline->GetTopology()),
+        elements,
+        GL_UNSIGNED_INT,
+        indices
+      );
+    } else {
+      glDrawElementsInstanced(
+        GetGLTopology(m_currPipeline->GetTopology()),
+        elements,
+        GL_UNSIGNED_INT,  
+        indices,
+        instances
+      );
+    }
+    VIKR_ASSERT(glGetError() == 0);
+  };
+  buffer->AddCommand([=] ( ) -> vvoid { execute(indices, elements, instances); });
 }
 
 
 vvoid GL4RenderContext::SetTexture(Texture *texture, vuint32 index) {  
-  CLEAN_PIPELINE();
   if (!texture) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Texture is null.");
     return;
@@ -94,111 +117,33 @@ vvoid GL4RenderContext::SetTexture(Texture *texture, vuint32 index) {
 }
 
 
-vvoid GL4RenderContext::SetRenderTarget(RenderTarget *target, vuint32 index) {
-  CLEAN_PIPELINE();
-  if (target) {
-    switch (target->GetRenderType()) {
-      case RenderTargetType::render_TEXTURE_MULTISAMPLE:
-      case RenderTargetType::render_TEXTURE: {
-        Texture *tex = static_cast<Texture *>(target->GetTexture());
-        SetTexture(tex, index);
-      }
-      break;
-      default: break;
-    }
-  }
-
-  VIKR_ASSERT(glGetError() == 0);
+vvoid GL4RenderContext::Clear(GL4Commandbuffer *buffer) {
+  buffer->AddCommand( [=] ( ) -> vvoid {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  });
 }
 
 
-vvoid GL4RenderContext::ChangeTopology(Topology topology) {
-  m_currPipeline->SetTopology(topology);
-}
-
-
-vvoid GL4RenderContext::ChangeViewport(Viewport  *port) {
-  m_currPipeline->SetViewport(*port);
-}
-
-
-vvoid GL4RenderContext::Clear() {
-  CLEAN_PIPELINE();
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-
-vvoid GL4RenderContext::SetCullFace(CullFace face) {
-  m_currPipeline->SetCullFace(face);
-}
-
-
-vvoid GL4RenderContext::SetFrontFace(FrontFace face) {
-  m_currPipeline->SetFrontFace(face);
-}
-
-
-vvoid GL4RenderContext::EnableBlendMode(vbool enable) {
-  m_currPipeline->SetBlendMode(enable);
-}
-
-
-vvoid GL4RenderContext::EnableCullMode(vbool enable) {
-  m_currPipeline->SetCullMode(enable);
-}
-
-
-vvoid GL4RenderContext::EnableDepthMode(vbool enable) {
-  m_currPipeline->SetDepthMode(enable);
-}
-
-
-vvoid GL4RenderContext::SetBlendEq(BlendEq eq) {
-  m_currPipeline->SetBlendEq(eq);
-}
-
-
-vvoid GL4RenderContext::SetBlendMode(BlendFunc src, BlendFunc dst) {
-  m_currPipeline->SetBlendFunc(src, dst);
-}
-
-
-vvoid GL4RenderContext::SetDepthFunc(DepthCompare func) {
-  m_currPipeline->SetDepthFunc(func);
-}
-
-
-vvoid GL4RenderContext::ClearWithColor(glm::vec4 color) {
-  CLEAN_PIPELINE();
-  glClearColor(color.x, color.y, color.z, color.w);
-}
-
-
-vvoid GL4RenderContext::ExecuteCommands(CommandbufferList *commandbuffer) {
-  CLEAN_PIPELINE();
-  if (commandbuffer) {
-    GL4CommandbufferList *list = static_cast<GL4CommandbufferList *>(commandbuffer);
-    for (GL4Commandbuffer &command : list->GetList()) {
-      VIKR_ASSERT(command);
-     command.Execute(this);
-    }
-  }
+vvoid GL4RenderContext::ClearWithColor(GL4Commandbuffer *buffer, glm::vec4 color) {
+  auto execute = [=] (glm::vec4 color) -> vvoid {
+    glClearColor(color.x, color.y, color.z, color.w);
+  };
+  buffer->AddCommand([=] ( ) -> vvoid { execute(color); });
 }
 
 
 vvoid GL4RenderContext::SetFramebuffer(Framebuffer *framebuffer) {
-  CLEAN_PIPELINE();
   if (framebuffer) {
     GL4Framebuffer *glFb = static_cast<GL4Framebuffer *>(framebuffer);
     glFb->Bind();
-    glViewport(
-      glFb->GetViewport().win_x,
-      glFb->GetViewport().win_y,
-      glFb->GetViewport().win_width,
-      glFb->GetViewport().win_height
-    );
-    m_currPipeline->SetViewport(glFb->GetViewport());
-    Clear();
+    if (glFb->GetViewport().win_height != 0 || glFb->GetViewport().win_width != 0) {
+      glViewport(
+        glFb->GetViewport().win_x,
+        glFb->GetViewport().win_y,
+        glFb->GetViewport().win_width,
+        glFb->GetViewport().win_height
+      );
+    }
   } else {
     // Set back to default.
     Viewport default_port = { 
@@ -206,17 +151,14 @@ vvoid GL4RenderContext::SetFramebuffer(Framebuffer *framebuffer) {
       Window::GetMainWindow()->GetWidth(), 
       Window::GetMainWindow()->GetHeight() 
     };
-    m_currPipeline->SetViewport(default_port);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    Clear();
   }
-
+  glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
   VIKR_ASSERT(glGetError() == 0);
 }
 
 
 vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
-  CLEAN_PIPELINE();
   if (!params) { 
     return;
   }
@@ -225,7 +167,7 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     TODO(): Will need to parse these location values in the future.
   */
   //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
-  shader_program = static_cast<GLSLShaderProgram *>(m_currPipeline->GetShaderProgram())->GetNativeId();
+  shader_program = m_currPipeline->GetShaderProgram();
   if (params->uniforms) {
     for (auto variable = params->uniforms->begin(); variable != params->uniforms->end(); ++variable) {
       std::string s = variable->first;
@@ -325,20 +267,16 @@ vvoid GL4RenderContext::ClearTextures() {
 }
 
 
-vvoid GL4RenderContext::QueryVertexbuffer(Vertexbuffer *buffer) {
-  CLEAN_PIPELINE();
-  if (buffer) {
-    GL4Vertexbuffer *buf = static_cast<GL4Vertexbuffer *>(buffer);
-    glBindVertexArray(static_cast<vuint32>(buf->GetVertexArrayId()));
-    m_queriedVertexbuffer = buf;
-  }
-  VIKR_ASSERT(glGetError() == 0);
-}
-
-
-vvoid GL4RenderContext::Present() {
-  glfwSwapBuffers(Window::GetMainWindow()->GetWindow());
-  VIKR_ASSERT(glGetError() == 0);
+vvoid GL4RenderContext::QueryVertexbuffer(GL4Commandbuffer *commandbuffer, Vertexbuffer *buffer) {
+  auto execute = [=] (Vertexbuffer *buffer) -> vvoid {
+    if (buffer) {
+      GL4Vertexbuffer *buf = static_cast<GL4Vertexbuffer *>(buffer);
+      glBindVertexArray(static_cast<vuint32>(buf->GetVertexArrayId()));
+      m_queriedVertexbuffer = buf;
+    }
+    VIKR_ASSERT(glGetError() == 0);
+  };
+  commandbuffer->AddCommand([=] () -> vvoid { execute(buffer); });
 }
 
 
@@ -348,24 +286,51 @@ GraphicsPipelineState *GL4RenderContext::GetGraphicsPipelineState()
 }
 
 
-vvoid GL4RenderContext::BeginRecord(Commandbuffer *buf) 
+vvoid GL4RenderContext::BindGraphicsPipelineState(GL4Commandbuffer *buffer, GraphicsPipelineState *pipelinestate) 
 {
-  m_recordCommandbuffer = static_cast<GL4Commandbuffer *>(buf);
-}
+  auto execute = [=] (GraphicsPipelineState *pipelinestate) -> vvoid {
+    if (pipelinestate == m_currPipeline) {
+      return;
+    }
+    m_currPipeline = static_cast<GL4GraphicsPipelineState *>(pipelinestate);
+    if (m_currPipeline->IsBlending()) {
+      glEnable(GL_BLEND);
+      glBlendEquation(m_currPipeline->GetNativeBlendEq);
+      glBlendFunc(m_currPipeline->GetNativeBlendSrc(), m_currPipeline->GetNativeBlendDst());
+    } else {
+      glDisable(GL_BLEND);
+    }
 
+    if (m_currPipeline->IsCulling()) {
+      glEnable(GL_CULL_FACE); 
+      glCullFace(m_currPipeline->GetNativeCullFace());
+      glFrontFace(m_currPipeline->GetNativeFrontFace());
+    } else {
+      glDisable(GL_CULL_FACE);
+    }
 
-vvoid GL4RenderContext::EndRecord() 
-{
-  m_recordCommandbuffer = nullptr;
-}
+    if (m_currPipeline->HasDepth()) {
+      glEnable(GL_DEPTH);
+      glDepthFunc(m_currPipeline->GetNativeDepthFunc());
+    } else {
+      glDisable(GL_DEPTH);
+    }
 
-vvoid GL4RenderContext::ApplyGraphicsPipelineState(GraphicsPipelineState *pipelinestate) 
-{
-  if (pipelinestate == m_currPipeline) {
-    return;
-  }
-  m_currPipeline = static_cast<GL4GraphicsPipelineState *>(pipelinestate);
-  m_currPipeline->Update();
+    glViewport(
+      m_currPipeline->GetViewport().win_x,
+      m_currPipeline->GetViewport().win_y,
+      m_currPipeline->GetViewport().win_width,
+      m_currPipeline->GetViewport().win_height
+    );
+    glScissor(
+      m_currPipeline->GetScissor().offsetx,
+      m_currPipeline->GetScissor().offsety,
+      m_currPipeline->GetScissor().width,
+      m_currPipeline->GetScissor().height
+    );
+    
+  };
+  buffer->AddCommand([=] () -> vvoid { execute(pipelinestate); });
 }
 
 
@@ -375,8 +340,9 @@ Framebuffer *GL4RenderContext::GetFramebuffer()
 }
 
 
-vvoid GL4RenderContext::SetMaterial(Material *material) 
+vvoid GL4RenderContext::SetMaterial(GL4Commandbuffer *buffer, Material *material) 
 {
+  GLSLMaterial *gl_material = static_cast<GLSLMaterial *>(material);
   ShaderUniformParams params;
   params.uniforms = material->GetMaterialValues();
   params.samplers = material->GetUniformSamplers();
@@ -384,12 +350,12 @@ vvoid GL4RenderContext::SetMaterial(Material *material)
 }
 
 
-vvoid GL4RenderContext::Dispatch(vuint32 x, vuint32 y, vuint32 z) 
+vvoid GL4RenderContext::Dispatch(GL4Commandbuffer *buffer, vuint32 x, vuint32 y, vuint32 z) 
 {
 }
 
 
-vvoid GL4RenderContext::SetRenderPass(RenderPass *pass) 
+vvoid GL4RenderContext::SetRenderPass(GL4Commandbuffer *buffer, RenderPass *pass) 
 {
 }
 } // vikr

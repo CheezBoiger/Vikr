@@ -32,10 +32,13 @@ class Cubemap;
 /// Material defines the textures, samplers, and descriptor
 /// sets to bind to graphic pipelines. this is ultimately 
 /// created by the RenderDevice, so create them sparingly.
+/// Use Uniformbuffer Objects if there needs to be number
+/// data sent over to shaders. Do not use this as temporary 
+/// objects!
 /// NOTE(): Vulkan can only use uniform buffers, no standalone 
 ///         uniforms should be implemented in glsl code.
 ///         Need to redesign Material so that it adheres to vulkan.
-class Material : public RenderDeviceObject {
+class Material : public RenderDeviceObject, public GUID {
   static const std::string kDefaultName;
 public:
   Material(GraphicsAPIType type);
@@ -50,18 +53,17 @@ public:
   vvoid SetName(std::string name) { m_name = name; }
 
   /// Sets the texture for a sampler in the shader.
-  vvoid SetTexture(vuint32 bind, Texture *texture);
-  vvoid SetCubemap(vuint32 bind, Cubemap *cubemap);
-  vvoid Clear() { m_tex_samplers.clear(); }
-  
-  std::map<std::string, TextureSampler> *GetUniformSamplers() { return &m_tex_samplers; }
+  virtual vvoid SetTexture(vuint32 bind, Texture *texture) = 0;
+  virtual vvoid SetCubemap(vuint32 bind, Cubemap *cubemap) = 0;
+
+  virtual Texture *GetTexture(vuint32 bind) = 0;
+  virtual Cubemap *GetCubemap(vuint32 bind) = 0;
+
+  virtual vbool RemoveTexture(vuint32 bind) = 0;
+  virtual vbool RemoveCubemap(vuint32 bind) = 0;
 
 protected:
   std::string m_name;
-
-  /// Keep track of the uniforms and samplers of the shader. These values get called by the renderer
-  /// to render textures and materials.
-  std::map<std::string, TextureSampler> m_tex_samplers;
 }; 
 } // vikr
 #endif // __VIKR_MATERIAL_HPP

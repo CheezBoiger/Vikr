@@ -60,11 +60,6 @@ public:
     destroy the entire subtree heirarchy.
   */
   vbool DestroySceneNode(guid_t guid, vbool destroy_subtree);
-
-
-  Material *CreateMaterial(std::string mat_name);
-  Material *GetMaterial(std::string name);
-  vbool DestroyMaterial(std::string name);
 };
 
 

@@ -31,8 +31,8 @@ public:
   vbool HasDepth() const override { return m_depth; }
   DepthCompare GetDepthFunc() const override;
   BlendEq GetBlendEquation() const override;
-  BlendFunc GetBlendFunctionSrc() const override;
-  BlendFunc GetBlendFunctionDst() const override;
+  BlendFactor GetBlendFactorSrc() const override;
+  BlendFactor GetBlendFactorDst() const override;
   Topology GetTopology() const override;
   Viewport GetViewport() const override { return m_viewport; }
   Scissor2D GetScissor() const override { return m_scissor; }
@@ -47,10 +47,14 @@ public:
   GLuint GetNativeCullFace() { return m_cullface; }
   GLuint GetNativeFrontFace() { return m_frontface; }
 
+  GLuint GetShaderProgram() { return m_shaderProgram; }
+  Shader *GetShader(ShaderStage stage) override;
+
 private:
   vvoid SetDirty() { m_dirty = true; }
   vvoid SetClean() { m_dirty = false; }
 
+  GLuint m_shaderProgram;
   vbool m_blend             = false;
   GLuint m_blendeq          = GL_FUNC_ADD;
   GLuint m_blendsrc         = GL_SRC_ALPHA;
@@ -77,8 +81,6 @@ private:
     Shaders linked in the pipeline.
   */
   std::map<ShaderStage, Shader *> shaders;
-
-  GLSLShaderProgram *program;
   std::string name;
 };
 } // vikr

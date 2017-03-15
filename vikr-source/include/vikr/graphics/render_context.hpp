@@ -81,7 +81,7 @@ public:
   virtual vvoid SetBlendEq(BlendEq eq) = 0;
 
   /// Set the blend function for both the context source and destination.
-  virtual vvoid SetBlendMode(BlendFunc src, BlendFunc dst) = 0;
+  virtual vvoid SetBlendMode(BlendFactor src, BlendFactor dst) = 0;
 
   /// Set the Depth function, this is mainly kept in default.
   virtual vvoid SetDepthFunc(DepthCompare depth) = 0;

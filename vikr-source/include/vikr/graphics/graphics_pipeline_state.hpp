@@ -20,9 +20,9 @@
 #include <vikr/graphics/depthmode.hpp>
 #include <vikr/graphics/stencildepth.hpp>
 #include <vikr/graphics/topology.hpp>
+#include <vikr/graphics/viewport.hpp>
 
-#include <vikr/shader/shader.hpp>
-#include <vikr/shader/shader_program.hpp>
+#include <vikr/shader/shader_config.hpp>
 
 
 namespace vikr {
@@ -56,7 +56,7 @@ struct GraphicsPipelineDescription {
 
   /// Describe the Blending functionality to use for
   /// this Graphics Pipelinestate. 
-  BlendFunc bsrc, bdst;
+  BlendFactor bsrc, bdst;
 
   /// The Blend equation for this Graphics pipelinestate.
   /// This value is normally kept to vikr_BLEND_ADD, as it
@@ -112,9 +112,21 @@ public:
   virtual vbool HasDepth() const = 0;
   virtual DepthCompare GetDepthFunc() const = 0;
   virtual BlendEq GetBlendEquation() const = 0;
-  virtual BlendFunc GetBlendFunctionSrc() const = 0;
-  virtual BlendFunc GetBlendFunctionDst() const = 0;
+
+  /// Get the Blend factor for the src.
+  virtual BlendFactor GetBlendFactorSrc() const = 0;
+
+  /// Get the Blend Factor for the destination.
+  virtual BlendFactor GetBlendFactorDst() const = 0;
+
+  /// Get the topology of the pipeline state.
   virtual Topology GetTopology() const = 0;
+
+  /// Get a Shader that was baked into this pipeline state.
+  /// Returns reference to the Shader that is in this pipeline.
+  /// Returns nullptr if now shader was found with requested 
+  /// shader stage.
+  virtual Shader *GetShader(ShaderStage stage) = 0;
 
   virtual vvoid Bake(GraphicsPipelineDescription &description) = 0;
 

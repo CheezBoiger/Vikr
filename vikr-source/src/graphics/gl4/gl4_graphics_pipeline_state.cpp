@@ -11,22 +11,22 @@
 namespace vikr {
 
 
-GLenum GetGLBlendMode(BlendFunc func) {
+GLenum GetGLBlendMode(BlendFactor func) {
   switch (func) {
-    case BlendFunc::vikr_BLEND_CONSTANT_ALPHA: return GL_CONSTANT_ALPHA;  
-    case BlendFunc::vikr_BLEND_CONSTANT_COLOR: return GL_CONSTANT_COLOR;
-    case BlendFunc::vikr_BLEND_DST_ALPHA: return GL_DST_ALPHA;
-    case BlendFunc::vikr_BLEND_DST_COLOR: return GL_DST_COLOR;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_ALPHA: return GL_ONE_MINUS_CONSTANT_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE: return GL_ONE;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR: return GL_ONE_MINUS_CONSTANT_COLOR;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_ALPHA: return GL_ONE_MINUS_DST_ALPHA;  
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_COLOR: return GL_ONE_MINUS_DST_COLOR;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA: return GL_ONE_MINUS_SRC_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_COLOR: return GL_ONE_MINUS_SRC_COLOR;
-    case BlendFunc::vikr_BLEND_SRC_ALPHA: return GL_SRC_ALPHA;
-    case BlendFunc::vikr_BLEND_SRC_COLOR: return GL_SRC_COLOR;
-    case BlendFunc::vikr_BLEND_ZERO: return GL_ZERO;
+    case BlendFactor::vikr_BLEND_CONSTANT_ALPHA: return GL_CONSTANT_ALPHA;  
+    case BlendFactor::vikr_BLEND_CONSTANT_COLOR: return GL_CONSTANT_COLOR;
+    case BlendFactor::vikr_BLEND_DST_ALPHA: return GL_DST_ALPHA;
+    case BlendFactor::vikr_BLEND_DST_COLOR: return GL_DST_COLOR;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_CONSTANT_ALPHA: return GL_ONE_MINUS_CONSTANT_ALPHA;
+    case BlendFactor::vikr_BLEND_ONE: return GL_ONE;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR: return GL_ONE_MINUS_CONSTANT_COLOR;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_DST_ALPHA: return GL_ONE_MINUS_DST_ALPHA;  
+    case BlendFactor::vikr_BLEND_ONE_MINUS_DST_COLOR: return GL_ONE_MINUS_DST_COLOR;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_SRC_ALPHA: return GL_ONE_MINUS_SRC_ALPHA;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_SRC_COLOR: return GL_ONE_MINUS_SRC_COLOR;
+    case BlendFactor::vikr_BLEND_SRC_ALPHA: return GL_SRC_ALPHA;
+    case BlendFactor::vikr_BLEND_SRC_COLOR: return GL_SRC_COLOR;
+    case BlendFactor::vikr_BLEND_ZERO: return GL_ZERO;
     default: return GL_ONE_MINUS_CONSTANT_ALPHA;
   }
 }
@@ -59,6 +59,7 @@ GLenum GetGLBlendEq(BlendEq eq) {
 
 GL4GraphicsPipelineState::GL4GraphicsPipelineState()
   : program(nullptr)
+  , GraphicsPipelineState(vikr_API_OPENGL)
 {
   m_viewport = {
     0,

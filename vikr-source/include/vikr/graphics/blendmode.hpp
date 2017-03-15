@@ -8,7 +8,7 @@
 namespace vikr {
 
 
-enum class BlendFunc {
+enum class BlendFactor {
   vikr_BLEND_ZERO,
   vikr_BLEND_ONE,
   vikr_BLEND_SRC_COLOR,

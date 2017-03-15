@@ -5,9 +5,16 @@
 #define __VIKR_GLSL_MATERIAL_HPP
 
 
+#include <vikr/shader/material.hpp>
+
+
 namespace vikr {
 
 
+class GLSLMaterial : public Material {
+public:
 
+private:
+};
 } // vikr
 #endif // __VIKR_GLSL_MATERIAL_HPP

@@ -8,6 +8,7 @@
 #include <vikr/platform/vikr_api.hpp>
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/graphics/graphics_config.hpp>
+#include <vikr/shader/texture_config.hpp>
 #include <vikr/mesh/imesh.hpp>
 #include <vikr/scene/guid_generator.hpp>
 
@@ -28,6 +29,8 @@ class RenderPass;
 class Shader;
 class Material;
 class ResourceManager;
+class GraphicsPipelineState;
+class ComputePipelineState;
 class RenderContext;
 class Vertexbuffer;
 class Cubemap;
@@ -140,6 +143,17 @@ public:
 
   /// Get the Performance of this device.
   virtual GraphicsPerformanceInfo GetPerformanceInformation() = 0;
+
+  /// Create a material object to use for the RenderDevice.
+  /// This is ultimately a descriptor set for Vulkan, and simply
+  /// just a clump of mapped values for OpenGL. 
+  virtual Material *CreateMaterial() = 0;
+
+  /// Get the material provided with the necessary id.
+  virtual Material *GetMaterial(guid_t id) = 0;
+
+  /// Destroy the material.
+  virtual vbool DestroyMaterial(guid_t id) = 0;
 
   /// Submit a commandbuffer through the RenderDevice.
   /// This ultimately deprecates RenderContext, As it is no longer needed

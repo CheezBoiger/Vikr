@@ -41,17 +41,17 @@ vbool GL4Commandbuffer::IsRecording()
 }
 
 
-vvoid GL4Commandbuffer::Draw(vuint32 start, vuint32 vertices) {
+vvoid GL4Commandbuffer::Draw(vuint32 start, vuint32 vertices, vuint32 instances) {
   CHECK_RECORDING();
   static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().Draw(
-    this, start, vertices);
+    this, start, vertices, instances);
 }
 
 
-vvoid GL4Commandbuffer::DrawIndexed(const vvoid *indices, vuint32 vertices) {
+vvoid GL4Commandbuffer::DrawIndexed(const vvoid *indices, vuint32 vertices, vuint32 instances) {
   CHECK_RECORDING();
   static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().DrawIndexed(
-    this, indices, vertices);
+    this, indices, vertices, instances);
 }
 
 
@@ -64,38 +64,51 @@ vvoid GL4Commandbuffer::BindRenderPass(RenderPass *pass) {
 
 vvoid GL4Commandbuffer::BindGraphicsPipelineState(GraphicsPipelineState *state) {
   CHECK_RECORDING();
-  static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().ApplyGraphicsPipelineState(
+  static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().BindGraphicsPipelineState(
     this, state);
 }
 
 
-vvoid GL4Commandbuffer::BindVertexbuffers(vuint32 instances, Vertexbuffer *buffer) {
+vvoid GL4Commandbuffer::BindVertexbuffers(Vertexbuffer *buffer) {
   CHECK_RECORDING();
   static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().QueryVertexbuffer(
-    this, instances, buffer);
+    this, buffer);
     
 }
 
 
 vvoid GL4Commandbuffer::BindMaterial(Material *material) {
   CHECK_RECORDING();
+  static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().SetMaterial(
+    this, material);
 }
 
 
-vvoid GL4Commandbuffer::SetViewport(Viewport *viewport) {
+vvoid GL4Commandbuffer::SetViewport(Viewport *viewport) 
+{
+  CHECK_RECORDING();
+  static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().SetViewport(
+    this, viewport);
 }
 
 
 vvoid GL4Commandbuffer::Clear() {
   CHECK_RECORDING();
+  static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().Clear(
+    this);
 }
 
 
 vvoid GL4Commandbuffer::ClearWithColor(glm::vec4 color) {
   CHECK_RECORDING();
+  static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().ClearWithColor(
+    this, color);
 }
 
 
 vvoid GL4Commandbuffer::BindComputePipelineState(ComputePipelineState *pipeline) {
+  CHECK_RECORDING();
+  static_cast<GL4RenderDevice *>(GetRenderDevice())->GetContext().BindComputePipelineState(
+    this, pipeline);
 }
 } // vikr

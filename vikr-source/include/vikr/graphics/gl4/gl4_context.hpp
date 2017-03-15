@@ -23,9 +23,12 @@ class GL4Vertexbuffer;
 struct TextureSampler;
 
 
-/**
-  OpenGL 4.3 Render Context.
-*/
+/// OpenGL 4.3 Render Context. This keeps track of the dynamic
+/// state of OpenGL, since Vulkan is all static based. We tend to
+/// use this context by means of implementing dynamic states, which is debatable
+/// as to whether it should even be interfaced... which not really. 
+/// 
+/// Treat this Context as a means to keep the current state of OpenGL.
 class GL4RenderContext {
 public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(GL4RenderContext);
@@ -35,30 +38,14 @@ public:
     You are using the OpenGL context, which makes it easier to 
     understand.
   */
-  vvoid Draw(GL4Commandbuffer *buffer, vuint32 start, vuint32 vertices);
-  vvoid DrawIndexed(GL4Commandbuffer *buffer, const vvoid *indices, vuint32 elements);
+  vvoid Draw(GL4Commandbuffer *buffer, vuint32 start, vuint32 vertices, vuint32 instances);
+  vvoid DrawIndexed(GL4Commandbuffer *buffer, const vvoid *indices, vuint32 elements, vuint32 instances);
   vvoid SetTexture(Texture *texture, vuint32 index);
   
-  vvoid SetRenderTarget(RenderTarget *target, vuint32 index);
-
-  /**
-    These functions might need to hit the PipelineState instead. They involve
-    mostly rasterization.
-  */
-  vvoid SetBlendEq(BlendEq eq);
-  vvoid SetBlendMode(BlendFunc src, BlendFunc dst);
-  vvoid SetDepthFunc(DepthCompare depth);
-  vvoid EnableCullMode(vbool enable);
-  vvoid EnableBlendMode(vbool enable);
-  vvoid EnableDepthMode(vbool enable);
-  vvoid SetCullFace(CullFace face);
-  vvoid SetFrontFace(FrontFace face);
-
-  
+  //vvoid SetRenderTarget(RenderTarget *target, vuint32 index);
   vvoid Clear(GL4Commandbuffer *buffer);
   vvoid ClearWithColor(GL4Commandbuffer *buffer, glm::vec4 color);
-  vvoid ChangeViewport(GL4Commandbuffer *buffer, Viewport *port);
-  vvoid ChangeTopology(Topology topology);
+  vvoid SetViewport(GL4Commandbuffer *buffer, Viewport *port);
 
   vvoid SetShaderUniforms(ShaderUniformParams *params);
   vvoid QueryVertexbuffer(GL4Commandbuffer *buffer, Vertexbuffer *vertexbuffer);
@@ -70,23 +57,21 @@ public:
 
   Framebuffer *GetFramebuffer();
   GraphicsPipelineState *GetGraphicsPipelineState();
-  vvoid ApplyGraphicsPipelineState(GL4Commandbuffer *buffer, GraphicsPipelineState *pipelinestate);
+  vvoid BindGraphicsPipelineState(GL4Commandbuffer *buffer, GraphicsPipelineState *pipelinestate);
+  vvoid BindComputePipelineState(GL4Commandbuffer *buffer, ComputePipelineState *pipelinestate);
   vvoid SetMaterial(GL4Commandbuffer *buffer, Material *material);
-  vvoid QueryVertexbuffer(GL4Commandbuffer *buffer, vuint32 instances, Vertexbuffer *vertexbuffer);
+  vvoid QueryVertexbuffer(GL4Commandbuffer *buffer, Vertexbuffer *vertexbuffer);
 
   GL4Vertexbuffer *GetCurrentVertexbuffer() { return m_queriedVertexbuffer; }
 
-  vvoid Dispatch(GL4Commandbuffer *buffer, vuint32 x, vuint32 y, vuint32 z) override;
-  vvoid ClearTextures() override;
+  vvoid Dispatch(GL4Commandbuffer *buffer, vuint32 x, vuint32 y, vuint32 z);
+  vvoid ClearTextures();
 
 private:
-
-  GL4GraphicsPipelineState *m_currPipeline                = nullptr;
-
-  std::vector<TextureSampler> m_currTextures;
-  GL4Commandbuffer *m_recordCommandbuffer         = nullptr;
+  GL4GraphicsPipelineState *m_currPipeline        = nullptr;
   GL4Framebuffer *m_currFramebuffer               = nullptr;
   GL4Vertexbuffer *m_queriedVertexbuffer          = nullptr;
+  std::vector<TextureSampler> m_currTextures;
 };
 } // vikr
 #endif // __VIKR_GL4_CONTEXT_HPP

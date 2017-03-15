@@ -90,8 +90,8 @@ public:
 
   virtual vvoid BeginRecord() = 0;
   virtual vvoid EndRecord() = 0;
-  virtual vvoid Draw(vuint32 start, vuint32 vertices) = 0;
-  virtual vvoid DrawIndexed(const vvoid *indices, vuint32 vertices) = 0;
+  virtual vvoid Draw(vuint32 start, vuint32 vertices, vuint32 instances) = 0;
+  virtual vvoid DrawIndexed(const vvoid *indices, vuint32 vertices, vuint32 instances) = 0;
   virtual vvoid BindRenderPass(RenderPass *pass) = 0;
   virtual vvoid UnbindRenderPass() = 0;
   virtual vvoid Clear() = 0;
@@ -100,7 +100,7 @@ public:
   virtual vvoid SetScissor(Scissor2D *scissor) = 0;
   virtual vvoid BindGraphicsPipelineState(GraphicsPipelineState *pipelinestate) = 0;
   virtual vvoid BindComputePipelineState(ComputePipelineState *pipelinestate) = 0;
-  virtual vvoid BindVertexbuffers(vuint32 instances, Vertexbuffer *buffer) = 0;
+  virtual vvoid BindVertexbuffers(Vertexbuffer *buffer) = 0;
   virtual vvoid BindMaterial(Material *material) = 0;
 
   ///  TODO(): This requires new in order to subdata with text! Need better optimization.

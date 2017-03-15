@@ -17,50 +17,31 @@ namespace vikr {
 
 class VKRenderPass;
 
-/**
-  Vulkan Framebuffer implemenation.
-*/
+
+/// Vulkan Framebuffer implemenation.
 class VKFramebuffer : public Framebuffer {
 public:
-  /**
-    Framebuffer constructor.
-  */
+  /// Framebuffer constructor.
   VKFramebuffer();
 
   vvoid Generate() override;
-
   vvoid SetClearColor(glm::vec3 color) override;
   glm::vec3 GetClearColor() override;
-
   VkFramebuffer GetFramebufferId() { return m_fbo.Get(); }
-
   vint32 IsComplete() override;
-  
   vvoid Bind() override;
   vvoid Unbind() override;
-
   vvoid ClearAttachments() override;
-
   vvoid Update() override;
-
   vbool HasDepthStencil() override;
-
   vbool IsMultisampled() override;
-
   vvoid Readbuffer(BufferMode mode) override;
-
   vvoid Writebuffer(BufferMode mode) override;
-
   vvoid Cleanup() override;
-
   vvoid SetRenderPass(RenderPass *pass) override;
-
   RenderPass *GetRenderPass() override;
-
   Viewport GetViewport() override;
-
   vvoid SetViewport(const Viewport &viewport) override;
-
   vvoid BlitTo(Framebuffer *framebuffer) override;
 
 private:

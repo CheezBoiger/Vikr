@@ -15,29 +15,22 @@
 namespace vikr {
 
 
+/// OpenGL 4 Render Device. This is used for device rendering.
+/// If need be, this device may be inherited in order to conduct your
+/// own device renderer.
 class GL4RenderDevice : public RenderDevice {
   static const std::string kGLSLShaderLanguage;
 public:
   GL4RenderDevice();
-  /**
-  
-  */
   std::string GetShaderLanguage() override;
-  
   Framebuffer *CreateFramebuffer() override;
-
   Vertexbuffer *CreateVertexbuffer(VertexUsageType type, 
     std::vector<Vertex> &vertices, std::vector<vuint32> &indices = std::vector<vuint32>()) override;
 
-  /**
-    Get the context of this device.
-  */
+  /// Get the context of this device.
   GL4RenderContext &GetContext() { return context; }
-
   Cubemap *CreateCubemap() override;
-
   RenderPass *CreateRenderPass() override;
-
   Commandbuffer &CreateCommandbuffer() override;
 
   vbool DestroyRenderPass(guid_t id) override;
@@ -57,10 +50,8 @@ public:
   ComputePipelineState *GetComputePipelineState(guid_t id) override;
   vbool DestroyComputePipelineState(guid_t id) override;
 
-  /**
-  Create a shader, and store it into Resources, the id of the shader will
-  be returned. Resources takes care of this.
-  */
+  /// Create a shader, and store it into Resources, the id of the shader will
+  /// be returned. Resources takes care of this.
   Shader *CreateShader(std::string name, ShaderStage stage) override;
   Shader *GetShader(guid_t id) override;
   vbool DestroyShader(guid_t id) override;
@@ -75,9 +66,7 @@ public:
   GraphicsPerformanceInfo GetPerformanceInformation() override;
 
 private:
-  /**
-    Rendering context that this device uses.
-  */
+  /// Rendering context that this device uses.
   GL4RenderContext context;
 };
 } // vikr

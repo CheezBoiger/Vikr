@@ -35,8 +35,8 @@ public:
   vbool HasDepth() const override;
   DepthCompare GetDepthFunc() const override;
   BlendEq GetBlendEquation() const override;
-  BlendFunc GetBlendFunctionSrc() const override;
-  BlendFunc GetBlendFunctionDst() const override;
+  BlendFactor GetBlendFunctionSrc() const override;
+  BlendFactor GetBlendFunctionDst() const override;
   Topology GetTopology() const override;
   std::string GetName() const override;
   vvoid SetName(std::string name) override;

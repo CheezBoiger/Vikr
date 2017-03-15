@@ -52,23 +52,23 @@ VkCompareOp GetNativeDepthFunc(DepthCompare func) {
 }
 
 
-VkBlendFactor GetNativeBlendFactor(BlendFunc func)
+VkBlendFactor GetNativeBlendFactor(BlendFactor func)
 {
   switch (func) {
-    case BlendFunc::vikr_BLEND_ZERO: return VK_BLEND_FACTOR_ZERO;
-    case BlendFunc::vikr_BLEND_SRC_COLOR: return VK_BLEND_FACTOR_SRC_COLOR;
-    case BlendFunc::vikr_BLEND_SRC_ALPHA: return VK_BLEND_FACTOR_SRC_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_COLOR: return VK_BLEND_FACTOR_ONE_MINUS_SRC_COLOR;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_SRC_ALPHA: return VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_COLOR: return VK_BLEND_FACTOR_ONE_MINUS_DST_COLOR;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_DST_ALPHA: return VK_BLEND_FACTOR_ONE_MINUS_DST_ALPHA;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR: return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_COLOR;
-    case BlendFunc::vikr_BLEND_ONE: return VK_BLEND_FACTOR_ONE;
-    case BlendFunc::vikr_BLEND_ONE_MINUS_CONSTANT_ALPHA: return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_ALPHA;
-    case BlendFunc::vikr_BLEND_DST_COLOR: return VK_BLEND_FACTOR_DST_COLOR;
-    case BlendFunc::vikr_BLEND_DST_ALPHA: return VK_BLEND_FACTOR_DST_ALPHA;
-    case BlendFunc::vikr_BLEND_CONSTANT_COLOR: return VK_BLEND_FACTOR_CONSTANT_COLOR;
-    case BlendFunc::vikr_BLEND_CONSTANT_ALPHA: return VK_BLEND_FACTOR_CONSTANT_ALPHA;
+    case BlendFactor::vikr_BLEND_ZERO: return VK_BLEND_FACTOR_ZERO;
+    case BlendFactor::vikr_BLEND_SRC_COLOR: return VK_BLEND_FACTOR_SRC_COLOR;
+    case BlendFactor::vikr_BLEND_SRC_ALPHA: return VK_BLEND_FACTOR_SRC_ALPHA;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_SRC_COLOR: return VK_BLEND_FACTOR_ONE_MINUS_SRC_COLOR;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_SRC_ALPHA: return VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_DST_COLOR: return VK_BLEND_FACTOR_ONE_MINUS_DST_COLOR;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_DST_ALPHA: return VK_BLEND_FACTOR_ONE_MINUS_DST_ALPHA;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_CONSTANT_COLOR: return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_COLOR;
+    case BlendFactor::vikr_BLEND_ONE: return VK_BLEND_FACTOR_ONE;
+    case BlendFactor::vikr_BLEND_ONE_MINUS_CONSTANT_ALPHA: return VK_BLEND_FACTOR_ONE_MINUS_CONSTANT_ALPHA;
+    case BlendFactor::vikr_BLEND_DST_COLOR: return VK_BLEND_FACTOR_DST_COLOR;
+    case BlendFactor::vikr_BLEND_DST_ALPHA: return VK_BLEND_FACTOR_DST_ALPHA;
+    case BlendFactor::vikr_BLEND_CONSTANT_COLOR: return VK_BLEND_FACTOR_CONSTANT_COLOR;
+    case BlendFactor::vikr_BLEND_CONSTANT_ALPHA: return VK_BLEND_FACTOR_CONSTANT_ALPHA;
     default: return VK_BLEND_FACTOR_ONE;
   }
 }

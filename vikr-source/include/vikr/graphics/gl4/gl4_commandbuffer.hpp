@@ -35,9 +35,9 @@ public:
 
   vvoid BeginRecord() override;
   vvoid EndRecord() override;
-  vvoid Draw(vuint32 start, vuint32 vertices) override;
-  vvoid DrawIndexed(const vvoid *indices, vuint32 vertices) override;
-  vvoid BindVertexbuffers(vuint32 instances, Vertexbuffer *buffer) override;
+  vvoid Draw(vuint32 start, vuint32 vertices, vuint32 instances) override;
+  vvoid DrawIndexed(const vvoid *indices, vuint32 vertices, vuint32 instances) override;
+  vvoid BindVertexbuffers(Vertexbuffer *buffer) override;
   vvoid BindRenderPass(RenderPass *pass) override;
   vvoid Clear() override;
   vvoid BindMaterial(Material *material) override;
@@ -49,7 +49,7 @@ public:
   vvoid SetBufferData(VertexUsageType type, 
     std::unique_ptr<std::vector<Vertex> > data) override;
   vbool IsRecording() override;
-  vvoid Execute(GL4RenderContext *context);
+  vvoid AddCommand(GL4GraphicsCommand command) { commands.push_back(command); }
 
 private:
   vbool recording = false;

@@ -20,15 +20,19 @@
 namespace vikr {
 
 
-/**
-  Vulkan RenderDevice. Initializing the Renderer with this device
-  will enable the GPU to issue Vulkan Commands and requests.
-  
-  This is still in developement however, so be on the look out to figure out 
-  what to do.
 
-  TODO(): This device is currently not usable, work is being done however.
-*/
+/// Vulkan RenderDevice. Initializing the Renderer with this device
+/// will enable the GPU to issue Vulkan Commands and requests.
+/// 
+/// This is still in developement however, so be on the look out to figure out 
+/// what to do.
+///
+/// We leave SubmitCommandbuffer() and Present() virtual, simply because Semaphore creation,
+/// along with Presentation, is highly dependent on how the programmer wishes to handle
+/// commandbuffers. There is no telling how many semaphores will be needed for the programmer,
+/// so we will leave that up to them. We will simply make it easier to implement however.
+///
+/// TODO(): This device is currently not usable, work is being done however.
 class VKRenderDevice : public RenderDevice {
 public:
   VKRenderDevice();
@@ -39,8 +43,6 @@ public:
   
   Vertexbuffer *CreateVertexbuffer(VertexUsageType type, 
     std::vector<Vertex> &vertices, std::vector<vuint32> &indices= std::vector<vuint32>()) override;
-
-  RenderContext *GetContext() override { return &context; }
 
   Cubemap *CreateCubemap() override;
 
@@ -80,13 +82,25 @@ public:
   Texture *GetTexture(guid_t id) override;
   vbool DestroyTexture(guid_t id) override;
 
+  virtual vbool SubmitCommandbuffer(Commandbuffer *buffer) override;
+
+  virtual vvoid Present() override;
+
   GraphicsHardwareInfo GetHardwareInformation() override;
   GraphicsPerformanceInfo GetPerformanceInformation() override;
 
-private:
+protected:
+  /// Base semaphores. For basic handling.
+  struct {
+    VkSemaphore present_complete;
+    VkSemaphore render_complete;
+  } semaphores;
 
+private:
+  /// Setup the Device and it's swapchain, devices, etc...
   vvoid Setup();
 
+  /// Determines the physical device used by this Vulkan Device.
   vvoid DeterminePhysicalDevice();
 
   vvoid CreateLogicalDevices();
@@ -98,10 +112,8 @@ private:
   
   VKPhysicalDevice m_physicalDevice;
 
-  /**
-    Vulkan Context.
-  */
-  VKRenderContext context;
+  VkCommandPool m_commandPool;
+  VkDescriptorPool m_descriptorPool;
 
 public:
   static const vchar *kApplicationName;
