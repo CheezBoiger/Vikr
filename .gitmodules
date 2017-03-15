@@ -4,6 +4,6 @@
 [submodule "libs/glfw"]
 	path = libs/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule "libs/--force"]
-	path = libs/--force
+[submodule "glslang"]
+	path = libs/glslang
 	url = https://github.com/KhronosGroup/glslang.git
