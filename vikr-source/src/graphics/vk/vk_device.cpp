@@ -29,22 +29,22 @@ VKRenderDevice::VKRenderDevice()
 
 // Pipeline setup.
 vvoid VKRenderDevice::Setup() {
-  VKInstance::CreateInstance();
-  m_surface.CreateSurface();
+  m_instance.Create();
+  m_surface.Create(this);
   DeterminePhysicalDevice();
   CreateLogicalDevices();
 }
 
 
 vvoid VKRenderDevice::DeterminePhysicalDevice() {
-  m_physicalDevice.CheckSuitableDevices(VKInstance::instance.Get());
+  m_physicalDevice.CheckSuitableDevices(m_instance.GetNativeInstance());
   m_physicalDevice.SelectPhysicalDevice();
 }
 
 
 vvoid VKRenderDevice::CreateLogicalDevices() {
   VKQueueFamily indices = 
-    VKQueueFamily::FindQueueFamilies(m_physicalDevice.GetCurrentDevice());
+    VKQueueFamily::FindQueueFamilies(m_physicalDevice.GetCurrentNativePhysicalDevice());
   VkPhysicalDeviceFeatures device_features = { };
   
   std::vector<VkDeviceQueueCreateInfo> queue_createInfos;
@@ -72,13 +72,13 @@ vvoid VKRenderDevice::CreateLogicalDevices() {
   // require Validation Layers in the future. 
   device_info.enabledLayerCount = 0; 
 
-  if (vkCreateDevice(m_physicalDevice.GetCurrentDevice(),
+  if (vkCreateDevice(m_physicalDevice.GetCurrentNativePhysicalDevice(),
         &device_info, nullptr, m_logicDevice.Replace()) != VK_SUCCESS) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Failed to create a logical device!");
   }
 
-  vkGetDeviceQueue(m_logicDevice, indices.GetGFRFamily(), 0, &context.GetGraphicsQueue());
-  vkGetDeviceQueue(m_logicDevice, indices.GetPrstFamily(), 0, &context.GetPresentationQueue());
+  vkGetDeviceQueue(m_logicDevice, indices.GetGFRFamily(), 0, &m_queueGraphicsBuffer);
+  vkGetDeviceQueue(m_logicDevice, indices.GetPrstFamily(), 0, &m_queuePresentBuffer);
 }
 
 

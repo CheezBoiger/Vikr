@@ -29,7 +29,7 @@ public:
   /**
     Check for suitable devices with Vulkan.
   */  
-  vvoid CheckSuitableDevices(VkInstance &instance);
+  vvoid CheckSuitableDevices(VKRenderDevice *device);
   /**
     Select the best physical device to use.
   */
@@ -38,19 +38,19 @@ public:
   /**
     Get the current physical device being used.
   */
-  VkPhysicalDevice GetCurrentDevice() { return m_physicalDevice; }
+  VkPhysicalDevice GetCurrentNativePhysicalDevice() { return m_physicalDevice; }
 
   std::vector<const vchar *> &GetDeviceExtensions() { return device_ext; }
 private:
   /**
     Rate our found devices.
   */
-  vint32 RateDeviceCompatibility(VkPhysicalDevice &device);
-  vbool IsSuitable(VkPhysicalDevice &device);
+  vint32 RateDeviceCompatibility(VkPhysicalDevice pdevice);
+  vbool IsSuitable(VKRenderDevice *rdevice);
 
   vuint32 m_currentCount;
   std::vector<VkPhysicalDevice> m_foundDevices;
-  vbool CheckDeviceExtensionSupport(VkPhysicalDevice &device); 
+  vbool CheckDeviceExtensionSupport(VkPhysicalDevice pdevice); 
   /**
     Current Physical Device we are using.
   */
@@ -74,7 +74,7 @@ public:
   /**
     Find us a queue family for rendering.
   */
-  static VKQueueFamily FindQueueFamilies(VkPhysicalDevice device);
+  static VKQueueFamily FindQueueFamilies(VKRenderDevice *device);
   
   vint32 GetGFRFamily() { return gfrFamily; }
   vint32 GetPrstFamily() { return prstFamily; }

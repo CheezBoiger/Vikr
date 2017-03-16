@@ -10,10 +10,14 @@
 namespace vikr {
 
 
-VkMemoryManager<VkInstance> VKInstance::instance = { vkDestroyInstance };
+VKInstance::VKInstance()
+  : instance({ vkDestroyInstance })
+{
+}
 
 
-vvoid VKInstance::CreateInstance() {
+
+vvoid VKInstance::Create() {
   VkApplicationInfo app_info = { };
   VkInstanceCreateInfo inst_info = { };
   app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;

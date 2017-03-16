@@ -27,7 +27,7 @@ class VKRenderDevice;
 /// offers in it's implementation.  
 class VKGraphicsPipelineState : public GraphicsPipelineState {
 public:
-  VKGraphicsPipelineState(VKRenderDevice *device);
+  VKGraphicsPipelineState();
   Viewport GetViewport() const override;
   Scissor2D GetScissor() const override;
   vbool IsCulling() const override;

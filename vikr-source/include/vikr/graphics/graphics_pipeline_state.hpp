@@ -21,6 +21,7 @@
 #include <vikr/graphics/stencildepth.hpp>
 #include <vikr/graphics/topology.hpp>
 #include <vikr/graphics/viewport.hpp>
+#include <vikr/graphics/render_device.hpp>
 
 #include <vikr/shader/shader_config.hpp>
 

@@ -62,9 +62,6 @@ private:
     Current Pipeline State to use.
   */
   VKPipelineState *m_currPipelineState = nullptr;
-
-  VkQueue m_queueGraphicsBuffer;
-  VkQueue m_queuePresentBuffer;
 };
 } // vikr
 #endif // __VIKR_VK_CONTEXT_HPP

@@ -18,11 +18,15 @@ namespace vikr {
 */
 class VKInstance {
 public:
+  VKInstance();
 
-  static vvoid CreateInstance();
+  vvoid Create();
 
+  VkInstance GetNativeInstance() { return instance.Get(); }
 
-  static VkMemoryManager<VkInstance> instance;
+private:
+  
+  VkMemoryManager<VkInstance> instance;
 
 };
 } // vikr

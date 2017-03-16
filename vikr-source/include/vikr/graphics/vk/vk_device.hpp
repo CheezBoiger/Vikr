@@ -83,12 +83,19 @@ public:
   Material *GetMaterial(guid_t id) override;
   vbool DestroyMaterial(guid_t id) override;
 
+  VKSurface &GetSurface() { return m_surface; }
+  VKPhysicalDevice &GetPhysicalDevice() { return m_physicalDevice; }
+  VKInstance &GetInstance() { return m_instance; }
+
 protected:
   /// Base semaphores. For basic handling.
   struct {
     VkSemaphore present_complete;
     VkSemaphore render_complete;
   } semaphores;
+
+  VkQueue m_queueGraphicsBuffer;
+  VkQueue m_queuePresentBuffer;
 
 private:
   /// Setup the Device and it's swapchain, devices, etc...
@@ -105,6 +112,7 @@ private:
   VkMemoryManager<VkDevice> m_logicDevice;
   VKPhysicalDevice m_physicalDevice;
   VKSurface m_surface;
+  VKInstance m_instance;
   VkCommandPool m_commandPool;
   VkDescriptorPool m_descriptorPool;
 

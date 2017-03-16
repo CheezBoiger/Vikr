@@ -8,16 +8,19 @@
 namespace vikr {
 
 
-vvoid VKSwapChain::Init(VkPhysicalDevice physical_device)
+vvoid VKSwapChain::Init(VKRenderDevice *renderdevice)
 {
-  device = physical_device;
+  device = renderdevice;
 }
 
 
 SwapChainSupportDetails VKSwapChain::QuerySwapChainSupport()
 {
   SwapChainSupportDetails details;
-  vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, VKSurface::surface, &details.capabilities);
+  vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
+    device->GetPhysicalDevice().GetCurrentNativePhysicalDevice(),
+    device->GetSurface().GetNativeSurfaceKHR(),
+    &details.capabilities);
   return details;
 }
 } // vikr

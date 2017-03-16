@@ -120,8 +120,8 @@ VkPolygonMode GetNativePolygonMode(PolygonMode mode)
 }
 
 
-VKGraphicsPipelineState::VKGraphicsPipelineState(VKRenderDevice *device)
-  : device(device)
+VKGraphicsPipelineState::VKGraphicsPipelineState()
+  : GraphicsPipelineState(vikr_API_VULKAN)
 {
 }
 

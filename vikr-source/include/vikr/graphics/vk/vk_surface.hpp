@@ -15,17 +15,19 @@
 namespace vikr {
 
 
+class VKRenderDevice;
+
+
 class VKSurface {
 public:
   
-  vvoid CreateSurface();
+  vvoid Create(VKRenderDevice *device);
   vvoid Cleanup();
 
-  VkSurfaceKHR GetSurface() { return surface; }
+  VkSurfaceKHR GetNativeSurfaceKHR() { return surface; }
   
 private:
   VkSurfaceKHR surface;
-
 }; 
 } // vikr
 #endif // __VIKR_VK_SURFACE_HPP

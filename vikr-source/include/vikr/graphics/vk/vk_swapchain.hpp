@@ -6,7 +6,7 @@
 
 
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
-
+#include <vikr/graphics/vk/vk_device.hpp>
 #include <vikr/graphics/graphics.hpp>
 
 
@@ -27,12 +27,12 @@ public:
   /**
     Gunna need that physical device to initialize yo...
   */
-  vvoid Init(VkPhysicalDevice physical_dev);
+  vvoid Init(VKRenderDevice *device);
 
   SwapChainSupportDetails QuerySwapChainSupport();
 
 private:
-  VkPhysicalDevice device;
+  VKRenderDevice *device;
 };
 } // vikr
 #endif // __VIKR_VK_SWAPCHAIN_HPP
