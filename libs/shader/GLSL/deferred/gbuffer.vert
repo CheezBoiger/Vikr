@@ -2,6 +2,8 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #version 430 core
+#extension GL_ARB_separate_shader_objects : enable
+
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec2 texCoords;
@@ -16,14 +18,11 @@ out VERT_OUT {
 } vs_out;
 
 
-layout (std140) uniform VikrBlock {
+layout (std140, binding = 0) uniform VikrBlock {
   mat4 Projection;
   mat4 View;
+  mat4 Model;
 };
-
-uniform mat4 vikr_Model;
-uniform mat4 vikr_View;
-uniform mat4 vikr_Projection;
 
 
 void main() {

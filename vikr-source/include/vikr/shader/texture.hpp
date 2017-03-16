@@ -106,7 +106,7 @@ public:
   virtual vvoid SetHeight(vint32 height) = 0;
   virtual vvoid SetDepth(vint32 depth) = 0;
   virtual vvoid SetName(std::string name) = 0;
-  virtual vvoid SetBytecode(vbyte *bytecode, vbool is_stbi = true) = 0;
+  virtual vvoid SetBytecode(vbyte *bytecode) = 0;
   virtual vbyte *GetBytecode() = 0;
   virtual vvoid Cleanup() = 0;
   virtual vvoid SetSamples(vint32 samples) = 0;

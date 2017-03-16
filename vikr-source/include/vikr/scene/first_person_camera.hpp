@@ -10,10 +10,9 @@
 namespace vikr {
 
 
-/**
-  First-Person Shooter style camera, for free movement. This should not be part of the 
-  Renderer engine, but it is useful to have one...
-*/
+
+/// First-Person Shooter style camera, for free movement. This should not be part of the 
+/// Renderer engine, but it is useful to have one...
 class FPSCamera : public Camera {
 public:
   FPSCamera(vreal32 pitch_deg_max = 89.0f,

@@ -65,10 +65,21 @@ struct GraphicsPipelineDescription {
 
   /// The Depth function used to compare Renderables in the 
   /// zbuffer. 
-  DepthCompare dfunct;
+  DepthCompare dcompare;
+
+  /// Cull Mode description. Determine face culling for the
+  /// back, front, or both. 
   CullFace cull;
+
+  /// Determine the winding order of how meshes render on the screen.
   FrontFace front;
+
+  /// Determine the topology of the pipeline. The default would be 
+  /// triangle tesselation.
   Topology topology;
+  
+  /// Polygon mode determines how to render meshes, by line, solid
+  /// coloring, or simply wireframe...
   PolygonMode polygon;
   vbool blend;
   vbool depth;
@@ -107,10 +118,19 @@ public:
   /// Get the Scissor viewport of this pipeline state.
   virtual Scissor2D GetScissor() const = 0;
 
+  /// Check if this pipeline is culling.
   virtual vbool IsCulling() const = 0;
+
+  /// Check if this pipeline is blending.
   virtual vbool IsBlending() const = 0;
+
+  /// Determine if this pipeline has depth for 3D support.
   virtual vbool HasDepth() const = 0;
-  virtual DepthCompare GetDepthFunc() const = 0;
+
+  /// Get the Depth compare function used in this pipeline.
+  virtual DepthCompare GetDepthCompare() const = 0;
+
+  /// Get the Blend equation used in this pipeline.
   virtual BlendEq GetBlendEquation() const = 0;
 
   /// Get the Blend factor for the src.
@@ -128,9 +148,17 @@ public:
   /// shader stage.
   virtual Shader *GetShader(ShaderStage stage) = 0;
 
+  /// Bake descriptions into the pipeline state. Once baked, the pipeline
+  /// can no longer be updated, or changed. Be sure to describe the pipeline
+  /// state with the Graphics Pipeline description, as it will be a way
+  /// to create pipelines for the renderer.
   virtual vvoid Bake(GraphicsPipelineDescription &description) = 0;
 
-  virtual GraphicsPipelineState *CreateChild() = 0;
+  /// Create a child from this Parent PipelineState. Child is created, provided with
+  /// an empty graphics description object, which will be filled with information about 
+  /// the parent pipeline. If Parent pipeline state can not be derived, then a nullptr
+  /// will be returned, along with no info about the parent state.
+  virtual GraphicsPipelineState *CreateChild(GraphicsPipelineDescription &inherited) = 0;
   
   virtual std::string GetName() const = 0;
   virtual vvoid SetName(std::string name) = 0;

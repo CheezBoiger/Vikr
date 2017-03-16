@@ -35,7 +35,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[0]->SetFormat(vikr_FORMAT_R16G16B16_SFLOAT);
   m_rendertargets[0]->SetFilterMin(vikr_FILTER_NEAREST);
   m_rendertargets[0]->SetFilterMax(vikr_FILTER_NEAREST);
-  m_rendertargets[0]->SetByteCode(nullptr);
+  m_rendertargets[0]->SetBytecode(nullptr);
   m_rendertargets[0]->Finalize();
 
   m_rendertargets[1] = device->CreateTexture("gNormal", vikr_TARGET_2D_MULTISAMPLE, "", false);
@@ -45,7 +45,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[1]->SetFormat(vikr_FORMAT_R16G16B16_SFLOAT);
   m_rendertargets[1]->SetFilterMin(vikr_FILTER_NEAREST);
   m_rendertargets[1]->SetFilterMax(vikr_FILTER_NEAREST);
-  m_rendertargets[1]->SetByteCode(nullptr);
+  m_rendertargets[1]->SetBytecode(nullptr);
   m_rendertargets[1]->Finalize();
 
   m_rendertargets[2] = device->CreateTexture("gAlbedo", vikr_TARGET_2D_MULTISAMPLE, "", false);
@@ -55,7 +55,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[2]->SetFormat(vikr_FORMAT_R16G16B16_SFLOAT);
   m_rendertargets[2]->SetFilterMin(vikr_FILTER_NEAREST);
   m_rendertargets[2]->SetFilterMax(vikr_FILTER_NEAREST);
-  m_rendertargets[2]->SetByteCode(nullptr);
+  m_rendertargets[2]->SetBytecode(nullptr);
   m_rendertargets[2]->Finalize();
 
   m_rendertargets[3] = device->CreateTexture("gSpecular", vikr_TARGET_2D_MULTISAMPLE, "", false);
@@ -65,7 +65,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[3]->SetFormat(vikr_FORMAT_R16G16B16_SFLOAT);
   m_rendertargets[3]->SetFilterMin(vikr_FILTER_NEAREST);
   m_rendertargets[3]->SetFilterMax(vikr_FILTER_NEAREST);
-  m_rendertargets[3]->SetByteCode(nullptr);
+  m_rendertargets[3]->SetBytecode(nullptr);
   m_rendertargets[3]->Finalize();
 
   m_rendertargets[4] = device->CreateTexture("gTangent", vikr_TARGET_2D_MULTISAMPLE, "", false);
@@ -75,7 +75,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[4]->SetFormat(vikr_FORMAT_R16G16B16_SFLOAT);
   m_rendertargets[4]->SetFilterMin(vikr_FILTER_NEAREST);
   m_rendertargets[4]->SetFilterMax(vikr_FILTER_NEAREST);
-  m_rendertargets[4]->SetByteCode(nullptr);
+  m_rendertargets[4]->SetBytecode(nullptr);
   m_rendertargets[4]->Finalize();
 
   m_rendertargets[5] = device->CreateTexture("gBitangent", vikr_TARGET_2D_MULTISAMPLE, "", false);
@@ -85,7 +85,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[5]->SetFormat(vikr_FORMAT_R16G16B16_SFLOAT);
   m_rendertargets[5]->SetFilterMin(vikr_FILTER_NEAREST);
   m_rendertargets[5]->SetFilterMax(vikr_FILTER_NEAREST);
-  m_rendertargets[5]->SetByteCode(nullptr);
+  m_rendertargets[5]->SetBytecode(nullptr);
   m_rendertargets[5]->Finalize();
 
   m_rendertargets[6] = device->CreateTexture("gNorm", vikr_TARGET_2D_MULTISAMPLE, "", false);
@@ -95,7 +95,7 @@ vvoid GBuffer::Init(RenderDevice *device) {
   m_rendertargets[6]->SetFormat(vikr_FORMAT_R16G16B16_SFLOAT);
   m_rendertargets[6]->SetFilterMin(vikr_FILTER_NEAREST);
   m_rendertargets[6]->SetFilterMax(vikr_FILTER_NEAREST);
-  m_rendertargets[6]->SetByteCode(nullptr);
+  m_rendertargets[6]->SetBytecode(nullptr);
   m_rendertargets[6]->Finalize();
 
   m_rendertargets[7] = device->CreateTexture("gDepth", vikr_TARGET_2D_MULTISAMPLE, "", false);

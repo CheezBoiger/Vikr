@@ -22,7 +22,6 @@ public:
 
   GL4Texture();
 
-
   virtual vint32 Finalize() override = 0;
   virtual vvoid Bind(vint32 texture = -1) override;
   virtual vvoid Unbind() override;
@@ -41,14 +40,14 @@ public:
   ImageFormat GetFormat() override;
   TextureFilterMode GetFilterMin() override;
   TextureFilterMode GetFilterMax() override;
-  vvoid SetName(std::string name) override;
-  vvoid SetBytecode(vbyte *bytecode, vbool is_stbi = true) override;
-  vbyte *GetBytecode() override;
-  vbool IsMipmapping() override;
-  vvoid SetSamples(vint32 samples) override;
-  vint32 GetSamples() override;
+  vvoid SetName(std::string name) override { m_name = name; }
+  vvoid SetBytecode(vbyte *bytecode) override { m_bytecode = bytecode; }
+  vbyte *GetBytecode() override { return m_bytecode; }
+  vbool IsMipmapping() override { return m_mipmapping; }
+  vvoid SetSamples(vint32 samples) override { m_samples = samples; }
+  vint32 GetSamples() override { return m_samples; }
   
-  vuint32 GetNativeId() { return id; }
+  GLuint GetNativeId() { return id; }
 
   vuint32 GetNativeFormat() { return native_format; }
   vuint32 GetNativeTarget() { return native_target; }
@@ -76,8 +75,8 @@ public:
 
 protected:
   vvoid SetPixelStore();
-  vuint32 id                          = 0;
-
+  GLuint id                           = 0;
+  vbyte *m_bytecode                   = nullptr;
   vint32  m_width                     = 0;
   vuint32 native_target               = GL_TEXTURE_2D;
   vuint32 native_format               = GL_RGBA;
@@ -89,15 +88,10 @@ protected:
   vuint32 native_wrap_t               = GL_REPEAT;
   vuint32 native_wrap_r               = GL_REPEAT;
 
-  vbool mipmapping                    = true;
+  vbool m_mipmapping                  = true;
   vbool m_alpha                       = true;
   vbool m_multisampled                = false;
   vuint32 m_samples                   = 1;
-
-  /**
-    Clean the Shader params.
-  */
-  vvoid CleanParams();
 
   std::string   m_name;
   std::string    m_path;

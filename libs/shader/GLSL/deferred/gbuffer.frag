@@ -2,6 +2,8 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #version 430 core
+#extension GL_ARB_separate_shader_objects : enable
+
 layout (location = 0) out vec3 gPosition;
 layout (location = 1) out vec4 gNormal;
 layout (location = 2) out vec4 gAlbedo;
@@ -10,14 +12,12 @@ layout (location = 4) out vec3 gTangent;
 layout (location = 5) out vec3 gBitangent;
 layout (location = 6) out vec3 gNorm;
 
-uniform sampler2D vikr_TexAlbedo;
-uniform sampler2D vikr_TexNormal;
-uniform sampler2D vikr_TexSpecular;
-uniform sampler2D vikr_TexRoughness;
-uniform sampler2D vikr_TexAmbient;
+layout (binding = 0) uniform sampler2D vikr_TexAlbedo;
+layout (binding = 1) uniform sampler2D vikr_TexNormal;
+layout (binding = 2) uniform sampler2D vikr_TexSpecular;
+layout (binding = 3) uniform sampler2D vikr_TexRoughness;
+layout (binding = 4) uniform sampler2D vikr_TexAmbient;
 
-
-uniform int vikr_Mask;
 
 
 in VERT_OUT {

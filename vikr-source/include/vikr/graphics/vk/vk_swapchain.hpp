@@ -13,6 +13,13 @@
 namespace vikr {
 
 
+struct SwapChainSupportDetails {
+  VkSurfaceCapabilitiesKHR capabilities;
+  std::vector<VkSurfaceFormatKHR> formats;
+  std::vector<VkPresentModeKHR> presentation_modes;
+};
+
+
 class VKSwapChain {
 public:
   VKSwapChain();
@@ -22,8 +29,10 @@ public:
   */
   vvoid Init(VkPhysicalDevice physical_dev);
 
+  SwapChainSupportDetails QuerySwapChainSupport();
+
 private:
-  
+  VkPhysicalDevice device;
 };
 } // vikr
 #endif // __VIKR_VK_SWAPCHAIN_HPP

@@ -188,7 +188,7 @@ vvoid VKGraphicsPipelineState::Bake(GraphicsPipelineDescription &description)
   depthstencil_info.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
   depthstencil_info.depthTestEnable = (m_depth ? VK_TRUE : VK_FALSE);
   depthstencil_info.depthWriteEnable = (m_depth ? VK_TRUE : VK_FALSE);
-  depthstencil_info.depthCompareOp = GetNativeDepthFunc(description.dfunct);
+  depthstencil_info.depthCompareOp = GetNativeDepthFunc(description.dcompare);
   depthstencil_info.depthBoundsTestEnable = VK_FALSE;
   depthstencil_info.minDepthBounds = 0.0f;
   depthstencil_info.maxDepthBounds = 1.0f;

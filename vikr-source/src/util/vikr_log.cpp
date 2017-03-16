@@ -33,10 +33,10 @@ void VikrLog::DisplayMessage(VikrMessage type, std::string message) {
       PRINT_MESSAGE(UNKNOWN, "Unknown message");
       break;
   };
-  //if ((VikrLog::unsuppressed & VIKR_ERROR) == VIKR_ERROR) {
-  //  VIKR_PRINT("Press any key to continue the program...");
-  //  std::cin.ignore();
-  //}
+  if ((VikrLog::unsuppressed & VIKR_ERROR) == VIKR_ERROR) {
+    VIKR_PRINT("Press any key to continue the program...");
+    std::cin.ignore();
+  }
 }
 
 

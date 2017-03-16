@@ -21,24 +21,21 @@ class VKRenderDevice;
 
 class SpvShader : public Shader {
 public:
- SpvShader(VKRenderDevice *device, ShaderStage stage);
+ SpvShader(ShaderStage stage);
   
   vvoid Compile(std::string path) override;
   vvoid Cleanup() override;
 
-  VkShaderModule GetNativeId() { return module.Get(); }
+  VkShaderModule GetShaderModule() { return module; }
   
 private:
-  /**
-    Shader module for vulkan.
-  */
-  VkMemoryManager<VkShaderModule> module;
+  /// Shader module for vulkan.
+  VkShaderModule module;
 
-  
+  /// Information of the shader module for pipelines.
+  VkPipelineShaderStageCreateInfo pipelineShaderStageInfo;
 
-  /**
-    Weak ref.
-  */
+  /// Weak ref.
   VKRenderDevice *device = nullptr;
 };
 } // vikr

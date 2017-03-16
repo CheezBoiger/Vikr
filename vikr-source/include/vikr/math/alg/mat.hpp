@@ -25,17 +25,18 @@ namespace math {
 template<typename _Type> class Matrix3;
 template<typename _Type> class Matrix2;
 
-/**
-  Column Major 4x4 Matrix:
-
-  Design:
-
-  | a00 a01 a02 a03 |
-  | a10 a11 a12 a13 |
-  | a20 a21 a22 a23 |
-  | a30 a31 a32 a33 |
-
-*/
+/// Column Major 4x4 Matrix:
+///
+/// Design:
+///
+/// | a00 a01 a02 a03 |
+/// | a10 a11 a12 a13 |
+/// | a20 a21 a22 a23 |
+/// | a30 a31 a32 a33 |
+/// 
+/// The memory layout is similar to how OpenGL defines matrices
+/// in its specifications and blue book. This math library uses the
+/// same layout as well.
 template<typename _Type = float>
 class Matrix4 {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Matrix4<_Type>);
@@ -74,7 +75,7 @@ public:
     mat[0][0] = mat1[0][0]; mat[0][1] = mat1[0][1]; mat[0][2] = mat1[0][2]; mat[0][3] = 0;
     mat[1][0] = mat1[1][0]; mat[1][1] = mat1[1][1]; mat[1][2] = mat1[1][2]; mat[1][3] = 0;
     mat[2][0] = mat1[2][0]; mat[2][1] = mat1[2][1]; mat[2][2] = mat1[2][2]; mat[2][3] = 0;
-    mat[3][0] = 0;          mat[3][1] = 0;          mat[3][2] = 0;          mat[3][3] = 0;
+    mat[3][0] = 0;          mat[3][1] = 0;          mat[3][2] = 0;          mat[3][3] = 1;
   }
 
   static Matrix4 Identity() {
@@ -126,8 +127,8 @@ public:
     );
   }
 
-  _Type *operator[](unsigned int index) {
-    return mat[index];
+  _Type *operator[](unsigned int row) {
+    return mat[row];
   }
 
   _Type *GetData() {

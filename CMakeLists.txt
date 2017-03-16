@@ -90,7 +90,8 @@ else()
  message("No vulkan libraries were linked.")
 endif()
 
-target_compile_definitions(${VIKR_NAME} PUBLIC -DVIKR_CURRENT_VERSION=0x00006000)
+# Version 0.6.1 (0x 00 06 01)
+target_compile_definitions(${VIKR_NAME} PUBLIC -DVIKR_CURRENT_VERSION=0x000601)
 
 target_link_libraries(${VIKR_NAME} assimp)
 target_link_libraries(${VIKR_NAME} ${OPENGL_LIBRARIES})

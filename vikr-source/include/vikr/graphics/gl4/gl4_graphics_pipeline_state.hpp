@@ -11,7 +11,7 @@
 
 #include <vikr/shader/shader.hpp>
 #include <vikr/shader/shader_config.hpp>
-#include <vikr/shader/glsl/glsl_program.hpp>
+#include <vikr/shader/glsl/glsl_shader.hpp>
 
 #include <map>
 #include <string>
@@ -29,7 +29,7 @@ public:
   vbool IsCulling() const override { return m_cull; }
   vbool IsBlending() const override { return m_blend; }
   vbool HasDepth() const override { return m_depth; }
-  DepthCompare GetDepthFunc() const override;
+  DepthCompare GetDepthCompare() const override;
   BlendEq GetBlendEquation() const override;
   BlendFactor GetBlendFactorSrc() const override;
   BlendFactor GetBlendFactorDst() const override;
@@ -40,47 +40,45 @@ public:
   vvoid SetName(std::string name) override { this->name = name; }
   vvoid Bake(GraphicsPipelineDescription &description) override;
 
-  GLuint GetNativeBlendEq() { return m_blendeq; }
-  GLuint GetNativeBlendSrc() { return m_blendsrc; }
-  GLuint GetNativeBlendDst() { return m_blenddst; }
-  GLuint GetNativeDepthFunc() { return m_depthfunc; }
-  GLuint GetNativeCullFace() { return m_cullface; }
-  GLuint GetNativeFrontFace() { return m_frontface; }
+  GraphicsPipelineState *CreateChild(GraphicsPipelineDescription &inherited) override;
+
+  GLenum GetNativeBlendEq() { return m_blendeq; }
+  GLenum GetNativeBlendSrc() { return m_blendsrc; }
+  GLenum GetNativeBlendDst() { return m_blenddst; }
+  GLenum GetNativeDepthFunc() { return m_depthCompare; }
+  GLenum GetNativeCullFace() { return m_cullface; }
+  GLenum GetNativeFrontFace() { return m_frontface; }
+  GLenum GetNativeTopology() { return m_topology; }
 
   GLuint GetShaderProgram() { return m_shaderProgram; }
   Shader *GetShader(ShaderStage stage) override;
 
 private:
-  vvoid SetDirty() { m_dirty = true; }
-  vvoid SetClean() { m_dirty = false; }
 
   GLuint m_shaderProgram;
   vbool m_blend             = false;
-  GLuint m_blendeq          = GL_FUNC_ADD;
-  GLuint m_blendsrc         = GL_SRC_ALPHA;
-  GLuint m_blenddst         = GL_ONE_MINUS_SRC_ALPHA;  
+  GLenum m_blendeq          = GL_FUNC_ADD;
+  GLenum m_blendsrc         = GL_SRC_ALPHA;
+  GLenum m_blenddst         = GL_ONE_MINUS_SRC_ALPHA;  
 
   vbool m_depth             = true;
-  GLuint m_depthfunc        = GL_LESS;
+  GLenum m_depthCompare     = GL_LESS;
 
   vbool m_cull              = true;
-  GLuint m_cullface         = GL_BACK;
-  GLuint m_frontface        = GL_CCW;
-
-  /*
-    Is the pipeline state clean? Has anything been changed before?
-  */
-  vbool m_dirty             = false;
+  GLenum m_cullface         = GL_BACK;
+  GLenum m_frontface        = GL_CCW;
 
   Viewport m_viewport;
 
-  GLuint m_topology         = GL_TRIANGLES;
+  GLenum m_topology         = GL_TRIANGLES;
+  GLenum m_polygon          = GL_FILL;
   Scissor2D m_scissor;
 
   /**
     Shaders linked in the pipeline.
   */
-  std::map<ShaderStage, Shader *> shaders;
+  std::map<ShaderStage, GLSLShader *> shaders;
+  std::vector<DynamicStateInfo>       dynamicinfo;
   std::string name;
 };
 } // vikr

@@ -21,6 +21,7 @@ enum class FrontFace {
 enum class CullFace {
   vikr_FRONT_FACE,
   vikr_BACK_FACE,
+  vikr_FRONT_AND_BACK
 };
 } // vikr
 #endif // __VIKR_CULLMODE_HPP 

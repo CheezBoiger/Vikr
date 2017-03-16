@@ -2,23 +2,23 @@
 // Copyright (c) Mario Garcia, Under the MIT License.
 //
 #version 430 core
-out vec4 FragColor;
-in vec2 TexCoords;
-in mat3 TBN;
+#extension GL_ARB_separate_shader_objects : enable
 
-uniform sampler2DMS gPosition;
-uniform sampler2DMS gNormal;
-uniform sampler2DMS gAlbedo;
-uniform sampler2DMS gSpecular;
-uniform sampler2DMS gTangent;
-uniform sampler2DMS gBitangent;
-uniform sampler2DMS gNorm;
-uniform sampler2D Shadowmap;
+layout (location = 0) in vec2 TexCoords;
+layout (location = 0) out vec4 FragColor;
+
+// Uniform gbuffer object.
+layout (binding = 0) uniform sampler2DMS gPosition;
+layout (binding = 1) uniform sampler2DMS gNormal;
+layout (binding = 2) uniform sampler2DMS gAlbedo;
+layout (binding = 3) uniform sampler2DMS gSpecular;
+layout (binding = 4) uniform sampler2DMS gTangent;
+layout (binding = 5) uniform sampler2DMS gBitangent;
+layout (binding = 6) uniform sampler2DMS gNorm;
+layout (binding = 7) uniform sampler2D Shadowmap;
 
 
-/**
-  Point light test.
-*/
+/// Point light.
 struct PointLight {
   vec3 position;
   float constant;
@@ -31,9 +31,7 @@ struct PointLight {
 };
 
 
-/**
-  Directional Light test.
-*/
+// Directional Light.
 struct DirectionalLight {
   mat4 lightSpaceMatrix;
   vec3 direction;
@@ -48,10 +46,17 @@ struct DirectionalLight {
 #define MAX_POINTLIGHTS 2
 #define MAX_DIRECTIONALLIGHTS 1
 
-uniform vec3 vikr_CamPosition;
+// Light information.
+layout (binding = 1) uniform LightInformation {
+  DirectionalLight vikr_directionalLights[MAX_DIRECTIONALLIGHTS];
+  PointLight vikr_pointLights[MAX_POINTLIGHTS];
+} lightinfo;
 
-uniform DirectionalLight vikr_directionalLights[MAX_DIRECTIONALLIGHTS];
-uniform PointLight vikr_pointLights[MAX_POINTLIGHTS];
+
+// Camera uniform buffer.
+layout (binding = 2) unform Camera {
+  vec3 cameraPosition;
+} camera;
 
 
 float LinearizeDepth(float m_depth) {

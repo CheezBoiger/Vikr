@@ -17,10 +17,15 @@ namespace vikr {
 
 class VKSurface {
 public:
+  
+  vvoid CreateSurface();
+  vvoid Cleanup();
 
-  static vvoid CreateSurface();
+  VkSurfaceKHR GetSurface() { return surface; }
+  
+private:
+  VkSurfaceKHR surface;
 
-  static VkMemoryManager<VkSurfaceKHR> surface;
 }; 
 } // vikr
 #endif // __VIKR_VK_SURFACE_HPP

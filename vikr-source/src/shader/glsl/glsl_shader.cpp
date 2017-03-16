@@ -12,7 +12,7 @@ namespace vikr {
 
 
 GLSLShader::GLSLShader(ShaderStage stage)
-  : Shader(stage, vikr_GLSL)
+  : Shader(vikr_API_OPENGL, stage, vikr_GLSL)
 {
 }
 

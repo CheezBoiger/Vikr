@@ -26,13 +26,7 @@ public:
 
   vvoid Generate() override;
 
-  /// Get the RenderTargets
-  std::map<vuint32, RenderTarget> &GetRenderTargets() 
-    { return m_rendertargets; }
-
 private:
-  /// The rendertargets that are weakly referenced.
-  std::map<vuint32, RenderTarget> m_rendertargets;
 };
 } // vikr
 #endif // __VIKR_GL4_RENDERPASS_HPP

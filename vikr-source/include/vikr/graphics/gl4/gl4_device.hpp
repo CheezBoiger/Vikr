@@ -65,6 +65,14 @@ public:
   GraphicsHardwareInfo GetHardwareInformation() override;
   GraphicsPerformanceInfo GetPerformanceInformation() override;
 
+  Material *CreateMaterial() override;
+  Material *GetMaterial(guid_t id) override;
+  vbool DestroyMaterial(guid_t id) override;
+
+  vbool SubmitCommandbuffer(Commandbuffer *commandbuffer) override;
+  vvoid Present() override;
+  
+
 private:
   /// Rendering context that this device uses.
   GL4RenderContext context;

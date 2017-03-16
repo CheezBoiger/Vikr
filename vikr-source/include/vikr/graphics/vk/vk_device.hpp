@@ -38,33 +38,23 @@ public:
   VKRenderDevice();
 
   std::string GetShaderLanguage() override;
-
   Framebuffer *CreateFramebuffer() override;
-  
   Vertexbuffer *CreateVertexbuffer(VertexUsageType type, 
     std::vector<Vertex> &vertices, std::vector<vuint32> &indices= std::vector<vuint32>()) override;
-
   Cubemap *CreateCubemap() override;
-
   RenderPass *CreateRenderPass() override;
-
   Commandbuffer &CreateCommandbuffer() override;
-
-  VkDevice GetVkDevice() { return m_logicDevice.Get(); }
-
+  VkDevice GetLogicalDevice() { return m_logicDevice.Get(); }
   vbool DestroyVertexbuffer(guid_t id) override;
   vbool DestroyCubemap(guid_t id) override;
   vbool DestroyRenderPass(guid_t id) override;
   vbool DestroyFramebuffer(guid_t id) override;
-
   vbool DestroyUniformbuffer(guid_t id) override;
   Uniformbuffer *CreateUniformbuffer() override;
   Uniformbuffer *GetUniformbuffer(guid_t id) override;
-
   GraphicsPipelineState *CreateGraphicsPipelineState(vbool derivative) override;
   GraphicsPipelineState *GetGraphicsPipelineState(guid_t id) override;
   vbool DestroyGraphicsPipelineState(guid_t id) override;
-
   ComputePipelineState *CreateComputePipelineState(std::string name) override;
   ComputePipelineState *GetComputePipelineState(guid_t id) override;
   vbool DestroyComputePipelineState(guid_t id) override;
@@ -89,6 +79,10 @@ public:
   GraphicsHardwareInfo GetHardwareInformation() override;
   GraphicsPerformanceInfo GetPerformanceInformation() override;
 
+  Material *CreateMaterial() override;
+  Material *GetMaterial(guid_t id) override;
+  vbool DestroyMaterial(guid_t id) override;
+
 protected:
   /// Base semaphores. For basic handling.
   struct {
@@ -109,9 +103,8 @@ private:
     Vulkan Logic Device.
   */
   VkMemoryManager<VkDevice> m_logicDevice;
-  
   VKPhysicalDevice m_physicalDevice;
-
+  VKSurface m_surface;
   VkCommandPool m_commandPool;
   VkDescriptorPool m_descriptorPool;
 

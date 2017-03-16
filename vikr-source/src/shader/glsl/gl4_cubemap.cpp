@@ -6,6 +6,7 @@
 
 #include <vikr/shader/stb/stb_image.h>
 #include <vikr/util/vikr_assert.hpp>
+#include <vikr/util/vikr_log.hpp>
 
 namespace vikr { 
 
@@ -35,8 +36,7 @@ vvoid GL4Cubemap::Load(std::vector<const vchar *> *face_path) {
 
 
 vint32 GL4Cubemap::Finalize() {
-  m_target = vikr_TARGET_CUBEMAP;
-  native_target = GL4Texture::GetNativeTextureTarget(m_target);
+  native_target = GL4Texture::GetNativeTextureTarget(vikr_TARGET_CUBEMAP);
   SetPixelStore();
   if (id == Texture::kNoTextureId) {
     glGenTextures(1, &id);

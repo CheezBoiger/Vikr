@@ -76,7 +76,6 @@ private:
     Font shader.
   */
   ShaderProgram *m_fontshader = nullptr;
-  CommandbufferList *printlist;
   std::string proj_name;
   std::string color_name;
 };

@@ -30,7 +30,7 @@ VKRenderDevice::VKRenderDevice()
 // Pipeline setup.
 vvoid VKRenderDevice::Setup() {
   VKInstance::CreateInstance();
-  VKSurface::CreateSurface();
+  m_surface.CreateSurface();
   DeterminePhysicalDevice();
   CreateLogicalDevices();
 }

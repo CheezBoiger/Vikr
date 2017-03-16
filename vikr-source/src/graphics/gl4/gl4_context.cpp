@@ -37,19 +37,6 @@ namespace vikr {
 }
 
 
-GLenum GetGLTopology(Topology topology) {
-  switch (topology) {
-    case Topology::VIKR_LINES: return GL_LINES;
-    case Topology::VIKR_TRIANGLES: return GL_TRIANGLES;
-    case Topology::VIKR_POINTS: return GL_POINTS;
-    case Topology::VIKR_TRIANGLE_FAN: return GL_TRIANGLE_FAN;
-    case Topology::VIKR_LINE_STRIP: return GL_LINE_STRIP;
-    case Topology::VIKR_TRIANGLE_STRIP_ADJACENCY: return GL_TRIANGLE_STRIP_ADJACENCY;
-    default: return GL_TRIANGLES;  
-  }
-}
-
-
 GL4RenderContext::GL4RenderContext()
 {
   glEnable(GL_FRAMEBUFFER_SRGB);
@@ -63,13 +50,13 @@ vvoid GL4RenderContext::Draw(GL4Commandbuffer *buffer, vuint32 start, vuint32 ve
   auto execute = [=] (vuint32 start, vuint32 vertices, vuint32 instances) -> vvoid {
     if (instances == 0) {
       glDrawArrays(
-        GetGLTopology(m_currPipeline->GetTopology()),
+        m_currPipeline->GetNativeTopology(),
         start,
         vertices
       );
     } else {
       glDrawArraysInstanced(
-        GetGLTopology(m_currPipeline->GetTopology()),
+        m_currPipeline->GetNativeTopology(),
         start, 
         vertices,
         instances
@@ -85,14 +72,14 @@ vvoid GL4RenderContext::DrawIndexed(GL4Commandbuffer *buffer, const vvoid *indic
   auto execute = [=] (const vvoid *indices, vuint32 elements, vuint32 instances) -> vvoid {
     if (instances == 0) {
       glDrawElements(
-        GetGLTopology(m_currPipeline->GetTopology()),
+        m_currPipeline->GetNativeTopology(),
         elements,
         GL_UNSIGNED_INT,
         indices
       );
     } else {
       glDrawElementsInstanced(
-        GetGLTopology(m_currPipeline->GetTopology()),
+        m_currPipeline->GetNativeTopology(),
         elements,
         GL_UNSIGNED_INT,  
         indices,
@@ -334,6 +321,15 @@ vvoid GL4RenderContext::BindGraphicsPipelineState(GL4Commandbuffer *buffer, Grap
 }
 
 
+vvoid GL4RenderContext::BindComputePipelineState(GL4Commandbuffer *buffer, ComputePipelineState *pipeline)
+{
+  auto execute = [=] (ComputePipelineState *pipeline) -> vvoid {
+    
+  };
+  buffer->AddCommand([=] ( ) -> vvoid { execute(pipeline); });
+}
+
+
 Framebuffer *GL4RenderContext::GetFramebuffer() 
 {
   return static_cast<Framebuffer *>(m_currFramebuffer);
@@ -342,10 +338,13 @@ Framebuffer *GL4RenderContext::GetFramebuffer()
 
 vvoid GL4RenderContext::SetMaterial(GL4Commandbuffer *buffer, Material *material) 
 {
+  if (material->GetAPIType() != vikr_API_OPENGL) {
+    return;
+  }
   GLSLMaterial *gl_material = static_cast<GLSLMaterial *>(material);
   ShaderUniformParams params;
-  params.uniforms = material->GetMaterialValues();
-  params.samplers = material->GetUniformSamplers();
+  params.uniforms = gl_material->GetMaterialValues();
+  params.samplers = gl_material->GetUniformSamplers();
   SetShaderUniforms(&params);
 }
 

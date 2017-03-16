@@ -13,7 +13,6 @@ namespace vikr {
 
 class GLSLMaterial : public Material {
 public:
-
 private:
 };
 } // vikr

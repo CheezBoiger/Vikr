@@ -17,12 +17,9 @@ namespace vikr {
 class GL4RenderPass;
 
 
-/**
-  GL4 framebuffer.
-
-  Must call Generate() in order to generate a Framebuffer.
-
-*/
+/// GL4 framebuffer.
+///
+/// Must call Generate() in order to generate a Framebuffer.
 class GL4Framebuffer : public Framebuffer {
   vuint32 GetFramebufferMode(BufferMode mode);
 public:
@@ -35,15 +32,13 @@ public:
 
   GLuint GetFramebufferId() { return m_fbo; }
   
-  /**
-    Check if the framebuffer is complete.
-  */
+  /// Check if the framebuffer is complete.
   vint32 IsComplete() override;
 
-  vvoid Bind() override;
-  vvoid Unbind() override;
+  vvoid Bind();
+  vvoid Unbind();
 
-  vvoid ClearAttachments() override;
+  vvoid ClearAttachments();
 
   vvoid Update() override;
 
@@ -64,20 +59,22 @@ public:
 
   vvoid BlitTo(Framebuffer *framebuffer) override;
 
+  vvoid InsertNewRenderTarget(RenderTargetType type, vuint32 point) override;
+  RenderTarget *GetRenderTarget(vuint32 point) override;
+  vbool RemoveRenderTarget(vuint32 point) override;
+  vuint32 GetNumOfRenderTargets() override { return rendertargets.size(); }
+
 private:
   /**
     Get the clear color for this framebuffer.
   */
   glm::vec3 m_clearcolor            = glm::vec3(0.1f, 0.1f, 0.1f);
-
   GLuint m_fbo                     = 0;
-
   GL4RenderPass *m_renderPass = nullptr;
-
   Viewport m_viewport;
-
   GLint m_read;
   GLint m_write;
+  std::vector<GL4RenderTarget> rendertargets;
 }; 
 } // vikr
 #endif // __VIKR_

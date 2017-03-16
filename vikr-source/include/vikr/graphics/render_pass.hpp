@@ -88,6 +88,9 @@ public:
 
   /// Update the RenderPass.
   virtual vvoid Update() = 0;
+  
+  /// Cleanup the Renderpass, if need be.
+  virtual vvoid Cleanup() = 0;
 
   virtual Framebuffer *GetFramebuffer() = 0;
   virtual vvoid SetFramebuffer(Framebuffer *buffer) = 0;

@@ -33,10 +33,10 @@ public:
   vbool IsCulling() const override;
   vbool IsBlending() const override;
   vbool HasDepth() const override;
-  DepthCompare GetDepthFunc() const override;
+  DepthCompare GetDepthCompare() const override;
   BlendEq GetBlendEquation() const override;
-  BlendFactor GetBlendFunctionSrc() const override;
-  BlendFactor GetBlendFunctionDst() const override;
+  BlendFactor GetBlendFactorSrc() const override;
+  BlendFactor GetBlendFactorDst() const override;
   Topology GetTopology() const override;
   std::string GetName() const override;
   vvoid SetName(std::string name) override;

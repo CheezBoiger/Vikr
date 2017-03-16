@@ -11,9 +11,8 @@
 namespace vikr {
 
 
-SpvShader::SpvShader(VKRenderDevice *device, ShaderStage stage)
-  : device(device)
-  , Shader(stage, vikr_SPIRV)
+SpvShader::SpvShader(ShaderStage stage)
+  : Shader(vikr_API_VULKAN, stage, vikr_SPIRV)
 {
 }
 
@@ -28,8 +27,23 @@ vvoid SpvShader::Compile(std::string path) {
   compiler.Compile();
 
   if (compiler.IsCompiled()) {
-     
+    module = compiler.GetShaderModule();
+    pipelineShaderStageInfo = compiler.GetPipelineShaderStageInfo();
+    VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, "Successful SPIR-V Shader Compiler");
+    // No need to cleanup the compiler, since all resources are moving to this shader.
   } else {
+    VikrLog::DisplayMessage(VIKR_ERROR, "Unsuccessful SPIR-V Shader Compilation!");
+    compiler.Cleanup();
   }
+}
+
+
+vvoid SpvShader::Cleanup()
+{
+  vkDestroyShaderModule(
+    static_cast<VKRenderDevice *>(GetRenderDevice())->GetLogicalDevice(), 
+    module, 
+    nullptr
+  );
 }
 } // vikr

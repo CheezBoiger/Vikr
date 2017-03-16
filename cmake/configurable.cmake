@@ -1,10 +1,10 @@
 # configurables for the files and their directories.
 
 set(ASSIMP_INCLUDE_DIR libs/assimp/include)
-set(GLSLANG_INCLUDE_DIR libs/glslang)
 set(GLFW_INCLUDE_DIR libs/glfw/include/GLFW)
 set(FREETYPE_INCLUDE_DIR libs/freetype/include)
 set(FREETYPE_SECONDARY_DIR libs/freetype/include/freetype2)
+set(GLSLANG_INCLUDE_DIR libs/glslang/)
 
 
 find_package(Vulkan)
@@ -12,8 +12,14 @@ if (vulkan AND VULKAN_FOUND)
   message("Vulkan API enabled...")
   set(VULKAN_INCLUDE_DIR ${Vulkan_INCLUDE_DIRS})
   add_definitions(-DVIKR_VULKAN_ENABLED)
-  include_directories(SYSTEM ${GLSLANG_INCLUDE_DIR})
-  include_directories(SYSTEM ${VULKAN_INCLUDE_DIR})
+  include_directories(SYSTEM 
+    ${VULKAN_INCLUDE_DIR}
+    ${GLSLANG_INCLUDE_DIR}
+  )
+  
+  # GLSLang standalone not needed.
+  set(ENABLE_GLSLANG_BINARIES OFF)
+  add_subdirectory(libs/glslang)
 elseif(vulkan AND NOT VULKAN_FOUND)
  message(FATAL_ERROR "Vulkan not found, cannot continue with \"vulkan\" command")
 endif()

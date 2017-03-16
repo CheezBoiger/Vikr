@@ -14,15 +14,11 @@
 namespace vikr {
 
 
-/**
-  Get the Type of camera, which is suppose to be the projection of the camera.
-*/
+/// Get the Type of camera, which is suppose to be the projection of the camera.
 enum CamType { ORTHOGRAPHIC, PERSPECTIVE };
 
 
-/**
-  Camera direction, for which is used for movement of the camera.
-*/
+/// Camera direction, for which is used for movement of the camera.
 enum CamDirection {
   FORWARD,
   BACK,
@@ -33,77 +29,49 @@ enum CamDirection {
 };
 
 
-/**
-  Camera Interface used for the rendering system.
-*/
+/// Camera Interface used for the rendering system.
 class ICamera {
 public:
   ICamera() { }
   virtual ~ICamera() { }
 
-  /**
-    Move the camera using the direction and delta time (change in time).
-  */
+  /// Move the camera using the direction and delta time (change in time).
   virtual vvoid Move(CamDirection dir, vreal32 dt) = 0;
 
-  /**
-    Set the instantaneous position of the camera.
-  */
+  /// Set the instantaneous position of the camera.
   virtual vvoid SetPos(glm::vec3 new_pos) = 0;
   
-  /**
-    Set the camera to look at some point in world space.
-  */
+  /// Set the camera to look at some point in world space.
   virtual vvoid SetLookAt(glm::vec3 new_look) = 0;
 
-  /**
-    Set the clipping plane of the camera view frustum.
-  */
+  /// Set the clipping plane of the camera view frustum.
   virtual vvoid SetClip(vreal64 near_clip_dist, vreal64 far_clip_dist) = 0;
   
-  /**
-    Set the Type of camera { PERSPECTIVE, ORTHOGRAPHIC }.
-  */
+  /// Set the Type of camera { PERSPECTIVE, ORTHOGRAPHIC }.
   virtual vvoid SetType(CamType new_type) = 0;
 
-  /**
-    Set the camera to look at a mouse offset point.
-  */
+  /// Set the camera to look at a mouse offset point.
   virtual vvoid Look(glm::vec2 mouse_offset, vbool constrain_pitch = true) = 0;
   
-  /**
-    Set the camera to look at a mouse offset point.
-  */
+  /// Set the camera to look at a mouse offset point.
   virtual vvoid Look(vreal32 xoffset, vreal32 yoffset, vbool constrain_pitch = true) = 0;
 
-  /**
-    Get the position of the camera.
-  */
+  /// Get the position of the camera.
   virtual glm::vec3 &GetPos() = 0;
 
-  /**
-    Get the view matrix of the camera.
-  */
+  /// Get the view matrix of the camera.
   virtual glm::mat4 GetView() = 0;
 
-  /**
-    Get the projection matrix of the camera.
-  */
+  /// Get the projection matrix of the camera.
   virtual glm::mat4 GetProjection() = 0;
 
-  /**
-    Set the viewport of the camera.
-  */
+  /// Set the viewport of the camera.
   virtual vvoid SetViewport(vint32 x, vint32 y, vint32 width, vint32 height) = 0;
   
-  /**
-    Get the viewport of the camera.
-  */
+  /// Get the viewport of the camera.
   virtual Viewport& GetViewport() = 0;
 
-  /**
-    Update the camera status and whatnot. Includes the change in time for quaternion based cameras.
-  */
+  /// Update the camera status and whatnot. Includes the change in time for quaternion based cameras.
   virtual vvoid Update(vreal32 dt) = 0;
 };
 } // vikr

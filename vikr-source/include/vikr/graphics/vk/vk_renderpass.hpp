@@ -20,9 +20,8 @@ namespace vikr {
 class VKRenderDevice;
 
 
-/*
-  Vulkan RenderPass implementation.
-*/
+
+/// Vulkan RenderPass implementation.
 class VKRenderPass : public RenderPass {
 public:
   VKRenderPass();

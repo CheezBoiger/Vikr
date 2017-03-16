@@ -37,10 +37,10 @@ template<typename _Type>
 Matrix4<_Type> LookAt(Vector3<_Type> &eye, Vector3<_Type> &center, Vector3<_Type> &up);
 
 template<typename _Type>
-Matrix4<_Type> Perspective(_Type fov, _Type aspect, _Type near, _Type far);
+Matrix4<_Type> Perspective(_Type _fov, _Type _aspect, _Type _near, _Type _far);
 
 template<typename _Type>
-Matrix4<_Type> Orthographic(_Type fov, _Type aspect, _Type near, _Type far);
+Matrix4<_Type> Orthographic(_Type _fov, _Type _aspect, _Type _near, _Type _far);
 
 } // math
 } // vikr

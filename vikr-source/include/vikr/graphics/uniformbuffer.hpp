@@ -42,7 +42,7 @@ public:
   /// the programmer intends to allocate for the shader. If the uniform
   /// buffer object is dynamic (in the case for vulkan) model matrices may
   /// need to be allocated depending on the number of model matrices per object. 
-  virtual vvoid Generate(vuint32 bytes) = 0;
+  virtual vvoid Generate(vuint32 bind, vuint32 bytes) = 0;
 
   /// Update the the Uniform buffer. This is useful when the uniformbuffer
   /// needs to update contents in the shader. Shader will see this as 
@@ -51,7 +51,7 @@ public:
 
   /// Reallocate the number of bytes for this uniform buffer. This would be
   /// usefull for vulkan implementations.
-  virtual vvoid Reallocate(vuint32 new_bytes);
+  virtual vvoid Reallocate(vuint32 new_bytes) = 0;
 
   ///  Store data into the uniform buffer.
   ///  @param bytes Size of data in bytes.
@@ -59,16 +59,18 @@ public:
   virtual vvoid StoreData(vuint32 offset, vuint32 bytes, vbyte *data) = 0;
 
   /// Primitive uniform defines.
-  virtual vvoid SetInt(vuint32 bind, vint32 value) = 0;
-  virtual vvoid SetBool(vuint32 bind, vbool value) = 0;
-  virtual vvoid SetVector4fv(vuint32 bind, glm::vec4 value) = 0;
-  virtual vvoid SetVector3fv(vuint32 bind, glm::vec3 value) = 0;
-  virtual vvoid SetVector2fv(vuint32 bind, glm::vec2 value) = 0;
-  virtual vvoid SetFloat(vuint32 bind, vreal32 value) = 0;
-  virtual vvoid SetDouble(vuint32 bind, vreal64 value) = 0;
-  virtual vvoid SetMat4(vuint32 bind, glm::mat4 value) = 0;
-  virtual vvoid SetMat3(vuint32 bind, glm::mat3 value) = 0;
-  virtual vvoid SetMat2(vuint32 bind, glm::mat2 value) = 0;
+  virtual vvoid SetTexture(vuint32 offset, Texture *texture) = 0;
+  virtual vvoid SetCubemap(vuint32 offset, Cubemap *cubemap) = 0;
+  virtual vvoid SetInt(vuint32 offset, vint32 value) = 0;
+  virtual vvoid SetBool(vuint32 offset, vbool value) = 0;
+  virtual vvoid SetVector4fv(vuint32 offset, glm::vec4 value) = 0;
+  virtual vvoid SetVector3fv(vuint32 offset, glm::vec3 value) = 0;
+  virtual vvoid SetVector2fv(vuint32 offset, glm::vec2 value) = 0;
+  virtual vvoid SetFloat(vuint32 offset, vreal32 value) = 0;
+  virtual vvoid SetDouble(vuint32 offset, vreal64 value) = 0;
+  virtual vvoid SetMat4(vuint32 offset, glm::mat4 value) = 0;
+  virtual vvoid SetMat3(vuint32 offset, glm::mat3 value) = 0;
+  virtual vvoid SetMat2(vuint32 offset, glm::mat2 value) = 0;
 };
 } // vikr
 #endif // __VIKR_UNIFORMBUFFER_HPP

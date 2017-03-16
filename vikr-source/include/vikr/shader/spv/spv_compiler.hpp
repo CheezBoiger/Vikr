@@ -44,19 +44,15 @@ public:
   VkPipelineShaderStageCreateInfo GetPipelineShaderStageInfo() { return pipelineShaderStage; }
   
 private:
-
   vvoid LoadShaderFile();
+  vvoid GLSlangCompile(const vchar *source, vuint32 length);
   
   VkShaderModule shaderModule;
   VkPipelineShaderStageCreateInfo pipelineShaderStage;
   vbool compiled;
-
   std::string filepath;
-
   ShaderStage shader_stage;
-
   GLSLPreprocessor preprocessor;
-  
   // weak ref.
   VKRenderDevice *device = nullptr;
 };
