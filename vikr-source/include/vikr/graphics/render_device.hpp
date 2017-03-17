@@ -47,7 +47,6 @@ class Uniformbuffer;
 class RenderDevice {
   VIKR_DISALLOW_COPY_AND_ASSIGN(RenderDevice);
 public:
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(RenderDevice);
   RenderDevice(GraphicsAPIType type = vikr_API_UNKNOWN) 
     : m_api(type) { }
 

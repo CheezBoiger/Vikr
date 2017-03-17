@@ -105,7 +105,6 @@ struct GraphicsPipelineDescription {
 class GraphicsPipelineState : public RenderDeviceObject, public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(GraphicsPipelineState);
 public:
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(GraphicsPipelineState);
   GraphicsPipelineState(GraphicsAPIType type) 
     : RenderDeviceObject(type) { }
   virtual ~GraphicsPipelineState() { }

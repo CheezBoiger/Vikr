@@ -31,7 +31,6 @@ class ShaderProgram;
 class Uniformbuffer : public RenderDeviceObject, public GUID {
   VIKR_DISALLOW_COPY_AND_ASSIGN(Uniformbuffer);
 public:
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(Uniformbuffer);
   Uniformbuffer(GraphicsAPIType type) 
     : RenderDeviceObject(type) { }
 
@@ -57,6 +56,8 @@ public:
   ///  @param bytes Size of data in bytes.
   ///  @param data Raw data.
   virtual vvoid StoreData(vuint32 offset, vuint32 bytes, vbyte *data) = 0;
+
+  virtual vvoid Cleanup() = 0;
 
   /// Primitive uniform defines.
   virtual vvoid SetTexture(vuint32 offset, Texture *texture) = 0;

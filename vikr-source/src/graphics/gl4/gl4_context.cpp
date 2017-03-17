@@ -150,10 +150,6 @@ vvoid GL4RenderContext::SetShaderUniforms(ShaderUniformParams *params) {
     return;
   }
   vuint32 shader_program = 0;
-  /*
-    TODO(): Will need to parse these location values in the future.
-  */
-  //VikrLog::DisplayMessage(VIKR_NORMAL, std::to_string(glGetError()));
   shader_program = m_currPipeline->GetShaderProgram();
   if (params->uniforms) {
     for (auto variable = params->uniforms->begin(); variable != params->uniforms->end(); ++variable) {
@@ -338,14 +334,27 @@ Framebuffer *GL4RenderContext::GetFramebuffer()
 
 vvoid GL4RenderContext::SetMaterial(GL4Commandbuffer *buffer, Material *material) 
 {
-  if (material->GetAPIType() != vikr_API_OPENGL) {
-    return;
-  }
-  GLSLMaterial *gl_material = static_cast<GLSLMaterial *>(material);
-  ShaderUniformParams params;
-  params.uniforms = gl_material->GetMaterialValues();
-  params.samplers = gl_material->GetUniformSamplers();
-  SetShaderUniforms(&params);
+  auto execute = [=] (Material *material) -> vvoid {
+    if (material->GetAPIType() != vikr_API_OPENGL) {
+      return;
+    }
+    GLSLMaterial *gl_material = static_cast<GLSLMaterial *>(material);
+    auto mappedSamplers = gl_material->GetTexSamplers();
+    m_currTextures.reserve(mappedSamplers.size());
+    for (auto &sampler : mappedSamplers) {
+      // Bind all texture that was given.
+      if(sampler.second.type != vikr_UNIFORM_SAMPLERCUBE) {
+        GL4Texture *texture = static_cast<GL4Texture *>(sampler.second.texture);
+        SetTexture(texture, sampler.second.i);
+        m_currTextures.push_back(std::move(sampler.second));
+      } else {
+        GL4Cubemap *cubemap = static_cast<GL4Cubemap *>(sampler.second.cubemap);
+        SetTexture(cubemap, sampler.second.i);
+      }
+      VIKR_ASSERT(glGetError() == 0);
+    }
+  };
+  buffer->AddCommand([=] () -> vvoid { execute(material); });
 }
 
 

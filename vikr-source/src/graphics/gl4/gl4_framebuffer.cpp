@@ -82,6 +82,21 @@ vvoid GL4Framebuffer::Unbind() {
 }
 
 
+vvoid GL4Framebuffer::InsertNewRenderTarget(RenderTargetType type, vuint32 point)
+{
+  GL4RenderTarget target(type);
+  switch (type) {
+    case vikr_RENDERTARGET_COLOR: target.SetFormat(vikr_FORMAT_R16G16B16_SFLOAT); break;
+    case vikr_RENDERTARGET_DEPTH: target.SetFormat(vikr_FORMAT_D32_SFLOAT); break;
+    case vikr_RENDERTARGET_DEPTHSTENCIL: break;
+    default: target.SetFormat(vikr_FORMAT_R16G16B16A16_SFLOAT); break;
+  }
+  target.SetWidth(m_viewport.win_width);
+  target.SetHeight(m_viewport.win_height);
+  target.Finalize();
+  m_rendertargets[point] = std::move(target);
+}
+
 
 vvoid GL4Framebuffer::Update() {
   if (!m_renderPass) {
@@ -91,7 +106,7 @@ vvoid GL4Framebuffer::Update() {
 
   if (m_renderPass->GetRenderTargets().empty()) {
     VikrLog::DisplayMessage(VIKR_WARNING, R"VIKR(
-      Empty Renderpass for this framebuffer. Skipping update. 
+      Empty Renderpass for this framebuffer. Skipping update.
       Be sure to check glGetError() for the specific error.
     )VIKR");
     return;

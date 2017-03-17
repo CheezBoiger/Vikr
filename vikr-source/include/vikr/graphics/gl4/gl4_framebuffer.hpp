@@ -62,7 +62,7 @@ public:
   vvoid InsertNewRenderTarget(RenderTargetType type, vuint32 point) override;
   RenderTarget *GetRenderTarget(vuint32 point) override;
   vbool RemoveRenderTarget(vuint32 point) override;
-  vuint32 GetNumOfRenderTargets() override { return rendertargets.size(); }
+  vuint32 GetNumOfRenderTargets() override { return m_rendertargets.size(); }
 
 private:
   /**
@@ -74,7 +74,7 @@ private:
   Viewport m_viewport;
   GLint m_read;
   GLint m_write;
-  std::vector<GL4RenderTarget> rendertargets;
+  std::map<vuint32, GL4RenderTarget> m_rendertargets;
 }; 
 } // vikr
 #endif // __VIKR_

@@ -7,6 +7,8 @@
 namespace vikr {
 
 
-
-
+vint32 SpvTexture::Finalize()
+{
+  
+}
 } // vikr

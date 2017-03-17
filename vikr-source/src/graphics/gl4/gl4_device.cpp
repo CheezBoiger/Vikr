@@ -296,8 +296,6 @@ Texture *GL4RenderDevice::CreateTexture(
   vint32 width = 0;
   vint32 height = 0;
   vint32 depth = 0;
-  vbyte *bytecode = stbi_load(filepath.c_str(), &width, &height, &depth,
-                              alpha ? STBI_rgb_alpha : STBI_rgb);
   switch(target) {
   case vikr_TARGET_1D: texture = std::make_unique<GL4Texture1D>(width); break;
   case vikr_TARGET_2D_MULTISAMPLE:
@@ -311,7 +309,6 @@ Texture *GL4RenderDevice::CreateTexture(
     if (target == vikr_TARGET_2D_MULTISAMPLE) {
       texture->SetMultisampled(true);
     }
-    texture->SetBytecode(bytecode);
     //texture->Finalize(); // No need to tell the resource manager to finalize for us.
     texture->SetPath(filepath);
     texture->SetName(name);

@@ -44,9 +44,8 @@ namespace vikr {
 ///  This does depend on the manufacturer though. AMD gpus are differently
 ///  implemented than Nvidia gpus.  
 class Vertexbuffer : public RenderDeviceObject, public GUID {
-  VIKR_DISALLOW_COPY_AND_ASSIGN(Vertexbuffer);
-public:
   VIKR_DEFAULT_MOVE_AND_ASSIGN(Vertexbuffer);
+public:
   Vertexbuffer(GraphicsAPIType type) 
     : RenderDeviceObject(type) { }
   virtual ~Vertexbuffer() { }

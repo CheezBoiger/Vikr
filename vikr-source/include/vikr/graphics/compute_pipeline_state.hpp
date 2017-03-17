@@ -17,6 +17,7 @@ namespace vikr {
 /// Compute pipeline state, for computing of course!
 /// Should only contain one Compute shader and nothing else!
 class ComputePipelineState : public RenderDeviceObject, public GUID {
+  VIKR_DISALLOW_COPY_AND_ASSIGN(ComputePipelineState);
 public:
   ComputePipelineState(GraphicsAPIType type)
     : RenderDeviceObject(type) { }

@@ -34,4 +34,13 @@ vbyte *Texture::CreateImageByteCode(
   }
   return image;
 }
+
+
+vvoid Texture::FreeImageByteCode(vbyte *bytecode)
+{
+  if (bytecode) {
+    stbi_image_free(bytecode);
+    bytecode = nullptr;
+  }
+}
 } // vikr

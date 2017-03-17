@@ -37,14 +37,14 @@ vvoid VKRenderDevice::Setup() {
 
 
 vvoid VKRenderDevice::DeterminePhysicalDevice() {
-  m_physicalDevice.CheckSuitableDevices(m_instance.GetNativeInstance());
+  m_physicalDevice.CheckSuitableDevices(this);
   m_physicalDevice.SelectPhysicalDevice();
 }
 
 
 vvoid VKRenderDevice::CreateLogicalDevices() {
   VKQueueFamily indices = 
-    VKQueueFamily::FindQueueFamilies(m_physicalDevice.GetCurrentNativePhysicalDevice());
+    VKQueueFamily::FindQueueFamilies(this);
   VkPhysicalDeviceFeatures device_features = { };
   
   std::vector<VkDeviceQueueCreateInfo> queue_createInfos;
@@ -79,6 +79,22 @@ vvoid VKRenderDevice::CreateLogicalDevices() {
 
   vkGetDeviceQueue(m_logicDevice, indices.GetGFRFamily(), 0, &m_queueGraphicsBuffer);
   vkGetDeviceQueue(m_logicDevice, indices.GetPrstFamily(), 0, &m_queuePresentBuffer);
+}
+
+
+vint32 VKRenderDevice::FindMemorytype(vuint32 typeFilter, VkMemoryPropertyFlags properties)
+{
+  VkPhysicalDeviceMemoryProperties memProperties;
+  vkGetPhysicalDeviceMemoryProperties(m_physicalDevice.GetCurrentNativePhysicalDevice(),
+    &memProperties);
+  for (vuint32 i = 0; i < memProperties.memoryTypeCount; ++i) {
+    if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) ==
+      properties)
+    {
+      return static_cast<vint32>(i);
+    }
+  }
+  return -1;
 }
 
 

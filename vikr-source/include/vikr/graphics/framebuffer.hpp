@@ -10,6 +10,7 @@
 #include <vikr/platform/vikr_types.hpp>
 #include <vikr/graphics/render_device.hpp>
 #include <vikr/graphics/viewport.hpp>
+#include <vikr/graphics/render_target.hpp>
 #include <glm/glm.hpp>
 
 #include <list>
@@ -54,9 +55,8 @@ enum BufferMode {
 ///  OpenGL: Associates GL4Framebuffer
 ///  Vulkan: Associates VKFramebuffer
 class Framebuffer : public RenderDeviceObject, public GUID {
-  VIKR_DISALLOW_COPY_AND_ASSIGN(vikr::Framebuffer);
+  VIKR_DISALLOW_COPY_AND_ASSIGN(Framebuffer);
 public:
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(vikr::Framebuffer);
   virtual ~Framebuffer() { }
   Framebuffer(GraphicsAPIType type) 
     : RenderDeviceObject(type) { }

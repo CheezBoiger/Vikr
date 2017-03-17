@@ -47,13 +47,14 @@ public:
   vvoid ClearWithColor(GL4Commandbuffer *buffer, glm::vec4 color);
   vvoid SetViewport(GL4Commandbuffer *buffer, Viewport *port);
 
+  /// Currently not in use. But kept if needed.
   vvoid SetShaderUniforms(ShaderUniformParams *params);
+
+  /// queries the vertex buffer to this context.
   vvoid QueryVertexbuffer(GL4Commandbuffer *buffer, Vertexbuffer *vertexbuffer);
 
   vvoid SetFramebuffer(Framebuffer *framebuffer);
   vvoid SetRenderPass(GL4Commandbuffer *buffer, RenderPass *renderpass);
-  vvoid BeginRecord(GL4Commandbuffer *buf); 
-  vvoid EndRecord();
 
   Framebuffer *GetFramebuffer();
   GraphicsPipelineState *GetGraphicsPipelineState();

@@ -22,18 +22,21 @@ vvoid SpvShader::Compile(std::string path) {
     VikrLog::DisplayMessage(VIKR_ERROR, "Can not Compile empty path!");
     return;
   }
-  SpvCompiler compiler(device, shader_stage, path);
-  compiler.GetPreprocessor()->SetSourceDirectory(include_searchpath);
-  compiler.Compile();
+  
+  {
+    SpvCompiler compiler(device, shader_stage, path);
+    compiler.GetPreprocessor()->SetSourceDirectory(include_searchpath);
+    compiler.Compile();
 
-  if (compiler.IsCompiled()) {
-    module = compiler.GetShaderModule();
-    pipelineShaderStageInfo = compiler.GetPipelineShaderStageInfo();
-    VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, "Successful SPIR-V Shader Compiler");
-    // No need to cleanup the compiler, since all resources are moving to this shader.
-  } else {
-    VikrLog::DisplayMessage(VIKR_ERROR, "Unsuccessful SPIR-V Shader Compilation!");
-    compiler.Cleanup();
+    if (compiler.IsCompiled()) {
+      module = compiler.GetShaderModule();
+      pipelineShaderStageInfo = compiler.GetPipelineShaderStageInfo();
+      VikrLog::DisplayMessage(VIKR_RUNTIME_DEBUG, "Successful SPIR-V Shader Compiler");
+      // No need to cleanup the compiler, since all resources are moving to this shader.
+    } else {
+      VikrLog::DisplayMessage(VIKR_ERROR, "Unsuccessful SPIR-V Shader Compilation!");
+      compiler.Cleanup();
+    }
   }
 }
 

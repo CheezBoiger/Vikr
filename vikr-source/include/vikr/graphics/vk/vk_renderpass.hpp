@@ -27,11 +27,11 @@ public:
   VKRenderPass();
 
 
-  VkRenderPass GetNativePass() {return m_renderpass.Get(); }
+  VkRenderPass GetNativePass() { return m_renderpass; }
 
 private:
   VKRenderDevice *device; 
-  VkMemoryManager<VkRenderPass> m_renderpass;
+  VkRenderPass m_renderpass;
 
   std::map<vuint32, RenderTarget> m_rendertargets;
 };

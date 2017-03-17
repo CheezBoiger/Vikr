@@ -38,6 +38,7 @@ public:
 
   vvoid Update() override;
   vvoid StoreData(vuint32 offset, vuint32 bytes, vbyte *data) override;
+  vvoid Cleanup() override;
 
   vvoid SetInt(vuint32 offset, vint32 value) override;
   vvoid SetBool(vuint32 offset, vbool value) override;

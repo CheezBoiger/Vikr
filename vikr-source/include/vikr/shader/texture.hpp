@@ -24,13 +24,13 @@ public:
   static const vuint32 kNoTextureId;
   Texture(GraphicsAPIType type) 
     : RenderDeviceObject(type) { }
-  VIKR_DEFAULT_MOVE_AND_ASSIGN(Texture);
 
   virtual ~Texture();
 
   /// Generates bytecode for the provided image.
   static vbyte *CreateImageByteCode(std::string filepath, 
             vint32 *width, vint32 *height, vint32 *channels, vbool alpha);
+  static vvoid FreeImageByteCode(vbyte *bytecode);
 
   /// Target format, intends to be the type of format that the texture is going to be.
   /// This can be a 1D, 2D, 3D, or cubemap.
@@ -66,13 +66,6 @@ public:
   /// Create the Texture object.
   virtual vint32 Finalize() = 0;
 
-  /// Bind our texture object with the associated attachment point
-  /// ( or, our id).
-  virtual vvoid Bind(vint32 id = -1) = 0;
-
-  /// Unbind the texture from our Renderer.
-  virtual vvoid Unbind() = 0;
-
   /// Format represents the storage type of the texture. This can be RGB, RGBA, Depth, or
   /// ALPHA, etc.
   virtual vvoid SetFormat(ImageFormat format) = 0;
@@ -106,8 +99,6 @@ public:
   virtual vvoid SetHeight(vint32 height) = 0;
   virtual vvoid SetDepth(vint32 depth) = 0;
   virtual vvoid SetName(std::string name) = 0;
-  virtual vvoid SetBytecode(vbyte *bytecode) = 0;
-  virtual vbyte *GetBytecode() = 0;
   virtual vvoid Cleanup() = 0;
   virtual vvoid SetSamples(vint32 samples) = 0;
   virtual vint32 GetSamples() = 0;

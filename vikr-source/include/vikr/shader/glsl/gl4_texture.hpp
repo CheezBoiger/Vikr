@@ -23,8 +23,8 @@ public:
   GL4Texture();
 
   virtual vint32 Finalize() override = 0;
-  virtual vvoid Bind(vint32 texture = -1) override;
-  virtual vvoid Unbind() override;
+  vvoid Bind(vint32 texture = -1);
+  vvoid Unbind();
 
   vvoid SetFormat(ImageFormat format) override;
   vvoid SetFilterMin(TextureFilterMode filter) override;
@@ -41,8 +41,6 @@ public:
   TextureFilterMode GetFilterMin() override;
   TextureFilterMode GetFilterMax() override;
   vvoid SetName(std::string name) override { m_name = name; }
-  vvoid SetBytecode(vbyte *bytecode) override { m_bytecode = bytecode; }
-  vbyte *GetBytecode() override { return m_bytecode; }
   vbool IsMipmapping() override { return m_mipmapping; }
   vvoid SetSamples(vint32 samples) override { m_samples = samples; }
   vint32 GetSamples() override { return m_samples; }
@@ -76,7 +74,6 @@ public:
 protected:
   vvoid SetPixelStore();
   GLuint id                           = 0;
-  vbyte *m_bytecode                   = nullptr;
   vint32  m_width                     = 0;
   vuint32 native_target               = GL_TEXTURE_2D;
   vuint32 native_format               = GL_RGBA;

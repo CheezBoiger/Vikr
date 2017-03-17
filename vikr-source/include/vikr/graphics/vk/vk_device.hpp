@@ -12,6 +12,8 @@
 #include <vikr/graphics/vk/vk_phydevice.hpp>
 #include <vikr/graphics/graphics_pipeline_state.hpp>
 #include <vikr/resources/vulkan/vk_memorymanager.hpp>
+#include <vikr/graphics/vk/vk_surface.hpp>
+#include <vikr/graphics/vk/vk_instance.hpp>
 #include <vikr/shader/cubemap.hpp>
 
 #include <vikr/graphics/graphics.hpp>
@@ -86,6 +88,8 @@ public:
   VKSurface &GetSurface() { return m_surface; }
   VKPhysicalDevice &GetPhysicalDevice() { return m_physicalDevice; }
   VKInstance &GetInstance() { return m_instance; }
+
+  vint32 FindMemorytype(vuint32 typeFilter, VkMemoryPropertyFlags flags);
 
 protected:
   /// Base semaphores. For basic handling.
