@@ -75,6 +75,7 @@ public:
 protected:
   std::string m_path;
   std::string m_name;
+  /// This is likely to move to SpvSampler...
   VkSampler m_sampler;
   VkImage m_image;
   VkDeviceMemory m_imageMemory;

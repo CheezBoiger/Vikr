@@ -11,5 +11,10 @@
 namespace vikr {
 
 
+class SpvSampler : public Sampler {
+public:
+
+private:
+};
 } // vikr
 #endif // __VIKR_SPV_SAMPLER_HPP

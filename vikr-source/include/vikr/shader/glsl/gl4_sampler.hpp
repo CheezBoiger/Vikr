@@ -11,5 +11,11 @@
 namespace vikr {
 
 
+class GL4Sampler : public Sampler {
+public:
+
+private:
+
+};
 } // vikr
 #endif // __VIKR_GL4_SAMPLER_HPP
